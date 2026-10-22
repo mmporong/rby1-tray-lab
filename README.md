@@ -72,7 +72,15 @@ python3 -m venv .venv
 .venv/bin/python -m rby1_tray.cli view --port 8786
 ```
 
-뷰어는 `http://127.0.0.1:8786`이다. 실제 MuJoCo 세션의 재생·일시정지·초기화·완료 후 재생, 전체/파지/안착 시점, 저장된 머리·양손목 RGB와 깊이 관측을 제공한다. 완료 상태에서 재생을 누르면 새 세션으로 시작한다. GIF는 약 4배속이다.
+뷰어는 `http://127.0.0.1:8786`이다. 기본은 **검증된 물리 실행의 60 FPS 영상 재생**이며, **8배속으로 시작해 12·16배속까지 재생 중에 변경**할 수 있다. 일시정지·초기화·완료 후 다시 재생, 전체/파지/안착 시점 전환을 지원한다. 영상 프레임과 같은 실행의 상태·머리/양손목 RGB-D 관측을 같은 시각으로 맞춘다. 미래 시각의 센서 관측은 표시하지 않는다. 기존 성공 GIF는 약 4배속이다.
+
+빠른 화면 재생과 새 물리 계산은 분리한다. `evidence/playback-native`의 영상은 기존 2 ms 물리/제어를 모두 계산하면서 실제 MuJoCo 상태를 샘플링한 기록이며, 브라우저에서는 원본 8배속 영상을 1·1.5·2의 재생률로 표시한다. 물리 시간 간격을 늘리거나 누락된 움직임을 영상 보간으로 합성하지 않는다. 재생 자료가 없거나 설정·해시 검증에 실패하면 실시간 계산 모드로 표시하며, 이 모드의 실제 속도는 CPU 성능에 따른다. 새 물리 실험은 `run`으로 실행한다.
+
+재생 기록 생성에는 기존 Python 환경과 FFmpeg/FFprobe가 필요하다. 기존 폴더를 덮어쓰지 않고 별도 경로에서 재현할 수 있다.
+
+```bash
+.venv/bin/python tools/build_playback.py --config configs/mobile-native.json --output artifacts/playback-check
+```
 
 기본 설정은 [`configs/mobile-native.json`](configs/mobile-native.json)이다. `--config`로 설정을 선택한다. 기존 실행 폴더는 덮어쓰지 않는다. `plan`은 이동형의 계획이 RGB-D 관측 이후 온라인으로 생성됨을 안내하며 실제 실행은 `run`으로 수행한다.
 

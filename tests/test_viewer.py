@@ -1,4 +1,7 @@
 import json
+from io import BytesIO
+from pathlib import Path
+import tempfile
 import threading
 import unittest
 from http.server import HTTPServer
@@ -9,7 +12,7 @@ from urllib.request import Request, urlopen
 import numpy as np
 from PIL import Image
 
-from rby1_tray.viewer import _make_handler, _view_value
+from rby1_tray.viewer import _byte_range, _make_handler, _view_value
 
 
 class FakeSession:
@@ -34,7 +37,23 @@ class FakeSession:
 class ViewerContractTests(unittest.TestCase):
     def setUp(self):
         self.session = FakeSession()
-        self.server = HTTPServer(("127.0.0.1", 0), _make_handler(self.session))
+        self.directory = tempfile.TemporaryDirectory()
+        video = Path(self.directory.name) / 'overview.mp4'
+        video.write_bytes(b'0123456789')
+        image = BytesIO()
+        Image.new('RGB', (2, 2), 'blue').save(image, format='PNG')
+        self.recorded_sensor = image.getvalue()
+        class FakePlayback:
+            def info(inner):
+                return {'enabled': True, 'base_speed': 8, 'fps': 60,
+                        'speed_options': [8, 12, 16]}
+
+            def asset(inner, name):
+                return (video, 'video/mp4', None) if name == 'overview.mp4' else None
+
+            def sensor_png(inner, camera, kind, time_s):
+                return (self.recorded_sensor, 1.0) if time_s >= 1.0 else None
+        self.server = HTTPServer(("127.0.0.1", 0), _make_handler(self.session, FakePlayback()))
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
         self.base_url = f"http://127.0.0.1:{self.server.server_port}"
@@ -43,6 +62,53 @@ class ViewerContractTests(unittest.TestCase):
         self.server.shutdown()
         self.server.server_close()
         self.thread.join(timeout=2)
+        self.directory.cleanup()
+
+    def test_playback_capability_reports_native_rates(self):
+        with urlopen(f'{self.base_url}/api/playback', timeout=3) as response:
+            info = json.load(response)
+        self.assertEqual(info['speed_options'], [8, 12, 16])
+        self.assertEqual(info['base_speed'], 8)
+        self.assertEqual(info['fps'], 60)
+
+    def test_video_range_and_head_support_native_seeking(self):
+        request = Request(f'{self.base_url}/playback/overview.mp4', headers={'Range': 'bytes=2-5'})
+        with urlopen(request, timeout=3) as response:
+            self.assertEqual(response.status, 206)
+            self.assertEqual(response.headers['Content-Range'], 'bytes 2-5/10')
+            self.assertEqual(response.read(), b'2345')
+        request = Request(f'{self.base_url}/playback/overview.mp4', method='HEAD')
+        with urlopen(request, timeout=3) as response:
+            self.assertEqual(response.headers['Content-Length'], '10')
+            self.assertEqual(response.headers['Accept-Ranges'], 'bytes')
+            self.assertEqual(response.read(), b'')
+
+    def test_invalid_video_range_and_unknown_asset_are_rejected(self):
+        request = Request(f'{self.base_url}/playback/overview.mp4', headers={'Range': 'bytes=15-'})
+        with self.assertRaises(HTTPError) as caught:
+            urlopen(request, timeout=3)
+        self.assertEqual(caught.exception.code, 416)
+        self.assertEqual(caught.exception.headers['Content-Range'], 'bytes */10')
+        with self.assertRaises(HTTPError) as caught:
+            urlopen(f'{self.base_url}/playback/not-a-declared-file', timeout=3)
+        self.assertEqual(caught.exception.code, 404)
+
+    def test_recorded_sensor_observations_follow_playback_time(self):
+        for time_s, status in [('0.5', 404), ('NaN', 400), ('-1', 400)]:
+            with self.assertRaises(HTTPError) as caught:
+                urlopen(f'{self.base_url}/sensor.png?camera=head_rgbd&kind=rgb&time_s={time_s}', timeout=3)
+            self.assertEqual(caught.exception.code, status)
+        with urlopen(f'{self.base_url}/sensor.png?camera=head_rgbd&kind=rgb&time_s=2', timeout=3) as response:
+            self.assertEqual(response.read(), self.recorded_sensor)
+            self.assertEqual(response.headers['X-Sensor-Timestamp-S'], '1')
+
+    def test_byte_ranges_support_suffix_open_end_and_reject_multiple(self):
+        self.assertEqual(_byte_range('bytes=-3', 10), (7, 9))
+        self.assertEqual(_byte_range('bytes=7-', 10), (7, 9))
+        self.assertEqual(_byte_range('bytes=0-999', 10), (0, 9))
+        for value in ['bytes=0-1,3-5', 'bytes=-0', 'bytes=-', 'other=0-1']:
+            with self.assertRaises(ValueError):
+                _byte_range(value, 10)
 
     def test_replay_endpoint_resets_a_finished_session(self):
         request = Request(f"{self.base_url}/api/replay", data=b"{}", method="POST")

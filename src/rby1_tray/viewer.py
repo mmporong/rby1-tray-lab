@@ -1,4 +1,4 @@
-"""Local, read-only web controls for an :class:`rby1_tray.session.Session`.
+"""Local simulation controls and synchronized recorded-physics playback.
 
 The HTTP server deliberately handles one request at a time.  MuJoCo's OpenGL
 context is created lazily by ``Session.render`` and must continue to be used on
@@ -13,7 +13,9 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from io import BytesIO
 import json
+import math
 from pathlib import Path
+import re
 from typing import Any
 from urllib.parse import parse_qs, urlsplit
 
@@ -102,7 +104,27 @@ def _sensor_png(session: Any, camera_name: str, kind: str) -> tuple[bytes, float
     return payload.getvalue(), float(frame.timestamp_sim_s)
 
 
-def _make_handler(session: Any) -> type[BaseHTTPRequestHandler]:
+def _byte_range(header: str | None, size: int) -> tuple[int, int] | None:
+    """Resolve one HTTP byte range, including suffix and open-ended requests."""
+    if header is None:
+        return None
+    match = re.fullmatch(r"bytes=(\d*)-(\d*)", header.strip())
+    if not match or size <= 0 or not any(match.groups()):
+        raise ValueError("Unsatisfiable byte range")
+    first, last = match.groups()
+    if not first:
+        suffix = int(last)
+        if suffix <= 0:
+            raise ValueError("Unsatisfiable suffix range")
+        return max(0, size - suffix), size - 1
+    start = int(first)
+    end = min(int(last), size - 1) if last else size - 1
+    if start >= size or start > end:
+        raise ValueError("Unsatisfiable byte range")
+    return start, end
+
+
+def _make_handler(session: Any, playback: Any = None) -> type[BaseHTTPRequestHandler]:
     class ViewerHandler(BaseHTTPRequestHandler):
         server_version = "RBY1TrayViewer/0.1"
 
@@ -113,6 +135,12 @@ def _make_handler(session: Any) -> type[BaseHTTPRequestHandler]:
                 return
             if request.path == "/api/state":
                 self._send_json(HTTPStatus.OK, session.snapshot())
+                return
+            if request.path == "/api/playback":
+                self._send_json(HTTPStatus.OK, playback.info() if playback else {"enabled": False})
+                return
+            if request.path.startswith("/playback/"):
+                self._serve_playback(request.path)
                 return
             if request.path == "/frame.png":
                 query = parse_qs(request.query)
@@ -141,7 +169,17 @@ def _make_handler(session: Any) -> type[BaseHTTPRequestHandler]:
                         {"error": "camera 또는 kind 값이 올바르지 않습니다."},
                     )
                     return
-                encoded = _sensor_png(session, camera_name, kind)
+                if playback and "time_s" in query:
+                    try:
+                        time_s = float(query["time_s"][0])
+                        if not math.isfinite(time_s) or time_s < 0:
+                            raise ValueError("Invalid playback time")
+                        encoded = playback.sensor_png(camera_name, kind, time_s)
+                    except (ValueError, TypeError):
+                        self._send_json(HTTPStatus.BAD_REQUEST, {"error": "센서 재생 시각이 올바르지 않습니다."})
+                        return
+                else:
+                    encoded = _sensor_png(session, camera_name, kind)
                 if encoded is None:
                     self._send_json(
                         HTTPStatus.NOT_FOUND,
@@ -157,6 +195,56 @@ def _make_handler(session: Any) -> type[BaseHTTPRequestHandler]:
                 )
                 return
             self._send_json(HTTPStatus.NOT_FOUND, {"error": "요청한 경로를 찾을 수 없습니다."})
+
+        def do_HEAD(self) -> None:  # noqa: N802
+            request = urlsplit(self.path)
+            if request.path.startswith("/playback/"):
+                self._serve_playback(request.path, head_only=True)
+            else:
+                self.send_error(HTTPStatus.NOT_FOUND)
+
+        def _serve_playback(self, request_path: str, head_only: bool = False) -> None:
+            asset = playback.asset(request_path.removeprefix("/playback/")) if playback else None
+            if asset is None:
+                self.send_error(HTTPStatus.NOT_FOUND)
+                return
+            path, content_type, encoding = asset
+            size = path.stat().st_size
+            try:
+                selected = _byte_range(self.headers.get("Range"), size)
+            except ValueError:
+                self.send_response(HTTPStatus.REQUESTED_RANGE_NOT_SATISFIABLE)
+                self.send_header("Content-Range", f"bytes */{size}")
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+                return
+            start, end = selected if selected else (0, size - 1)
+            self.send_response(HTTPStatus.PARTIAL_CONTENT if selected else HTTPStatus.OK)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(max(0, end - start + 1)))
+            self.send_header("Accept-Ranges", "bytes")
+            self.send_header("Cache-Control", "private, max-age=0, must-revalidate")
+            self.send_header("X-Content-Type-Options", "nosniff")
+            if encoding:
+                self.send_header("Content-Encoding", encoding)
+            if selected:
+                self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
+            self.end_headers()
+            if head_only:
+                return
+            try:
+                with path.open("rb") as stream:
+                    stream.seek(start)
+                    remaining = end - start + 1
+                    while remaining > 0:
+                        chunk = stream.read(min(64 * 1024, remaining))
+                        if not chunk:
+                            break
+                        self.wfile.write(chunk)
+                        remaining -= len(chunk)
+            except (BrokenPipeError, ConnectionResetError):
+                # Native video seeking cancels the previous byte-range request.
+                return
 
         def do_POST(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler API
             request = urlsplit(self.path)
@@ -221,7 +309,7 @@ def _make_handler(session: Any) -> type[BaseHTTPRequestHandler]:
             self.send_header("Content-Length", str(len(body)))
             self.send_header("Cache-Control", "no-store")
             self.send_header("X-Content-Type-Options", "nosniff")
-            self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' blob:")
+            self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' blob:; media-src 'self'")
             for name, value in (headers or {}).items():
                 self.send_header(name, value)
             self.end_headers()
@@ -243,7 +331,14 @@ def serve(session: Any, host: str = "127.0.0.1", port: int = 8786) -> None:
 
     if not _INDEX_PATH.is_file():
         raise FileNotFoundError(f"Viewer page is missing: {_INDEX_PATH}")
-    server = HTTPServer((host, port), _make_handler(session))
+    from .playback import PlaybackAssets
+    playback = None
+    directory = Path(__file__).resolve().parents[2] / "evidence" / "playback-native"
+    try:
+        playback = PlaybackAssets(directory, session.config)
+    except (FileNotFoundError, ValueError) as exc:
+        print(f"[viewer] Recorded playback unavailable; live controls remain available: {exc}")
+    server = HTTPServer((host, port), _make_handler(session, playback))
     print(f"RB-Y1 Tray Lab: http://{host}:{server.server_port}")
     try:
         server.serve_forever(poll_interval=0.2)

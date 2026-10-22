@@ -29,7 +29,7 @@
     .viewport-panel { overflow: hidden; }
     .stage { position: relative; height: min(66vh, 720px); min-height: 360px; background: #050709; }
     .stage::after { position: absolute; inset: 0; pointer-events: none; content: ""; box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), inset 0 -100px 100px rgba(0,0,0,.18); }
-    .stage img { width: 100%; height: 100%; display: block; object-fit: contain; }
+    .stage img, .stage video { width: 100%; height: 100%; display: block; object-fit: contain; }
     .stage-top { position: absolute; z-index: 2; inset: 14px 14px auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
     .run-status, .target-callout { border: 1px solid rgba(255,255,255,.16); background: rgba(8,11,14,.86); backdrop-filter: blur(9px); }
     .run-status { display: flex; align-items: center; gap: 9px; padding: 9px 12px; color: #cbd6dc; font-size: .77rem; font-weight: 720; }
@@ -117,6 +117,7 @@
       <section class="panel viewport-panel" aria-label="MuJoCo 렌더 화면">
         <div class="stage">
           <img id="frame" alt="RB-Y1이 적재 트레이를 높은 컨테이너로 옮기는 MuJoCo 시뮬레이션" width="960" height="720">
+          <video id="playbackVideo" aria-label="검증된 MuJoCo 물리 실행 영상" width="960" height="720" muted playsinline preload="auto" hidden></video>
           <div class="stage-top">
             <div class="run-status" aria-live="polite"><span id="statusDot" class="dot"></span><span id="runStatus">준비 중</span></div>
             <div class="target-callout"><span>목표 안착면</span><strong id="targetHeight">— m</strong></div>
@@ -132,7 +133,7 @@
           <div class="controls" aria-label="시뮬레이션 제어">
             <button id="play" class="primary" type="button" aria-pressed="false">재생</button><button id="single" type="button">50 스텝</button>
             <button id="reset" type="button">처음으로</button>
-            <label for="speed">재생 배율<select id="speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select></label>
+            <label for="speed">재생 배율<select id="speed"><option value="8" selected>8×</option><option value="12">12×</option><option value="16">16×</option></select></label>
           </div>
           <div class="view-tabs" aria-label="카메라 시점">
             <button type="button" data-view="overview" aria-pressed="true">전체</button><button type="button" data-view="pickup" aria-pressed="false">파지</button><button type="button" data-view="placement" aria-pressed="false">안착</button>
@@ -165,7 +166,7 @@
             <div class="metric"><dt>트레이 중심 높이</dt><dd id="trayHeight">—</dd></div><div class="metric"><dt>손가락 접촉</dt><dd id="contact">—</dd></div>
             <div class="metric"><dt>트레이 위 적재물</dt><dd id="payload">—</dd></div><div class="metric"><dt>독립 평가</dt><dd id="result">진행 전</dd></div>
           </dl>
-          <p class="help">배율은 목표 재생 배율입니다. 브라우저와 CPU 부하에 따라 실제 재생 속도는 달라질 수 있습니다.</p>
+          <p id="playbackHelp" class="help">재생 데이터를 불러오는 중입니다.</p>
         </section>
         <section class="panel section result-panel">
           <div class="section-title"><h2>안착 판정</h2><span class="section-kicker">GEOMETRY + CONTACT</span></div>
@@ -182,7 +183,7 @@
   <script>
     const $ = (id) => document.getElementById(id);
     const ui = {
-      frame: $('frame'), play: $('play'), single: $('single'), reset: $('reset'), speed: $('speed'), error: $('error'),
+      frame: $('frame'), video: $('playbackVideo'), playbackHelp: $('playbackHelp'), play: $('play'), single: $('single'), reset: $('reset'), speed: $('speed'), error: $('error'),
       statusDot: $('statusDot'), runStatus: $('runStatus'), camera: $('cameraReadout'), raw: $('rawState'), phase: $('phase'),
       simTime: $('simTime'), trayHeight: $('trayHeight'), contact: $('contact'), payload: $('payload'), result: $('result'),
       targetHeight: $('targetHeight'), checkTarget: $('checkTarget'), checkSupport: $('checkSupport'), checkPayload: $('checkPayload'),
@@ -194,6 +195,9 @@
     let playing = false, actionPromise = null, playGeneration = 0, framePromise = null, frameDirty = false;
     let azimuth = 105, selectedView = 'overview', currentState = null, frameObjectUrl = null;
     let selectedCamera = 'head_rgbd', sensorGeneration = 0, sensorEventKey = '', sensorObjectUrls = [];
+    let playbackInfo = null, playbackStates = [], videoGeneration = 0, animationFrame = null;
+    let videoLoading = false;
+    let lastStateFrame = -1, lastStatePaint = 0;
     const elevation = -20;
     const phaseLabels = {
       approach:'바닥 접근', descend:'트레이 테두리 정렬', grasp:'양손 파지', lift:'초기 상승', raise:'상승', transport:'컨테이너 이송', seat:'안착', settle:'안정화', release:'손 분리', withdraw:'손 회수', hold:'완료 유지',
@@ -238,7 +242,7 @@
       ui.baseBadge.textContent = state.base_mode === 'fixture' ? '베이스 지그 고정 · 안정성 미평가' : state.base_mode === 'mobile' ? '4휠 직진 · 엔코더 오도메트리' : (state.base_mode || '베이스 조건 미제공');
       const audit = state.audit || {};
       ui.modelBadge.textContent = [audit.nq,audit.nv,audit.nu].every(Number.isInteger) ? `nq ${audit.nq} · nv ${audit.nv} · nu ${audit.nu}` : '모델 차원 미제공';
-      ui.raw.textContent = JSON.stringify(state, null, 2);
+      if (ui.raw.closest('details').open) ui.raw.textContent = JSON.stringify(state, null, 2);
       setCheck(ui.checkTarget, Boolean(checks.tray_in_target_xy)); setCheck(ui.checkSupport, Boolean(checks.tray_on_support));
       setCheck(ui.checkPayload, Boolean(checks.payloads_supported && checks.payloads_settled)); setCheck(ui.checkWithdraw, Boolean(milestones.withdrawn)); updateTimeline(state);
       const failed = Boolean(state.result?.failure_reason), succeeded = Boolean(state.result?.success);
@@ -248,7 +252,7 @@
       const perceptionTime = state.mission?.perception?.timestamp_sim_s ?? 'none';
       const nextSensorEventKey = `${state.phase || ''}|${perceptionTime}`;
       if (nextSensorEventKey !== sensorEventKey) { sensorEventKey=nextSensorEventKey; refreshSensor(); }
-      if (isTerminal(state) && playing) stopPlayback(true); updatePlayLabel();
+      if (isTerminal(state) && playing && !playbackInfo) stopPlayback(true); updatePlayLabel();
     }
     function showError(message='') { ui.error.textContent = message; ui.error.classList.toggle('hidden', !message); }
     async function request(url, options={}) {
@@ -291,6 +295,7 @@
     }
     async function fetchSensorImage(camera, kind) {
       const params = new URLSearchParams({camera,kind,v:String(Date.now())});
+      if (playbackInfo) params.set('time_s', String(currentState?.time_s || 0));
       const response = await fetch(`/sensor.png?${params}`, {cache:'no-store'});
       if (response.status === 404) return null;
       if (!response.ok) throw new Error(`센서 프레임 요청 실패 (${response.status})`);
@@ -319,7 +324,66 @@
       const timestamp=Number(images[0].timestamp); ui.sensorTime.textContent=Number.isFinite(timestamp) ? `관측 시각 ${formatNumber(timestamp,3)} s` : '관측 시각 —';
       ui.sensorQuality.textContent=sensorQuality(currentState,camera);
     }
-    function setControlsBusy(value) { ui.single.disabled=value; ui.reset.disabled=value; ui.speed.disabled=value; }
+    function syncRecordedState(force=false) {
+      if (!playbackInfo || !playbackStates.length) return;
+      const index = Math.min(playbackStates.length-1, Math.max(0, Math.floor(ui.video.currentTime*playbackInfo.fps+1e-5)));
+      if (force || index!==lastStateFrame) {
+        lastStateFrame=index; updateState(playbackStates[index].state);
+        ui.backendBadge.textContent='MuJoCo · 기록 재생';
+      }
+    }
+    function animateRecorded(now) {
+      animationFrame=null;
+      if (!playing || !playbackInfo) return;
+      // Video decoding stays native; status text only needs twenty updates/s.
+      if (now-lastStatePaint>=50) { lastStatePaint=now; syncRecordedState(); }
+      animationFrame=requestAnimationFrame(animateRecorded);
+    }
+    function recordedCameraLabel() {
+      const labels={overview:'전체',pickup:'파지',placement:'안착'};
+      ui.camera.value=`${labels[selectedView]} 시점 · 검증 실행 ${playbackInfo.fps} FPS · ${ui.speed.value}×`;
+      ui.camera.textContent=ui.camera.value;
+    }
+    async function loadRecordedView(view, resume=false) {
+      const generation=++videoGeneration, previousTime=ui.video.currentTime || 0;
+      videoLoading=true;
+      stopPlayback(); ui.play.disabled=true; setControlsBusy(true);
+      try {
+        const loaded=new Promise((resolve,reject)=>{
+          const clean=()=>{ui.video.removeEventListener('loadeddata',ready);ui.video.removeEventListener('error',failed);};
+          const ready=()=>{clean();resolve();};
+          const failed=()=>{clean();reject(new Error('재생 영상을 불러오지 못했습니다.'));};
+          ui.video.addEventListener('loadeddata',ready,{once:true}); ui.video.addEventListener('error',failed,{once:true});
+        });
+        ui.video.src=playbackInfo.videos[view]; ui.video.load(); await loaded;
+        if (generation!==videoGeneration) return;
+        ui.video.playbackRate=Number(ui.speed.value)/playbackInfo.base_speed;
+        const targetTime=Math.min(previousTime,ui.video.duration);
+        if (Math.abs(ui.video.currentTime-targetTime)>1e-6) {
+          const seeked=new Promise((resolve,reject)=>{
+            const clean=()=>{ui.video.removeEventListener('seeked',ready);ui.video.removeEventListener('error',failed);};
+            const ready=()=>{clean();resolve();};
+            const failed=()=>{clean();reject(new Error('영상 시각을 이동하지 못했습니다.'));};
+            ui.video.addEventListener('seeked',ready,{once:true});ui.video.addEventListener('error',failed,{once:true});
+          });
+          ui.video.currentTime=targetTime;await seeked;
+        }
+        if(generation!==videoGeneration)return;
+        ui.video.hidden=false; ui.frame.hidden=true; lastStateFrame=-1; syncRecordedState(true); recordedCameraLabel();
+        if (resume && !document.hidden && !isTerminal(currentState)) await ui.video.play();
+        showError();
+      } catch (error) { if (generation===videoGeneration) showError(error.message); }
+      finally { if (generation===videoGeneration) {videoLoading=false;ui.play.disabled=false;setControlsBusy(false);} }
+    }
+    function seekRecorded(seconds) {
+      ui.video.currentTime=Math.min(ui.video.duration,Math.max(0,seconds));
+      lastStateFrame=-1; syncRecordedState(true);
+    }
+    function setControlsBusy(value) {
+      const busy=value||videoLoading;
+      ui.single.disabled=busy||playing;ui.reset.disabled=busy;ui.speed.disabled=busy;
+      ui.viewButtons.forEach((button)=>{button.disabled=busy;});
+    }
     async function runAction(action) {
       if (actionPromise) return actionPromise; setControlsBusy(true);
       actionPromise = (async () => { const state=await action(); updateState(state); await refreshFrame(); showError(); return state; })()
@@ -327,26 +391,71 @@
         .finally(() => { actionPromise=null; setControlsBusy(false); }); return actionPromise;
     }
     const advance = (steps=50) => runAction(() => request('/api/step', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({steps}) }));
-    function stopPlayback(preserveStatus=false) { playing=false; playGeneration+=1; if (!preserveStatus && currentState && !isTerminal(currentState)) ui.runStatus.textContent='일시정지'; updatePlayLabel(); }
+    function stopPlayback(preserveStatus=false) {
+      playing=false; playGeneration+=1;
+      if (playbackInfo) {ui.video.pause();if(animationFrame!==null)cancelAnimationFrame(animationFrame);animationFrame=null;syncRecordedState();}
+      if (!preserveStatus && currentState && !isTerminal(currentState)) ui.runStatus.textContent='일시정지';
+      updatePlayLabel(); if (playbackInfo) setControlsBusy(false);
+    }
     async function playbackLoop(generation) {
       while (playing && generation===playGeneration) {
-        try { await advance(50*Number(ui.speed.value)); } catch (_) { return; }
+        try { await advance(25*Number(ui.speed.value)); } catch (_) { return; }
         if (!playing || generation!==playGeneration || isTerminal(currentState)) return;
-        await new Promise((resolve) => setTimeout(resolve,100));
+        await new Promise(requestAnimationFrame);
       }
     }
     async function startPlayback() {
       if (playing || actionPromise) return;
+      if (playbackInfo) {
+        if (isTerminal(currentState)||ui.video.ended) seekRecorded(0);
+        try {await ui.video.play();} catch (error) {showError(`재생을 시작하지 못했습니다. ${error.message}`);}
+        return;
+      }
       if (isTerminal(currentState)) { try { await runAction(() => request('/api/replay', {method:'POST'})); } catch (_) { return; } }
       playing=true; const generation=++playGeneration; ui.runStatus.textContent='재생 중'; updatePlayLabel(); playbackLoop(generation);
     }
+    ui.video.addEventListener('play',()=>{
+      playing=true;ui.runStatus.textContent='재생 중';updatePlayLabel();setControlsBusy(false);
+      if (animationFrame===null) animationFrame=requestAnimationFrame(animateRecorded);
+    });
+    ui.video.addEventListener('pause',()=>{
+      playing=false;if(animationFrame!==null)cancelAnimationFrame(animationFrame);animationFrame=null;
+      syncRecordedState(true);if(!isTerminal(currentState))ui.runStatus.textContent='일시정지';updatePlayLabel();setControlsBusy(false);
+    });
+    ui.video.addEventListener('ended',()=>{syncRecordedState(true);stopPlayback(true);});
+    ui.video.addEventListener('seeked',()=>syncRecordedState(true));
     ui.play.addEventListener('click', () => { if (playing) stopPlayback(); else startPlayback(); });
-    ui.single.addEventListener('click', () => advance(50).catch(()=>{}));
-    ui.reset.addEventListener('click', async () => { stopPlayback(); if (actionPromise) return; try { await runAction(() => request('/api/reset',{method:'POST'})); } catch (_) {} });
-    ui.viewButtons.forEach((button) => button.addEventListener('click', () => { selectedView=button.dataset.view; ui.viewButtons.forEach((item)=>item.setAttribute('aria-pressed',String(item===button))); refreshFrame().catch((error)=>showError(error.message)); }));
+    ui.single.addEventListener('click', () => {if(playbackInfo)seekRecorded(ui.video.currentTime+1/playbackInfo.fps);else advance(50).catch(()=>{});});
+    ui.reset.addEventListener('click', async () => {
+      stopPlayback(); if(playbackInfo){sensorEventKey='';seekRecorded(0);return;}
+      if (actionPromise) return; try { await runAction(() => request('/api/reset',{method:'POST'})); } catch (_) {}
+    });
+    ui.speed.addEventListener('change',()=>{if(playbackInfo){ui.video.playbackRate=Number(ui.speed.value)/playbackInfo.base_speed;recordedCameraLabel();}});
+    ui.viewButtons.forEach((button) => button.addEventListener('click', () => {
+      selectedView=button.dataset.view;ui.viewButtons.forEach((item)=>item.setAttribute('aria-pressed',String(item===button)));
+      if(playbackInfo)loadRecordedView(selectedView,playing);else refreshFrame().catch((error)=>showError(error.message));
+    }));
     ui.sensorCamera.addEventListener('change', () => { selectedCamera=ui.sensorCamera.value; refreshSensor(); });
+    ui.raw.closest('details').addEventListener('toggle',()=>{if(currentState&&ui.raw.closest('details').open)ui.raw.textContent=JSON.stringify(currentState,null,2);});
     document.addEventListener('visibilitychange', () => { if (document.hidden) stopPlayback(); });
-    Promise.all([request('/api/state').then(updateState),refreshFrame()]).catch((error)=>showError(`${error.message} 서버 연결을 확인해 주세요.`));
+    async function initialize() {
+      ui.play.disabled=true;setControlsBusy(true);
+      try {
+        const info=await request('/api/playback');
+        if(info.enabled){
+          const states=await request(info.states_url);
+          if(!Array.isArray(states)||states.length!==info.frame_count||!states.length)throw new Error('재생 상태와 영상 프레임 수가 맞지 않습니다.');
+          playbackInfo=info;playbackStates=states;ui.single.textContent='한 프레임';
+          ui.playbackHelp.textContent='검증된 물리 실행을 60 FPS 영상으로 재생합니다. 배율은 시뮬레이션 시간 기준이며 상태·센서도 같은 시각을 따릅니다.';
+          await loadRecordedView(selectedView);
+        } else {
+          ui.playbackHelp.textContent='실시간 물리 계산 모드입니다. 배율은 목표값이며 실제 진행 속도는 CPU 계산과 렌더 속도에 따라 달라집니다.';
+          await Promise.all([request('/api/state').then(updateState),refreshFrame()]);
+        }
+      } catch(error){showError(`${error.message} 서버 연결을 확인해 주세요.`);}
+      finally{ui.play.disabled=false;setControlsBusy(false);}
+    }
+    initialize();
   </script>
 </body>
 </html>
