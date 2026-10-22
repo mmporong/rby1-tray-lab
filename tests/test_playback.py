@@ -120,7 +120,8 @@ class PlaybackAssetsTests(unittest.TestCase):
 
         info = assets.info()
         self.assertTrue(info["enabled"])
-        self.assertEqual(info["speed_options"], [8, 12, 16])
+        self.assertEqual(info["speed_options"], [1, 1.5, 2])
+        self.assertEqual(info["simulation_speed_options"], [8, 12, 16])
         self.assertEqual(info["frame_count"], 3)
         self.assertEqual(info["videos"]["placement"], "/playback/placement.mp4")
         path, mime, encoding = assets.asset("states.json.gz")

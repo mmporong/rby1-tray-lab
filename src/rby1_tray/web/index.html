@@ -133,7 +133,7 @@
           <div class="controls" aria-label="시뮬레이션 제어">
             <button id="play" class="primary" type="button" aria-pressed="false">재생</button><button id="single" type="button">50 스텝</button>
             <button id="reset" type="button">처음으로</button>
-            <label for="speed">재생 배율<select id="speed"><option value="8" selected>8×</option><option value="12">12×</option><option value="16">16×</option></select></label>
+            <label for="speed">재생 배율<select id="speed"><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
           </div>
           <div class="view-tabs" aria-label="카메라 시점">
             <button type="button" data-view="overview" aria-pressed="true">전체</button><button type="button" data-view="pickup" aria-pressed="false">파지</button><button type="button" data-view="placement" aria-pressed="false">안착</button>
@@ -357,7 +357,7 @@
         });
         ui.video.src=playbackInfo.videos[view]; ui.video.load(); await loaded;
         if (generation!==videoGeneration) return;
-        ui.video.playbackRate=Number(ui.speed.value)/playbackInfo.base_speed;
+        ui.video.playbackRate=Number(ui.speed.value);
         const targetTime=Math.min(previousTime,ui.video.duration);
         if (Math.abs(ui.video.currentTime-targetTime)>1e-6) {
           const seeked=new Promise((resolve,reject)=>{
@@ -399,7 +399,7 @@
     }
     async function playbackLoop(generation) {
       while (playing && generation===playGeneration) {
-        try { await advance(25*Number(ui.speed.value)); } catch (_) { return; }
+        try { await advance(200*Number(ui.speed.value)); } catch (_) { return; }
         if (!playing || generation!==playGeneration || isTerminal(currentState)) return;
         await new Promise(requestAnimationFrame);
       }
@@ -430,7 +430,7 @@
       stopPlayback(); if(playbackInfo){sensorEventKey='';seekRecorded(0);return;}
       if (actionPromise) return; try { await runAction(() => request('/api/reset',{method:'POST'})); } catch (_) {}
     });
-    ui.speed.addEventListener('change',()=>{if(playbackInfo){ui.video.playbackRate=Number(ui.speed.value)/playbackInfo.base_speed;recordedCameraLabel();}});
+    ui.speed.addEventListener('change',()=>{if(playbackInfo){ui.video.playbackRate=Number(ui.speed.value);recordedCameraLabel();}});
     ui.viewButtons.forEach((button) => button.addEventListener('click', () => {
       selectedView=button.dataset.view;ui.viewButtons.forEach((item)=>item.setAttribute('aria-pressed',String(item===button)));
       if(playbackInfo)loadRecordedView(selectedView,playing);else refreshFrame().catch((error)=>showError(error.message));
@@ -446,7 +446,7 @@
           const states=await request(info.states_url);
           if(!Array.isArray(states)||states.length!==info.frame_count||!states.length)throw new Error('재생 상태와 영상 프레임 수가 맞지 않습니다.');
           playbackInfo=info;playbackStates=states;ui.single.textContent='한 프레임';
-          ui.playbackHelp.textContent='검증된 물리 실행을 60 FPS 영상으로 재생합니다. 배율은 시뮬레이션 시간 기준이며 상태·센서도 같은 시각을 따릅니다.';
+          ui.playbackHelp.textContent='검증된 물리 실행을 60 FPS 영상으로 재생합니다. 기본 1배속은 시뮬레이션 8배속에 해당하며, 상태·센서도 같은 기록 시각을 따릅니다.';
           await loadRecordedView(selectedView);
         } else {
           ui.playbackHelp.textContent='실시간 물리 계산 모드입니다. 배율은 목표값이며 실제 진행 속도는 CPU 계산과 렌더 속도에 따라 달라집니다.';

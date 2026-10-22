@@ -1,0 +1,61 @@
+{
+  "checks": {
+    "forbidden_contact": false,
+    "full_pad_contact": false,
+    "fully_released": true,
+    "opposed_contacts": false,
+    "pad_force_sufficient": false,
+    "payloads_contained": true,
+    "payloads_settled": true,
+    "payloads_supported": true,
+    "robot_tray_contact": false,
+    "secure_grasp": false,
+    "tray_in_target_xy": true,
+    "tray_lifted": true,
+    "tray_on_support": true,
+    "tray_slow": true,
+    "tray_upright": true
+  },
+  "failure_event": null,
+  "failure_reason": null,
+  "failure_time_s": null,
+  "frame_count": 770,
+  "last_time_s": 102.46999999994259,
+  "metrics": {
+    "left_grasp_force_n": 0.0,
+    "max_payload_speed_m_s": 0.007035579269236897,
+    "min_pad_force_n": 0.0,
+    "right_grasp_force_n": 0.0
+  },
+  "milestone_times_s": {
+    "grasped": 25.63599999999667,
+    "lifted": 29.89199999999431,
+    "released": 97.94999999995312,
+    "seated": 93.97399999996239,
+    "withdrawn": 102.46999999994259
+  },
+  "milestones": {
+    "grasped": true,
+    "lifted": true,
+    "released": true,
+    "seated": true,
+    "withdrawn": true
+  },
+  "rendering": {
+    "base_speed": 8,
+    "fps": 60,
+    "height": 720,
+    "state_source": "MobileSession.snapshot after unmodified MuJoCo stepping",
+    "views": [
+      "overview",
+      "pickup",
+      "placement"
+    ],
+    "width": 960
+  },
+  "simulation_time_s": 102.46999999994259,
+  "success": true,
+  "terminal": true,
+  "updates": 51236,
+  "wall_time_s": 106.64217847096734
+}

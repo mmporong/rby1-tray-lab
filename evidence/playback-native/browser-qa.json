@@ -1,0 +1,69 @@
+{
+  "scope": "CUA browser UI verification; display 1x is the original 8x simulation-time playback",
+  "rates": [
+    {
+      "display_rate": 1,
+      "native_video_rate": 1,
+      "wall_delta_s": 9.225,
+      "video_start_s": 0.260937,
+      "video_end_s": 9.490951,
+      "observed_simulation_time_multiplier": 8.004348184281843
+    },
+    {
+      "display_rate": 1.5,
+      "native_video_rate": 1.5,
+      "wall_delta_s": 8.469,
+      "video_start_s": 0.162727,
+      "video_end_s": 12.833333,
+      "observed_simulation_time_multiplier": 11.96892761837289
+    },
+    {
+      "display_rate": 2,
+      "native_video_rate": 2,
+      "wall_delta_s": 0.552,
+      "video_start_s": 0.223928,
+      "video_end_s": 1.329912,
+      "observed_simulation_time_multiplier": 16.028753623188404
+    }
+  ],
+  "pause": {
+    "before_video_time_s": 9.632594,
+    "after_video_time_s": 9.632594,
+    "paused": true
+  },
+  "paused_view_switch": {
+    "pickup_video_time_s": 9.632594,
+    "placement_video_time_s": 9.632594,
+    "paused": true
+  },
+  "playing_view_switch": {
+    "before_video_time_s": 0.109084,
+    "after_video_time_s": 0.499825,
+    "paused_before": false,
+    "paused_after": false
+  },
+  "left_wrist_observation_timestamp_sim_s": 27.406,
+  "left_wrist_checked_at_simulation_time_s": 77.060752,
+  "completion": {
+    "simulation_time_s": 102.47,
+    "result": "success"
+  },
+  "replay_after_completion_video_time_s": 0.210261,
+  "final_state": {
+    "display_rate": 1,
+    "native_video_rate": 1,
+    "video_time_s": 0,
+    "paused": true,
+    "view": "overview"
+  },
+  "browser_console_errors_or_warnings": [],
+  "unit_tests": {
+    "passed": 106,
+    "log": "/tmp/rby1-normalized-tests.log"
+  },
+  "limitations": [
+    "Timing samples include automation overhead and are not a hardware performance benchmark.",
+    "Video source is encoded at 60 FPS; browser dropped-frame counters were unavailable through the browser DOM inspection interface.",
+    "LSP type diagnostics were unavailable; compileall, Node parse, unit tests, and independent code/artifact review were used."
+  ]
+}

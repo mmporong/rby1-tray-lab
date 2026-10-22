@@ -46,7 +46,7 @@ class ViewerContractTests(unittest.TestCase):
         class FakePlayback:
             def info(inner):
                 return {'enabled': True, 'base_speed': 8, 'fps': 60,
-                        'speed_options': [8, 12, 16]}
+                        'speed_options': [1, 1.5, 2]}
 
             def asset(inner, name):
                 return (video, 'video/mp4', None) if name == 'overview.mp4' else None
@@ -67,7 +67,7 @@ class ViewerContractTests(unittest.TestCase):
     def test_playback_capability_reports_native_rates(self):
         with urlopen(f'{self.base_url}/api/playback', timeout=3) as response:
             info = json.load(response)
-        self.assertEqual(info['speed_options'], [8, 12, 16])
+        self.assertEqual(info['speed_options'], [1, 1.5, 2])
         self.assertEqual(info['base_speed'], 8)
         self.assertEqual(info['fps'], 60)
 
