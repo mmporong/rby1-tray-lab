@@ -8,8 +8,8 @@
           "encoding": "display-only inverse grayscale; invalid depth is 0",
           "metric_data": false,
           "metric_source": "recorded RGBDFrame.depth_m; use controller data for metric depth",
-          "valid_depth_max_m": 0.8928366899490356,
-          "valid_depth_min_m": 0.4189150631427765,
+          "valid_depth_max_m": 0.8928340077400208,
+          "valid_depth_min_m": 0.4189150929450989,
           "valid_pixel_count": 254746
         },
         "rgb": {
@@ -30,7 +30,7 @@
       },
       "rgb_path": "sensors/00_head_rgbd_rgb.png",
       "source_frame_index": 0,
-      "timestamp_sim_s": 9.291999999999772
+      "timestamp_sim_s": 18.448000000000654
     },
     {
       "camera_name": "left_wrist_rgbd",
@@ -40,8 +40,8 @@
           "encoding": "display-only inverse grayscale; invalid depth is 0",
           "metric_data": false,
           "metric_source": "recorded RGBDFrame.depth_m; use controller data for metric depth",
-          "valid_depth_max_m": 0.46965867280960083,
-          "valid_depth_min_m": 0.07114694267511368,
+          "valid_depth_max_m": 0.4695276618003845,
+          "valid_depth_min_m": 0.07114702463150024,
           "valid_pixel_count": 229018
         },
         "rgb": {
@@ -62,7 +62,7 @@
       },
       "rgb_path": "sensors/01_left_wrist_rgbd_rgb.png",
       "source_frame_index": 1,
-      "timestamp_sim_s": 23.5979999999978
+      "timestamp_sim_s": 32.753999999994065
     },
     {
       "camera_name": "right_wrist_rgbd",
@@ -72,9 +72,9 @@
           "encoding": "display-only inverse grayscale; invalid depth is 0",
           "metric_data": false,
           "metric_source": "recorded RGBDFrame.depth_m; use controller data for metric depth",
-          "valid_depth_max_m": 0.49999839067459106,
-          "valid_depth_min_m": 0.07165414839982986,
-          "valid_pixel_count": 212786
+          "valid_depth_max_m": 0.4999943673610687,
+          "valid_depth_min_m": 0.07165415585041046,
+          "valid_pixel_count": 212783
         },
         "rgb": {
           "encoding": "uint8 RGB copied from the recorded controller frame",
@@ -94,7 +94,7 @@
       },
       "rgb_path": "sensors/02_right_wrist_rgbd_rgb.png",
       "source_frame_index": 2,
-      "timestamp_sim_s": 23.5979999999978
+      "timestamp_sim_s": 32.753999999994065
     },
     {
       "camera_name": "left_wrist_rgbd",
@@ -104,9 +104,9 @@
           "encoding": "display-only inverse grayscale; invalid depth is 0",
           "metric_data": false,
           "metric_source": "recorded RGBDFrame.depth_m; use controller data for metric depth",
-          "valid_depth_max_m": 0.46770524978637695,
-          "valid_depth_min_m": 0.07164826989173889,
-          "valid_pixel_count": 228942
+          "valid_depth_max_m": 0.4676741361618042,
+          "valid_depth_min_m": 0.07164843380451202,
+          "valid_pixel_count": 228939
         },
         "rgb": {
           "encoding": "uint8 RGB copied from the recorded controller frame",
@@ -126,7 +126,7 @@
       },
       "rgb_path": "sensors/03_left_wrist_rgbd_rgb.png",
       "source_frame_index": 3,
-      "timestamp_sim_s": 27.40599999999569
+      "timestamp_sim_s": 36.55399999999871
     },
     {
       "camera_name": "right_wrist_rgbd",
@@ -136,9 +136,9 @@
           "encoding": "display-only inverse grayscale; invalid depth is 0",
           "metric_data": false,
           "metric_source": "recorded RGBDFrame.depth_m; use controller data for metric depth",
-          "valid_depth_max_m": 0.49999016523361206,
+          "valid_depth_max_m": 0.4999977946281433,
           "valid_depth_min_m": 0.07162059098482132,
-          "valid_pixel_count": 212138
+          "valid_pixel_count": 212117
         },
         "rgb": {
           "encoding": "uint8 RGB copied from the recorded controller frame",
@@ -158,7 +158,7 @@
       },
       "rgb_path": "sensors/04_right_wrist_rgbd_rgb.png",
       "source_frame_index": 4,
-      "timestamp_sim_s": 27.40599999999569
+      "timestamp_sim_s": 36.55399999999871
     }
   ],
   "metric_depth_location": "controller-data observations in the validated mission evidence, not these PNG previews",

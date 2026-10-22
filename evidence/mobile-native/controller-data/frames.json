@@ -3,30 +3,30 @@
     "camera_name": "head_rgbd",
     "index": 0,
     "path": "observations/0000_head_rgbd.npz",
-    "timestamp_sim_s": 9.291999999999772
+    "timestamp_sim_s": 18.448000000000654
   },
   {
     "camera_name": "left_wrist_rgbd",
     "index": 1,
     "path": "observations/0001_left_wrist_rgbd.npz",
-    "timestamp_sim_s": 23.5979999999978
+    "timestamp_sim_s": 32.753999999994065
   },
   {
     "camera_name": "right_wrist_rgbd",
     "index": 2,
     "path": "observations/0002_right_wrist_rgbd.npz",
-    "timestamp_sim_s": 23.5979999999978
+    "timestamp_sim_s": 32.753999999994065
   },
   {
     "camera_name": "left_wrist_rgbd",
     "index": 3,
     "path": "observations/0003_left_wrist_rgbd.npz",
-    "timestamp_sim_s": 27.40599999999569
+    "timestamp_sim_s": 36.55399999999871
   },
   {
     "camera_name": "right_wrist_rgbd",
     "index": 4,
     "path": "observations/0004_right_wrist_rgbd.npz",
-    "timestamp_sim_s": 27.40599999999569
+    "timestamp_sim_s": 36.55399999999871
   }
 ]

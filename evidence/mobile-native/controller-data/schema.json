@@ -62,6 +62,73 @@
     "wrench": "left/right wrist six-axis force-torque",
     "wrist_rgbd": "registered RGB/depth + measured K and flange extrinsic"
   },
+  "home_reference": {
+    "base_pose_xy_yaw": [
+      -0.4,
+      0.0,
+      0.0
+    ],
+    "base_position_tolerance_m": 0.02,
+    "base_speed_tolerance_m_s": 0.012,
+    "base_yaw_speed_tolerance_rad_s": 0.025,
+    "base_yaw_tolerance_rad": 0.02,
+    "gripper_position_m": 0.0,
+    "gripper_tolerance_m": 0.002,
+    "head_position_rad": [
+      0.0,
+      0.0
+    ],
+    "head_speed_tolerance_rad_s": 0.02,
+    "head_tolerance_rad": 0.01,
+    "joint_names": [
+      "torso_0",
+      "torso_1",
+      "torso_2",
+      "torso_3",
+      "torso_4",
+      "torso_5",
+      "right_arm_0",
+      "right_arm_1",
+      "right_arm_2",
+      "right_arm_3",
+      "right_arm_4",
+      "right_arm_5",
+      "right_arm_6",
+      "left_arm_0",
+      "left_arm_1",
+      "left_arm_2",
+      "left_arm_3",
+      "left_arm_4",
+      "left_arm_5",
+      "left_arm_6"
+    ],
+    "joint_position_rad": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "joint_speed_tolerance_rad_s": 0.02,
+    "joint_tolerance_rad": 0.01,
+    "settle_hold_s": 0.5,
+    "source": "fixed upstream model qpos0"
+  },
   "limits": {
     "gripper_position_m": [
       -0.05,

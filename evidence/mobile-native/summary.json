@@ -1,9 +1,9 @@
 {
-  "source_commit": "9f9fd5590b267b63d268f17ddf95f6d8b0507de8",
+  "source_commit": "4963881fe6dc27aa9f7ef741721ec0fdef038cd2",
   "source": "trace.jsonl and result.json from this run; summarized after execution",
-  "held_trace_samples": 3419,
+  "held_trace_samples": 3420,
   "held_trace_all_secure": true,
-  "held_trace_min_pad_force_n": 2.634841814228534,
+  "held_trace_min_pad_force_n": 2.651946343528031,
   "trace_forbidden_contact_samples": 0,
   "trace_sample_interval_s": 0.02,
   "continuous_strict_evaluation_interval_s": 0.002,

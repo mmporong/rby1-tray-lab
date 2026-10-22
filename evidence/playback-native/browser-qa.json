@@ -1,10 +1,10 @@
 {
-  "scope": "current recorded bundle artifact and HTTP verification; prior browser UI regression is referenced separately",
-  "source_commit": "9f9fd5590b267b63d268f17ddf95f6d8b0507de8",
+  "scope": "current home-cycle browser UI, HTTP and recorded-video verification",
+  "source_commit": "4963881fe6dc27aa9f7ef741721ec0fdef038cd2",
   "source_dirty_at_recording": false,
   "current_http": {
     "status": 200,
-    "served_source_commit": "9f9fd5590b267b63d268f17ddf95f6d8b0507de8",
+    "served_source_commit": "4963881fe6dc27aa9f7ef741721ec0fdef038cd2",
     "playback_enabled": true,
     "mp4_range_status": 206,
     "range_bytes_received": 1024
@@ -26,7 +26,7 @@
       "height": 720,
       "pix_fmt": "yuv420p",
       "r_frame_rate": "60/1",
-      "nb_read_frames": "770"
+      "nb_read_frames": "1053"
     },
     "pickup": {
       "codec_name": "h264",
@@ -34,7 +34,7 @@
       "height": 720,
       "pix_fmt": "yuv420p",
       "r_frame_rate": "60/1",
-      "nb_read_frames": "770"
+      "nb_read_frames": "1053"
     },
     "placement": {
       "codec_name": "h264",
@@ -42,11 +42,11 @@
       "height": 720,
       "pix_fmt": "yuv420p",
       "r_frame_rate": "60/1",
-      "nb_read_frames": "770"
+      "nb_read_frames": "1053"
     }
   },
-  "all_three_videos_full_ffmpeg_decode": "PASS",
-  "state_frame_count": 770,
+  "all_three_videos_full_ffmpeg_decode": "PASS; independent verifier decoded the current artifact copies",
+  "state_frame_count": 1053,
   "sensor_frame_count": 5,
   "terminal_result": {
     "checks": {
@@ -58,8 +58,18 @@
       "payloads_contained": true,
       "payloads_settled": true,
       "payloads_supported": true,
+      "return_home_base_position": true,
+      "return_home_base_stopped": true,
+      "return_home_base_yaw": true,
+      "return_home_candidate": true,
+      "return_home_gripper_position": true,
+      "return_home_head_position": true,
+      "return_home_head_stopped": true,
+      "return_home_joint_position": true,
+      "return_home_joint_stopped": true,
       "robot_tray_contact": false,
       "secure_grasp": false,
+      "task_preserved_after_withdrawal": true,
       "tray_in_target_xy": true,
       "tray_lifted": true,
       "tray_on_support": true,
@@ -69,48 +79,122 @@
     "failure_event": null,
     "failure_reason": null,
     "failure_time_s": null,
-    "last_time_s": 102.46999999994259,
+    "last_time_s": 140.24599999994155,
     "metrics": {
       "left_grasp_force_n": 0.0,
-      "max_payload_speed_m_s": 0.005573740598194079,
+      "max_payload_speed_m_s": 0.00012224932475243257,
       "min_pad_force_n": 0.0,
+      "return_home_base_linear_speed_m_s": 0.0019500857337435367,
+      "return_home_base_position_error_m": 0.010969256489362752,
+      "return_home_base_yaw_error_rad": 8.926141554608289e-07,
+      "return_home_base_yaw_speed_rad_s": 5.217143394692612e-06,
+      "return_home_max_gripper_error_m": 0.0005577419453457403,
+      "return_home_max_head_error_rad": 0.00014901588937140582,
+      "return_home_max_head_speed_rad_s": 2.030721591850434e-05,
+      "return_home_max_joint_error_rad": 0.0006361537498518298,
+      "return_home_max_joint_speed_rad_s": 0.003988976605139179,
       "right_grasp_force_n": 0.0
     },
     "milestone_times_s": {
-      "grasped": 25.639999999996668,
-      "lifted": 29.89199999999431,
-      "released": 97.96599999995308,
-      "seated": 94.0119999999623,
-      "withdrawn": 102.46999999994259
+      "grasped": 34.79599999999656,
+      "lifted": 39.038000000001745,
+      "released": 107.11599999993176,
+      "returned_home": 140.24599999994155,
+      "seated": 103.18999999994091,
+      "withdrawn": 111.61599999992127
     },
     "milestones": {
       "grasped": true,
       "lifted": true,
       "released": true,
+      "returned_home": true,
       "seated": true,
       "withdrawn": true
     },
     "success": true,
     "terminal": true,
-    "updates": 51236
+    "updates": 70124
   },
-  "current_browser_ui_recheck": {
-    "status": "unavailable",
-    "reason": "CUA Chrome reload timed out, followed by browser unavailable and no connected browsers; in-app browser was unavailable too",
-    "controls_changed_in_this_revision": false
-  },
-  "previous_browser_ui_verification": {
-    "git_revision": "c12c2defa78486f27a7a507e13de97e00bd5b985",
-    "repository_path": "evidence/playback-native/browser-qa.json",
-    "scope": "same playback controls, previous physical recording; not a current-bundle UI measurement"
+  "current_browser_ui": {
+    "status": "PASS",
+    "initial": {
+      "phase": "모델 기본 자세 출발",
+      "simulation_time_s": 0,
+      "home": "대기",
+      "video_time_s": 0,
+      "video_duration_s": 17.55,
+      "paused": true,
+      "native_rate": 1,
+      "video_ready_state": 4,
+      "play_disabled": false
+    },
+    "rate_checks": [
+      {
+        "display_rate": 1.5,
+        "native_video_rate": 1.5
+      },
+      {
+        "display_rate": 2,
+        "native_video_rate": 2
+      },
+      {
+        "display_rate": 1,
+        "native_video_rate": 1
+      }
+    ],
+    "pause_and_view_switch": {
+      "before_video_time_s": 8.020891,
+      "after_video_time_s": 8.020891,
+      "paused": true,
+      "from_view": "overview",
+      "to_view": "placement",
+      "simulation_time_label": "64.13 s"
+    },
+    "completion": {
+      "phase": "작업 완료",
+      "simTime": "140.25 s",
+      "result": "성공",
+      "home": "PASS",
+      "video_time_s": 17.55,
+      "video_duration_s": 17.55,
+      "video_ended": true,
+      "paused": true
+    },
+    "replay_after_completion": {
+      "video_time_s": 0.105613,
+      "paused": false,
+      "phase": "모델 기본 자세 출발"
+    },
+    "final_state": {
+      "phase": "모델 기본 자세 출발",
+      "simulation_time_s": 0,
+      "home": "대기",
+      "video_time_s": 0,
+      "paused": true,
+      "native_rate": 1,
+      "view": "overview",
+      "error_text": "",
+      "play_disabled": false
+    },
+    "browser_console_check_scope": "first completion and post-service-restart checks; transient shutdown recorded separately",
+    "browser_console_errors_or_warnings": [],
+    "service_recovery": {
+      "earlier_viewer_exit_code": 143,
+      "observed_signal": "SIGTERM",
+      "cause": "not established",
+      "transient_ui_message": "Failed to fetch during the server outage",
+      "persistent_user_service": "rby1-home-cycle-viewer.service",
+      "current_pid": 3622919,
+      "post_restart_http_and_reset": "PASS",
+      "post_restart_console_errors_or_warnings": []
+    }
   },
   "unit_tests": {
-    "passed": 106,
-    "verification": "fresh independent verifier unittest run after source freeze"
+    "passed": 114,
+    "log": "/tmp/rby1-home-tests-final.log"
   },
   "limitations": [
     "Real robot execution has not been validated.",
-    "Current browser playback UI could not be rechecked after replacing the bundle because the browser connection was unavailable.",
     "Browser dropped-frame counters and LSP diagnostics were unavailable."
   ]
 }

@@ -1,17 +1,19 @@
 {
-  "source_commit": "9f9fd5590b267b63d268f17ddf95f6d8b0507de8",
-  "original_run_manifest_sha256": "70a75748444d1daadefc7bfb403b978b52a0abe520ba3f55c338d457845bc382",
-  "derivation": "rollout MP4 uses this run GIF frames; preview uses stored controller RGB-D with percentile normalization; summary uses recorded grasped and not seated trace predicates; pickup still is frame105 of separate same-source playback run, simulation time14.000s; pickup comparison uses saved encoders and FK at playback sampling grid",
-  "playback_manifest_sha256": "4c8de4a006e6226189aa2e5241d1a8e2635ac7d2efd96accdaf354f5110bb162",
+  "source_commit": "4963881fe6dc27aa9f7ef741721ec0fdef038cd2",
+  "original_run_manifest_sha256": "f8b0799f8cf21521251a325d44eee17c8924e985a67a5e7778cbfa58a766255a",
+  "playback_manifest_sha256": "4e20ebd3f1aef777546ebe99684c4ef85bd39eee0962bfd8c26529f394ffcae8",
+  "playback_browser_qa_sha256": "d5f936a24d436c03b5860319bb853d579e479668944fb650e88887c3936ef103",
+  "derivation": "MP4 uses this physical run GIF frames; sensor preview uses stored controller RGB-D and percentile normalization; summary uses recorded grasped and not seated predicates; pickup still is frame 169 of the separate same-source 60 FPS run at simulation time 22.534s; home-cycle validation summarizes actual-state trace and 2 ms evaluator output",
   "artifact_sha256": {
-    "rollout.mp4": "aa7cef724e9d5539cad2f52555d298df47982bf3fac55b0d98dcfa46de860cf9",
-    "summary.json": "9f7f743ebb1935abe9038be278456f27fa874a11e962a4616752541a94e96d38",
-    "sensor-preview.png": "701917d30fd67e16462d5d9a58b91094f582d75bae7c6ad5741e5acb4baf473a",
-    "visualization-settings.json": "86611ed29296117b59800601dd383ad5fdc8bd7198b1bbb21d3df7f2e9908e6b",
-    "controller-validation.json": "8c621fe3076c4259b1fb3a4fe7448b7d463fb0c99e009cd0379dac5acb4fe9be",
-    "trace.jsonl.gz": "3dcd64ae745049a07ddd06ab41d1acaf92c215efb1e24d40c9679c5ea4ec4102",
-    "controller-data/commands.jsonl.gz": "f752a252cb8374505cc4428ae709582a37a708e904c2ec54167a41442d29d34a",
-    "pickup-path-comparison.json": "656877d200f36d0c6ebe7a0407efdd8e21e7ca78ac73eeb1a131714925686546",
-    "pickup-approach.png": "967ba06e42a6509e3499a73dd698bc4388fa820359a9d21ddc9f0a648a4dfc7b"
+    "rollout.mp4": "129561ff5ff0b07d9f17f3cde63a0d4952e27c3e3451296d140af23229dd58aa",
+    "summary.json": "7bfc1d18b911bc633b9f967cdae0489bfeaae6857354692678304818f7582625",
+    "sensor-preview.png": "1e08436d726e485377b58a2553ac62ed27adaaf5c521dbe14cda0b96fe2294dd",
+    "visualization-settings.json": "67365070accce0e252806324fcbfe399a7e6f0303533e53aa6a59a619b467b77",
+    "controller-validation.json": "5d5160b9c5d266b754be275da153e14a41e9895d7d6ed9e9b284cf2490a983c2",
+    "trace.jsonl.gz": "5f218a96765379b1e192ada8ee567fc822782f193b6925359045f25c1e493c7f",
+    "controller-data/commands.jsonl.gz": "3e19b672073b3066e5fd0fa2bb86e29a9cb2d71093e0d3b898c9b6ea02625e1d",
+    "pickup-path-comparison.json": "4031e8caeca915c8ee6c703bab6d971afe1bc9757dc6a04b062cdd63b88438c3",
+    "pickup-approach.png": "748b99bafd81edc67a9864739307f2afc491d68a239b0c940d3bd8c2b74d298f",
+    "home-cycle-validation.json": "ec0e23009a725e0afcc4521e1e54fedf3a5f5751180e841d3c15371091b273b9"
   }
 }

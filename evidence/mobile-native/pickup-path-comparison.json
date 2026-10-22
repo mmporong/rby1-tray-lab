@@ -34,43 +34,45 @@
   },
   "new": {
     "scope": "FK derived from stored new playback encoder samples, base-relative head height; not a hardware measurement",
-    "source_commit": "9f9fd5590b267b63d268f17ddf95f6d8b0507de8",
+    "source_commit": "4963881fe6dc27aa9f7ef741721ec0fdef038cd2",
     "sample_count": 136,
     "first": {
-      "time_s": 9.333999999999786,
+      "time_s": 18.534000000000606,
       "phase": "pickup_approach",
-      "head_above_base_m": 0.9050465846577664,
-      "torso_1_rad": 1.5139656289030003
+      "head_above_base_m": 0.9051014788231051,
+      "torso_1_rad": 1.5138970244189944
     },
     "max_head_sample": {
-      "time_s": 18.266000000000755,
+      "time_s": 27.465999999995656,
       "phase": "pickup_approach",
-      "head_above_base_m": 0.917766851130897,
-      "torso_1_rad": 1.4979354801509215
+      "head_above_base_m": 0.9177698535654597,
+      "torso_1_rad": 1.4979307364806735
     },
     "last": {
-      "time_s": 27.33399999999573,
+      "time_s": 36.533999999998684,
       "phase": "grasp_hold",
-      "head_above_base_m": 0.8446622428513757,
-      "torso_1_rad": 1.5165688945938787
+      "head_above_base_m": 0.8446766182903944,
+      "torso_1_rad": 1.5165326513386013
     }
   },
-  "maximum_head_height_reduction_m": 0.5550446221961989,
+  "maximum_head_height_reduction_m": 0.5550416197616361,
   "matching_separate_reruns": {
-    "source_commit": "9f9fd5590b267b63d268f17ddf95f6d8b0507de8",
-    "dataset_simulation_time_s": 102.46999999994259,
-    "playback_simulation_time_s": 102.46999999994259,
+    "source_commit": "4963881fe6dc27aa9f7ef741721ec0fdef038cd2",
+    "dataset_simulation_time_s": 140.24599999994155,
+    "playback_simulation_time_s": 140.24599999994155,
     "dataset_all_milestones": {
       "grasped": true,
       "lifted": true,
       "seated": true,
       "released": true,
-      "withdrawn": true
+      "withdrawn": true,
+      "returned_home": true
     },
     "playback_all_milestones": {
       "grasped": true,
       "lifted": true,
       "released": true,
+      "returned_home": true,
       "seated": true,
       "withdrawn": true
     }

@@ -2,24 +2,24 @@
   {
     "frame": "observations/0000_head_rgbd.npz",
     "display_depth_range_m": [
-      0.480131222307682,
-      0.8890381783246994
+      0.48013166040182115,
+      0.889036363363266
     ],
     "scale": "1st-99th percentile clipped linear grayscale; nearer white; invalid black"
   },
   {
     "frame": "observations/0001_left_wrist_rgbd.npz",
     "display_depth_range_m": [
-      0.07957928754389286,
-      0.45848453134298317
+      0.07957931242883205,
+      0.4586520743370056
     ],
     "scale": "1st-99th percentile clipped linear grayscale; nearer white; invalid black"
   },
   {
     "frame": "observations/0002_right_wrist_rgbd.npz",
     "display_depth_range_m": [
-      0.07748254239559174,
-      0.4852169588208197
+      0.07748252630233765,
+      0.48519783496856683
     ],
     "scale": "1st-99th percentile clipped linear grayscale; nearer white; invalid black"
   }

@@ -45,6 +45,26 @@
   "gripper_collision": "cad_mesh",
   "gripper_coupling_timeconst_s": 0.004,
   "gripper_model": "upstream_native",
+  "mission_cycle": {
+    "home_source": "fixed_upstream_model_qpos0",
+    "home_tolerances": {
+      "base_position_tolerance_m": 0.02,
+      "base_speed_tolerance_m_s": 0.012,
+      "base_yaw_speed_tolerance_rad_s": 0.025,
+      "base_yaw_tolerance_rad": 0.02,
+      "gripper_tolerance_m": 0.002,
+      "head_speed_tolerance_rad_s": 0.02,
+      "head_tolerance_rad": 0.01,
+      "joint_speed_tolerance_rad_s": 0.02,
+      "joint_tolerance_rad": 0.01,
+      "settle_hold_s": 0.5
+    },
+    "initial_hold_s": 1.0,
+    "parameter_provenance": "synthetic motion durations and verification tolerances; model qpos0 is the home target, not measured hardware calibration",
+    "prepare_duration_s": 8.0,
+    "return_drive_timeout_s": 30.0,
+    "return_duration_s": 10.0
+  },
   "model": "RBY1-M 1.2",
   "modeling_assumptions": {
     "base": "free-base four-wheel M model, longitudinal driving only",
