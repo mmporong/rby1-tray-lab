@@ -1,0 +1,443 @@
+[
+  {
+    "phase": "approach",
+    "position_error_m": 4.764346368784091e-07,
+    "orientation_error_rad": 2.6772626782465604e-05,
+    "gravity_torque_ratio": 0.7264948892245553,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "descend",
+    "position_error_m": 3.3935144653942556e-07,
+    "orientation_error_rad": 2.39680752776335e-06,
+    "gravity_torque_ratio": 0.7311909394970826,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "descend",
+    "position_error_m": 6.004351782377547e-07,
+    "orientation_error_rad": 5.507747315836152e-06,
+    "gravity_torque_ratio": 0.7375291418348305,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "descend",
+    "position_error_m": 1.8980083020533094e-06,
+    "orientation_error_rad": 2.1399060412086293e-05,
+    "gravity_torque_ratio": 0.7509313676401072,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "grasp",
+    "position_error_m": 6.366013490930684e-07,
+    "orientation_error_rad": 8.036197764677675e-06,
+    "gravity_torque_ratio": 0.7493337036533955,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "grasp",
+    "position_error_m": 3.1268900565298587e-07,
+    "orientation_error_rad": 3.985380818066533e-06,
+    "gravity_torque_ratio": 0.74908525679084,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "lift",
+    "position_error_m": 1.1061316720293126e-06,
+    "orientation_error_rad": 1.2700406812307022e-05,
+    "gravity_torque_ratio": 0.7279877249682477,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "lift",
+    "position_error_m": 6.086253629195477e-07,
+    "orientation_error_rad": 5.940875900947291e-06,
+    "gravity_torque_ratio": 0.7244812786055838,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 4.8541608434678594e-08,
+    "orientation_error_rad": 1.109239354989691e-06,
+    "gravity_torque_ratio": 0.6976753535135166,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 4.658202752941591e-08,
+    "orientation_error_rad": 1.1193867250052851e-06,
+    "gravity_torque_ratio": 0.6718532833745354,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 4.44811731082561e-08,
+    "orientation_error_rad": 1.1331599999086788e-06,
+    "gravity_torque_ratio": 0.6472888732206261,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 4.2326514091358e-08,
+    "orientation_error_rad": 1.1508175321470438e-06,
+    "gravity_torque_ratio": 0.6242218583914642,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 4.0222871397979996e-08,
+    "orientation_error_rad": 1.1722441116787648e-06,
+    "gravity_torque_ratio": 0.6028502465689795,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 3.825009371547859e-08,
+    "orientation_error_rad": 1.1973261689870615e-06,
+    "gravity_torque_ratio": 0.583330222632395,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 3.650552786629315e-08,
+    "orientation_error_rad": 1.225771782966161e-06,
+    "gravity_torque_ratio": 0.565776190856735,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 3.5075750255690926e-08,
+    "orientation_error_rad": 1.257255575626072e-06,
+    "gravity_torque_ratio": 0.5502643270054652,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 3.403621991590119e-08,
+    "orientation_error_rad": 1.2914598606219946e-06,
+    "gravity_torque_ratio": 0.536837498982161,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 3.344427501047423e-08,
+    "orientation_error_rad": 1.3281345465302274e-06,
+    "gravity_torque_ratio": 0.5255111527998013,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 3.334256144179004e-08,
+    "orientation_error_rad": 1.367123545870275e-06,
+    "gravity_torque_ratio": 0.5162795975894802,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 3.3754430900716304e-08,
+    "orientation_error_rad": 1.4084234909553337e-06,
+    "gravity_torque_ratio": 0.5091222514109494,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 9.27397472304213e-08,
+    "orientation_error_rad": 5.0285412757020515e-06,
+    "gravity_torque_ratio": 0.49598738768391515,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 1.0414689358270318e-07,
+    "orientation_error_rad": 5.831386635654974e-06,
+    "gravity_torque_ratio": 0.4833885840977961,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 1.0405434771832513e-07,
+    "orientation_error_rad": 5.913468598379094e-06,
+    "gravity_torque_ratio": 0.47314244202134464,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 1.0577308898925608e-07,
+    "orientation_error_rad": 6.077984783830277e-06,
+    "gravity_torque_ratio": 0.4652178923801659,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 1.0931850598241456e-07,
+    "orientation_error_rad": 6.3254264087815926e-06,
+    "gravity_torque_ratio": 0.45958610595071053,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 1.1473366675737561e-07,
+    "orientation_error_rad": 6.656858258411502e-06,
+    "gravity_torque_ratio": 0.456233532855303,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 1.2209575454365107e-07,
+    "orientation_error_rad": 7.07307016162596e-06,
+    "gravity_torque_ratio": 0.455171880656398,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 1.31508671088153e-07,
+    "orientation_error_rad": 7.573239611037437e-06,
+    "gravity_torque_ratio": 0.45644433957993275,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 1.4311143836923515e-07,
+    "orientation_error_rad": 8.153766648070319e-06,
+    "gravity_torque_ratio": 0.4601260555476855,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 1.5708071306959436e-07,
+    "orientation_error_rad": 8.808863070085727e-06,
+    "gravity_torque_ratio": 0.4663155892713804,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 1.7378125182753425e-07,
+    "orientation_error_rad": 9.535498123292149e-06,
+    "gravity_torque_ratio": 0.47511466893004545,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "raise",
+    "position_error_m": 3.5365464702781165e-07,
+    "orientation_error_rad": 2.2199940797742728e-05,
+    "gravity_torque_ratio": 0.4785142828318728,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.347257372180241e-07,
+    "orientation_error_rad": 7.300039108481113e-06,
+    "gravity_torque_ratio": 0.47796457048453195,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.3889641494315946e-07,
+    "orientation_error_rad": 7.415351406833461e-06,
+    "gravity_torque_ratio": 0.4787312555255634,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.4467887671221222e-07,
+    "orientation_error_rad": 7.6079272994539915e-06,
+    "gravity_torque_ratio": 0.480807495661605,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.5223458572148812e-07,
+    "orientation_error_rad": 7.87996064769357e-06,
+    "gravity_torque_ratio": 0.4841810023123652,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.6188833855520697e-07,
+    "orientation_error_rad": 8.243993654032826e-06,
+    "gravity_torque_ratio": 0.4888364613829041,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.740763605765732e-07,
+    "orientation_error_rad": 8.715939697787393e-06,
+    "gravity_torque_ratio": 0.4947519490361198,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.8938208636261236e-07,
+    "orientation_error_rad": 9.31589982454866e-06,
+    "gravity_torque_ratio": 0.5018926042963705,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 2.0858832910462267e-07,
+    "orientation_error_rad": 1.006905252523748e-05,
+    "gravity_torque_ratio": 0.5101998469482159,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 2.3273352463753977e-07,
+    "orientation_error_rad": 1.100638050247569e-05,
+    "gravity_torque_ratio": 0.5195734814768662,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 2.6317811018019147e-07,
+    "orientation_error_rad": 1.216481659526041e-05,
+    "gravity_torque_ratio": 0.5298429422183913,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 3.2980035982683934e-07,
+    "orientation_error_rad": 1.4711823919666371e-05,
+    "gravity_torque_ratio": 0.5376696487467987,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 3.8306759403975105e-07,
+    "orientation_error_rad": 1.671399950375228e-05,
+    "gravity_torque_ratio": 0.5439533652723775,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 4.249592088883553e-07,
+    "orientation_error_rad": 1.826787782528067e-05,
+    "gravity_torque_ratio": 0.5500129844552374,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.4988673623700165e-06,
+    "orientation_error_rad": 5.772526182123633e-05,
+    "gravity_torque_ratio": 0.5493683124763008,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.4828924856912921e-06,
+    "orientation_error_rad": 5.308782134208892e-05,
+    "gravity_torque_ratio": 0.5690978787303739,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.3549302607500883e-06,
+    "orientation_error_rad": 4.845456468076709e-05,
+    "gravity_torque_ratio": 0.5989704544465383,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.5165465953042902e-06,
+    "orientation_error_rad": 5.3854207970446314e-05,
+    "gravity_torque_ratio": 0.6364026759935594,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 1.9146255160362544e-06,
+    "orientation_error_rad": 6.739796946794302e-05,
+    "gravity_torque_ratio": 0.6802368733320686,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 2.647336863553456e-06,
+    "orientation_error_rad": 9.234824449530768e-05,
+    "gravity_torque_ratio": 0.7286829393806223,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 4.106908847139797e-06,
+    "orientation_error_rad": 0.00014213028129355932,
+    "gravity_torque_ratio": 0.7789306696162035,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 8.418723865455335e-06,
+    "orientation_error_rad": 0.00028982121052561664,
+    "gravity_torque_ratio": 0.8278047800973692,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "transport",
+    "position_error_m": 0.0002946222942965236,
+    "orientation_error_rad": 0.009400879541652054,
+    "gravity_torque_ratio": 0.7848666739938117,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "seat",
+    "position_error_m": 2.3338807597226868e-07,
+    "orientation_error_rad": 7.182387537956709e-06,
+    "gravity_torque_ratio": 0.7993051422104356,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "seat",
+    "position_error_m": 3.5620243068183796e-07,
+    "orientation_error_rad": 1.09536457972357e-05,
+    "gravity_torque_ratio": 0.8225959727830254,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "seat",
+    "position_error_m": 3.3006783411832274e-07,
+    "orientation_error_rad": 1.028530464853512e-05,
+    "gravity_torque_ratio": 0.8456558541972253,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "settle",
+    "position_error_m": 6.813608919005358e-11,
+    "orientation_error_rad": 2.1590315441261555e-09,
+    "gravity_torque_ratio": 0.845658399660094,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "release",
+    "position_error_m": 1.612271671344403e-14,
+    "orientation_error_rad": 4.965541330844822e-13,
+    "gravity_torque_ratio": 0.845658400306412,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "withdraw",
+    "position_error_m": 2.2114443007497262e-07,
+    "orientation_error_rad": 7.0225880554360406e-06,
+    "gravity_torque_ratio": 0.8328167224298724,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "withdraw",
+    "position_error_m": 2.464493212146603e-07,
+    "orientation_error_rad": 7.655924845508503e-06,
+    "gravity_torque_ratio": 0.8187137061924753,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "withdraw",
+    "position_error_m": 0.00018612300302958966,
+    "orientation_error_rad": 0.0057095135825961756,
+    "gravity_torque_ratio": 0.8315962156800467,
+    "forbidden_contact_count": 0
+  },
+  {
+    "phase": "hold",
+    "position_error_m": 0.00015099179772245857,
+    "orientation_error_rad": 0.004590479730045403,
+    "gravity_torque_ratio": 0.8546337179349085,
+    "forbidden_contact_count": 0
+  }
+]

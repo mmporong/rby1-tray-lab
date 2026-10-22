@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "model": "RBY1-A 1.2",
+  "base_mode": "fixture",
+  "controller": "ik_position_baseline",
+  "seed": 2,
+  "physics_dt_s": 0.002,
+  "control_dt_s": 0.002,
+  "motion_duration_scale": 2.0,
+  "transport_clearance_m": 0.1,
+  "withdraw_offset_m": [
+    0.0,
+    0.0,
+    0.1
+  ],
+  "record_dt_s": 0.02,
+  "tray_initial_pos_m": [
+    0.65,
+    0.0,
+    0.012
+  ],
+  "tray_half_extents_m": [
+    0.18,
+    0.27,
+    0.012
+  ],
+  "tray_mass_kg": 0.28,
+  "payload_mass_scale": 1.0,
+  "handle_y_m": 0.24,
+  "handle_z_m": 0.12,
+  "target": {
+    "center_xy_m": [
+      0.65,
+      0.75
+    ],
+    "inner_half_xy_m": [
+      0.25,
+      0.36
+    ],
+    "support_z_m": 0.8
+  },
+  "thresholds": {
+    "grasp_hold_s": 0.15,
+    "settle_hold_s": 0.5,
+    "withdraw_clearance_m": 0.08,
+    "linear_speed_m_s": 0.03,
+    "angular_speed_rad_s": 0.1,
+    "lift_clearance_m": 0.03,
+    "payload_margin_m": 0.005,
+    "containment_tolerance_m": 0.006,
+    "min_pad_force_n": 0.1,
+    "payload_speed_m_s": 0.05,
+    "max_seat_tilt_rad": 0.05
+  },
+  "modeling_assumptions": {
+    "parameters": "synthetic benchmark design, not hardware calibration",
+    "tray": "raised side handles permit downward finger access from floor",
+    "finger_collision": "original finger collision meshes are disabled and replaced by 6 x 28 x 50 mm flat box proxies; visual meshes remain unchanged",
+    "base": "world fixture; no balancing or tipping performance claim",
+    "structural_collision_exclusions": "base-wheel_l, base-wheel_r, and base-link_torso_0 only; arm and environment collisions remain active",
+    "observation": "simulator ground truth",
+    "actuators": "upstream simulation-oriented position actuators"
+  }
+}

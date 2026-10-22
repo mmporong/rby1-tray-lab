@@ -1,0 +1,10 @@
+{
+  "command": "benchmark",
+  "config": null,
+  "output": "artifacts/release-dataset",
+  "render": false,
+  "lift_only": false,
+  "port": 8786,
+  "heights": "0.75,0.8,0.85",
+  "seeds": "0,1,2"
+}

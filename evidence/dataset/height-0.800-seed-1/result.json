@@ -1,0 +1,97 @@
+{
+  "success": false,
+  "terminal": true,
+  "failure_reason": "release_before_seat",
+  "failure_time_s": 62.596000000030536,
+  "failure_event": {
+    "reason": "release_before_seat",
+    "time_s": 62.596000000030536
+  },
+  "milestones": {
+    "grasped": true,
+    "lifted": true,
+    "seated": false,
+    "released": false,
+    "withdrawn": false
+  },
+  "milestone_times_s": {
+    "grasped": 7.801999999999363,
+    "lifted": 11.7700000000006
+  },
+  "checks": {
+    "full_pad_contact": false,
+    "opposed_contacts": false,
+    "pad_force_sufficient": false,
+    "secure_grasp": false,
+    "fully_released": false,
+    "robot_tray_contact": true,
+    "payloads_contained": true,
+    "payloads_supported": true,
+    "payloads_settled": false,
+    "tray_lifted": true,
+    "tray_in_target_xy": true,
+    "tray_on_support": false,
+    "tray_slow": false,
+    "tray_upright": true,
+    "forbidden_contact": false
+  },
+  "metrics": {
+    "max_tracking_error_rad": 0.0027909262819305614,
+    "max_joint_torque_nm": 237.0511717935692,
+    "max_finger_actuator_force_n": 31.113715869196415
+  },
+  "updates": 31299,
+  "last_time_s": 62.596000000030536,
+  "evaluation": {
+    "success": false,
+    "terminal": true,
+    "failure_reason": "release_before_seat",
+    "failure_time_s": 62.596000000030536,
+    "failure_event": {
+      "reason": "release_before_seat",
+      "time_s": 62.596000000030536
+    },
+    "milestones": {
+      "grasped": true,
+      "lifted": true,
+      "seated": false,
+      "released": false,
+      "withdrawn": false
+    },
+    "milestone_times_s": {
+      "grasped": 7.801999999999363,
+      "lifted": 11.7700000000006
+    },
+    "checks": {
+      "full_pad_contact": false,
+      "opposed_contacts": false,
+      "pad_force_sufficient": false,
+      "secure_grasp": false,
+      "fully_released": false,
+      "robot_tray_contact": true,
+      "payloads_contained": true,
+      "payloads_supported": true,
+      "payloads_settled": false,
+      "tray_lifted": true,
+      "tray_in_target_xy": true,
+      "tray_on_support": false,
+      "tray_slow": false,
+      "tray_upright": true,
+      "forbidden_contact": false
+    },
+    "metrics": {
+      "min_pad_force_n": 0.0,
+      "left_grasp_force_n": 29.228432261790253,
+      "right_grasp_force_n": 13.030781143775528,
+      "max_payload_speed_m_s": 0.06797736410654623
+    },
+    "updates": 31299,
+    "last_time_s": 62.596000000030536
+  },
+  "run_completed": true,
+  "wall_time_s": 40.50258579989895,
+  "simulation_time_s": 62.596000000030536,
+  "highest_tray_center_z_m": 0.9139936790627308,
+  "task": "floor_to_container",
+  "modeling_scope": "fixed-base simulation only; ground-truth state"
+}

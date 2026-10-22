@@ -1,0 +1,11 @@
+{
+  "free_objects": true,
+  "object_attachment": false,
+  "runtime_state_overwrite": false,
+  "base_mode": "fixture",
+  "stability_claim": false,
+  "robot": "RBY1-A 1.2",
+  "nq": 56,
+  "nv": 52,
+  "nu": 26
+}

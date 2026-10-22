@@ -1,0 +1,27 @@
+{
+  "complete": true,
+  "runs": [
+    "height-0.750-seed-0",
+    "height-0.750-seed-1",
+    "height-0.750-seed-2",
+    "height-0.800-seed-0",
+    "height-0.800-seed-1",
+    "height-0.800-seed-2",
+    "height-0.850-seed-0",
+    "height-0.850-seed-1",
+    "height-0.850-seed-2"
+  ],
+  "artifact_sha256": {
+    "preregistered.json": "6ce02b1e3569d62c62033719e8e52a7c1b09c4be0eab3e8e025dfc4c02c265bd",
+    "summary.json": "b9cfbe3e6a71a0dcf30b09707c193155e78adf1a6e5c0da1befaccd37b3fe457",
+    "height-0.750-seed-0/manifest.json": "fdfa779bc5449c39dc0cf8f955cfb90be7f542eafda30672832cbf15b47046d6",
+    "height-0.750-seed-1/manifest.json": "11105e32d4d233882c417ae6c5efe52bfd3a6f8e3f39c83f55871ac115788205",
+    "height-0.750-seed-2/manifest.json": "0a786088534c67cb593b0bb6c59f3fefe1b9076328680fa1481392eea8e5fdc1",
+    "height-0.800-seed-0/manifest.json": "7adb08b63169b750b3b6cb2bb3dc9be76cb3c06c239f699d3f80ba2a73f1960a",
+    "height-0.800-seed-1/manifest.json": "afdfb37b69d4359b0225326e500258a18bf6e2695990e1f586b7496e7378271b",
+    "height-0.800-seed-2/manifest.json": "31ab2480ab0d23663be9b73790d46eb011056e58125bed3fc4465ea029418819",
+    "height-0.850-seed-0/manifest.json": "0b7523f3b4ea3a3e74cf0549c1e6ae2d0712d9b11577b8847445ff877209f5a2",
+    "height-0.850-seed-1/manifest.json": "8bf3af131806698dac9907b6123ef72dffcb39c6ead8996316f974fa3c735d1c",
+    "height-0.850-seed-2/manifest.json": "cc8b640592a86be850d1390ed06629cec7101b6770ef371d07d33f3a62b65d35"
+  }
+}

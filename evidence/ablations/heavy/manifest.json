@@ -1,0 +1,32 @@
+{
+  "python": "3.12.13",
+  "versions": {
+    "mujoco": "3.11.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "Pillow": "12.3.0"
+  },
+  "commit": "8342a8079f6181eaa18a4a774d786ba0e4ccb772",
+  "render_backend": "egl",
+  "egl_vendor": "/usr/share/glvnd/egl_vendor.d/50_mesa.json",
+  "source_sha256": {
+    "__init__.py": "a91e0b62ede8dbc5203342f341b170cec7cb3eeee103e0e9e880657fae065a9f",
+    "assets.py": "a65a52c250a23cc7a7c8cf90d48006b0cf2930ce48febcb62276881fdd1a2b68",
+    "cli.py": "74f2aac7251c0fd997884f75e1aae1df392f044a7964d449d74d77ad5ceb16cb",
+    "evaluation.py": "25ef7f86cc9265bc827cfc8827539aaee699e0935f78afc76f94ed9284ac8f73",
+    "planning.py": "7aa1521fbe9f926e2efd419e9e207951fced181b99ee127c8ea86f957ab61f04",
+    "scene.py": "fb17e1c5bcaa70daa77cc3edc4895c432db60547aee0604dedc0c34648ac6033",
+    "session.py": "50bc3d9510e1119bb19a184f4a85475b43dfd54200e8a99d4a70001fd8452f31",
+    "viewer.py": "cfce46c1cac4c33e2f74ea9b567b66bd992fbff789d05bbae194edb93eb08c1c",
+    "web/index.html": "85093cdc099cf7f18879a8da25e876a118193ddb8ef6026f83b604b587a2f788"
+  },
+  "artifact_sha256": {
+    "config.json": "8a89a6622d990efefc4de704811ae4f4b6a2702b82230ab8bb51a06eca6d0133",
+    "ik.json": "ba66d11a686f539d051450c106e65a15fd36dea78ad8cc2087ecdaf8f94f7a8f",
+    "model-audit.json": "e911bd3fb0ca4de6c0f2352429996fb9ea716e973c74a6426ff59e6a4b898af5",
+    "result.json": "d7f49b9af63c846fa484ba913da1d4beec7740a0732cfe542babc5ef60cbcf35",
+    "scene.xml": "08404d5a5d2c0777ed487196f7addb2b5c873e7112cb0d8c7a22f7014c33bbb6",
+    "trace.jsonl": "39cb019e9b983bad251469fac92f94a5ce8032ee467a3eef09e4c1d14d32f292",
+    "upstream.json": "63b18fcfe572fd9e1c9ba8dd6065aa9483669d727fd76b712bbf1a01655be05b"
+  }
+}

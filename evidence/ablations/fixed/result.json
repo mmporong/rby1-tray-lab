@@ -1,0 +1,7 @@
+{
+  "success": false,
+  "status": "planning_infeasible",
+  "failure_reason": "raise at [0.65, 0.0, 0.353304347826087]: No feasible IK candidate: position=0.0000 m, orientation=0.0000 rad, gravity_ratio=0.736, collision=robot_geom_93/container_bottom",
+  "simulation_time_s": 0.0,
+  "physics_executed": false
+}

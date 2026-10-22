@@ -1,0 +1,7 @@
+{
+  "success": false,
+  "status": "planning_infeasible",
+  "failure_reason": "transport at [0.65, 0.75, 0.962]: No feasible IK candidate: position=0.0029 m, orientation=0.0873 rad, gravity_ratio=0.821, collision=none",
+  "simulation_time_s": 0.0,
+  "physics_executed": false
+}
