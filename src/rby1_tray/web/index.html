@@ -105,7 +105,7 @@
       <div>
         <p class="eyebrow">MuJoCo · Bimanual manipulation cell</p>
         <h1>RB-Y1 적재 트레이 이송</h1>
-        <p class="subtitle">바닥의 자유 강체 트레이를 양손으로 파지해 적재물을 유지하고, 높은 컨테이너에 안착한 뒤 손을 회수하는 전 과정을 검증합니다.</p>
+        <p class="subtitle">바닥의 자유 강체 트레이를 양손으로 파지해 적재물을 유지하고, 높은 컨테이너에 안착한 뒤 후진해 출발 위치와 모델 기본 자세로 복귀합니다.</p>
       </div>
       <div class="condition" aria-label="실험 조건">
         <span id="backendBadge" class="badge">CPU MuJoCo</span><span id="baseBadge" class="badge">베이스 지그 고정</span>
@@ -125,7 +125,7 @@
           <div class="timeline" aria-label="작업 진행 단계">
             <div class="timeline-step" data-stage="pickup">1 바닥 접근</div><div class="timeline-step" data-stage="grasp">2 양손 파지</div>
             <div class="timeline-step" data-stage="transfer">3 상승·이송</div><div class="timeline-step" data-stage="placement">4 컨테이너 안착</div>
-            <div class="timeline-step" data-stage="release">5 분리·회수</div>
+            <div class="timeline-step" data-stage="release">5 분리·복귀</div>
           </div>
           <p id="error" class="error hidden" role="alert"></p>
         </div>
@@ -157,7 +157,7 @@
       <aside aria-label="실험 상태">
         <section class="panel section">
           <div class="section-title"><h2>작업 목표</h2><span class="section-kicker">TASK CONTRACT</span></div>
-          <div class="mission"><strong>3개 적재물을 끝까지 유지</strong><p>트레이를 목표 높이에 안착하고 양손 접촉을 해제한 다음, 손이 안전 거리 밖으로 물러나야 성공입니다.</p></div>
+          <div class="mission"><strong>적재물 안착과 로봇 원위치 복귀</strong><p>트레이와 적재물 3개를 안착하고 손을 해제·회수합니다. 후진해 출발 위치로 돌아온 뒤 모델의 기본 자세로 정지해야 성공입니다.</p></div>
         </section>
         <section class="panel section">
           <div class="section-title"><h2>현재 물리 상태</h2><span class="section-kicker">SI UNITS</span></div>
@@ -173,6 +173,7 @@
           <div class="checklist">
             <div class="check"><span>목표 영역 안</span><span id="checkTarget" class="check-state">대기</span></div><div class="check"><span>컨테이너 바닥 접촉</span><span id="checkSupport" class="check-state">대기</span></div>
             <div class="check"><span>적재물 3개 지지</span><span id="checkPayload" class="check-state">대기</span></div><div class="check"><span>손 분리·회수</span><span id="checkWithdraw" class="check-state">대기</span></div>
+            <div class="check"><span>출발 위치·기본 자세 복귀</span><span id="checkHome" class="check-state">대기</span></div>
           </div>
         </section>
         <section class="panel"><details><summary>원본 상태 JSON 보기</summary><pre id="rawState" aria-live="polite">상태를 불러오는 중…</pre></details></section>
@@ -201,11 +202,11 @@
     const elevation = -20;
     const phaseLabels = {
       approach:'바닥 접근', descend:'트레이 테두리 정렬', grasp:'양손 파지', lift:'초기 상승', raise:'상승', transport:'컨테이너 이송', seat:'안착', settle:'안정화', release:'손 분리', withdraw:'손 회수', hold:'완료 유지',
-      drive_approach:'픽업 위치로 주행', observe_close:'헤드 RGB-D 근접 관측', pickup_approach:'트레이 상단 접근', pickup_descend:'트레이 테두리 정렬', grasp_hold:'파지 유지·손목 검증', retract_low:'저상 운반 자세', drive_loaded:'적재 상태 주행', raise_high:'고위치 상승', drive_high:'고위치 정렬 주행', complete:'작업 완료'
+      home_start:'모델 기본 자세 출발', prepare_pickup:'낮은 작업 자세 준비', drive_return:'출발 위치로 후진', return_home:'모델 기본 자세 복귀', home_settle:'복귀 정지 확인', drive_approach:'픽업 위치로 주행', observe_close:'헤드 RGB-D 근접 관측', pickup_approach:'트레이 상단 접근', pickup_descend:'트레이 테두리 정렬', grasp_hold:'파지 유지·손목 검증', retract_low:'저상 운반 자세', drive_loaded:'적재 상태 주행', raise_high:'고위치 상승', drive_high:'고위치 정렬 주행', complete:'작업 완료'
     };
     const phaseStage = {
       approach:0, descend:0, grasp:1, lift:2, raise:2, transport:2, seat:3, settle:3, release:4, withdraw:4, hold:4,
-      drive_approach:0, observe_close:0, pickup_approach:0, pickup_descend:0, grasp_hold:1, retract_low:2, drive_loaded:2, raise_high:2, drive_high:2, complete:4
+      home_start:0, prepare_pickup:0, drive_return:4, return_home:4, home_settle:4, drive_approach:0, observe_close:0, pickup_approach:0, pickup_descend:0, grasp_hold:1, retract_low:2, drive_loaded:2, raise_high:2, drive_high:2, complete:4
     };
 
     const formatNumber = (value, digits=3) => new Intl.NumberFormat('ko-KR', { maximumFractionDigits: digits }).format(value);
@@ -244,7 +245,7 @@
       ui.modelBadge.textContent = [audit.nq,audit.nv,audit.nu].every(Number.isInteger) ? `nq ${audit.nq} · nv ${audit.nv} · nu ${audit.nu}` : '모델 차원 미제공';
       if (ui.raw.closest('details').open) ui.raw.textContent = JSON.stringify(state, null, 2);
       setCheck(ui.checkTarget, Boolean(checks.tray_in_target_xy)); setCheck(ui.checkSupport, Boolean(checks.tray_on_support));
-      setCheck(ui.checkPayload, Boolean(checks.payloads_supported && checks.payloads_settled)); setCheck(ui.checkWithdraw, Boolean(milestones.withdrawn)); updateTimeline(state);
+      setCheck(ui.checkPayload, Boolean(checks.payloads_supported && checks.payloads_settled)); setCheck(ui.checkWithdraw, Boolean(milestones.withdrawn)); setCheck($('checkHome'), Boolean(milestones.returned_home)); updateTimeline(state);
       const failed = Boolean(state.result?.failure_reason), succeeded = Boolean(state.result?.success);
       ui.statusDot.classList.toggle('failed', failed); ui.statusDot.classList.toggle('finished', succeeded || (!failed && state.finished));
       if (failed) ui.runStatus.textContent = `실패 · ${state.result.failure_reason}`; else if (succeeded) ui.runStatus.textContent = '작업 성공';

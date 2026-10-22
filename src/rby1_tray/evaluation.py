@@ -37,6 +37,7 @@ class Evaluator:
         self._thresholds = self._config["thresholds"]
         self._expected_payload_names = tuple(config["expected_payload_names"])
         self._payload_max_height = config.get("payload_max_height_m")
+        self._return_home = deepcopy(config.get("return_home"))
         self._thresholds.setdefault("min_pad_force_n", 0.1)
         self._thresholds.setdefault("payload_speed_m_s", 0.05)
         self._thresholds.setdefault("max_seat_tilt_rad", 0.05)
@@ -46,6 +47,7 @@ class Evaluator:
         self._full_contact_since: float | None = None
         self._settled_since: float | None = None
         self._withdraw_since: float | None = None
+        self._return_home_since: float | None = None
         self._failure_reason: str | None = None
         self._failure_time: float | None = None
         self._milestones = {
@@ -55,6 +57,8 @@ class Evaluator:
             "released": False,
             "withdrawn": False,
         }
+        if self._return_home is not None:
+            self._milestones["returned_home"] = False
         self._milestone_times: dict[str, float] = {}
         self._last_checks: dict[str, bool] = {}
         self._last_metrics: dict[str, float] = {}
@@ -66,7 +70,7 @@ class Evaluator:
         A terminal failure is latched. Later snapshots cannot erase it or turn the
         episode into a success.
         """
-        if self._failure_reason is not None or self._milestones["withdrawn"]:
+        if self._failure_reason is not None or self._episode_complete():
             return self.result()
 
         try:
@@ -183,6 +187,32 @@ class Evaluator:
                 "max_payload_speed_m_s": max(payload_speeds),
             }
 
+            home_candidate = False
+            if self._return_home is not None:
+                home_checks, home_metrics = self._evaluate_return_home(snapshot["robot_state"])
+                self._last_checks.update(home_checks)
+                self._last_metrics.update(home_metrics)
+                home_candidate = home_checks["return_home_candidate"]
+
+            if self._milestones["withdrawn"]:
+                clearances = snapshot["hand_clearance_m"]
+                threshold = float(self._thresholds["withdraw_clearance_m"])
+                task_preserved = (
+                    fully_released
+                    and in_target_xy
+                    and on_support
+                    and slow
+                    and upright
+                    and payloads_contained
+                    and payloads_supported
+                    and payloads_settled
+                    and float(clearances["left"]) >= threshold
+                    and float(clearances["right"]) >= threshold
+                )
+                self._last_checks["task_preserved_after_withdrawal"] = task_preserved
+                if not task_preserved:
+                    return self._fail("task_invalidated_after_withdrawal", now)
+
             if forbidden_contact:
                 return self._fail("forbidden_contact", now)
             if not payloads_contained:
@@ -247,6 +277,17 @@ class Evaluator:
                 else:
                     self._withdraw_since = None
 
+            if self._return_home is not None and self._milestones["withdrawn"]:
+                if home_candidate:
+                    if self._return_home_since is None:
+                        self._return_home_since = now
+                    if now - self._return_home_since >= float(
+                        self._return_home["settle_hold_s"]
+                    ):
+                        self._mark("returned_home", now)
+                else:
+                    self._return_home_since = None
+
             self._last_time = now
             self._updates += 1
             return self.result()
@@ -255,7 +296,7 @@ class Evaluator:
 
     def finalize(self, time_s: float, reason: str = "episode_timeout") -> dict[str, Any]:
         """Close an unfinished episode with an explicit terminal failure."""
-        if self._failure_reason is not None or self._milestones["withdrawn"]:
+        if self._failure_reason is not None or self._episode_complete():
             return self.result()
         try:
             now = float(time_s)
@@ -271,7 +312,7 @@ class Evaluator:
 
     def result(self) -> dict[str, Any]:
         """Return a detached summary suitable for JSON serialization."""
-        success = self._milestones["withdrawn"] and self._failure_reason is None
+        success = self._episode_complete() and self._failure_reason is None
         return {
             "success": success,
             "terminal": success or self._failure_reason is not None,
@@ -323,6 +364,156 @@ class Evaluator:
                 raise ValueError(f"threshold {name} must be finite and nonnegative")
         if float(self._thresholds["max_seat_tilt_rad"]) > np.pi:
             raise ValueError("threshold max_seat_tilt_rad must not exceed pi")
+        if self._return_home is not None:
+            self._validate_return_home_config()
+
+    def _validate_return_home_config(self) -> None:
+        if not isinstance(self._return_home, dict):
+            raise ValueError("return_home must be an object")
+        joint_names = self._return_home.get("joint_names")
+        if (
+            not isinstance(joint_names, list)
+            or len(joint_names) != 20
+            or len(set(joint_names)) != 20
+            or not all(isinstance(name, str) and name for name in joint_names)
+        ):
+            raise ValueError("return_home.joint_names must contain 20 unique nonempty strings")
+        self._return_home["joint_position_rad"] = self._vector(
+            self._return_home.get("joint_position_rad"),
+            20,
+            "return_home.joint_position_rad",
+        )
+        self._return_home["head_position_rad"] = self._vector(
+            self._return_home.get("head_position_rad"),
+            2,
+            "return_home.head_position_rad",
+        )
+        self._return_home["base_pose_xy_yaw"] = self._vector(
+            self._return_home.get("base_pose_xy_yaw"),
+            3,
+            "return_home.base_pose_xy_yaw",
+        )
+        try:
+            gripper = float(self._return_home.get("gripper_position_m"))
+        except (TypeError, ValueError) as exc:
+            raise ValueError("return_home.gripper_position_m must be finite") from exc
+        if not isfinite(gripper):
+            raise ValueError("return_home.gripper_position_m must be finite")
+        self._return_home["gripper_position_m"] = gripper
+        defaults = {
+            "joint_tolerance_rad": 0.01,
+            "joint_speed_tolerance_rad_s": 0.02,
+            "head_tolerance_rad": 0.01,
+            "head_speed_tolerance_rad_s": 0.02,
+            "gripper_tolerance_m": 0.002,
+            "base_position_tolerance_m": 0.02,
+            "base_yaw_tolerance_rad": 0.02,
+            "base_speed_tolerance_m_s": 0.012,
+            "base_yaw_speed_tolerance_rad_s": 0.025,
+            "settle_hold_s": 0.5,
+        }
+        for name, default in defaults.items():
+            try:
+                value = float(self._return_home.get(name, default))
+            except (TypeError, ValueError) as exc:
+                raise ValueError(
+                    f"return_home.{name} must be finite and nonnegative"
+                ) from exc
+            if not isfinite(value) or value < 0.0:
+                raise ValueError(f"return_home.{name} must be finite and nonnegative")
+            self._return_home[name] = value
+
+    def _evaluate_return_home(
+        self, robot_state: Any
+    ) -> tuple[dict[str, bool], dict[str, float]]:
+        if not isinstance(robot_state, dict):
+            raise ValueError("robot_state must be an object")
+        names = robot_state.get("joint_names")
+        if names != self._return_home["joint_names"]:
+            raise ValueError("robot_state.joint_names must match return_home.joint_names")
+        joints = self._vector(robot_state.get("position_rad"), 20, "robot_state.position_rad")
+        joint_velocity = self._vector(
+            robot_state.get("velocity_rad_s"), 20, "robot_state.velocity_rad_s"
+        )
+        head = self._vector(
+            robot_state.get("head_position_rad"), 2, "robot_state.head_position_rad"
+        )
+        head_velocity = self._vector(
+            robot_state.get("head_velocity_rad_s"), 2, "robot_state.head_velocity_rad_s"
+        )
+        gripper = self._vector(
+            robot_state.get("gripper_position_m"), 4, "robot_state.gripper_position_m"
+        )
+        base = self._vector(
+            robot_state.get("base_pose_xy_yaw"), 3, "robot_state.base_pose_xy_yaw"
+        )
+        base_linear_speed = float(robot_state.get("base_linear_speed_m_s"))
+        base_yaw_speed = abs(float(robot_state.get("base_yaw_rate_rad_s")))
+        if (
+            not isfinite(base_linear_speed)
+            or base_linear_speed < 0.0
+            or not isfinite(base_yaw_speed)
+        ):
+            raise ValueError("robot_state base speeds must be finite and nonnegative")
+
+        joint_error = float(np.max(np.abs(joints - self._return_home["joint_position_rad"])))
+        joint_speed = float(np.max(np.abs(joint_velocity)))
+        head_error = float(np.max(np.abs(head - self._return_home["head_position_rad"])))
+        head_speed = float(np.max(np.abs(head_velocity)))
+        gripper_error = float(
+            np.max(np.abs(gripper - self._return_home["gripper_position_m"]))
+        )
+        base_position_error = float(
+            np.linalg.norm(base[:2] - self._return_home["base_pose_xy_yaw"][:2])
+        )
+        yaw_delta = base[2] - self._return_home["base_pose_xy_yaw"][2]
+        base_yaw_error = abs(float(np.arctan2(np.sin(yaw_delta), np.cos(yaw_delta))))
+        checks = {
+            "return_home_joint_position": (
+                joint_error <= self._return_home["joint_tolerance_rad"]
+            ),
+            "return_home_joint_stopped": (
+                joint_speed <= self._return_home["joint_speed_tolerance_rad_s"]
+            ),
+            "return_home_head_position": (
+                head_error <= self._return_home["head_tolerance_rad"]
+            ),
+            "return_home_head_stopped": (
+                head_speed <= self._return_home["head_speed_tolerance_rad_s"]
+            ),
+            "return_home_gripper_position": (
+                gripper_error <= self._return_home["gripper_tolerance_m"]
+            ),
+            "return_home_base_position": (
+                base_position_error <= self._return_home["base_position_tolerance_m"]
+            ),
+            "return_home_base_yaw": (
+                base_yaw_error <= self._return_home["base_yaw_tolerance_rad"]
+            ),
+            "return_home_base_stopped": (
+                base_linear_speed <= self._return_home["base_speed_tolerance_m_s"]
+                and base_yaw_speed <= self._return_home["base_yaw_speed_tolerance_rad_s"]
+            ),
+        }
+        checks["return_home_candidate"] = all(checks.values())
+        metrics = {
+            "return_home_max_joint_error_rad": joint_error,
+            "return_home_max_joint_speed_rad_s": joint_speed,
+            "return_home_max_head_error_rad": head_error,
+            "return_home_max_head_speed_rad_s": head_speed,
+            "return_home_max_gripper_error_m": gripper_error,
+            "return_home_base_position_error_m": base_position_error,
+            "return_home_base_yaw_error_rad": base_yaw_error,
+            "return_home_base_linear_speed_m_s": base_linear_speed,
+            "return_home_base_yaw_speed_rad_s": base_yaw_speed,
+        }
+        return checks, metrics
+
+    def _episode_complete(self) -> bool:
+        terminal_milestone = (
+            "returned_home" if self._return_home is not None else "withdrawn"
+        )
+        return self._milestones[terminal_milestone]
 
     @staticmethod
     def _vector(value: Any, size: int, name: str) -> np.ndarray:

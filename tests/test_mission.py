@@ -1,4 +1,5 @@
 import json
+from dataclasses import replace
 import unittest
 import tempfile
 
@@ -177,9 +178,13 @@ class MissionContractTests(unittest.TestCase):
         )
         session = MobileSession(
             config=self._pickup_config(),
-            observation_provider=lambda _data: frame,
+            observation_provider=lambda data: replace(frame, timestamp_sim_s=float(data.time)),
             pose_estimator=lambda *_args, **_kwargs: estimate,
         )
+        while session.phase in {"home_start", "prepare_pickup"} and not session.finished:
+            session.step(100)
+        self.assertFalse(session.finished)
+        self.assertEqual(session.phase, "drive_approach")
         solve_seeds = []
         solve = session.robot.solve
 
@@ -255,8 +260,8 @@ class MissionContractTests(unittest.TestCase):
                 pass
 
         session._wrist_cameras = {
-            "left": FakeWristCamera(self._wrist_frame("left_wrist_rgbd")),
-            "right": FakeWristCamera(self._wrist_frame("right_wrist_rgbd")),
+            "left": FakeWristCamera(self._wrist_frame("left_wrist_rgbd", float(session.data.time))),
+            "right": FakeWristCamera(self._wrist_frame("right_wrist_rgbd", float(session.data.time))),
         }
         session._contacts = lambda: self.fail(
             "controller wrist verification must not inspect contact geometry"
@@ -275,6 +280,25 @@ class MissionContractTests(unittest.TestCase):
             self.assertEqual(len(limits["head_joint_lower_rad"]), 2)
             self.assertEqual(len(limits["head_joint_upper_rad"]), 2)
         session.close()
+
+    def test_departure_uses_model_qpos0_and_return_targets_same_pose(self):
+        session = MobileSession()
+        try:
+            self.assertEqual(session.phase, "home_start")
+            np.testing.assert_array_equal(session.command_rad, session.model.qpos0[session.robot.qadr])
+            self.assertEqual(session.command_gripper_m, float(session.model.qpos0[session.robot.grip_qadr[0]]))
+            self.assertFalse(session.snapshot()["result"]["success"])
+            self.assertIn("returned_home", session.snapshot()["result"]["milestones"])
+            session._planned_tray_center = np.array([1.2, 0.0, 1.212])
+            session.phase = "withdraw"
+            session._advance_phase()
+            self.assertEqual(session.phase, "drive_return")
+            self.assertIsNone(session._drive_start_tray_center)
+            self.assertEqual(session._drive_target(), session.config["base"]["initial_pose_xy_yaw"])
+            self.assertFalse(session.finished)
+            self.assertEqual(session.home_reference["joint_position_rad"], session.command_rad.tolist())
+        finally:
+            session.close()
 
     def test_stale_rgbd_terminates_before_pose_estimation(self):
         estimator_called = False

@@ -200,6 +200,7 @@ class MobileSession(Session):
     PRESEAT_EXPECTED_LOAD_FRACTION_MIN = 0.25
 
     ARM_PHASES = {
+        "prepare_pickup",
         "pickup_approach",
         "pickup_descend",
         "grasp",
@@ -211,11 +212,13 @@ class MobileSession(Session):
         "settle",
         "release",
         "withdraw",
+        "return_home",
     }
     DRIVE_PHASE_TARGET = {
         "drive_approach": "pickup_pose_xy_yaw",
         "drive_loaded": "low_carry_pose_xy_yaw",
         "drive_high": "placement_pose_xy_yaw",
+        "drive_return": "initial_pose_xy_yaw",
     }
 
     def __init__(
@@ -230,6 +233,13 @@ class MobileSession(Session):
         self.config = copy.deepcopy(config or load_config(default_config))
         if self.config.get("base_mode") != "mobile":
             raise ValueError("MobileSession requires base_mode=mobile")
+        cycle = self.config.get("mission_cycle", {})
+        if cycle.get("home_source") != "fixed_upstream_model_qpos0":
+            raise ValueError("MobileSession requires mission_cycle home_source=fixed_upstream_model_qpos0")
+        for name in ("initial_hold_s", "prepare_duration_s", "return_duration_s", "return_drive_timeout_s"):
+            value = float(cycle.get(name, float("nan")))
+            if not np.isfinite(value) or value <= 0:
+                raise ValueError(f"mission_cycle.{name} must be finite and positive")
         self.lift_only = False
         self.model, self.xml = build_scene(self.config)
         self.audit = audit_model(self.model)
@@ -280,14 +290,22 @@ class MobileSession(Session):
         initial_base = np.asarray(self.config["base"]["initial_pose_xy_yaw"], dtype=float)
         base_qpos[:3] = (initial_base[0], initial_base[1], 0.0)
         base_qpos[3:7] = (math.cos(initial_base[2] / 2), 0.0, 0.0, math.sin(initial_base[2] / 2))
-        initial_joints = self.robot.crouched_pickup_posture()
+        # The fixed upstream model has no keyframes.  Its qpos0 is the source
+        # for both departure and return, including the native gripper sliders.
+        self.home_joints_rad = self.model.qpos0[self.robot.qadr].copy()
+        self.home_head_rad = self.model.qpos0[self._head_qadr].copy()
+        home_fingers = self.model.qpos0[self.robot.grip_qadr]
+        if not np.allclose(home_fingers, home_fingers[0], rtol=0, atol=1e-12):
+            raise ValueError("model qpos0 requires independently controlled home fingers")
+        self.home_gripper_m = float(home_fingers[0])
+        initial_joints = self.home_joints_rad.copy()
         self.data.qpos[self.robot.qadr] = initial_joints
-        open_gripper = float(self.config["grasp"]["open_gripper_m"])
+        self.data.qpos[self._head_qadr] = self.home_head_rad
         for letter in ("l", "r"):
             for finger in (1, 2):
-                self.data.joint(f"gripper_finger_{letter}{finger}").qpos[0] = open_gripper
+                self.data.joint(f"gripper_finger_{letter}{finger}").qpos[0] = self.home_gripper_m
         self.command_rad = initial_joints.copy()
-        self.command_gripper_m = open_gripper
+        self.command_gripper_m = self.home_gripper_m
         self.drive = DriveController(self.model, self._drive_config())
         mujoco.mj_forward(self.model, self.data)
         self.drive.reset(self.model, self.data)
@@ -321,12 +339,21 @@ class MobileSession(Session):
         low, high = geom_low.min(axis=0), geom_high.max(axis=0)
         cfg["tray_containment_half_extents_m"] = ((high - low) / 2).tolist()
         cfg["tray_containment_center_m"] = ((high + low) / 2).tolist()
+        self.home_reference = {
+            **copy.deepcopy(self.config["mission_cycle"]["home_tolerances"]),
+            "joint_names": list(self.robot.names),
+            "joint_position_rad": self.home_joints_rad.tolist(),
+            "head_position_rad": self.home_head_rad.tolist(),
+            "gripper_position_m": self.home_gripper_m,
+            "base_pose_xy_yaw": initial_base.tolist(),
+        }
+        cfg["return_home"] = copy.deepcopy(self.home_reference)
         self.evaluator = Evaluator(cfg)
 
         # Navigate to the surveyed pickup station from wheel odometry first.
         # The floor tray is partially outside the initial head-camera frame;
         # grasp planning waits for the complete close-range RGB-D observation.
-        self.phase = "drive_approach"
+        self.phase = "home_start"
         self.phase_started_s = 0.0
         self._active_motion: ArmMotion | None = None
         self._detected_tray: TrayEstimate | None = None
@@ -958,6 +985,62 @@ class MobileSession(Session):
         self.plan.append(motion)
         return motion
 
+    def _joint_home_motion(self, phase: str) -> ArmMotion:
+        """Validate an unloaded posture change using the executed cubic path."""
+
+        preparing = phase == "prepare_pickup"
+        target = self.robot.crouched_pickup_posture() if preparing else self.home_joints_rad
+        target_gripper = (
+            float(self.config["grasp"]["open_gripper_m"])
+            if preparing else self.home_gripper_m
+        )
+        base = tuple(self.drive.metrics(self.model, self.data)["wheel_odometry_pose_xy_yaw"])
+        if preparing:
+            # Surveyed initial CAD is used only to reject a preparation path;
+            # the subsequent grasp still waits for a complete RGB-D estimate.
+            center = np.asarray(self.config["tray_initial_pos_m"], dtype=float)
+            yaw = 0.0
+        else:
+            center = np.array([
+                *self.config["target"]["center_xy_m"],
+                self.config["target"]["support_z_m"] + self.config["tray_half_extents_m"][2],
+            ])
+            yaw = float(self._detected_tray.yaw_rad)
+        path = [self.command_rad.copy(), target.copy()]
+        limit_error = joint_path_limit_violation(path, self.robot.low, self.robot.high)
+        if limit_error > 1e-10:
+            raise ValueError(f"{phase} joint-limit violation: {limit_error:.9f} rad")
+        self._set_work_base(base)
+        self._set_work_task_prediction(center, yaw)
+        max_gravity_ratio = 0.0
+        for alpha in np.linspace(0.0, 1.0, 101):
+            self.robot._prepare(
+                interpolate_joint_path(path, alpha),
+                self.command_gripper_m + alpha * (target_gripper - self.command_gripper_m),
+            )
+            forbidden = self.robot._forbidden_contacts()
+            ratio = float(np.max(np.abs(self.robot.work.qfrc_bias[self.robot.dadr]) / self.robot.force_limit))
+            max_gravity_ratio = max(max_gravity_ratio, ratio)
+            if forbidden or ratio > self.robot.TORQUE_LIMIT_RATIO:
+                raise ValueError(f"{phase} free-joint path rejected at {alpha:.3f}: collision={forbidden}, gravity={ratio:.6f}")
+        duration_key = "prepare_duration_s" if preparing else "return_duration_s"
+        metrics = {
+            "phase": phase,
+            "pose_source": "model_qpos0" if not preparing else "task_crouched_pickup_posture",
+            "collision_samples": 101,
+            "gravity_torque_ratio": max_gravity_ratio,
+            "interpolated_joint_limit_violation_rad": limit_error,
+            "base_pose_xy_yaw": list(base),
+        }
+        self.ik_errors.append(metrics)
+        motion = ArmMotion(
+            phase, float(self.config["mission_cycle"][duration_key]),
+            self.command_rad.copy(), target.copy(), self.command_gripper_m,
+            target_gripper, tuple(center), base, tuple(path), metrics,
+        )
+        self.plan.append(motion)
+        return motion
+
     def _phase_motion_spec(self, phase: str):
         estimate = np.asarray(self._detected_tray.center_world_m, dtype=float)
         base_now = tuple(self.drive.metrics(self.model, self.data)["wheel_odometry_pose_xy_yaw"])
@@ -1013,6 +1096,8 @@ class MobileSession(Session):
         self._drive_stopped_since_s = None
         self._motion_settled_since_s = None
         self._active_motion = None
+        self._drive_start_pose = None
+        self._drive_start_tray_center = None
         if phase == "grasp":
             # Tare in the final open-gripper pose.  Hardware uses the same
             # boundary immediately before closure.
@@ -1058,10 +1143,12 @@ class MobileSession(Session):
                     repr(self._pregrasp_wrist_verification),
                 )
                 return
-        if phase in self.ARM_PHASES:
+        if phase in {"prepare_pickup", "return_home"}:
+            self._active_motion = self._joint_home_motion(phase)
+        elif phase in self.ARM_PHASES:
             center, base, duration, gripper = self._phase_motion_spec(phase)
             self._active_motion = self._solve_motion(phase, center, base, duration, gripper)
-        elif phase in self.DRIVE_PHASE_TARGET and self._planned_tray_center is not None:
+        elif phase in {"drive_loaded", "drive_high"} and self._planned_tray_center is not None:
             self._drive_start_pose = np.asarray(
                 self.drive.metrics(self.model, self.data)["wheel_odometry_pose_xy_yaw"],
                 dtype=float,
@@ -1070,15 +1157,14 @@ class MobileSession(Session):
 
     def _advance_phase(self) -> None:
         sequence = (
+            "home_start", "prepare_pickup",
             "drive_approach", "observe_close", "pickup_approach", "pickup_descend",
             "grasp", "grasp_hold", "lift", "retract_low", "drive_loaded",
             "raise_high", "drive_high", "seat", "settle", "release",
-            "withdraw", "complete",
+            "withdraw", "drive_return", "return_home", "home_settle",
         )
         index = sequence.index(self.phase)
         self._enter_phase(sequence[min(index + 1, len(sequence) - 1)])
-        if self.phase == "complete":
-            self.finished = True
 
     def _contact_wrist_verifier(self, _session: "MobileSession") -> dict:
         proprioception = self._wrist_proprioception()
@@ -1401,6 +1487,10 @@ class MobileSession(Session):
         if self.finished:
             return
         try:
+            if self.phase == "home_start":
+                if float(self.data.time) - self.phase_started_s >= self.config["mission_cycle"]["initial_hold_s"]:
+                    self._advance_phase()
+                return
             if self.phase in self.DRIVE_PHASE_TARGET and self._drive_arrived():
                 if (
                     self._drive_start_pose is not None
@@ -1474,20 +1564,26 @@ class MobileSession(Session):
                         if not verification["passed"]:
                             self._fail("seat_verification_failed", repr(verification))
                             return
-                    self._planned_tray_center = np.asarray(
-                        self._active_motion.tray_center_world_m, dtype=float
-                    )
+                    if self.phase not in {"prepare_pickup", "return_home"}:
+                        self._planned_tray_center = np.asarray(
+                            self._active_motion.tray_center_world_m, dtype=float
+                        )
                     self._advance_phase()
         except (ValueError, RuntimeError) as exc:
             self._fail("ik_planning_failed", str(exc))
 
     def _check_phase_timeout(self) -> None:
+        if self.phase == "home_settle" and not self.finished:
+            if float(self.data.time) - self.phase_started_s > 4.0 + self.home_reference["settle_hold_s"]:
+                self._fail("home_settle_timeout", "model qpos0 return and stationary base were not verified")
+            return
         if self.phase not in self.DRIVE_PHASE_TARGET or self.finished:
             return
         timeout_s = {
             "drive_approach": 20.0,
             "drive_loaded": 15.0,
             "drive_high": 20.0,
+            "drive_return": float(self.config["mission_cycle"]["return_drive_timeout_s"]),
         }[self.phase]
         if float(self.data.time) - self.phase_started_s > timeout_s:
             self._fail("phase_timeout", f"{self.phase} exceeded {timeout_s:.1f} s")
@@ -1526,12 +1622,12 @@ class MobileSession(Session):
                         "phase": self.phase,
                         "upper_body_position_reference_rad": self.command_rad.tolist(),
                         "upper_body_velocity_reference_rad_s": velocity.tolist(),
-                        "head_position_reference_rad": [0.0, 0.0],
+                        "head_position_reference_rad": self.home_head_rad.tolist(),
                         "gripper_position_reference_m": self.command_gripper_m,
                         "wheel_velocity_reference_rad_s": self.drive.commands(self.model),
                         "observation": self._controller_observation(),
                         "controller_inputs": {
-                            "tray_pose": "rgbd_estimate",
+                            "tray_pose": "rgbd_estimate" if self._detected_tray is not None else "not_yet_observed",
                             "base_pose": "wheel_encoder_odometry",
                             "simulator_object_pose_used": False,
                         },
@@ -1560,6 +1656,19 @@ class MobileSession(Session):
 
     def snapshot(self):
         state = super().snapshot()
+        drive = self.drive.metrics(self.model, self.data)
+        state["robot_state"] = {
+            "joint_names": list(self.robot.names),
+            "position_rad": self.data.qpos[self.robot.qadr].tolist(),
+            "velocity_rad_s": self.data.qvel[self.robot.dadr].tolist(),
+            "head_position_rad": self.data.qpos[self._head_qadr].tolist(),
+            "head_velocity_rad_s": self.data.qvel[self._head_dadr].tolist(),
+            "gripper_position_m": self.data.qpos[self.robot.grip_qadr].tolist(),
+            "base_pose_xy_yaw": drive["ground_truth_pose_xy_yaw"],
+            "base_linear_speed_m_s": float(np.linalg.norm(drive["base_linear_velocity_m_s"])),
+            "base_yaw_rate_rad_s": float(drive["base_angular_velocity_rad_s"][2]),
+            "role": "independent_evaluation_only; ground_truth_base_pose_excluded_from_controller",
+        }
         state["controller"] = "RGB-D + encoder odometry + IK position + wheel velocity"
         state["mission"] = {
             "phase": self.phase,
@@ -1567,7 +1676,8 @@ class MobileSession(Session):
             "failure": copy.deepcopy(self._mission_failure),
             "perception": copy.deepcopy(self.perception_history[-1]) if self.perception_history else None,
             "command": copy.deepcopy(self.command_history[-1]) if self.command_history else None,
-            "drive": self.drive.metrics(self.model, self.data),
+            "drive": drive,
+            "home_reference": copy.deepcopy(self.home_reference),
             "wrist_proprioception": self._wrist_proprioception(),
             "data_contract": {
                 "head_observation": "registered RGB uint8 + metric axial depth + K + T_world_optical",
@@ -1581,6 +1691,11 @@ class MobileSession(Session):
         if self._detected_tray is not None:
             state["mission"]["detected_tray"] = self._detected_tray.to_dict()
         return state
+
+    def _record(self, force_log=False):
+        super()._record(force_log)
+        if self.evaluator.result()["success"]:
+            self.phase = "complete"
 
     def export_sim2real_dataset(self, output_directory: str | Path) -> Path:
         """Export controller inputs/outputs without simulator object ground truth."""
@@ -1613,6 +1728,7 @@ class MobileSession(Session):
         schema = {
             "schema_version": 1,
             "purpose": "sim-to-real controller interface replay",
+            "home_reference": {"source": "fixed upstream model qpos0", **copy.deepcopy(self.home_reference)},
             "observations": {
                 "rgb": "uint8 HxWx3 RGB",
                 "depth_m": "float metric optical-axis depth",

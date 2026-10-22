@@ -128,7 +128,8 @@ def run_episode(config, output, render=False, lift_only=False):
         result["run_completed"] = True
         result.update(wall_time_s=time.monotonic() - started, simulation_time_s=session.data.time,
                       metrics=session.snapshot()["metrics"], highest_tray_center_z_m=max(row["tray"]["pos_m"][2] for row in session.log),
-                      task="grasp_lift_feasibility" if lift_only else "floor_to_container",
+                      task=("grasp_lift_feasibility" if lift_only else "floor_to_container_and_return_home"
+                            if config["base_mode"] == "mobile" else "floor_to_container"),
                       modeling_scope=("mobile native-gripper simulation; RGB-D perception and encoder odometry; synthetic calibration"
                                       if config["base_mode"] == "mobile" else "historical fixed-base simulation; ground-truth state"))
         if config["base_mode"] == "mobile":

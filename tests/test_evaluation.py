@@ -28,16 +28,42 @@ def config():
     }
 
 
+def return_home_config():
+    cfg = config()
+    cfg["return_home"] = {
+        "joint_names": [f"joint_{index}" for index in range(20)],
+        "joint_position_rad": [0.0] * 20,
+        "head_position_rad": [0.0, 0.0],
+        "gripper_position_m": 0.0,
+        "base_pose_xy_yaw": [-0.4, 0.0, 0.0],
+    }
+    return cfg
+
+
+def robot_state(*, home=False, moving=False):
+    return {
+        "joint_names": [f"joint_{index}" for index in range(20)],
+        "position_rad": [0.0 if home else 0.4] * 20,
+        "velocity_rad_s": [0.03 if moving else 0.0] * 20,
+        "head_position_rad": [0.0 if home else 0.2, 0.0 if home else -0.2],
+        "head_velocity_rad_s": [0.03 if moving else 0.0] * 2,
+        "gripper_position_m": [0.0 if home else -0.045] * 4,
+        "base_pose_xy_yaw": [-0.4, 0.0, 0.0] if home else [0.55, 0.0, 0.0],
+        "base_linear_speed_m_s": 0.02 if moving else 0.0,
+        "base_yaw_rate_rad_s": 0.03 if moving else 0.0,
+    }
+
+
 def snapshot(time_s, *, pos=(0.0, 0.0, 0.02), quat=(1.0, 0.0, 0.0, 0.0),
              pads=(False, False, False, False), opposed=(True, True),
              pad_forces=None, payload_local=(0.0, 0.0, 0.07),
              payload_supported=True, payload_speed=0.0, container=False,
              robot_tray_contact=None, clearance=(0.0, 0.0), audit=None,
-             phase="ignored"):
+             phase="ignored", robot=None):
     # Identity is sufficient for most sequences. Rotation-specific tests provide
     # world coordinates explicitly after applying the desired quaternion.
     payload_world = [pos[i] + payload_local[i] for i in range(3)]
-    return {
+    result = {
         "time_s": time_s,
         "phase": phase,
         "tray": {
@@ -77,6 +103,9 @@ def snapshot(time_s, *, pos=(0.0, 0.0, 0.02), quat=(1.0, 0.0, 0.0, 0.0),
             "runtime_state_overwrite": False,
         },
     }
+    if robot is not None:
+        result["robot_state"] = robot
+    return result
 
 
 def establish_grasp(evaluator):
@@ -85,7 +114,130 @@ def establish_grasp(evaluator):
     assert result["milestones"]["grasped"]
 
 
+def establish_return_home_withdrawal(evaluator):
+    away = robot_state()
+    evaluator.update(snapshot(0.00, pads=(True,) * 4, robot=away))
+    evaluator.update(snapshot(0.16, pads=(True,) * 4, robot=away))
+    evaluator.update(snapshot(0.30, pos=(0.0, 0.0, 0.20), pads=(True,) * 4,
+                              robot=away))
+    evaluator.update(snapshot(0.50, pos=(0.5, 0.0, 1.02), pads=(True,) * 4,
+                              container=True, robot=away))
+    evaluator.update(snapshot(0.91, pos=(0.5, 0.0, 1.02), pads=(True,) * 4,
+                              container=True, robot=away))
+    evaluator.update(snapshot(1.00, pos=(0.5, 0.0, 1.02), pads=(False,) * 4,
+                              container=True, clearance=(0.20, 0.20), robot=away))
+    result = evaluator.update(snapshot(
+        1.41,
+        pos=(0.5, 0.0, 1.02),
+        pads=(False,) * 4,
+        container=True,
+        clearance=(0.20, 0.20),
+        robot=away,
+    ))
+    assert result["milestones"]["withdrawn"]
+    return result
+
+
 class EvaluatorTests(unittest.TestCase):
+    def test_legacy_config_still_finishes_at_withdrawal(self):
+        evaluator = Evaluator(config())
+        establish_grasp(evaluator)
+        evaluator.update(snapshot(0.30, pos=(0.0, 0.0, 0.20), pads=(True,) * 4))
+        evaluator.update(snapshot(0.50, pos=(0.5, 0.0, 1.02), pads=(True,) * 4,
+                                  container=True))
+        evaluator.update(snapshot(0.91, pos=(0.5, 0.0, 1.02), pads=(True,) * 4,
+                                  container=True))
+        evaluator.update(snapshot(1.00, pos=(0.5, 0.0, 1.02), pads=(False,) * 4,
+                                  container=True, clearance=(0.20, 0.20)))
+        result = evaluator.update(snapshot(1.41, pos=(0.5, 0.0, 1.02),
+                                           pads=(False,) * 4, container=True,
+                                           clearance=(0.20, 0.20)))
+        self.assertTrue(result["success"])
+        self.assertTrue(result["terminal"])
+        self.assertNotIn("returned_home", result["milestones"])
+
+    def test_return_home_withdrawal_is_not_terminal(self):
+        result = establish_return_home_withdrawal(Evaluator(return_home_config()))
+        self.assertFalse(result["success"])
+        self.assertFalse(result["terminal"])
+        self.assertFalse(result["milestones"]["returned_home"])
+        self.assertFalse(result["checks"]["return_home_candidate"])
+
+    def test_return_home_hold_resets_for_position_and_speed(self):
+        evaluator = Evaluator(return_home_config())
+        establish_return_home_withdrawal(evaluator)
+        common = dict(pos=(0.5, 0.0, 1.02), pads=(False,) * 4, container=True,
+                      clearance=(0.20, 0.20))
+        result = evaluator.update(snapshot(1.60, robot=robot_state(home=True, moving=True),
+                                           **common))
+        self.assertFalse(result["checks"]["return_home_candidate"])
+        evaluator.update(snapshot(1.70, robot=robot_state(home=True), **common))
+        evaluator.update(snapshot(2.00, robot=robot_state(home=False), **common))
+        evaluator.update(snapshot(2.10, robot=robot_state(home=True), **common))
+        result = evaluator.update(snapshot(2.59, robot=robot_state(home=True), **common))
+        self.assertFalse(result["success"])
+        result = evaluator.update(snapshot(2.61, robot=robot_state(home=True), **common))
+        self.assertTrue(result["success"])
+        self.assertTrue(result["milestones"]["returned_home"])
+
+    def test_return_home_arrival_requires_settle_and_reports_errors(self):
+        evaluator = Evaluator(return_home_config())
+        establish_return_home_withdrawal(evaluator)
+        common = dict(pos=(0.5, 0.0, 1.02), pads=(False,) * 4, container=True,
+                      clearance=(0.20, 0.20), robot=robot_state(home=True))
+        first = evaluator.update(snapshot(2.00, **common))
+        self.assertFalse(first["success"])
+        self.assertTrue(first["checks"]["return_home_candidate"])
+        self.assertEqual(first["metrics"]["return_home_max_joint_error_rad"], 0.0)
+        result = evaluator.update(snapshot(2.51, **common))
+        self.assertTrue(result["success"])
+        self.assertTrue(result["terminal"])
+        self.assertEqual(result["milestone_times_s"]["returned_home"], 2.51)
+
+    def test_finalize_before_return_home_is_failure(self):
+        evaluator = Evaluator(return_home_config())
+        establish_return_home_withdrawal(evaluator)
+        result = evaluator.finalize(2.0)
+        self.assertFalse(result["success"])
+        self.assertEqual(result["failure_reason"], "episode_timeout")
+
+    def test_return_home_latches_task_invalidation_after_withdrawal(self):
+        common = dict(pos=(0.5, 0.0, 1.02), pads=(False,) * 4, container=True,
+                      clearance=(0.20, 0.20), robot=robot_state())
+        invalid_snapshots = []
+        collision = snapshot(1.60, **common)
+        collision["contacts"]["forbidden"] = ["robot/container"]
+        invalid_snapshots.append((collision, "forbidden_contact"))
+        invalid_snapshots.append((
+            snapshot(1.60, payload_local=(0.40, 0.0, 0.07), **common),
+            "task_invalidated_after_withdrawal",
+        ))
+        invalid_snapshots.append((
+            snapshot(1.60, **{**common, "container": False}),
+            "task_invalidated_after_withdrawal",
+        ))
+        for bad_snapshot, expected in invalid_snapshots:
+            with self.subTest(expected=expected):
+                evaluator = Evaluator(return_home_config())
+                establish_return_home_withdrawal(evaluator)
+                result = evaluator.update(bad_snapshot)
+                self.assertFalse(result["success"])
+                self.assertTrue(result["terminal"])
+                self.assertEqual(result["failure_reason"], expected)
+
+    def test_return_home_config_and_robot_state_shapes_are_validated(self):
+        cfg = return_home_config()
+        cfg["return_home"]["joint_position_rad"] = [0.0] * 19
+        with self.assertRaisesRegex(ValueError, "joint_position_rad"):
+            Evaluator(cfg)
+
+        evaluator = Evaluator(return_home_config())
+        bad = robot_state()
+        bad["head_velocity_rad_s"] = [math.nan, 0.0]
+        result = evaluator.update(snapshot(0.0, robot=bad))
+        self.assertTrue(result["terminal"])
+        self.assertTrue(result["failure_reason"].startswith("invalid_snapshot"))
+
     def test_complete_success_is_phase_independent(self):
         evaluator = Evaluator(config())
         establish_grasp(evaluator)
