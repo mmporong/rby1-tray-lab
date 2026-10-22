@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.png -text
+*.gif -text
+*.gz -text
+# Preserve archived artifacts byte-for-byte for SHA-256 verification.
+evidence/** -text
+# Retain whitespace inherited from the upstream XML snapshots.
+evidence/**/scene.xml whitespace=-blank-at-eol
