@@ -1,0 +1,11 @@
+{
+  "kind": "actual interactive MuJoCo physics captured through the local viewer API",
+  "simulation_time_s": 70.81200000001637,
+  "frame_count": 143,
+  "display_speed": "approximately 4x",
+  "strict_stop_preserved": true,
+  "diagnostic_continuation": false,
+  "source_provenance": "interactive backend started before source freeze; exact loaded source hash was not exposed by that backend",
+  "use": "failure illustration only; use committed-revision CLI artifacts for quantitative comparison",
+  "failure_reason": "release_before_seat"
+}

@@ -47,6 +47,18 @@ class Robot:
             model.jnt_qposadr[model.joint(f"gripper_finger_{letter}{finger}").id]
             for letter in ("r", "l") for finger in (1, 2)
         ])
+        grip_joint_ids = np.array([
+            model.joint(f"gripper_finger_{letter}{finger}").id
+            for letter in ("r", "l") for finger in (1, 2)
+        ])
+        self.grip_low = float(max(
+            np.max(model.jnt_range[grip_joint_ids, 0]),
+            np.max(model.actuator_ctrlrange[self.grip_act, 0]),
+        ))
+        self.grip_high = float(min(
+            np.min(model.jnt_range[grip_joint_ids, 1]),
+            np.min(model.actuator_ctrlrange[self.grip_act, 1]),
+        ))
         self.force_limit = np.max(np.abs(model.actuator_forcerange[self.act]), axis=1)
         base = model.body("base").id
         self.robot_bodies = {
@@ -71,7 +83,14 @@ class Robot:
         posture[offset + 7:offset + 14] = [0, .8, 0, -1.5, 0, .5, 0]
         return np.clip(posture, self.low, self.high)
 
+    def _validate_gripper(self, gripper_m):
+        if not np.isfinite(gripper_m) or not self.grip_low <= gripper_m <= self.grip_high:
+            raise ValueError(
+                f"gripper_m must be within [{self.grip_low}, {self.grip_high}] m"
+            )
+
     def _prepare(self, q, gripper_m):
+        self._validate_gripper(gripper_m)
         self.work.qpos[self.qadr] = q
         self.work.qpos[self.grip_qadr] = gripper_m
         mujoco.mj_forward(self.model, self.work)
@@ -82,6 +101,14 @@ class Robot:
             frozenset(("base", "wheel_l")),
             frozenset(("base", "wheel_r")),
             frozenset(("base", "link_torso_0")),
+            frozenset(("base", "wheel_fr_link")),
+            frozenset(("base", "wheel_fl_link")),
+            frozenset(("base", "wheel_rr_link")),
+            frozenset(("base", "wheel_rl_link")),
+        }
+        ground_bodies = {
+            "base", "wheel_l", "wheel_r", "wheel_fr_link",
+            "wheel_fl_link", "wheel_rr_link", "wheel_rl_link",
         }
         for index in range(self.work.ncon):
             contact = self.work.contact[index]
@@ -96,13 +123,26 @@ class Robot:
             if frozenset(body_names) in structural:
                 continue
             if "floor" in geom_names and any(
-                    name in {"base", "wheel_l", "wheel_r"} for name in body_names):
+                    name in ground_bodies for name in body_names):
                 continue
-            pad_handle = (
+            native_finger_rim = (
+                any(
+                    name.startswith("left_pad_") and "_native_" in name
+                    for name in geom_names
+                )
+                and "tray_yrim_1" in geom_names
+            ) or (
+                any(
+                    name.startswith("right_pad_") and "_native_" in name
+                    for name in geom_names
+                )
+                and "tray_yrim_-1" in geom_names
+            )
+            legacy_proxy_handle = (
                 any(name.startswith(("left_pad_", "right_pad_")) for name in geom_names)
                 and any(name.startswith("handle_") for name in geom_names)
             )
-            if pad_handle:
+            if native_finger_rim or legacy_proxy_handle:
                 continue
             forbidden.append({
                 "distance_m": float(contact.dist),
@@ -110,7 +150,20 @@ class Robot:
             })
         return forbidden
 
-    def _candidate_metrics(self, q, targets_m, gripper_m):
+    @staticmethod
+    def _target_rotations(target_rotations):
+        if target_rotations is None:
+            return np.repeat(np.eye(3)[None, :, :], 2, axis=0)
+        matrices = np.asarray(target_rotations, dtype=float)
+        if matrices.shape != (2, 3, 3) or not np.all(np.isfinite(matrices)):
+            raise ValueError("target_rotations must contain two finite 3x3 matrices")
+        for matrix in matrices:
+            if not np.allclose(matrix.T @ matrix, np.eye(3), atol=1e-6) or not np.isclose(
+                    np.linalg.det(matrix), 1.0, atol=1e-6):
+                raise ValueError("target_rotations must be proper rotation matrices")
+        return matrices
+
+    def _candidate_metrics(self, q, targets_m, gripper_m, target_rotations):
         self._prepare(q, gripper_m)
         position_error = max(
             np.linalg.norm(self.work.site_xpos[site] - target)
@@ -118,8 +171,10 @@ class Robot:
         )
         orientation_error = max(
             np.linalg.norm(Rotation.from_matrix(
-                self.work.site_xmat[site].reshape(3, 3)).as_rotvec())
-            for site in self.tcp
+                target_rotation.T
+                @ self.work.site_xmat[site].reshape(3, 3)
+            ).as_rotvec())
+            for site, target_rotation in zip(self.tcp, target_rotations)
         )
         torque_ratio = float(np.max(
             np.abs(self.work.qfrc_bias[self.dadr]) / self.force_limit))
@@ -127,10 +182,23 @@ class Robot:
             "position_error_m": float(position_error),
             "orientation_error_rad": float(orientation_error),
             "gravity_torque_ratio": torque_ratio,
+            # arm_3 is the physical elbow pitch in the upstream RB-Y1 model;
+            # zero is the straight-arm limit for both arms.
+            "elbow_flexion_rad": {
+                "right": float(abs(q[self.names.index("right_arm_3")])),
+                "left": float(abs(q[self.names.index("left_arm_3")])),
+            },
             "forbidden_contacts": self._forbidden_contacts(),
         }
 
-    def solve(self, targets_m, seed=None, posture=None, gripper_m=-.045, max_nfev=300):
+    def solve(
+            self, targets_m, seed=None, posture=None, gripper_m=-.045,
+            max_nfev=300, target_rotations=None):
+        targets_m = np.asarray(targets_m, dtype=float)
+        if targets_m.shape != (2, 3) or not np.all(np.isfinite(targets_m)):
+            raise ValueError("targets_m must contain two finite 3D positions")
+        target_rotations = self._target_rotations(target_rotations)
+        self._validate_gripper(gripper_m)
         if seed is None:
             seed = posture if posture is not None else np.zeros(len(self.names))
         seed = np.clip(np.asarray(seed, dtype=float), self.low, self.high)
@@ -171,10 +239,13 @@ class Robot:
                 self.work.qpos[self.qadr] = q
                 mujoco.mj_kinematics(self.model, self.work)
                 result = []
-                for site, target in zip(self.tcp, targets_m):
+                for site, target, target_rotation in zip(
+                        self.tcp, targets_m, target_rotations):
                     result.extend(8 * (self.work.site_xpos[site] - target))
                     result.extend(.7 * Rotation.from_matrix(
-                        self.work.site_xmat[site].reshape(3, 3)).as_rotvec())
+                        target_rotation.T
+                        @ self.work.site_xmat[site].reshape(3, 3)
+                    ).as_rotvec())
                 result.extend(weights * (q - reference))
                 return result
 
@@ -186,7 +257,8 @@ class Robot:
             )
             q = initial.copy()
             q[self.active] = solution.x
-            metrics = self._candidate_metrics(q, targets_m, gripper_m)
+            metrics = self._candidate_metrics(
+                q, targets_m, gripper_m, target_rotations)
             feasible = (
                 metrics["position_error_m"] <= self.POSITION_TOLERANCE_M
                 and metrics["orientation_error_rad"] <= self.ORIENTATION_TOLERANCE_RAD
@@ -221,14 +293,47 @@ class Robot:
         return q, metrics
 
 
-def build_plan(model, config, lift_only=False):
+def build_plan(model, config, lift_only=False, tray_pose=None):
     robot = Robot(
         model,
         use_torso=config.get("use_torso", True),
         fixed_torso_rad=config.get("fixed_torso_rad"),
     )
-    x, y, z = config["tray_initial_pos_m"]
-    hz, hy = config["handle_z_m"], config["handle_y_m"]
+    if tray_pose is None:
+        detected_center = config["tray_initial_pos_m"]
+        tray_yaw_rad = config.get("tray_initial_yaw_rad", 0.0)
+    else:
+        if hasattr(tray_pose, "to_dict"):
+            tray_pose = tray_pose.to_dict()
+        try:
+            detected_center = tray_pose["center_world_m"]
+            tray_yaw_rad = tray_pose["yaw_rad"]
+        except (KeyError, TypeError) as exc:
+            raise ValueError(
+                "tray_pose must provide center_world_m and yaw_rad"
+            ) from exc
+    detected_center = np.asarray(detected_center, dtype=float)
+    if detected_center.shape != (3,) or not np.all(np.isfinite(detected_center)):
+        raise ValueError("tray center must contain three finite world coordinates")
+    if not np.isfinite(tray_yaw_rad):
+        raise ValueError("tray yaw must be finite")
+    x, y, z = detected_center
+    grasp = config.get("grasp", {})
+    hy = grasp.get(
+        "side_offset_y_m",
+        config.get("handle_y_m", config["tray_half_extents_m"][1]),
+    )
+    hz = grasp.get(
+        "tcp_height_m",
+        config.get("handle_z_m", config["tray_half_extents_m"][2] + .035),
+    )
+    yaw_rad = tray_yaw_rad + grasp.get(
+        "yaw_rad", config.get("grasp_orientation_yaw_rad", 0.0))
+    open_gripper_m = grasp.get("open_gripper_m", -.045)
+    closed_gripper_m = grasp.get("closed_gripper_m", 0.0)
+    grasp_rotations = np.repeat(
+        Rotation.from_euler("z", yaw_rad).as_matrix()[None, :, :], 2, axis=0)
+    tray_rotation = Rotation.from_euler("z", tray_yaw_rad).as_matrix()
     target = config["target"]
     tx, ty = target["center_xy_m"]
     tz = target["support_z_m"] + config["tray_half_extents_m"][2]
@@ -238,21 +343,21 @@ def build_plan(model, config, lift_only=False):
     q = None
     pickup_posture = robot.crouched_pickup_posture()
     sequence = [
-        ("approach", [x, y, z + .10], -.045, 2.0),
-        ("descend", [x, y, z], -.045, 2.0),
-        ("grasp", [x, y, z], 0.0, 2.5),
-        ("grasp", [x, y, z], 0.0, 1.0),
-        ("lift", [x, y, z + .07], 0.0, 3.0),
+        ("approach", [x, y, z + .10], open_gripper_m, 2.0),
+        ("descend", [x, y, z], open_gripper_m, 2.0),
+        ("grasp", [x, y, z], closed_gripper_m, 2.5),
+        ("grasp", [x, y, z], closed_gripper_m, 1.0),
+        ("lift", [x, y, z + .07], closed_gripper_m, 3.0),
     ]
     if not lift_only:
         sequence += [
-            ("raise", [x, y, max(tz + clearance_m, .5)], 0.0, 12.0),
-            ("transport", [tx, ty, tz + clearance_m], 0.0, 12.0),
-            ("seat", [tx, ty, tz], 0.0, 5.0),
-            ("settle", [tx, ty, tz], 0.0, 1.5),
-            ("release", [tx, ty, tz], -.045, 2.0),
-            ("withdraw", withdrawn, -.045, 4.0),
-            ("hold", withdrawn, -.045, 1.0),
+            ("raise", [x, y, max(tz + clearance_m, .5)], closed_gripper_m, 12.0),
+            ("transport", [tx, ty, tz + clearance_m], closed_gripper_m, 12.0),
+            ("seat", [tx, ty, tz], closed_gripper_m, 5.0),
+            ("settle", [tx, ty, tz], closed_gripper_m, 1.5),
+            ("release", [tx, ty, tz], open_gripper_m, 2.0),
+            ("withdraw", withdrawn, open_gripper_m, 4.0),
+            ("hold", withdrawn, open_gripper_m, 1.0),
         ]
     previous_center = np.array(sequence[0][1], dtype=float)
     previous_grip = sequence[0][2]
@@ -265,13 +370,28 @@ def build_plan(model, config, lift_only=False):
             fraction = k / samples
             point = previous_center + fraction * (center - previous_center)
             grip_reference = previous_grip + fraction * (grip - previous_grip)
-            targets = [point + [0, sign * hy, hz] for sign in (-1, 1)]
+            targets = [
+                point + tray_rotation @ np.array([0, sign * hy, hz])
+                for sign in (-1, 1)
+            ]
             posture = pickup_posture if phase in {"approach", "descend", "grasp", "lift"} else None
             try:
-                q, errors = robot.solve(targets, q, posture=posture, gripper_m=grip_reference)
+                q, errors = robot.solve(
+                    targets,
+                    q,
+                    posture=posture,
+                    gripper_m=grip_reference,
+                    target_rotations=grasp_rotations,
+                )
             except ValueError as exc:
                 raise ValueError(f"{phase} at {point.tolist()}: {exc}") from exc
-            ik_results.append({"phase": phase, **errors})
+            ik_results.append({
+                "phase": phase,
+                "target_tcp_positions_m": np.asarray(targets).tolist(),
+                "target_tcp_rotations": grasp_rotations.tolist(),
+                "gripper_reference_m": float(grip_reference),
+                **errors,
+            })
             waypoints.append(Waypoint(phase, duration_s / samples, q.copy(), grip_reference))
         previous_center, previous_grip = center, grip
     return robot, waypoints, ik_results

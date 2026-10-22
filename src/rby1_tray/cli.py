@@ -30,6 +30,16 @@ def source_hashes():
 _LOADED_SOURCES = source_hashes()
 
 
+def create_session(config, lift_only=False):
+    if config["base_mode"] == "mobile":
+        if lift_only:
+            raise ValueError("--lift-only is available only for the historical fixture experiment")
+        from .mission import MobileSession
+        return MobileSession(config)
+    from .session import Session
+    return Session(config, lift_only=lift_only)
+
+
 def write_manifest(output, expected_sources):
     import importlib.metadata
     import subprocess
@@ -44,7 +54,11 @@ def write_manifest(output, expected_sources):
         "render_backend": os.environ.get("MUJOCO_GL", "none"),
         "egl_vendor": os.environ.get("__EGL_VENDOR_LIBRARY_FILENAMES"),
         "source_sha256": expected_sources,
-        "artifact_sha256": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(output.iterdir()) if p.is_file() and p.name != "manifest.json"},
+        "artifact_sha256": {
+            p.relative_to(output).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in sorted(output.rglob("*"))
+            if p.is_file() and "assets" not in p.relative_to(output).parts and p != output / "manifest.json"
+        },
     }
     save_json(output / "manifest.json", manifest)
 
@@ -57,21 +71,20 @@ def run_episode(config, output, render=False, lift_only=False):
     import numpy as np
     from PIL import Image
     from .assets import asset_directory, provenance
-    from .session import Session
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     started = time.monotonic()
     expected_sources = _LOADED_SOURCES
     save_json(output / "config.json", config)
     try:
-        session = Session(config, lift_only=lift_only)
+        session = create_session(config, lift_only=lift_only)
     except ValueError as error:
         if "No feasible IK candidate" not in str(error):
             raise
         from .scene import build_scene, audit_model
         model, xml = build_scene(config)
         save_json(output / "model-audit.json", audit_model(model))
-        save_json(output / "upstream.json", provenance(asset_directory()))
+        save_json(output / "upstream.json", provenance(asset_directory(), config))
         (output / "scene.xml").write_text(xml.replace(str(asset_directory() / "assets"), "assets"))
         (output / "assets").symlink_to(asset_directory() / "assets", target_is_directory=True)
         result = {"success": False, "status": "planning_infeasible", "failure_reason": str(error),
@@ -81,7 +94,7 @@ def run_episode(config, output, render=False, lift_only=False):
         return result
     save_json(output / "model-audit.json", session.audit)
     save_json(output / "ik.json", session.ik_errors)
-    save_json(output / "upstream.json", provenance(asset_directory()))
+    save_json(output / "upstream.json", provenance(asset_directory(), config))
     portable_xml = session.xml.replace(str(asset_directory() / "assets"), "assets")
     (output / "scene.xml").write_text(portable_xml)
     (output / "assets").symlink_to(asset_directory() / "assets", target_is_directory=True)
@@ -91,7 +104,7 @@ def run_episode(config, output, render=False, lift_only=False):
             session.step(250)
             state = session.snapshot()
             if render:
-                frame = session.render(640, 480, 135, -20)
+                frame = session.render(640, 480, 105, -20)
                 if float(np.std(frame)) < 1:
                     raise RuntimeError("Renderer produced an empty frame")
                 frames.append(Image.fromarray(frame))
@@ -106,13 +119,20 @@ def run_episode(config, output, render=False, lift_only=False):
         with (output / "trace.jsonl").open("w") as stream:
             for row in session.log: stream.write(json.dumps(row, allow_nan=False) + "\n")
         evaluation = session.evaluator.result()
+        save_json(output / "ik.json", session.ik_errors)
+        save_json(output / "model-audit.json", session.audit)
+        if hasattr(session, "export_sim2real_dataset"):
+            session.export_sim2real_dataset(output / "controller-data")
         result = dict(evaluation)
         result["evaluation"] = evaluation
         result["run_completed"] = True
         result.update(wall_time_s=time.monotonic() - started, simulation_time_s=session.data.time,
                       metrics=session.snapshot()["metrics"], highest_tray_center_z_m=max(row["tray"]["pos_m"][2] for row in session.log),
                       task="grasp_lift_feasibility" if lift_only else "floor_to_container",
-                      modeling_scope="fixed-base simulation only; ground-truth state")
+                      modeling_scope=("mobile native-gripper simulation; RGB-D perception and encoder odometry; synthetic calibration"
+                                      if config["base_mode"] == "mobile" else "historical fixed-base simulation; ground-truth state"))
+        if config["base_mode"] == "mobile":
+            result["mission"] = final_snapshot["mission"]
         if lift_only:
             clearance = final_snapshot["tray"]["bottom_z_m"] - session.log[0]["tray"]["bottom_z_m"]
             result["feasibility_pass"] = bool(result["milestones"]["grasped"] and result["milestones"]["lifted"] and result["failure_reason"] is None and clearance >= .05)
@@ -151,19 +171,24 @@ def main(argv=None):
         print(directory); return 0
     rendering_environment()
     from .scene import load_config, build_scene, audit_model
-    config = load_config(args.config)
+    default_mobile = Path(__file__).resolve().parents[2] / "configs/mobile-native.json"
+    config = load_config(args.config or default_mobile)
     if args.command == "audit":
         model, _ = build_scene(config)
         print(json.dumps(audit_model(model), indent=2)); return 0
     if args.command == "plan":
+        if config["base_mode"] == "mobile":
+            print(json.dumps({"planning_mode": "online RGB-D observation followed by phase-wise IK",
+                              "status": "requires_physical_rollout", "command": "run",
+                              "object_ground_truth_planning": False}, indent=2))
+            return 0
         from .planning import build_plan
         model, _ = build_scene(config)
         _, _, errors = build_plan(model, config, lift_only=args.lift_only)
         print(json.dumps(errors, indent=2)); return 0 if max(e["position_error_m"] for e in errors) < .005 else 1
     if args.command == "view":
-        from .session import Session
         from .viewer import serve
-        session = Session(config, lift_only=args.lift_only)
+        session = create_session(config, lift_only=args.lift_only)
         try: serve(session, port=args.port)
         finally: session.close()
         return 0

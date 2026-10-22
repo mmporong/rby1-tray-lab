@@ -4,6 +4,8 @@ import gzip
 import hashlib
 import json
 from pathlib import Path
+import re
+import subprocess
 
 
 def verify(directory):
@@ -23,9 +25,19 @@ def verify(directory):
             raise ValueError(f'Missing artifact: {path}')
         if actual != expected:
             raise ValueError(f'Hash mismatch: {path}')
-    root = Path(__file__).resolve().parents[1] / 'src/rby1_tray'
+    repository = Path(__file__).resolve().parents[1]
+    commit = manifest['commit']
+    if not re.fullmatch(r'[0-9a-f]{40}', commit):
+        raise ValueError('Evidence requires a recorded Git source revision')
     for name, expected in manifest['source_sha256'].items():
-        actual = hashlib.sha256((root / name).read_bytes()).hexdigest()
+        if Path(name).is_absolute() or '..' in Path(name).parts:
+            raise ValueError('Invalid source path in manifest')
+        # Historical runs retain their own source revision after the project evolves.
+        source = subprocess.run(
+            ['git', '-C', str(repository), 'show', f'{commit}:src/rby1_tray/{name}'],
+            capture_output=True, check=True,
+        ).stdout
+        actual = hashlib.sha256(source).hexdigest()
         if actual != expected:
             raise ValueError(f'Source mismatch: {name}')
     result = json.loads((directory / 'result.json').read_text())

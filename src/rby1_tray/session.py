@@ -149,7 +149,8 @@ class Session:
                         supported[name] = True
             for side in ("left", "right"):
                 for finger in (1, 2):
-                    if any(n.startswith(f"{side}_pad_{finger}_") for n in names) and f"handle_{side}" in names:
+                    target_name = f"tray_yrim_{1 if side == 'left' else -1}" if self.config.get("gripper_model") == "upstream_native" else f"handle_{side}"
+                    if any(n.startswith(f"{side}_pad_{finger}_") for n in names) and target_name in names:
                         pads[f"{side}_fingers"][finger - 1] = True
                         forces[side] += float(force[0])
                         pad_forces[side][finger - 1] += float(force[0])
@@ -159,8 +160,12 @@ class Session:
             if any(robot_flags) and "tray" in bodies:
                 pads["robot_tray_contact"] = True
             if any(robot_flags) and contact.dist < -.002:
-                allowed = any(n.startswith(("left_pad_", "right_pad_")) for n in names) and any(n.startswith("handle_") for n in names)
-                base_floor = "floor" in names and any(b in {"base", "wheel_l", "wheel_r"} for b in bodies)
+                allowed = any(
+                    any(n.startswith(f"{side}_pad_") for n in names)
+                    and (f"tray_yrim_{1 if side == 'left' else -1}" in names if self.config.get("gripper_model") == "upstream_native" else f"handle_{side}" in names)
+                    for side in ("left", "right")
+                )
+                base_floor = "floor" in names and any(b in {"base", "wheel_l", "wheel_r", "wheel_fr_link", "wheel_fl_link", "wheel_rr_link", "wheel_rl_link"} for b in bodies)
                 if not allowed and not base_floor:
                     pads["forbidden"].append("/".join(names))
         pads["forbidden"] = sorted(set(pads["forbidden"]))
@@ -196,8 +201,11 @@ class Session:
                              "supported_by_tray": supported[name], "linear_speed_m_s": float(np.linalg.norm(body_velocity[3:]))})
         clearance = {}
         rotation = d.xmat[tid].reshape(3, 3)
+        grasp = self.config.get("grasp", {})
+        grasp_y = grasp.get("side_offset_y_m", self.config.get("handle_y_m", self.config["tray_half_extents_m"][1]))
+        grasp_z = grasp.get("tcp_height_m", self.config.get("handle_z_m", .055))
         for side, sign in [("left", 1), ("right", -1)]:
-            handle = pos + rotation @ np.array([0, sign * self.config["handle_y_m"], self.config["handle_z_m"]])
+            handle = pos + rotation @ np.array([0, sign * grasp_y, grasp_z])
             clearance[side] = float(np.linalg.norm(d.site(f"{side}_tcp").xpos - handle))
         joints = d.qpos[self.robot.qadr]
         violation = bool(np.any(joints < self.robot.low - .01) or np.any(joints > self.robot.high + .01))
@@ -212,7 +220,8 @@ class Session:
                         "max_joint_torque_nm": self.max_joint_torque_nm,
                         "max_finger_actuator_force_n": self.max_finger_force_n},
             "result": self.evaluator.result() if hasattr(self, "evaluator") else {},
-            "backend": "CPU MuJoCo", "controller": "IK position baseline", "base_mode": "fixture",
+            "backend": "CPU MuJoCo", "controller": "IK position baseline", "base_mode": self.config["base_mode"],
+            "target": copy.deepcopy(self.config["target"]),
             "ik_errors": self.ik_errors}
         state["joint_state"] = {"names": self.robot.names, "position_rad": joints.tolist(),
                                 "reference_rad": self.command_rad.tolist(),
@@ -226,18 +235,29 @@ class Session:
         state = self.snapshot()
         state["result"] = self.evaluator.update(state)
         if force_log or state["result"]["terminal"] or self.data.time - self._last_record_s >= self.config["record_dt_s"] - 1e-9:
-            self.log.append(state)
+            # Detailed path diagnostics are exported once in ik.json. Keeping
+            # the mutable IK list in every historical snapshot leaks future
+            # planning entries into earlier timestamps and duplicates the path.
+            logged = dict(state)
+            logged.pop("ik_errors", None)
+            self.log.append(logged)
             self._last_record_s = self.data.time
         if state["result"]["terminal"]:
             self.finished = True
 
-    def render(self, width=960, height=720, azimuth=135, elevation=-20):
+    def render(self, width=960, height=720, azimuth=105, elevation=-20, view="overview"):
         if self.renderer is None or self.renderer.width != width or self.renderer.height != height:
             if self.renderer: self.renderer.close()
             self.renderer = mujoco.Renderer(self.model, height, width)
         camera = mujoco.MjvCamera()
-        camera.lookat[:] = [.4, .25, .75]
-        camera.distance = 2.7
+        presets = {
+            "overview": ([.45, 0, .75], 3.2),
+            "pickup": ([.65, 0, .30], 1.45),
+            "placement": ([*self.config["target"]["center_xy_m"], self.config["target"]["support_z_m"] - .02], 1.7),
+        }
+        lookat, distance = presets.get(view, presets["overview"])
+        camera.lookat[:] = lookat
+        camera.distance = distance
         camera.azimuth = azimuth
         camera.elevation = elevation
         self.renderer.update_scene(self.data, camera)

@@ -52,6 +52,12 @@ class AssetIntegrityTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "local changes"):
                 validate_checkout(checkout, expected_revision=revision)
 
+    def test_mobile_native_provenance_uses_the_executed_model(self):
+        result = provenance(asset_directory(), {'base_mode': 'mobile', 'gripper_model': 'upstream_native'})
+        self.assertIn('rby1m_1.2.xml', result['files'])
+        self.assertNotIn('rby1a_1.2.xml', result['files'])
+        self.assertNotIn('finger_proxy_comparison', result)
+
     def test_proxy_measurement_matches_generated_scene(self):
         comparison = finger_proxy_comparison(asset_directory())
         self.assertEqual(comparison["proxy"]["center_m"], FINGER_PROXY_CENTER_M)

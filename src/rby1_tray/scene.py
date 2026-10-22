@@ -12,8 +12,8 @@ from .assets import asset_directory
 def load_config(path=None):
     path = Path(path) if path else Path(__file__).resolve().parents[2] / "configs/default.json"
     config = json.loads(path.read_text())
-    if config["base_mode"] != "fixture":
-        raise ValueError("Only explicitly fixtured manipulation is implemented")
+    if config["base_mode"] not in {"fixture", "mobile"}:
+        raise ValueError("Unknown base mode")
     if config.get("controller") != "ik_position_baseline":
         raise ValueError("Only the IK position baseline controller is implemented")
     if not 0 < config["physics_dt_s"] <= config["control_dt_s"]:
@@ -34,43 +34,97 @@ def numbers(values):
 
 def build_scene(config):
     directory = asset_directory()
-    root = ET.parse(directory / "rby1a_1.2.xml").getroot()
+    mobile = config["base_mode"] == "mobile"
+    native = config.get("gripper_model") == "upstream_native"
+    cad_gripper = native and config.get("gripper_collision") == "cad_mesh"
+    root = ET.parse(directory / ("rby1m_1.2.xml" if mobile else "rby1a_1.2.xml")).getroot()
     root.find("compiler").set("meshdir", str(directory / "assets"))
+    if mobile:
+        wheel_gain = float(config["drive"]["wheel_velocity_gain"])
+        if not np.isfinite(wheel_gain) or wheel_gain <= 0:
+            raise ValueError("Wheel velocity gain must be finite and positive")
+        for actuator in root.find("actuator"):
+            if actuator.get("joint", "").startswith("wheel_"):
+                actuator.set("kv", str(wheel_gain))
+    servo = config.get("upper_body_servo")
+    if servo is not None:
+        kp, kv = float(servo["kp_nm_per_rad"]), float(servo["kv_nms_per_rad"])
+        if not np.isfinite(kp) or not np.isfinite(kv) or kp <= 0 or kv <= 0:
+            raise ValueError("Upper-body servo gains must be finite and positive")
+        for actuator in root.find("actuator"):
+            if actuator.get("joint", "").startswith(("torso_", "right_arm_", "left_arm_")):
+                actuator.set("kp", str(kp))
+                actuator.set("kv", str(kv))
     ET.SubElement(root, "option", timestep=str(config["physics_dt_s"]), integrator="implicitfast",
                   solver="Newton", iterations="40", cone="elliptic", impratio="100")
     ET.SubElement(root, "size", memory="64M")
     visual = ET.SubElement(root, "visual")
     ET.SubElement(visual, "global", offwidth="1280", offheight="960")
-    ET.SubElement(visual, "headlight", ambient="0.45 0.45 0.45", diffuse="0.7 0.7 0.7")
-    ET.SubElement(root.find("asset"), "texture", type="skybox", builtin="gradient", rgb1=".94 .96 .99", rgb2=".94 .96 .99", width="256", height="256")
+    ET.SubElement(visual, "headlight", ambient="0.3 0.3 0.34", diffuse="0.6 0.65 0.7")
+    asset = root.find("asset")
+    ET.SubElement(asset, "texture", type="skybox", builtin="gradient", rgb1=".035 .055 .075", rgb2=".13 .18 .22", width="256", height="256")
+    ET.SubElement(asset, "texture", name="concrete_grid", type="2d", builtin="checker", rgb1=".14 .18 .21", rgb2=".17 .21 .24", width="512", height="512")
+    ET.SubElement(asset, "material", name="concrete", texture="concrete_grid", texrepeat="10 10", reflectance=".08", shininess=".1")
     world = root.find("worldbody")
-    ET.SubElement(world, "light", pos="1 -1 4", dir="-0.2 0 -1", directional="true")
-    ET.SubElement(world, "geom", name="floor", type="plane", size="4 4 .1", rgba=".91 .93 .95 1",
+    ET.SubElement(world, "light", pos="0 -1 3.5", dir=".15 .2 -1", directional="true", diffuse=".85 .88 .92", castshadow="true")
+    ET.SubElement(world, "light", pos="1.5 2 3", dir="-.25 -.3 -1", diffuse=".45 .6 .65", castshadow="false")
+    ET.SubElement(world, "geom", name="floor", type="plane", size="4 4 .1", material="concrete",
                   friction="0.8 0.01 0.001")
+    ET.SubElement(world, "geom", name="cell_back_wall", type="box", pos="2.5 0 1.5", size=".06 3 1.5", rgba=".09 .13 .16 1")
+    ET.SubElement(world, "geom", name="wall_service_line", type="box", pos="2.435 0 1.1", size=".005 3 .012", rgba=".85 .48 .12 1", contype="0", conaffinity="0")
+    for axis in (0, 1):
+        for sign in (-1, 1):
+            position = [.45, .40, .001]
+            position[axis] += sign * [.95, 1.05][axis]
+            half = [.95, 1.05, .001]
+            half[axis] = .008
+            ET.SubElement(world, "geom", name=f"zone_line_{axis}_{sign}", type="box", pos=numbers(position), size=numbers(half), rgba=".9 .55 .16 1", contype="0", conaffinity="0")
     # Remove the free base joint: an explicit fixture, never an object attachment.
     base = world.find("body[@name='base']")
-    base.remove(base.find("joint[@name='world_j']"))
+    if not mobile:
+        base.remove(base.find("joint[@name='world_j']"))
     # Adjacent assembly meshes overlap even in the upstream zero pose.
     # Exclude only these structural neighbors; retain arm/environment collisions.
-    for neighbor in ("wheel_l", "wheel_r", "link_torso_0"):
+    for neighbor in (() if mobile else ("wheel_l", "wheel_r", "link_torso_0")):
         ET.SubElement(root.find("contact"), "exclude", body1="base", body2=neighbor)
     for index, geom in enumerate(world.findall(".//geom")):
         if not geom.get("name"):
             geom.set("name", f"robot_geom_{index}")
     for side, letter in [("left", "l"), ("right", "r")]:
         wrist = root.find(f".//body[@name='link_{side}_arm_6']")
+        if cad_gripper:
+            hand = root.find(f".//body[@name='EE_BODY_{letter.upper()}']")
+            for geom in hand.findall("geom"):
+                if geom.get("class") != "visual":
+                    geom.set("type", "mesh")
         ET.SubElement(wrist, "site", name=f"{side}_tcp", pos="0 0 -0.228", size=".008", rgba="1 .4 0 1")
         for finger in (1, 2):
             body = root.find(f".//body[@name='ee_finger_{letter}{finger}']")
             for index, geom in enumerate(body.findall("geom")):
                 if geom.get("class") != "visual":
-                    geom.set("contype", "0")
-                    geom.set("conaffinity", "0")
-            ET.SubElement(body, "geom", name=f"{side}_pad_{finger}_proxy", type="box",
-                          pos="0 0 -.027", size=".003 .014 .025", mass="0",
-                          friction="2 .05 .01", condim="4", solref=".005 1", rgba=".25 .27 .3 1")
-    for equality in root.find("equality"):
-        equality.set("solref", ".003 1")
+                    if native:
+                        geom.set("name", f"{side}_pad_{finger}_native_{index}")
+                        if cad_gripper:
+                            # Upstream's in-model-collision class defaults to
+                            # fitted spheres. Explicit CAD collision avoids
+                            # confusing their round contact with flat fingers.
+                            geom.set("type", "mesh")
+                    else:
+                        geom.set("contype", "0")
+                        geom.set("conaffinity", "0")
+            if not native:
+                ET.SubElement(body, "geom", name=f"{side}_pad_{finger}_proxy", type="box",
+                              pos="0 0 -.027", size=".003 .014 .025", mass="0",
+                              friction="2 .05 .01", condim="4", solref=".005 1", rgba=".25 .27 .3 1")
+    if native and "gripper_coupling_timeconst_s" in config:
+        timeconst = float(config["gripper_coupling_timeconst_s"])
+        if not np.isfinite(timeconst) or timeconst < 2 * config["physics_dt_s"]:
+            raise ValueError("Gripper coupling time constant must be at least two physics steps")
+        for equality in root.find("equality"):
+            equality.set("solref", f"{timeconst} 1")
+    elif not native:
+        for equality in root.find("equality"):
+            equality.set("solref", ".003 1")
     tray = ET.SubElement(world, "body", name="tray", pos=numbers(config["tray_initial_pos_m"]))
     ET.SubElement(tray, "freejoint", name="tray_free")
     hx, hy, hz = config["tray_half_extents_m"]
@@ -81,7 +135,7 @@ def build_scene(config):
                       pos=numbers([sign * hx, 0, hz + .025]), mass=".012", rgba=".12 .35 .52 1")
         ET.SubElement(tray, "geom", name=f"tray_yrim_{sign}", type="box", size=numbers([hx, .006, .025]),
                       pos=numbers([0, sign * hy, hz + .025]), mass=".012", rgba=".12 .35 .52 1")
-    for side, sign in [("left", 1), ("right", -1)]:
+    for side, sign in ([] if native else [("left", 1), ("right", -1)]):
         y, z = sign * config["handle_y_m"], config["handle_z_m"]
         ET.SubElement(tray, "geom", name=f"handle_{side}", type="box", size=".014 .048 .012",
                       pos=numbers([0, y, z]), mass=".02", rgba=".9 .65 .15 1", friction="1 .02 .001", condim="4", solref=".005 1")
@@ -105,13 +159,85 @@ def build_scene(config):
     cx, cy = target["center_xy_m"]
     tx, ty = target["inner_half_xy_m"]
     sz = target["support_z_m"]
+    stand = target.get("stand", {"overhang_m": 0, "leg_half_width_m": .025, "deck_thickness_m": .015})
+    overhang, leg, deck = stand["overhang_m"], stand["leg_half_width_m"], stand["deck_thickness_m"]
+    deck_top = sz - .03
+    leg_top = deck_top - deck
+    ET.SubElement(world, "geom", name="stand_deck", type="box", pos=numbers([cx, cy, deck_top - deck / 2]), size=numbers([tx + overhang, ty + overhang, deck / 2]), rgba=".16 .23 .28 1")
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            leg_x, leg_y = cx + sx * (tx + overhang - leg), cy + sy * (ty + overhang - leg)
+            ET.SubElement(world, "geom", name=f"stand_leg_{sx}_{sy}", type="box", pos=numbers([leg_x, leg_y, leg_top / 2]), size=numbers([leg, leg, leg_top / 2]), rgba=".22 .30 .35 1")
+            ET.SubElement(world, "geom", name=f"stand_foot_{sx}_{sy}", type="box", pos=numbers([leg_x, leg_y, .012]), size=numbers([leg + .02, leg + .02, .012]), rgba=".08 .11 .13 1")
+    for sx in (-1, 1):
+        ET.SubElement(world, "geom", name=f"stand_brace_{sx}", type="box", pos=numbers([cx + sx * (tx + overhang - leg), cy, .18]), size=numbers([leg, ty + overhang, .02]), rgba=".20 .28 .32 1")
     ET.SubElement(world, "geom", name="container_bottom", type="box", pos=numbers([cx, cy, sz - .015]),
-                  size=numbers([tx, ty, .015]), rgba=".6 .65 .72 1")
+                  size=numbers([tx, ty, .015]), rgba=".30 .38 .42 1")
     for sign in (-1, 1):
         ET.SubElement(world, "geom", name=f"container_xwall_{sign}", type="box",
-                      pos=numbers([cx + sign * (tx + .012), cy, sz + .035]), size=numbers([.012, ty + .024, .035]), rgba=".65 .72 .8 .7")
+                      pos=numbers([cx + sign * (tx + .012), cy, sz + .035]), size=numbers([.012, ty + .024, .035]), rgba=".9 .50 .12 1")
         ET.SubElement(world, "geom", name=f"container_ywall_{sign}", type="box",
-                      pos=numbers([cx, cy + sign * (ty + .012), sz + .035]), size=numbers([tx, .012, .035]), rgba=".65 .72 .8 .7")
+                      pos=numbers([cx, cy + sign * (ty + .012), sz + .035]), size=numbers([tx, .012, .035]), rgba=".9 .50 .12 1")
+    if mobile:
+        # Body-mounted sensor transforms are synthetic mount designs, not measurements.
+        head = root.find(".//body[@name='link_head_2']")
+        if head is None:
+            head = root.find(".//body[@name='link_head_1']")
+        if head is None:
+            raise ValueError("Robot head frame missing")
+        ET.SubElement(head, "camera", name="head_rgbd", pos=".08 0 .04", xyaxes="0 -1 0 .7 0 .7", fovy="60")
+        sensor = root.find("sensor")
+        if sensor is None:
+            sensor = ET.SubElement(root, "sensor")
+        # Camera cases use nominal dimensions; mass/inertia provenance is in config.
+        head_case = ET.SubElement(head, "body", name="head_camera_case", pos=".067 0 .053")
+        ET.SubElement(head_case, "geom", name="robot_geom_head_camera_case", type="box", size=".01835 .0468 .0159", mass=".151", rgba=".12 .15 .17 1")
+        for side in ("left", "right"):
+            wrist = root.find(f".//body[@name='link_{side}_arm_6']")
+            ET.SubElement(wrist, "camera", name=f"{side}_wrist_rgbd", pos=".035 .045 -.07", xyaxes="1 0 0 0 1 0", fovy="58")
+            case = ET.SubElement(wrist, "body", name=f"{side}_wrist_camera_case", pos=".035 .045 -.0585")
+            ET.SubElement(case, "geom", name=f"robot_geom_{side}_camera_case", type="box", size=".021 .021 .0115", mass=".06", rgba=".16 .18 .20 1")
+            # Preserve every EE collision pose while locating the virtual FT
+            # boundary between the wrist link and the complete gripper assembly.
+            flange_offset = np.array([0.0, 0.0, -0.1261])
+            flange = ET.SubElement(wrist, "body", name=f"{side}_ft_mount", pos=numbers(flange_offset))
+            letter = "l" if side == "left" else "r"
+            for name in (f"EE_BODY_{letter.upper()}", f"ee_finger_{letter}1", f"ee_finger_{letter}2"):
+                child = wrist.find(f"body[@name='{name}']")
+                position = np.fromstring(child.get("pos", "0 0 0"), sep=" ")
+                wrist.remove(child)
+                child.set("pos", numbers(position - flange_offset))
+                flange.append(child)
+            ET.SubElement(flange, "site", name=f"{side}_ft_frame", size=".004", rgba="0 0 0 0")
+            ET.SubElement(sensor, "force", name=f"{side}_wrist_force_n", site=f"{side}_ft_frame")
+            ET.SubElement(sensor, "torque", name=f"{side}_wrist_torque_nm", site=f"{side}_ft_frame")
+        for profile in config.get("sensors", {}).values():
+            camera = root.find(f".//camera[@name='{profile['camera_name']}']")
+            if camera is None:
+                raise ValueError("Configured sensor camera is absent")
+            transform = np.asarray(profile["T_mount_optical"], dtype=float)
+            if transform.shape != (4, 4) or not np.allclose(transform[3], [0, 0, 0, 1]):
+                raise ValueError("Invalid optical mount transform")
+            rotation = transform[:3, :3]
+            if not np.allclose(rotation.T @ rotation, np.eye(3)) or not np.isclose(np.linalg.det(rotation), 1):
+                raise ValueError("Optical mount rotation must be orthonormal")
+            rotation_gl = rotation @ np.diag([1, -1, -1])
+            quat = np.zeros(4)
+            mujoco.mju_mat2Quat(quat, rotation_gl.ravel())
+            camera.attrib.pop("xyaxes", None)
+            camera.set("quat", numbers(quat))
+            camera.set("pos", numbers(transform[:3, 3]))
+            camera.set("fovy", str(profile["fovy_deg"]))
+            case_name = "head_camera_case" if profile["camera_name"] == "head_rgbd" else profile["camera_name"].replace("rgbd", "camera_case")
+            case = root.find(f".//body[@name='{case_name}']")
+            if case is not None:
+                dimensions = np.asarray(profile["case_dimensions_m"], dtype=float)
+                case.set("pos", numbers(transform[:3, 3] - rotation[:, 2] * dimensions[2] / 2))
+                mujoco.mju_mat2Quat(quat, rotation.ravel())
+                case.set("quat", numbers(quat))
+                case.find("geom").set("size", numbers(dimensions / 2))
+                case.find("geom").set("mass", str(profile["case_mass_kg"]))
+        ET.SubElement(world, "camera", name="task_camera", pos="1.0 0 2.7", xyaxes="1 0 0 0 1 0", fovy="55")
     xml = ET.tostring(root, encoding="unicode")
     return mujoco.MjModel.from_xml_string(xml), xml
 
@@ -133,6 +259,7 @@ def audit_model(model):
             model.eq_obj1id[index] in object_ids or model.eq_obj2id[index] in object_ids
         ):
             raise ValueError("Task objects cannot use equality connect constraints")
+    mobile = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, "world_j") >= 0
     return {"free_objects": True, "object_attachment": False, "runtime_state_overwrite": False,
-            "base_mode": "fixture", "stability_claim": False,
-            "robot": "RBY1-A 1.2", "nq": model.nq, "nv": model.nv, "nu": model.nu}
+            "base_mode": "mobile" if mobile else "fixture", "stability_claim": False,
+            "robot": "RBY1-M 1.2" if mobile else "RBY1-A 1.2", "nq": model.nq, "nv": model.nv, "nu": model.nu}

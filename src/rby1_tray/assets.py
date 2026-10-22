@@ -116,23 +116,32 @@ def asset_directory(fetch=False):
     return path
 
 
-def provenance(path):
+def provenance(path, config=None):
     path = Path(path)
     checkout = path.parent
     identity = validate_checkout(checkout)
     license_text = (path / "LICENSE").read_text()
     if "Apache License" not in license_text or "Version 2.0" not in license_text:
         raise ValueError("Upstream LICENSE is not recognizable as Apache-2.0")
-    files = [path / MODEL_FILE, path / "LICENSE", *sorted((path / "assets").glob("*"))]
-    return {
+    mobile = (config or {}).get("base_mode") == "mobile"
+    native = (config or {}).get("gripper_model") == "upstream_native"
+    model_file = "rby1m_1.2.xml" if mobile else MODEL_FILE
+    files = [path / model_file, path / "LICENSE", *sorted((path / "assets").glob("*"))]
+    result = {
         "repository": identity["repository"],
         "revision": identity["revision"],
         "worktree_clean": identity["clean"],
         "license": "Apache-2.0",
-        "model": "RBY1-A 1.2",
+        "model": "RBY1-M 1.2" if mobile else "RBY1-A 1.2",
+        "model_file": model_file,
+        "finger_geometry": ("upstream CAD meshes with explicit convex-mesh collision; replaces upstream fitted spheres"
+                            if native and (config or {}).get("gripper_collision") == "cad_mesh"
+                            else "unchanged upstream fitted-sphere collision" if native else "synthetic flat-pad proxy"),
         "files": {
             str(file.relative_to(path)): hashlib.sha256(file.read_bytes()).hexdigest()
             for file in files if file.is_file()
         },
-        "finger_proxy_comparison": finger_proxy_comparison(path),
     }
+    if not native:
+        result["finger_proxy_comparison"] = finger_proxy_comparison(path)
+    return result

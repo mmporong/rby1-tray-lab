@@ -3,138 +3,178 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RB-Y1 Tray Lab</title>
+  <title>RB-Y1 Tray Transfer Cell</title>
   <style>
     :root {
-      color-scheme: light;
-      --ink: #14233b;
-      --muted: #627089;
-      --line: #dce3ed;
-      --paper: #ffffff;
-      --wash: #f3f6fa;
-      --blue: #175cd3;
-      --blue-dark: #0e3f98;
-      --green: #147d64;
-      --amber: #b15f00;
-      --danger: #b42318;
+      color-scheme: dark;
+      --void: #080b0e; --graphite: #0e1318; --panel: #151b21; --line: #34424d;
+      --text: #e9f0f4; --muted: #91a0aa; --cyan: #43d7e6; --amber: #f6b94a;
+      --red: #ff746c; --green: #6ee7a8;
       font-family: Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, sans-serif;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--wash); color: var(--ink); min-width: 280px; }
-    button { font: inherit; }
-    button:focus-visible { outline: 3px solid #84adff; outline-offset: 2px; }
-    .shell { max-width: 1500px; margin: 0 auto; padding: 20px; }
-    header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 16px; }
-    .eyebrow { margin: 0 0 4px; color: var(--blue); font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-    h1 { margin: 0; font-size: clamp(1.55rem, 3vw, 2.2rem); letter-spacing: -.04em; }
-    .subtitle { margin: 7px 0 0; color: var(--muted); font-size: .92rem; }
-    .badges { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
-    .badge { border: 1px solid var(--line); border-radius: 999px; background: var(--paper); color: #34445e; padding: 6px 10px; font-size: .75rem; font-weight: 700; }
-    .layout { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(300px, .72fr); gap: 16px; align-items: start; }
-    .panel { border: 1px solid var(--line); border-radius: 14px; background: var(--paper); box-shadow: 0 8px 26px rgba(20, 35, 59, .06); overflow: hidden; }
-    .stage { position: relative; aspect-ratio: 4 / 3; background: #e8edf4; }
+    [hidden] { display: none !important; }
+    body { margin: 0; min-width: 300px; background: var(--void); color: var(--text); }
+    button, select { font: inherit; }
+    button:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+    .shell { width: min(1680px, 100%); margin: 0 auto; padding: 18px; }
+    header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 5px 3px 17px; }
+    .eyebrow { margin: 0 0 6px; color: var(--cyan); font: 750 .69rem/1 ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(1.55rem, 2.5vw, 2.35rem); font-weight: 730; letter-spacing: -.045em; }
+    .subtitle { max-width: 690px; margin: 7px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.5; }
+    .condition { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+    .badge { border: 1px solid var(--line); background: var(--graphite); color: #b8c5cd; padding: 7px 10px; font: 680 .7rem/1 ui-monospace, monospace; }
+    .layout { display: grid; grid-template-columns: minmax(0, 2.1fr) minmax(310px, .72fr); gap: 14px; align-items: start; }
+    .panel { border: 1px solid var(--line); background: var(--panel); box-shadow: 0 18px 45px rgba(0,0,0,.24); }
+    .viewport-panel { overflow: hidden; }
+    .stage { position: relative; height: min(66vh, 720px); min-height: 360px; background: #050709; }
+    .stage::after { position: absolute; inset: 0; pointer-events: none; content: ""; box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), inset 0 -100px 100px rgba(0,0,0,.18); }
     .stage img { width: 100%; height: 100%; display: block; object-fit: contain; }
-    .stage-status { position: absolute; inset: 14px auto auto 14px; display: flex; align-items: center; gap: 8px; border-radius: 999px; background: rgba(255,255,255,.92); padding: 7px 11px; color: #3c4b62; font-size: .78rem; font-weight: 750; box-shadow: 0 3px 12px rgba(20,35,59,.12); }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: #7b879a; }
-    .dot.playing, .dot.finished { background: var(--green); box-shadow: 0 0 0 4px rgba(20,125,100,.14); }
-    .dot.failed { background: var(--danger); box-shadow: 0 0 0 4px rgba(180,35,24,.14); }
-    .error { position: absolute; inset: auto 14px 14px; margin: 0; border-radius: 8px; background: #fff1f0; color: var(--danger); padding: 10px 12px; font-size: .82rem; }
+    .stage-top { position: absolute; z-index: 2; inset: 14px 14px auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .run-status, .target-callout { border: 1px solid rgba(255,255,255,.16); background: rgba(8,11,14,.86); backdrop-filter: blur(9px); }
+    .run-status { display: flex; align-items: center; gap: 9px; padding: 9px 12px; color: #cbd6dc; font-size: .77rem; font-weight: 720; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #73818a; }
+    .dot.playing { background: var(--cyan); box-shadow: 0 0 0 5px rgba(67,215,230,.16); }
+    .dot.finished { background: var(--green); box-shadow: 0 0 0 5px rgba(110,231,168,.14); }
+    .dot.failed { background: var(--red); box-shadow: 0 0 0 5px rgba(255,116,108,.14); }
+    .target-callout { min-width: 154px; padding: 9px 11px; text-align: right; }
+    .target-callout span { display: block; color: var(--muted); font-size: .67rem; }
+    .target-callout strong { display: block; margin-top: 2px; color: var(--amber); font: 730 .95rem/1.3 ui-monospace, monospace; }
+    .error { position: absolute; z-index: 3; inset: auto 14px 14px; margin: 0; border: 1px solid rgba(255,116,108,.55); background: rgba(60,18,20,.94); color: #ffd4d1; padding: 11px 13px; font-size: .8rem; }
     .hidden { display: none; }
-    .toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding: 12px 14px; }
-    .button-group { display: flex; flex-wrap: wrap; gap: 8px; }
-    button { min-height: 42px; border: 1px solid #c9d3e2; border-radius: 9px; background: var(--paper); color: #293a55; padding: 8px 13px; font-weight: 750; cursor: pointer; }
-    button:hover { background: #f7f9fc; border-color: #9aabc3; }
-    button.primary { border-color: var(--blue); background: var(--blue); color: white; }
-    button.primary:hover { background: var(--blue-dark); }
-    button[aria-pressed="true"] { border-color: var(--green); color: var(--green); background: #edf9f5; }
-    button:disabled { cursor: wait; opacity: .55; }
-    .camera-readout { min-width: 128px; color: var(--muted); font-size: .78rem; text-align: right; }
-    aside { display: grid; gap: 16px; }
-    .section { padding: 16px; }
-    .section h2 { margin: 0 0 12px; font-size: .92rem; letter-spacing: -.01em; }
-    .metrics { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-    .metric { min-width: 0; padding: 12px; border-bottom: 1px solid var(--line); }
-    .metric:nth-child(odd) { border-right: 1px solid var(--line); }
-    .metric:nth-last-child(-n+2) { border-bottom: 0; }
-    .metric dt { margin: 0 0 5px; color: var(--muted); font-size: .72rem; font-weight: 700; }
-    .metric dd { margin: 0; overflow-wrap: anywhere; font-size: .97rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .timeline { position: absolute; z-index: 2; inset: auto 14px 14px; display: grid; grid-template-columns: repeat(5, 1fr); width: calc(100% - 28px); gap: 3px; }
+    .timeline-step { min-width: 0; border-top: 2px solid rgba(255,255,255,.18); padding-top: 7px; color: rgba(233,240,244,.55); font-size: .68rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .timeline-step.done { border-color: var(--green); color: #bdeed4; }
+    .timeline-step.active { border-color: var(--cyan); color: white; }
+    .toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; border-top: 1px solid var(--line); padding: 12px 14px; background: var(--graphite); }
+    .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    button, select { min-height: 44px; border: 1px solid #465560; border-radius: 3px; background: #1b242b; color: #dbe5ea; padding: 8px 13px; font-weight: 700; cursor: pointer; }
+    button:hover, select:hover { border-color: #6f828e; background: #222d35; }
+    button.primary { min-width: 106px; border-color: var(--cyan); background: var(--cyan); color: #071014; }
+    button.primary:hover { background: #78e5ef; }
+    button[aria-pressed="true"] { border-color: var(--cyan); color: var(--cyan); background: rgba(67,215,230,.16); }
+    button:disabled, select:disabled { cursor: wait; opacity: .5; }
+    label { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: .72rem; }
+    .view-tabs { display: flex; align-items: center; gap: 4px; }
+    .view-tabs button { min-height: 38px; padding: 7px 10px; font-size: .72rem; }
+    .camera-readout { grid-column: 1 / -1; color: #71818b; font: .68rem/1.3 ui-monospace, monospace; }
+    .sensor-strip { border-top: 1px solid var(--line); padding: 14px; background: #0b1014; }
+    .sensor-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+    .sensor-heading h2 { margin: 0; font-size: .82rem; }
+    .sensor-heading p { margin: 5px 0 0; color: var(--muted); font-size: .68rem; line-height: 1.45; }
+    .sensor-select { min-width: 205px; display: grid; gap: 5px; }
+    .sensor-select label { display: block; }
+    .sensor-select select { width: 100%; }
+    .sensor-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; min-height: 190px; }
+    .sensor-media { min-width: 0; margin: 0; border: 1px solid #2c3942; background: #050709; }
+    .sensor-media img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: #030506; }
+    .sensor-media figcaption { display: flex; justify-content: space-between; gap: 10px; padding: 8px 10px; color: #b8c5cd; font-size: .67rem; }
+    .sensor-media figcaption span:last-child { color: #6f828e; }
+    .sensor-empty { grid-column: 1 / -1; display: grid; place-items: center; min-height: 190px; border: 1px dashed #34424d; color: var(--muted); padding: 24px; text-align: center; font-size: .75rem; line-height: 1.55; }
+    .sensor-meta { display: flex; flex-wrap: wrap; gap: 7px 16px; margin: 10px 0 0; color: #8697a1; font: .66rem/1.45 ui-monospace, monospace; }
+    aside { display: grid; gap: 14px; }
+    .section { padding: 15px; }
+    .section-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .section h2 { margin: 0; font-size: .82rem; letter-spacing: .02em; }
+    .section-kicker { color: var(--muted); font: .65rem/1 ui-monospace, monospace; }
+    .mission { border-left: 3px solid var(--amber); background: rgba(246,185,74,.14); padding: 12px; }
+    .mission strong { display: block; color: var(--amber); font-size: .78rem; }
+    .mission p { margin: 6px 0 0; color: #d3dce1; font-size: .78rem; line-height: 1.55; }
+    .metrics { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+    .metric { min-width: 0; padding: 11px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .metric dt { margin: 0 0 6px; color: var(--muted); font-size: .66rem; font-weight: 650; }
+    .metric dd { margin: 0; overflow-wrap: anywhere; font: 720 .87rem/1.35 ui-monospace, monospace; }
     .metric dd.good { color: var(--green); }
     .metric dd.warn { color: var(--amber); }
-    pre { max-height: 330px; margin: 0; overflow: auto; border-radius: 9px; background: #111b2c; color: #dce8fa; padding: 13px; font: 12px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
-    .help { margin: 10px 0 0; color: var(--muted); font-size: .76rem; line-height: 1.5; }
-    @media (max-width: 920px) {
-      header { align-items: flex-start; flex-direction: column; }
-      .badges { justify-content: flex-start; }
-      .layout { grid-template-columns: 1fr; }
-      aside { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 620px) {
-      .shell { padding: 12px; }
-      aside { grid-template-columns: 1fr; }
-      .stage { aspect-ratio: 1 / 1; }
-      .toolbar { align-items: stretch; }
-      .button-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); flex: 1 1 100%; }
-      button { min-height: 44px; padding-inline: 9px; }
-      .camera-readout { text-align: left; }
-    }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
+    .checklist { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .check { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--panel); padding: 10px 11px; font-size: .74rem; }
+    .check-state { color: #71818b; font: 700 .68rem/1 ui-monospace, monospace; }
+    .check-state.pass { color: var(--green); }
+    details { border-top: 1px solid var(--line); }
+    summary { padding: 13px 15px; color: #adbac2; cursor: pointer; font-size: .76rem; font-weight: 700; }
+    pre { max-height: 320px; margin: 0 14px 14px; overflow: auto; border: 1px solid #26313a; background: #090d11; color: #adbbc4; padding: 12px; font: 11px/1.55 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .help { margin: 10px 0 0; color: var(--muted); font-size: .7rem; line-height: 1.5; }
+    @media (max-width: 1050px) { header { align-items: flex-start; flex-direction: column; } .condition { justify-content: flex-start; } .layout { grid-template-columns: 1fr; } aside { grid-template-columns: 1fr 1fr; } aside .result-panel { grid-column: 1 / -1; } }
+    @media (max-width: 680px) { .shell { padding: 10px; } .stage { height: auto; min-height: 0; aspect-ratio: 1 / 1; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(3, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-select { min-width: 0; } .sensor-grid { grid-template-columns: 1fr; min-height: 150px; } .sensor-empty { grid-column: auto; min-height: 150px; } aside { grid-template-columns: 1fr; } aside .result-panel { grid-column: auto; } }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
   </style>
 </head>
 <body>
   <main class="shell">
     <header>
       <div>
-        <p class="eyebrow">MuJoCo experiment viewer</p>
-        <h1>RB-Y1 Tray Lab</h1>
-        <p class="subtitle">트레이 운반 실험의 물리 상태를 한 프레임씩 확인합니다.</p>
+        <p class="eyebrow">MuJoCo · Bimanual manipulation cell</p>
+        <h1>RB-Y1 적재 트레이 이송</h1>
+        <p class="subtitle">바닥의 자유 강체 트레이를 양손으로 파지해 적재물을 유지하고, 높은 컨테이너에 안착한 뒤 손을 회수하는 전 과정을 검증합니다.</p>
       </div>
-      <div class="badges" aria-label="실험 조건">
-        <span id="backendBadge" class="badge">CPU MuJoCo</span>
-        <span id="baseBadge" class="badge">베이스 지그 고정 · 안정성 미평가</span>
-        <span class="badge">자유 강체 적재물</span>
-        <span id="modelBadge" class="badge">모델 차원 로드 중</span>
+      <div class="condition" aria-label="실험 조건">
+        <span id="backendBadge" class="badge">CPU MuJoCo</span><span id="baseBadge" class="badge">베이스 지그 고정</span>
+        <span class="badge">자유 강체 4개</span><span id="modelBadge" class="badge">모델 로드 중</span>
       </div>
     </header>
 
     <div class="layout">
-      <section class="panel" aria-label="MuJoCo 렌더 화면">
+      <section class="panel viewport-panel" aria-label="MuJoCo 렌더 화면">
         <div class="stage">
-          <img id="frame" alt="RB-Y1 트레이 운반 MuJoCo 시뮬레이션 프레임" width="960" height="720">
-          <div class="stage-status" aria-live="polite"><span id="statusDot" class="dot"></span><span id="runStatus">일시정지</span></div>
+          <img id="frame" alt="RB-Y1이 적재 트레이를 높은 컨테이너로 옮기는 MuJoCo 시뮬레이션" width="960" height="720">
+          <div class="stage-top">
+            <div class="run-status" aria-live="polite"><span id="statusDot" class="dot"></span><span id="runStatus">준비 중</span></div>
+            <div class="target-callout"><span>목표 안착면</span><strong id="targetHeight">— m</strong></div>
+          </div>
+          <div class="timeline" aria-label="작업 진행 단계">
+            <div class="timeline-step" data-stage="pickup">1 바닥 접근</div><div class="timeline-step" data-stage="grasp">2 양손 파지</div>
+            <div class="timeline-step" data-stage="transfer">3 상승·이송</div><div class="timeline-step" data-stage="placement">4 컨테이너 안착</div>
+            <div class="timeline-step" data-stage="release">5 분리·회수</div>
+          </div>
           <p id="error" class="error hidden" role="alert"></p>
         </div>
         <div class="toolbar">
-          <div class="button-group" aria-label="시뮬레이션 제어">
-            <button id="play" class="primary" type="button" aria-pressed="false">재생</button>
-            <button id="single" type="button">50 스텝</button>
-            <button id="reset" type="button">초기화</button>
-            <button id="download" type="button">상태 JSON 저장</button>
+          <div class="controls" aria-label="시뮬레이션 제어">
+            <button id="play" class="primary" type="button" aria-pressed="false">재생</button><button id="single" type="button">50 스텝</button>
+            <button id="reset" type="button">처음으로</button>
+            <label for="speed">재생 배율<select id="speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select></label>
           </div>
-          <div class="button-group" aria-label="카메라 제어">
-            <button id="cameraLeft" type="button" aria-label="카메라를 왼쪽으로 15도 회전">시점 왼쪽</button>
-            <button id="cameraRight" type="button" aria-label="카메라를 오른쪽으로 15도 회전">시점 오른쪽</button>
+          <div class="view-tabs" aria-label="카메라 시점">
+            <button type="button" data-view="overview" aria-pressed="true">전체</button><button type="button" data-view="pickup" aria-pressed="false">파지</button><button type="button" data-view="placement" aria-pressed="false">안착</button>
           </div>
-          <output id="cameraReadout" class="camera-readout">방위 135° · 고도 −20°</output>
+          <output id="cameraReadout" class="camera-readout">전체 시점 · 방위 105° · 고도 −20°</output>
         </div>
+        <section class="sensor-strip" aria-labelledby="sensorTitle">
+          <div class="sensor-header">
+            <div class="sensor-heading"><h2 id="sensorTitle">단계 경계 RGB-D 관측</h2><p>제어 단계에서 저장된 최신 프레임입니다. 깊이 PNG는 확인용이며 원본 미터 데이터는 NPZ에 보존됩니다.</p></div>
+            <div class="sensor-select"><label for="sensorCamera">센서 카메라</label><select id="sensorCamera"><option value="head_rgbd">헤드 · ZED X Mini 대응</option><option value="left_wrist_rgbd">왼쪽 손목 · RealSense D405 대응</option><option value="right_wrist_rgbd">오른쪽 손목 · RealSense D405 대응</option></select></div>
+          </div>
+          <div class="sensor-grid">
+            <figure id="sensorRgbFigure" class="sensor-media" hidden><img id="sensorRgb" alt="선택한 카메라의 저장된 RGB 관측" width="640" height="360"><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
+            <figure id="sensorDepthFigure" class="sensor-media" hidden><img id="sensorDepth" alt="선택한 카메라의 저장된 깊이 관측" width="640" height="360"><figcaption><span>깊이</span><span>가까울수록 밝게 표시</span></figcaption></figure>
+            <div id="sensorEmpty" class="sensor-empty" role="status">아직 이 카메라에서 기록된 관측이 없습니다. 재생하면 해당 작업 단계에서 프레임이 저장됩니다.</div>
+          </div>
+          <p class="sensor-meta"><span id="sensorModel">ZED X Mini 대응 · 합성 RGB-D</span><span id="sensorTime">관측 시각 —</span><span id="sensorQuality">추정 품질 —</span></p>
+        </section>
       </section>
 
       <aside aria-label="실험 상태">
         <section class="panel section">
-          <h2>핵심 상태</h2>
-          <dl class="metrics">
-            <div class="metric"><dt>단계</dt><dd id="phase">—</dd></div>
-            <div class="metric"><dt>시뮬레이션 시간</dt><dd id="simTime">—</dd></div>
-            <div class="metric"><dt>트레이 높이</dt><dd id="trayHeight">—</dd></div>
-            <div class="metric"><dt>접촉</dt><dd id="contact">—</dd></div>
-            <div class="metric"><dt>적재물</dt><dd id="payload">—</dd></div>
-            <div class="metric"><dt>독립 판정</dt><dd id="result">진행 전</dd></div>
-          </dl>
-          <p class="help">표시값은 현재 세션의 상태 응답에서 읽습니다. 실행 성공을 미리 판정하지 않습니다.</p>
+          <div class="section-title"><h2>작업 목표</h2><span class="section-kicker">TASK CONTRACT</span></div>
+          <div class="mission"><strong>3개 적재물을 끝까지 유지</strong><p>트레이를 목표 높이에 안착하고 양손 접촉을 해제한 다음, 손이 안전 거리 밖으로 물러나야 성공입니다.</p></div>
         </section>
         <section class="panel section">
-          <h2>원본 상태</h2>
-          <pre id="rawState" aria-live="polite">상태를 불러오는 중…</pre>
+          <div class="section-title"><h2>현재 물리 상태</h2><span class="section-kicker">SI UNITS</span></div>
+          <dl class="metrics">
+            <div class="metric"><dt>제어 단계</dt><dd id="phase">—</dd></div><div class="metric"><dt>시뮬레이션 시간</dt><dd id="simTime">—</dd></div>
+            <div class="metric"><dt>트레이 중심 높이</dt><dd id="trayHeight">—</dd></div><div class="metric"><dt>손가락 접촉</dt><dd id="contact">—</dd></div>
+            <div class="metric"><dt>트레이 위 적재물</dt><dd id="payload">—</dd></div><div class="metric"><dt>독립 평가</dt><dd id="result">진행 전</dd></div>
+          </dl>
+          <p class="help">배율은 목표 재생 배율입니다. 브라우저와 CPU 부하에 따라 실제 재생 속도는 달라질 수 있습니다.</p>
         </section>
+        <section class="panel section result-panel">
+          <div class="section-title"><h2>안착 판정</h2><span class="section-kicker">GEOMETRY + CONTACT</span></div>
+          <div class="checklist">
+            <div class="check"><span>목표 영역 안</span><span id="checkTarget" class="check-state">대기</span></div><div class="check"><span>컨테이너 바닥 접촉</span><span id="checkSupport" class="check-state">대기</span></div>
+            <div class="check"><span>적재물 3개 지지</span><span id="checkPayload" class="check-state">대기</span></div><div class="check"><span>손 분리·회수</span><span id="checkWithdraw" class="check-state">대기</span></div>
+          </div>
+        </section>
+        <section class="panel"><details><summary>원본 상태 JSON 보기</summary><pre id="rawState" aria-live="polite">상태를 불러오는 중…</pre></details></section>
       </aside>
     </div>
   </main>
@@ -142,167 +182,171 @@
   <script>
     const $ = (id) => document.getElementById(id);
     const ui = {
-      frame: $('frame'), play: $('play'), single: $('single'), reset: $('reset'), download: $('download'),
-      left: $('cameraLeft'), right: $('cameraRight'), error: $('error'),
-      statusDot: $('statusDot'), runStatus: $('runStatus'), camera: $('cameraReadout'),
-      raw: $('rawState'), phase: $('phase'), simTime: $('simTime'), trayHeight: $('trayHeight'),
-      contact: $('contact'), payload: $('payload'), result: $('result'),
-      backendBadge: $('backendBadge'), baseBadge: $('baseBadge'), modelBadge: $('modelBadge')
+      frame: $('frame'), play: $('play'), single: $('single'), reset: $('reset'), speed: $('speed'), error: $('error'),
+      statusDot: $('statusDot'), runStatus: $('runStatus'), camera: $('cameraReadout'), raw: $('rawState'), phase: $('phase'),
+      simTime: $('simTime'), trayHeight: $('trayHeight'), contact: $('contact'), payload: $('payload'), result: $('result'),
+      targetHeight: $('targetHeight'), checkTarget: $('checkTarget'), checkSupport: $('checkSupport'), checkPayload: $('checkPayload'),
+      checkWithdraw: $('checkWithdraw'), backendBadge: $('backendBadge'), baseBadge: $('baseBadge'), modelBadge: $('modelBadge'),
+      sensorCamera: $('sensorCamera'), sensorRgb: $('sensorRgb'), sensorDepth: $('sensorDepth'), sensorRgbFigure: $('sensorRgbFigure'),
+      sensorDepthFigure: $('sensorDepthFigure'), sensorEmpty: $('sensorEmpty'), sensorModel: $('sensorModel'), sensorTime: $('sensorTime'), sensorQuality: $('sensorQuality'),
+      viewButtons: [...document.querySelectorAll('[data-view]')], timeline: [...document.querySelectorAll('.timeline-step')]
     };
-    let playing = false;
-    let busy = false;
-    let timer = null;
-    let azimuth = 135;
+    let playing = false, actionPromise = null, playGeneration = 0, framePromise = null, frameDirty = false;
+    let azimuth = 105, selectedView = 'overview', currentState = null, frameObjectUrl = null;
+    let selectedCamera = 'head_rgbd', sensorGeneration = 0, sensorEventKey = '', sensorObjectUrls = [];
     const elevation = -20;
-    let currentState = null;
-
-    const paths = {
-      phase: ['phase', 'controller_phase', 'controller.phase', 'task.phase'],
-      simTime: ['time_s', 'sim_time', 'time', 'simulation.time'],
-      trayHeight: ['tray_height_m', 'tray_height', 'tray.height', 'tray.pos_m.2', 'metrics.tray_height'],
-      contact: ['contact', 'contacts', 'grasp.contact', 'metrics.contact'],
-      payload: ['payload', 'payloads', 'payload_status', 'metrics.payload'],
-      result: ['result']
+    const phaseLabels = {
+      approach:'바닥 접근', descend:'트레이 테두리 정렬', grasp:'양손 파지', lift:'초기 상승', raise:'상승', transport:'컨테이너 이송', seat:'안착', settle:'안정화', release:'손 분리', withdraw:'손 회수', hold:'완료 유지',
+      drive_approach:'픽업 위치로 주행', observe_close:'헤드 RGB-D 근접 관측', pickup_approach:'트레이 상단 접근', pickup_descend:'트레이 테두리 정렬', grasp_hold:'파지 유지·손목 검증', retract_low:'저상 운반 자세', drive_loaded:'적재 상태 주행', raise_high:'고위치 상승', drive_high:'고위치 정렬 주행', complete:'작업 완료'
+    };
+    const phaseStage = {
+      approach:0, descend:0, grasp:1, lift:2, raise:2, transport:2, seat:3, settle:3, release:4, withdraw:4, hold:4,
+      drive_approach:0, observe_close:0, pickup_approach:0, pickup_descend:0, grasp_hold:1, retract_low:2, drive_loaded:2, raise_high:2, drive_high:2, complete:4
     };
 
-    function getPath(object, path) {
-      return path.split('.').reduce((value, key) => value && typeof value === 'object' ? value[key] : undefined, object);
+    const formatNumber = (value, digits=3) => new Intl.NumberFormat('ko-KR', { maximumFractionDigits: digits }).format(value);
+    const isTerminal = (state) => Boolean(state?.finished || state?.result?.terminal);
+    function setCheck(element, value) { element.textContent = value ? 'PASS' : '대기'; element.className = `check-state${value ? ' pass' : ''}`; }
+    function formatResult(state) {
+      if (state.result?.success) return '성공';
+      if (state.result?.failure_reason) return `실패 · ${state.result.failure_reason}`;
+      return state.finished ? '종료 · 조건 미충족' : '진행 중';
     }
-    function pick(object, candidates) {
-      for (const candidate of candidates) {
-        const value = getPath(object, candidate);
-        if (value !== undefined && value !== null) return value;
-      }
-      return null;
+    function updateTimeline(state) {
+      const active = phaseStage[state.phase] ?? 0, success = Boolean(state.result?.success);
+      ui.timeline.forEach((step, index) => { step.classList.toggle('done', success || index < active); step.classList.toggle('active', !success && index === active); });
     }
-    function format(value, unit = '') {
-      if (value === null) return '—';
-      if (typeof value === 'number') return `${new Intl.NumberFormat('ko-KR', { maximumFractionDigits: 3 }).format(value)}${unit}`;
-      if (typeof value === 'boolean') return value ? '확인' : '없음';
-      if (typeof value === 'string') return value;
-      if (Array.isArray(value)) return `${value.length}개`;
-      return JSON.stringify(value);
-    }
-    function formatContact(value) {
-      if (value && typeof value === 'object' && !Array.isArray(value)) {
-        const fingers = [...(value.left_fingers || []), ...(value.right_fingers || [])];
-        if (fingers.length) {
-          const held = fingers.filter(Boolean).length;
-          const forbidden = Array.isArray(value.forbidden) ? value.forbidden.length : 0;
-          return `손잡이 ${held}/${fingers.length} · 금지 ${forbidden}`;
-        }
-      }
-      return format(value);
-    }
-    function formatResult(result, finished) {
-      if (result?.success) return '성공';
-      if (result?.failure_reason) return `실패 · ${result.failure_reason}`;
-      return finished ? '종료 · 성공 조건 미충족' : '진행 중';
-    }
-    function updateRunStatus(state) {
-      const failed = Boolean(state.result?.failure_reason);
-      const succeeded = Boolean(state.result?.success);
-      ui.statusDot.classList.toggle('failed', failed);
-      ui.statusDot.classList.toggle('finished', !failed && (succeeded || state.finished));
-      if (failed) ui.runStatus.textContent = `실패 · ${state.result.failure_reason}`;
-      else if (succeeded) ui.runStatus.textContent = '성공 판정';
-      else if (state.finished) ui.runStatus.textContent = '실행 종료';
-      else ui.runStatus.textContent = playing ? '재생 중' : '일시정지';
-      if (state.finished || state.result?.terminal) setPlaying(false, false);
+    function updatePlayLabel() {
+      ui.play.textContent = playing ? '일시정지' : isTerminal(currentState) ? '다시 재생' : '재생';
+      ui.play.setAttribute('aria-pressed', String(playing)); ui.statusDot.classList.toggle('playing', playing);
     }
     function updateState(state) {
       currentState = state;
-      const simTime = pick(state, paths.simTime);
-      ui.phase.textContent = format(pick(state, paths.phase));
-      ui.simTime.textContent = format(simTime, typeof simTime === 'number' ? ' s' : '');
-      const trayHeight = pick(state, paths.trayHeight);
-      ui.trayHeight.textContent = format(trayHeight, typeof trayHeight === 'number' ? ' m' : '');
-      ui.contact.textContent = formatContact(pick(state, paths.contact));
-      ui.payload.textContent = format(pick(state, paths.payload));
-      ui.result.textContent = formatResult(pick(state, paths.result), state.finished);
-      ui.result.className = state.result?.success ? 'good' : state.result?.failure_reason ? 'warn' : '';
+      const trayHeight = Number(state.tray?.pos_m?.[2]);
+      const pads = [...(state.contacts?.left_fingers || []), ...(state.contacts?.right_fingers || [])];
+      const supported = (state.payloads || []).filter((item) => item.supported_by_tray).length;
+      const checks = state.result?.checks || {}, milestones = state.result?.milestones || {};
+      const targetHeight = Number(state.target?.support_z_m);
+      ui.phase.textContent = phaseLabels[state.phase] || state.phase || '—';
+      ui.simTime.textContent = Number.isFinite(state.time_s) ? `${formatNumber(state.time_s, 2)} s` : '—';
+      ui.trayHeight.textContent = Number.isFinite(trayHeight) ? `${formatNumber(trayHeight)} m` : '—';
+      ui.contact.textContent = pads.length ? `${pads.filter(Boolean).length} / 4` : '—';
+      ui.payload.textContent = state.payloads ? `${supported} / ${state.payloads.length}` : '—';
+      ui.result.textContent = formatResult(state); ui.result.className = state.result?.success ? 'good' : state.result?.failure_reason ? 'warn' : '';
+      ui.targetHeight.textContent = Number.isFinite(targetHeight) ? `${formatNumber(targetHeight, 2)} m` : '— m';
       ui.backendBadge.textContent = state.backend || 'CPU MuJoCo';
-      ui.baseBadge.textContent = state.base_mode === 'fixture' ? '베이스 지그 고정 · 안정성 미평가' : format(state.base_mode);
-      const dimensions = state.audit && ['nq', 'nv', 'nu'].every((key) => Number.isInteger(state.audit[key]));
-      ui.modelBadge.textContent = dimensions ? `nq ${state.audit.nq} · nv ${state.audit.nv} · nu ${state.audit.nu}` : '모델 차원 미제공';
+      ui.baseBadge.textContent = state.base_mode === 'fixture' ? '베이스 지그 고정 · 안정성 미평가' : state.base_mode === 'mobile' ? '4휠 직진 · 엔코더 오도메트리' : (state.base_mode || '베이스 조건 미제공');
+      const audit = state.audit || {};
+      ui.modelBadge.textContent = [audit.nq,audit.nv,audit.nu].every(Number.isInteger) ? `nq ${audit.nq} · nv ${audit.nv} · nu ${audit.nu}` : '모델 차원 미제공';
       ui.raw.textContent = JSON.stringify(state, null, 2);
-      updateRunStatus(state);
+      setCheck(ui.checkTarget, Boolean(checks.tray_in_target_xy)); setCheck(ui.checkSupport, Boolean(checks.tray_on_support));
+      setCheck(ui.checkPayload, Boolean(checks.payloads_supported && checks.payloads_settled)); setCheck(ui.checkWithdraw, Boolean(milestones.withdrawn)); updateTimeline(state);
+      const failed = Boolean(state.result?.failure_reason), succeeded = Boolean(state.result?.success);
+      ui.statusDot.classList.toggle('failed', failed); ui.statusDot.classList.toggle('finished', succeeded || (!failed && state.finished));
+      if (failed) ui.runStatus.textContent = `실패 · ${state.result.failure_reason}`; else if (succeeded) ui.runStatus.textContent = '작업 성공';
+      else if (state.finished) ui.runStatus.textContent = '실행 종료'; else ui.runStatus.textContent = playing ? '재생 중' : '일시정지';
+      const perceptionTime = state.mission?.perception?.timestamp_sim_s ?? 'none';
+      const nextSensorEventKey = `${state.phase || ''}|${perceptionTime}`;
+      if (nextSensorEventKey !== sensorEventKey) { sensorEventKey=nextSensorEventKey; refreshSensor(); }
+      if (isTerminal(state) && playing) stopPlayback(true); updatePlayLabel();
     }
-    function showError(message = '') {
-      ui.error.textContent = message;
-      ui.error.classList.toggle('hidden', !message);
-    }
-    async function request(url, options = {}) {
-      const response = await fetch(url, { cache: 'no-store', ...options });
-      let data;
+    function showError(message='') { ui.error.textContent = message; ui.error.classList.toggle('hidden', !message); }
+    async function request(url, options={}) {
+      const response = await fetch(url, { cache:'no-store', ...options }); let data;
       try { data = await response.json(); } catch (_) { data = null; }
-      if (!response.ok) throw new Error(data?.error || `요청 실패 (${response.status})`);
-      return data;
+      if (!response.ok) throw new Error(data?.error || `요청 실패 (${response.status})`); return data;
     }
+    function waitForImage(image, url) { return new Promise((resolve,reject) => { image.onload=resolve; image.onerror=()=>reject(new Error('렌더 프레임을 표시하지 못했습니다.')); image.src=url; }); }
+    function preloadImage(url) { return new Promise((resolve,reject) => { const image=new Image(); image.onload=resolve; image.onerror=()=>reject(new Error('센서 프레임을 표시하지 못했습니다.')); image.src=url; }); }
     function refreshFrame() {
-      ui.frame.src = `/frame.png?azimuth=${azimuth}&elevation=${elevation}&v=${Date.now()}`;
-      ui.camera.value = `방위 ${azimuth}° · 고도 −20°`;
-      ui.camera.textContent = ui.camera.value;
+      frameDirty = true; if (framePromise) return framePromise;
+      framePromise = (async () => {
+        while (frameDirty) {
+          frameDirty = false;
+          const params = new URLSearchParams({ view:selectedView, azimuth:String(azimuth), elevation:String(elevation), v:String(Date.now()) });
+          const response = await fetch(`/frame.png?${params}`, { cache:'no-store' }); if (!response.ok) throw new Error(`렌더 요청 실패 (${response.status})`);
+          const nextUrl = URL.createObjectURL(await response.blob()); await waitForImage(ui.frame, nextUrl);
+          if (frameObjectUrl) URL.revokeObjectURL(frameObjectUrl); frameObjectUrl = nextUrl;
+        }
+        const labels = { overview:'전체', pickup:'파지', placement:'안착' };
+        ui.camera.value = `${labels[selectedView]} 시점 · 방위 ${azimuth}° · 고도 −20°`; ui.camera.textContent = ui.camera.value;
+      })().finally(() => { framePromise = null; }); return framePromise;
     }
-    async function refreshState() { updateState(await request('/api/state')); }
-    async function advance(steps = 50) {
-      if (busy) return;
-      busy = true;
-      ui.single.disabled = true;
-      try {
-        const state = await request('/api/step', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ steps })
-        });
-        updateState(state);
-        refreshFrame();
-        showError();
-      } catch (error) {
-        setPlaying(false);
-        showError(`${error.message} 상태를 확인한 뒤 다시 실행해 주세요.`);
-      } finally {
-        busy = false;
-        ui.single.disabled = false;
+    function sensorDescription(camera) {
+      return camera === 'head_rgbd' ? 'ZED X Mini 대응 · 합성 RGB-D' : 'RealSense D405 대응 · 합성 RGB-D';
+    }
+    function sensorQuality(state, camera) {
+      const perception = state?.mission?.perception;
+      if (camera === 'head_rgbd' && state?.mission?.detected_tray) {
+        const score = Number(state.mission.detected_tray.quality?.score_0_to_1);
+        return Number.isFinite(score) ? `추정 품질 ${formatNumber(score,2)} / 1` : '추정 품질 기록됨';
+      }
+      const verification = perception?.wrist_verification;
+      if (camera.endsWith('wrist_rgbd') && verification) {
+        const side = camera.startsWith('left') ? 'left' : 'right';
+        const observed = verification.wrist_observations?.[side];
+        if (observed) return `깊이 범위 ${observed.depth_in_sensor_range ? 'PASS' : '미충족'} · ROI ${formatNumber(Number(observed.roi_valid_depth_fraction || 0),2)}`;
+      }
+      return '추정 품질 —';
+    }
+    async function fetchSensorImage(camera, kind) {
+      const params = new URLSearchParams({camera,kind,v:String(Date.now())});
+      const response = await fetch(`/sensor.png?${params}`, {cache:'no-store'});
+      if (response.status === 404) return null;
+      if (!response.ok) throw new Error(`센서 프레임 요청 실패 (${response.status})`);
+      return {url:URL.createObjectURL(await response.blob()), timestamp:response.headers.get('X-Sensor-Timestamp-S')};
+    }
+    async function refreshSensor() {
+      const camera = selectedCamera, generation = ++sensorGeneration;
+      ui.sensorModel.textContent=sensorDescription(camera); ui.sensorTime.textContent='관측 시각 —';
+      ui.sensorQuality.textContent=sensorQuality(currentState,camera); ui.sensorEmpty.textContent='저장된 관측을 확인하는 중…';
+      ui.sensorEmpty.hidden=false; ui.sensorRgbFigure.hidden=true; ui.sensorDepthFigure.hidden=true;
+      let images;
+      try { images=await Promise.all([fetchSensorImage(camera,'rgb'),fetchSensorImage(camera,'depth')]); }
+      catch (error) { if (generation===sensorGeneration) ui.sensorEmpty.textContent=error.message; return; }
+      if (generation!==sensorGeneration || camera!==selectedCamera) { images.filter(Boolean).forEach((item)=>URL.revokeObjectURL(item.url)); return; }
+      if (!images[0] || !images[1]) {
+        images.filter(Boolean).forEach((item)=>URL.revokeObjectURL(item.url));
+        ui.sensorEmpty.textContent='아직 이 카메라에서 기록된 관측이 없습니다. 재생하면 해당 작업 단계에서 프레임이 저장됩니다.';
+        return;
+      }
+      try { await Promise.all([preloadImage(images[0].url),preloadImage(images[1].url)]); }
+      catch (error) { images.forEach((item)=>URL.revokeObjectURL(item.url)); ui.sensorEmpty.textContent=error.message; return; }
+      if (generation!==sensorGeneration || camera!==selectedCamera) { images.forEach((item)=>URL.revokeObjectURL(item.url)); return; }
+      ui.sensorRgb.src=images[0].url; ui.sensorDepth.src=images[1].url;
+      sensorObjectUrls.forEach((url)=>URL.revokeObjectURL(url)); sensorObjectUrls=images.map((item)=>item.url);
+      ui.sensorRgbFigure.hidden=false; ui.sensorDepthFigure.hidden=false; ui.sensorEmpty.hidden=true;
+      const timestamp=Number(images[0].timestamp); ui.sensorTime.textContent=Number.isFinite(timestamp) ? `관측 시각 ${formatNumber(timestamp,3)} s` : '관측 시각 —';
+      ui.sensorQuality.textContent=sensorQuality(currentState,camera);
+    }
+    function setControlsBusy(value) { ui.single.disabled=value; ui.reset.disabled=value; ui.speed.disabled=value; }
+    async function runAction(action) {
+      if (actionPromise) return actionPromise; setControlsBusy(true);
+      actionPromise = (async () => { const state=await action(); updateState(state); await refreshFrame(); showError(); return state; })()
+        .catch((error) => { stopPlayback(); showError(`${error.message} 서버 상태를 확인한 뒤 다시 실행해 주세요.`); throw error; })
+        .finally(() => { actionPromise=null; setControlsBusy(false); }); return actionPromise;
+    }
+    const advance = (steps=50) => runAction(() => request('/api/step', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({steps}) }));
+    function stopPlayback(preserveStatus=false) { playing=false; playGeneration+=1; if (!preserveStatus && currentState && !isTerminal(currentState)) ui.runStatus.textContent='일시정지'; updatePlayLabel(); }
+    async function playbackLoop(generation) {
+      while (playing && generation===playGeneration) {
+        try { await advance(50*Number(ui.speed.value)); } catch (_) { return; }
+        if (!playing || generation!==playGeneration || isTerminal(currentState)) return;
+        await new Promise((resolve) => setTimeout(resolve,100));
       }
     }
-    function setPlaying(next, updateLabel = true) {
-      playing = next;
-      ui.play.textContent = playing ? '일시정지' : '재생';
-      ui.play.setAttribute('aria-pressed', String(playing));
-      ui.statusDot.classList.toggle('playing', playing);
-      if (updateLabel) ui.runStatus.textContent = playing ? '재생 중' : '일시정지';
-      if (timer) clearInterval(timer);
-      timer = playing ? setInterval(() => advance(50), 100) : null;
+    async function startPlayback() {
+      if (playing || actionPromise) return;
+      if (isTerminal(currentState)) { try { await runAction(() => request('/api/replay', {method:'POST'})); } catch (_) { return; } }
+      playing=true; const generation=++playGeneration; ui.runStatus.textContent='재생 중'; updatePlayLabel(); playbackLoop(generation);
     }
-
-    ui.play.addEventListener('click', () => setPlaying(!playing));
-    ui.single.addEventListener('click', () => advance(50));
-    ui.reset.addEventListener('click', async () => {
-      setPlaying(false);
-      if (busy) return;
-      busy = true;
-      try {
-        updateState(await request('/api/reset', { method: 'POST' }));
-        refreshFrame();
-        showError();
-      } catch (error) { showError(`${error.message} 초기화하지 못했습니다.`); }
-      finally { busy = false; }
-    });
-    ui.download.addEventListener('click', () => {
-      if (!currentState) return;
-      const blob = new Blob([`${JSON.stringify(currentState, null, 2)}\n`], { type: 'application/json' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `rby1-tray-state-${Number(currentState.time_s || 0).toFixed(3)}s.json`;
-      link.click();
-      URL.revokeObjectURL(link.href);
-    });
-    ui.left.addEventListener('click', () => { azimuth -= 15; refreshFrame(); });
-    ui.right.addEventListener('click', () => { azimuth += 15; refreshFrame(); });
-    ui.frame.addEventListener('error', () => showError('렌더 프레임을 불러오지 못했습니다. 서버 로그를 확인해 주세요.'));
-    ui.frame.addEventListener('load', () => showError());
-    document.addEventListener('visibilitychange', () => { if (document.hidden) setPlaying(false); });
-
-    Promise.all([refreshState(), Promise.resolve(refreshFrame())]).catch((error) => showError(`${error.message} 서버 연결을 확인해 주세요.`));
+    ui.play.addEventListener('click', () => { if (playing) stopPlayback(); else startPlayback(); });
+    ui.single.addEventListener('click', () => advance(50).catch(()=>{}));
+    ui.reset.addEventListener('click', async () => { stopPlayback(); if (actionPromise) return; try { await runAction(() => request('/api/reset',{method:'POST'})); } catch (_) {} });
+    ui.viewButtons.forEach((button) => button.addEventListener('click', () => { selectedView=button.dataset.view; ui.viewButtons.forEach((item)=>item.setAttribute('aria-pressed',String(item===button))); refreshFrame().catch((error)=>showError(error.message)); }));
+    ui.sensorCamera.addEventListener('change', () => { selectedCamera=ui.sensorCamera.value; refreshSensor(); });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stopPlayback(); });
+    Promise.all([request('/api/state').then(updateState),refreshFrame()]).catch((error)=>showError(`${error.message} 서버 연결을 확인해 주세요.`));
   </script>
 </body>
 </html>
