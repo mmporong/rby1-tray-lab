@@ -1,14 +1,17 @@
 {
-  "source_commit": "fbff4e41b82ec4e57794bd7815ed6a9ad0822f66",
-  "original_run_manifest_sha256": "335bb429eb442077b37e4f895f175369f08b5d48c2be5fd52da9c2d8fdf8ca54",
-  "derivation": "video uses the same rollout GIF frames; preview uses stored controller RGB-D with recorded display normalization; summary uses recorded trace milestone predicates",
+  "source_commit": "9f9fd5590b267b63d268f17ddf95f6d8b0507de8",
+  "original_run_manifest_sha256": "70a75748444d1daadefc7bfb403b978b52a0abe520ba3f55c338d457845bc382",
+  "derivation": "rollout MP4 uses this run GIF frames; preview uses stored controller RGB-D with percentile normalization; summary uses recorded grasped and not seated trace predicates; pickup still is frame105 of separate same-source playback run, simulation time14.000s; pickup comparison uses saved encoders and FK at playback sampling grid",
+  "playback_manifest_sha256": "4c8de4a006e6226189aa2e5241d1a8e2635ac7d2efd96accdaf354f5110bb162",
   "artifact_sha256": {
-    "rollout.mp4": "241d937a53e95b15a68f52554b2a8799ee4f733a7d7669fc0851d39fd6d88a3f",
-    "summary.json": "a8240759cf99c8c6fb8a3dc06cc74456c7059467ef3dcbf3369292fcab1073ad",
-    "sensor-preview.png": "b29bae3f14f171c165eaee66196a871ea99981612395d0400e608a4fc6dbbe63",
-    "visualization-settings.json": "3ec778a1c9dcc65fe1b08cead6438c659b4704f5151fd7d9c85154e0c38ac1cd",
+    "rollout.mp4": "aa7cef724e9d5539cad2f52555d298df47982bf3fac55b0d98dcfa46de860cf9",
+    "summary.json": "9f7f743ebb1935abe9038be278456f27fa874a11e962a4616752541a94e96d38",
+    "sensor-preview.png": "701917d30fd67e16462d5d9a58b91094f582d75bae7c6ad5741e5acb4baf473a",
+    "visualization-settings.json": "86611ed29296117b59800601dd383ad5fdc8bd7198b1bbb21d3df7f2e9908e6b",
     "controller-validation.json": "8c621fe3076c4259b1fb3a4fe7448b7d463fb0c99e009cd0379dac5acb4fe9be",
-    "trace.jsonl.gz": "5745a66bb3f43bf13c3eee2b83ea8a9909eaa76e80200e98417eeff48aa5319d",
-    "controller-data/commands.jsonl.gz": "7b270793f0fada27f113e286419b335c4cfbc66925b875a6df1d5bcefd0e0e30"
+    "trace.jsonl.gz": "3dcd64ae745049a07ddd06ab41d1acaf92c215efb1e24d40c9679c5ea4ec4102",
+    "controller-data/commands.jsonl.gz": "f752a252cb8374505cc4428ae709582a37a708e904c2ec54167a41442d29d34a",
+    "pickup-path-comparison.json": "656877d200f36d0c6ebe7a0407efdd8e21e7ca78ac73eeb1a131714925686546",
+    "pickup-approach.png": "967ba06e42a6509e3499a73dd698bc4388fa820359a9d21ddc9f0a648a4dfc7b"
   }
 }

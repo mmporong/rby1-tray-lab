@@ -1,69 +1,116 @@
 {
-  "scope": "CUA browser UI verification; display 1x is the original 8x simulation-time playback",
-  "rates": [
-    {
-      "display_rate": 1,
-      "native_video_rate": 1,
-      "wall_delta_s": 9.225,
-      "video_start_s": 0.260937,
-      "video_end_s": 9.490951,
-      "observed_simulation_time_multiplier": 8.004348184281843
-    },
-    {
-      "display_rate": 1.5,
-      "native_video_rate": 1.5,
-      "wall_delta_s": 8.469,
-      "video_start_s": 0.162727,
-      "video_end_s": 12.833333,
-      "observed_simulation_time_multiplier": 11.96892761837289
-    },
-    {
-      "display_rate": 2,
-      "native_video_rate": 2,
-      "wall_delta_s": 0.552,
-      "video_start_s": 0.223928,
-      "video_end_s": 1.329912,
-      "observed_simulation_time_multiplier": 16.028753623188404
-    }
+  "scope": "current recorded bundle artifact and HTTP verification; prior browser UI regression is referenced separately",
+  "source_commit": "9f9fd5590b267b63d268f17ddf95f6d8b0507de8",
+  "source_dirty_at_recording": false,
+  "current_http": {
+    "status": 200,
+    "served_source_commit": "9f9fd5590b267b63d268f17ddf95f6d8b0507de8",
+    "playback_enabled": true,
+    "mp4_range_status": 206,
+    "range_bytes_received": 1024
+  },
+  "display_speed_options": [
+    1,
+    1.5,
+    2
   ],
-  "pause": {
-    "before_video_time_s": 9.632594,
-    "after_video_time_s": 9.632594,
-    "paused": true
+  "simulation_speed_options": [
+    8,
+    12,
+    16
+  ],
+  "videos": {
+    "overview": {
+      "codec_name": "h264",
+      "width": 960,
+      "height": 720,
+      "pix_fmt": "yuv420p",
+      "r_frame_rate": "60/1",
+      "nb_read_frames": "770"
+    },
+    "pickup": {
+      "codec_name": "h264",
+      "width": 960,
+      "height": 720,
+      "pix_fmt": "yuv420p",
+      "r_frame_rate": "60/1",
+      "nb_read_frames": "770"
+    },
+    "placement": {
+      "codec_name": "h264",
+      "width": 960,
+      "height": 720,
+      "pix_fmt": "yuv420p",
+      "r_frame_rate": "60/1",
+      "nb_read_frames": "770"
+    }
   },
-  "paused_view_switch": {
-    "pickup_video_time_s": 9.632594,
-    "placement_video_time_s": 9.632594,
-    "paused": true
+  "all_three_videos_full_ffmpeg_decode": "PASS",
+  "state_frame_count": 770,
+  "sensor_frame_count": 5,
+  "terminal_result": {
+    "checks": {
+      "forbidden_contact": false,
+      "full_pad_contact": false,
+      "fully_released": true,
+      "opposed_contacts": false,
+      "pad_force_sufficient": false,
+      "payloads_contained": true,
+      "payloads_settled": true,
+      "payloads_supported": true,
+      "robot_tray_contact": false,
+      "secure_grasp": false,
+      "tray_in_target_xy": true,
+      "tray_lifted": true,
+      "tray_on_support": true,
+      "tray_slow": true,
+      "tray_upright": true
+    },
+    "failure_event": null,
+    "failure_reason": null,
+    "failure_time_s": null,
+    "last_time_s": 102.46999999994259,
+    "metrics": {
+      "left_grasp_force_n": 0.0,
+      "max_payload_speed_m_s": 0.005573740598194079,
+      "min_pad_force_n": 0.0,
+      "right_grasp_force_n": 0.0
+    },
+    "milestone_times_s": {
+      "grasped": 25.639999999996668,
+      "lifted": 29.89199999999431,
+      "released": 97.96599999995308,
+      "seated": 94.0119999999623,
+      "withdrawn": 102.46999999994259
+    },
+    "milestones": {
+      "grasped": true,
+      "lifted": true,
+      "released": true,
+      "seated": true,
+      "withdrawn": true
+    },
+    "success": true,
+    "terminal": true,
+    "updates": 51236
   },
-  "playing_view_switch": {
-    "before_video_time_s": 0.109084,
-    "after_video_time_s": 0.499825,
-    "paused_before": false,
-    "paused_after": false
+  "current_browser_ui_recheck": {
+    "status": "unavailable",
+    "reason": "CUA Chrome reload timed out, followed by browser unavailable and no connected browsers; in-app browser was unavailable too",
+    "controls_changed_in_this_revision": false
   },
-  "left_wrist_observation_timestamp_sim_s": 27.406,
-  "left_wrist_checked_at_simulation_time_s": 77.060752,
-  "completion": {
-    "simulation_time_s": 102.47,
-    "result": "success"
+  "previous_browser_ui_verification": {
+    "git_revision": "c12c2defa78486f27a7a507e13de97e00bd5b985",
+    "repository_path": "evidence/playback-native/browser-qa.json",
+    "scope": "same playback controls, previous physical recording; not a current-bundle UI measurement"
   },
-  "replay_after_completion_video_time_s": 0.210261,
-  "final_state": {
-    "display_rate": 1,
-    "native_video_rate": 1,
-    "video_time_s": 0,
-    "paused": true,
-    "view": "overview"
-  },
-  "browser_console_errors_or_warnings": [],
   "unit_tests": {
     "passed": 106,
-    "log": "/tmp/rby1-normalized-tests.log"
+    "verification": "fresh independent verifier unittest run after source freeze"
   },
   "limitations": [
-    "Timing samples include automation overhead and are not a hardware performance benchmark.",
-    "Video source is encoded at 60 FPS; browser dropped-frame counters were unavailable through the browser DOM inspection interface.",
-    "LSP type diagnostics were unavailable; compileall, Node parse, unit tests, and independent code/artifact review were used."
+    "Real robot execution has not been validated.",
+    "Current browser playback UI could not be rechecked after replacing the bundle because the browser connection was unavailable.",
+    "Browser dropped-frame counters and LSP diagnostics were unavailable."
   ]
 }

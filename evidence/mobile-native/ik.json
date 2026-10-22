@@ -63,24 +63,29 @@
       5.9028808546912614e-05
     ],
     "pose_source": "rgbd_estimate_plus_encoder_odometry",
-    "cartesian_segment_count": 1,
+    "cartesian_segment_count": 2,
     "cartesian_max_step_m": 0.025,
-    "joint_path_max_step_rad": 2.3631448911570145,
+    "joint_path_max_step_rad": 2.4533042752128393,
     "joint_path_continuity_limit_rad": 0.22,
     "interpolated_joint_limit_violation_rad": 0.0,
-    "seed_policy": "validated_high_branch_via_free_space_waypoint",
+    "seed_policy": "crouched_arm_clearance_preapproach_then_high_branch_ik_seed_without_executed_waypoint",
     "segment_position_error_max_m": 2.058077038785741e-06,
     "segment_orientation_error_max_rad": 7.28735626974763e-05,
     "interpolated_position_error_max_m": 0.0,
-    "interpolated_orientation_error_max_rad": 0.0
+    "interpolated_orientation_error_max_rad": 0.0,
+    "pickup_preapproach_offset_m": [
+      0.05,
+      0.0,
+      0.11
+    ]
   },
   {
-    "position_error_m": 3.9548131730633286e-05,
-    "orientation_error_rad": 0.00034326660923954315,
-    "gravity_torque_ratio": 0.871617816917721,
+    "position_error_m": 3.953312123278167e-05,
+    "orientation_error_rad": 0.0003430547886806014,
+    "gravity_torque_ratio": 0.8715312495226046,
     "elbow_flexion_rad": {
-      "right": 0.21545655049931292,
-      "left": 0.21550520895552555
+      "right": 0.21545253103112563,
+      "left": 0.2154930577733567
     },
     "forbidden_contact_count": 0,
     "phase": "pickup_descend",
@@ -133,29 +138,30 @@
       ]
     ],
     "base_pose_xy_yaw": [
-      -0.008182842859969085,
-      1.2794155915690044e-05,
-      5.8667228615139067e-05
+      -0.008091346546905201,
+      1.283686696071233e-05,
+      7.610440151939457e-05
     ],
     "pose_source": "rgbd_estimate_plus_encoder_odometry",
     "cartesian_segment_count": 1,
     "cartesian_max_step_m": 0.025,
-    "joint_path_max_step_rad": 0.32498142221845105,
+    "joint_path_max_step_rad": 0.32507090137361394,
     "joint_path_continuity_limit_rad": 0.22,
     "interpolated_joint_limit_violation_rad": 0.0,
     "seed_policy": "previous_command_continuation",
-    "segment_position_error_max_m": 3.9548131730633286e-05,
-    "segment_orientation_error_max_rad": 0.00034326660923954315,
+    "segment_position_error_max_m": 3.953312123278167e-05,
+    "segment_orientation_error_max_rad": 0.0003430547886806014,
     "interpolated_position_error_max_m": 0.0,
-    "interpolated_orientation_error_max_rad": 0.0
+    "interpolated_orientation_error_max_rad": 0.0,
+    "pickup_preapproach_offset_m": null
   },
   {
-    "position_error_m": 3.926567205556128e-05,
-    "orientation_error_rad": 0.00035001580074554503,
-    "gravity_torque_ratio": 0.8709254350157289,
+    "position_error_m": 3.925519362101394e-05,
+    "orientation_error_rad": 0.0003497616511322017,
+    "gravity_torque_ratio": 0.8707941305026877,
     "elbow_flexion_rad": {
-      "right": 0.2307511126718389,
-      "left": 0.23072149988675225
+      "right": 0.2308055439011025,
+      "left": 0.23068425071817994
     },
     "forbidden_contact_count": 0,
     "phase": "grasp",
@@ -208,29 +214,30 @@
       ]
     ],
     "base_pose_xy_yaw": [
-      -0.007097714478548866,
-      1.2891392571714213e-05,
-      0.00024321518064329695
+      -0.006958940052947897,
+      1.3023145358647228e-05,
+      0.0003616409811559862
     ],
     "pose_source": "rgbd_estimate_plus_encoder_odometry",
     "cartesian_segment_count": 1,
     "cartesian_max_step_m": 0.025,
-    "joint_path_max_step_rad": 0.01913026844626331,
+    "joint_path_max_step_rad": 0.019481723742624357,
     "joint_path_continuity_limit_rad": 0.22,
     "interpolated_joint_limit_violation_rad": 0.0,
     "seed_policy": "previous_command_continuation",
-    "segment_position_error_max_m": 3.926567205556128e-05,
-    "segment_orientation_error_max_rad": 0.00035001580074554503,
-    "interpolated_position_error_max_m": 0.0009606722376680636,
-    "interpolated_orientation_error_max_rad": 0.0003903331935166066
+    "segment_position_error_max_m": 3.925519362101394e-05,
+    "segment_orientation_error_max_rad": 0.0003497616511322017,
+    "interpolated_position_error_max_m": 0.0010308204548347493,
+    "interpolated_orientation_error_max_rad": 0.00043328680192493153,
+    "pickup_preapproach_offset_m": null
   },
   {
-    "position_error_m": 3.917299290576066e-05,
-    "orientation_error_rad": 0.0003493299316740129,
-    "gravity_torque_ratio": 0.8703653840118063,
+    "position_error_m": 3.916606514001458e-05,
+    "orientation_error_rad": 0.0003491572378974818,
+    "gravity_torque_ratio": 0.8702582592962558,
     "elbow_flexion_rad": {
-      "right": 0.2322116233265404,
-      "left": 0.23219339868549116
+      "right": 0.23220756717471158,
+      "left": 0.23218958035546677
     },
     "forbidden_contact_count": 0,
     "phase": "grasp_hold",
@@ -283,29 +290,30 @@
       ]
     ],
     "base_pose_xy_yaw": [
-      -0.006465237544793748,
-      1.304532814718219e-05,
-      0.00024645988541749375
+      -0.006352572136401525,
+      1.3244385853978254e-05,
+      0.0003681153062289333
     ],
     "pose_source": "rgbd_estimate_plus_encoder_odometry",
     "cartesian_segment_count": 1,
     "cartesian_max_step_m": 0.025,
-    "joint_path_max_step_rad": 0.0018369659592294418,
+    "joint_path_max_step_rad": 0.0018857945049626235,
     "joint_path_continuity_limit_rad": 0.22,
     "interpolated_joint_limit_violation_rad": 0.0,
     "seed_policy": "previous_command_continuation",
-    "segment_position_error_max_m": 3.917299290576066e-05,
-    "segment_orientation_error_max_rad": 0.0003493299316740129,
-    "interpolated_position_error_max_m": 0.0005246287089329995,
-    "interpolated_orientation_error_max_rad": 0.00035003006676946917
+    "segment_position_error_max_m": 3.916606514001458e-05,
+    "segment_orientation_error_max_rad": 0.0003491572378974818,
+    "interpolated_position_error_max_m": 0.0005034216796983745,
+    "interpolated_orientation_error_max_rad": 0.00034982400176501564,
+    "pickup_preapproach_offset_m": null
   },
   {
-    "position_error_m": 3.6126967034500184e-08,
-    "orientation_error_rad": 1.0089901456171973e-06,
-    "gravity_torque_ratio": 0.8050491561836495,
+    "position_error_m": 3.612832704222072e-08,
+    "orientation_error_rad": 1.0081113461337304e-06,
+    "gravity_torque_ratio": 0.8049316129637665,
     "elbow_flexion_rad": {
-      "right": 0.2436101807320316,
-      "left": 0.2433865093470885
+      "right": 0.24356765609277614,
+      "left": 0.2434037560411542
     },
     "forbidden_contact_count": 0,
     "phase": "lift",
@@ -358,41 +366,42 @@
       ]
     ],
     "base_pose_xy_yaw": [
-      -0.006159259064581495,
-      1.3121236030382497e-05,
-      0.000249340307239887
+      -0.006046722222163903,
+      1.3357346731506355e-05,
+      0.0003704334556018374
     ],
     "pose_source": "rgbd_estimate_plus_encoder_odometry",
     "cartesian_segment_count": 3,
     "cartesian_max_step_m": 0.025,
-    "joint_path_max_step_rad": 0.03711396718201765,
+    "joint_path_max_step_rad": 0.03712311472857677,
     "joint_path_continuity_limit_rad": 0.22,
     "interpolated_joint_limit_violation_rad": 0.0,
     "seed_policy": "previous_command_continuation",
-    "segment_position_error_max_m": 3.8204598130905416e-08,
-    "segment_orientation_error_max_rad": 1.2569755059104403e-06,
-    "interpolated_position_error_max_m": 0.00328328320039427,
-    "interpolated_orientation_error_max_rad": 0.00027755785421456757
+    "segment_position_error_max_m": 3.8204045259267236e-08,
+    "segment_orientation_error_max_rad": 1.2558280250681614e-06,
+    "interpolated_position_error_max_m": 0.003283267134115074,
+    "interpolated_orientation_error_max_rad": 0.0002774354663935875,
+    "pickup_preapproach_offset_m": null
   },
   {
-    "position_error_m": 2.6187777447831075e-08,
-    "orientation_error_rad": 6.500239240690991e-07,
-    "gravity_torque_ratio": 0.5910157665683018,
+    "position_error_m": 2.618053104937192e-08,
+    "orientation_error_rad": 6.508319286729098e-07,
+    "gravity_torque_ratio": 0.5910093771816989,
     "elbow_flexion_rad": {
-      "right": 0.31556337973500875,
-      "left": 0.3147775101940626
+      "right": 0.31544553781327866,
+      "left": 0.3148607809356734
     },
     "forbidden_contact_count": 0,
     "phase": "retract_low",
     "target_tcp_positions_m": [
       [
-        0.6458283767594368,
-        -0.26998637121070734,
+        0.6460601881258874,
+        -0.26998585098866346,
         0.37
       ],
       [
-        0.6458283767594368,
-        0.2700136287892927,
+        0.6460601881258874,
+        0.2700141490113366,
         0.37
       ]
     ],
@@ -433,41 +442,42 @@
       ]
     ],
     "base_pose_xy_yaw": [
-      -0.004171623240563161,
-      1.3628789292679047e-05,
-      0.000260255245762675
+      -0.003939811874112597,
+      1.4149011336535415e-05,
+      0.0003615221775334909
     ],
     "pose_source": "rgbd_estimate_plus_encoder_odometry",
     "cartesian_segment_count": 10,
     "cartesian_max_step_m": 0.025,
-    "joint_path_max_step_rad": 0.04211291485093305,
+    "joint_path_max_step_rad": 0.042124571646116826,
     "joint_path_continuity_limit_rad": 0.22,
     "interpolated_joint_limit_violation_rad": 0.0,
     "seed_policy": "previous_command_continuation",
-    "segment_position_error_max_m": 3.6784865235476544e-08,
-    "segment_orientation_error_max_rad": 9.901694122779497e-07,
-    "interpolated_position_error_max_m": 0.0037789126987315394,
-    "interpolated_orientation_error_max_rad": 0.0004622750803320449
+    "segment_position_error_max_m": 3.680915505501622e-08,
+    "segment_orientation_error_max_rad": 9.905177679942742e-07,
+    "interpolated_position_error_max_m": 0.003826857284236397,
+    "interpolated_orientation_error_max_rad": 0.00046459520784892193,
+    "pickup_preapproach_offset_m": null
   },
   {
-    "position_error_m": 3.285394604745248e-07,
-    "orientation_error_rad": 9.279276470874538e-06,
-    "gravity_torque_ratio": 0.45021430088045844,
+    "position_error_m": 3.3266249733079635e-07,
+    "orientation_error_rad": 9.3910662780028e-06,
+    "gravity_torque_ratio": 0.4503987006078023,
     "elbow_flexion_rad": {
-      "right": 0.5545208076496798,
-      "left": 0.5533426347581067
+      "right": 0.5518684744539372,
+      "left": 0.5501484667451816
     },
     "forbidden_contact_count": 0,
     "phase": "raise_high",
     "target_tcp_positions_m": [
       [
-        0.7382714536886152,
-        -0.2699639731902456,
+        0.7384783030239569,
+        -0.26997000274118316,
         1.362
       ],
       [
-        0.7382714536886152,
-        0.2700360268097544,
+        0.7384783030239569,
+        0.2700299972588169,
         1.362
       ]
     ],
@@ -508,29 +518,30 @@
       ]
     ],
     "base_pose_xy_yaw": [
-      0.0889636959351577,
-      2.5292857086912044e-05,
-      0.00012907345159129946
+      0.08896696943749942,
+      3.247055362897245e-05,
+      0.00020052679281290509
     ],
     "pose_source": "rgbd_estimate_plus_encoder_odometry",
     "cartesian_segment_count": 100,
     "cartesian_max_step_m": 0.01,
-    "joint_path_max_step_rad": 0.16177571691450704,
+    "joint_path_max_step_rad": 0.16169752188017233,
     "joint_path_continuity_limit_rad": 0.22,
     "interpolated_joint_limit_violation_rad": 0.0,
     "seed_policy": "continuous_seed_with_gradual_validated_high_torso_posture",
-    "segment_position_error_max_m": 9.942849398270746e-07,
-    "segment_orientation_error_max_rad": 2.4488659953372055e-05,
-    "interpolated_position_error_max_m": 0.0015189048656028513,
-    "interpolated_orientation_error_max_rad": 0.0013311742562107062
+    "segment_position_error_max_m": 9.906492643217112e-07,
+    "segment_orientation_error_max_rad": 2.435004631156873e-05,
+    "interpolated_position_error_max_m": 0.0014508861672085972,
+    "interpolated_orientation_error_max_rad": 0.001187396830619571,
+    "pickup_preapproach_offset_m": null
   },
   {
-    "position_error_m": 2.982762819641251e-08,
-    "orientation_error_rad": 1.1553606335038114e-06,
-    "gravity_torque_ratio": 0.4211912169895926,
+    "position_error_m": 2.983755510217462e-08,
+    "orientation_error_rad": 1.1555916112963878e-06,
+    "gravity_torque_ratio": 0.4210171015083541,
     "elbow_flexion_rad": {
-      "right": 0.5869355950323165,
-      "left": 0.5855225360730592
+      "right": 0.5840995648461286,
+      "left": 0.5821509464855126
     },
     "forbidden_contact_count": 0,
     "phase": "seat",
@@ -583,29 +594,30 @@
       ]
     ],
     "base_pose_xy_yaw": [
-      0.5391556143055426,
-      0.0001454280038459005,
-      0.0003111811154274946
+      0.5391590821449684,
+      0.00018278904588253493,
+      0.0003457512987710132
     ],
     "pose_source": "rgbd_estimate_plus_encoder_odometry",
     "cartesian_segment_count": 5,
     "cartesian_max_step_m": 0.025,
-    "joint_path_max_step_rad": 0.0480108826703598,
+    "joint_path_max_step_rad": 0.047993901894593405,
     "joint_path_continuity_limit_rad": 0.22,
     "interpolated_joint_limit_violation_rad": 0.0,
     "seed_policy": "previous_command_continuation",
-    "segment_position_error_max_m": 4.1155505537880936e-08,
-    "segment_orientation_error_max_rad": 1.39762794048287e-06,
-    "interpolated_position_error_max_m": 0.0030716381027029132,
-    "interpolated_orientation_error_max_rad": 0.00015688535973901982
+    "segment_position_error_max_m": 4.107169701326883e-08,
+    "segment_orientation_error_max_rad": 1.3939876989919708e-06,
+    "interpolated_position_error_max_m": 0.0030606541390188714,
+    "interpolated_orientation_error_max_rad": 0.00012704780532317466,
+    "pickup_preapproach_offset_m": null
   },
   {
-    "position_error_m": 1.6878717134457162e-10,
-    "orientation_error_rad": 5.1982309011597225e-09,
-    "gravity_torque_ratio": 0.4209529373169134,
+    "position_error_m": 1.0893486617810805e-10,
+    "orientation_error_rad": 3.323552102093166e-09,
+    "gravity_torque_ratio": 0.4208789656363098,
     "elbow_flexion_rad": {
-      "right": 0.5869964716842018,
-      "left": 0.5855921338209062
+      "right": 0.5841325650299682,
+      "left": 0.5821931290820133
     },
     "forbidden_contact_count": 0,
     "phase": "settle",
@@ -658,29 +670,30 @@
       ]
     ],
     "base_pose_xy_yaw": [
-      0.5393051070404022,
-      0.0001454747922258194,
-      0.00030320441681874755
+      0.5392456312379443,
+      0.0001828190681845851,
+      0.0003373193941662578
     ],
     "pose_source": "rgbd_estimate_plus_encoder_odometry",
     "cartesian_segment_count": 1,
     "cartesian_max_step_m": 0.025,
-    "joint_path_max_step_rad": 0.000188867947585436,
+    "joint_path_max_step_rad": 0.00010993668528325173,
     "joint_path_continuity_limit_rad": 0.22,
     "interpolated_joint_limit_violation_rad": 0.0,
     "seed_policy": "previous_command_continuation",
-    "segment_position_error_max_m": 1.6878717134457162e-10,
-    "segment_orientation_error_max_rad": 5.1982309011597225e-09,
-    "interpolated_position_error_max_m": 0.00012803747985289232,
-    "interpolated_orientation_error_max_rad": 6.805377189586394e-06
+    "segment_position_error_max_m": 1.0893486617810805e-10,
+    "segment_orientation_error_max_rad": 3.323552102093166e-09,
+    "interpolated_position_error_max_m": 7.510170419281048e-05,
+    "interpolated_orientation_error_max_rad": 7.185414556878037e-06,
+    "pickup_preapproach_offset_m": null
   },
   {
-    "position_error_m": 3.36683443594642e-11,
-    "orientation_error_rad": 1.0769918217418026e-09,
-    "gravity_torque_ratio": 0.42094654912978313,
+    "position_error_m": 2.899420562701379e-11,
+    "orientation_error_rad": 8.414327775693523e-10,
+    "gravity_torque_ratio": 0.4208794757482646,
     "elbow_flexion_rad": {
-      "right": 0.5869916426802138,
-      "left": 0.5856004884519074
+      "right": 0.5841267070572745,
+      "left": 0.5821987140611589
     },
     "forbidden_contact_count": 0,
     "phase": "release",
@@ -733,29 +746,30 @@
       ]
     ],
     "base_pose_xy_yaw": [
-      0.5393091731447869,
-      0.00014547600170311068,
-      0.00029123976582878797
+      0.5392453560513282,
+      0.00018281897790729977,
+      0.0003268811609622446
     ],
     "pose_source": "rgbd_estimate_plus_encoder_odometry",
     "cartesian_segment_count": 1,
     "cartesian_max_step_m": 0.025,
-    "joint_path_max_step_rad": 9.51134620958918e-06,
+    "joint_path_max_step_rad": 8.31440631248614e-06,
     "joint_path_continuity_limit_rad": 0.22,
     "interpolated_joint_limit_violation_rad": 0.0,
     "seed_policy": "previous_command_continuation",
-    "segment_position_error_max_m": 3.36683443594642e-11,
-    "segment_orientation_error_max_rad": 1.0769918217418026e-09,
-    "interpolated_position_error_max_m": 9.075136720737749e-06,
-    "interpolated_orientation_error_max_rad": 1.0095486164900378e-05
+    "segment_position_error_max_m": 2.899420562701379e-11,
+    "segment_orientation_error_max_rad": 8.414327775693523e-10,
+    "interpolated_position_error_max_m": 6.378707405473779e-06,
+    "interpolated_orientation_error_max_rad": 8.80744528157967e-06,
+    "pickup_preapproach_offset_m": null
   },
   {
-    "position_error_m": 4.8185058506310116e-08,
-    "orientation_error_rad": 1.5457395761755064e-06,
-    "gravity_torque_ratio": 0.4690421627980961,
+    "position_error_m": 4.8165881825194136e-08,
+    "orientation_error_rad": 1.5450200107454303e-06,
+    "gravity_torque_ratio": 0.46899943792149984,
     "elbow_flexion_rad": {
-      "right": 0.5472758998592725,
-      "left": 0.5461098927010614
+      "right": 0.5446968376120606,
+      "left": 0.5430524222079023
     },
     "forbidden_contact_count": 0,
     "phase": "withdraw",
@@ -808,20 +822,21 @@
       ]
     ],
     "base_pose_xy_yaw": [
-      0.5393073350136781,
-      0.0001454754799641365,
-      0.00028290180771239903
+      0.5392441871224734,
+      0.00018281860963178097,
+      0.0003196267917511264
     ],
     "pose_source": "rgbd_estimate_plus_encoder_odometry",
     "cartesian_segment_count": 5,
     "cartesian_max_step_m": 0.025,
-    "joint_path_max_step_rad": 0.05162146497301645,
+    "joint_path_max_step_rad": 0.05163343844186086,
     "joint_path_continuity_limit_rad": 0.22,
     "interpolated_joint_limit_violation_rad": 0.0,
     "seed_policy": "previous_command_continuation",
-    "segment_position_error_max_m": 4.8185058506310116e-08,
-    "segment_orientation_error_max_rad": 1.5457395761755064e-06,
-    "interpolated_position_error_max_m": 0.0028315865399428947,
-    "interpolated_orientation_error_max_rad": 5.09765721753857e-05
+    "segment_position_error_max_m": 4.8165881825194136e-08,
+    "segment_orientation_error_max_rad": 1.5450200107454303e-06,
+    "interpolated_position_error_max_m": 0.0028315548574762016,
+    "interpolated_orientation_error_max_rad": 5.1553708752565995e-05,
+    "pickup_preapproach_offset_m": null
   }
 ]

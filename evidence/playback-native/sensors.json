@@ -40,9 +40,9 @@
           "encoding": "display-only inverse grayscale; invalid depth is 0",
           "metric_data": false,
           "metric_source": "recorded RGBDFrame.depth_m; use controller data for metric depth",
-          "valid_depth_max_m": 0.4697410762310028,
-          "valid_depth_min_m": 0.07114686071872711,
-          "valid_pixel_count": 229017
+          "valid_depth_max_m": 0.46965867280960083,
+          "valid_depth_min_m": 0.07114694267511368,
+          "valid_pixel_count": 229018
         },
         "rgb": {
           "encoding": "uint8 RGB copied from the recorded controller frame",
@@ -72,9 +72,9 @@
           "encoding": "display-only inverse grayscale; invalid depth is 0",
           "metric_data": false,
           "metric_source": "recorded RGBDFrame.depth_m; use controller data for metric depth",
-          "valid_depth_max_m": 0.4999987781047821,
+          "valid_depth_max_m": 0.49999839067459106,
           "valid_depth_min_m": 0.07165414839982986,
-          "valid_pixel_count": 212778
+          "valid_pixel_count": 212786
         },
         "rgb": {
           "encoding": "uint8 RGB copied from the recorded controller frame",
@@ -104,9 +104,9 @@
           "encoding": "display-only inverse grayscale; invalid depth is 0",
           "metric_data": false,
           "metric_source": "recorded RGBDFrame.depth_m; use controller data for metric depth",
-          "valid_depth_max_m": 0.4677233397960663,
-          "valid_depth_min_m": 0.07164841145277023,
-          "valid_pixel_count": 228936
+          "valid_depth_max_m": 0.46770524978637695,
+          "valid_depth_min_m": 0.07164826989173889,
+          "valid_pixel_count": 228942
         },
         "rgb": {
           "encoding": "uint8 RGB copied from the recorded controller frame",
@@ -136,9 +136,9 @@
           "encoding": "display-only inverse grayscale; invalid depth is 0",
           "metric_data": false,
           "metric_source": "recorded RGBDFrame.depth_m; use controller data for metric depth",
-          "valid_depth_max_m": 0.4999972879886627,
+          "valid_depth_max_m": 0.49999016523361206,
           "valid_depth_min_m": 0.07162059098482132,
-          "valid_pixel_count": 212100
+          "valid_pixel_count": 212138
         },
         "rgb": {
           "encoding": "uint8 RGB copied from the recorded controller frame",

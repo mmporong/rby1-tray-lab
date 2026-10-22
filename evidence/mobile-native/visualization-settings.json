@@ -10,16 +10,16 @@
   {
     "frame": "observations/0001_left_wrist_rgbd.npz",
     "display_depth_range_m": [
-      0.07957927376031876,
-      0.4585473155975342
+      0.07957928754389286,
+      0.45848453134298317
     ],
     "scale": "1st-99th percentile clipped linear grayscale; nearer white; invalid black"
   },
   {
     "frame": "observations/0002_right_wrist_rgbd.npz",
     "display_depth_range_m": [
-      0.07748248286545277,
-      0.4852155223488808
+      0.07748254239559174,
+      0.4852169588208197
     ],
     "scale": "1st-99th percentile clipped linear grayscale; nearer white; invalid black"
   }

@@ -23,15 +23,15 @@
   "last_time_s": 102.46999999994259,
   "metrics": {
     "left_grasp_force_n": 0.0,
-    "max_payload_speed_m_s": 0.007035579269236897,
+    "max_payload_speed_m_s": 0.005573740598194079,
     "min_pad_force_n": 0.0,
     "right_grasp_force_n": 0.0
   },
   "milestone_times_s": {
-    "grasped": 25.63599999999667,
+    "grasped": 25.639999999996668,
     "lifted": 29.89199999999431,
-    "released": 97.94999999995312,
-    "seated": 93.97399999996239,
+    "released": 97.96599999995308,
+    "seated": 94.0119999999623,
     "withdrawn": 102.46999999994259
   },
   "milestones": {
@@ -57,5 +57,5 @@
   "success": true,
   "terminal": true,
   "updates": 51236,
-  "wall_time_s": 106.64217847096734
+  "wall_time_s": 328.4117784239352
 }
