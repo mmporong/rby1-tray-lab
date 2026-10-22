@@ -1,0 +1,12 @@
+{
+  "source_commit": "fbff4e41b82ec4e57794bd7815ed6a9ad0822f66",
+  "source": "trace.jsonl and result.json from this run; summarized after execution",
+  "held_trace_samples": 3417,
+  "held_trace_all_secure": true,
+  "held_trace_min_pad_force_n": 2.6920548047310024,
+  "trace_forbidden_contact_samples": 0,
+  "trace_sample_interval_s": 0.02,
+  "continuous_strict_evaluation_interval_s": 0.002,
+  "failure_videos_role": "two illustrative exploratory failures; not a success-rate benchmark",
+  "held_trace_definition": "grasped milestone is true and seated milestone is false; recorded trace samples only"
+}

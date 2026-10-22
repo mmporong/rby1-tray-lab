@@ -1,0 +1,14 @@
+{
+  "source_commit": "fbff4e41b82ec4e57794bd7815ed6a9ad0822f66",
+  "original_run_manifest_sha256": "335bb429eb442077b37e4f895f175369f08b5d48c2be5fd52da9c2d8fdf8ca54",
+  "derivation": "video uses the same rollout GIF frames; preview uses stored controller RGB-D with recorded display normalization; summary uses recorded trace milestone predicates",
+  "artifact_sha256": {
+    "rollout.mp4": "241d937a53e95b15a68f52554b2a8799ee4f733a7d7669fc0851d39fd6d88a3f",
+    "summary.json": "a8240759cf99c8c6fb8a3dc06cc74456c7059467ef3dcbf3369292fcab1073ad",
+    "sensor-preview.png": "b29bae3f14f171c165eaee66196a871ea99981612395d0400e608a4fc6dbbe63",
+    "visualization-settings.json": "3ec778a1c9dcc65fe1b08cead6438c659b4704f5151fd7d9c85154e0c38ac1cd",
+    "controller-validation.json": "8c621fe3076c4259b1fb3a4fe7448b7d463fb0c99e009cd0379dac5acb4fe9be",
+    "trace.jsonl.gz": "5745a66bb3f43bf13c3eee2b83ea8a9909eaa76e80200e98417eeff48aa5319d",
+    "controller-data/commands.jsonl.gz": "7b270793f0fada27f113e286419b335c4cfbc66925b875a6df1d5bcefd0e0e30"
+  }
+}

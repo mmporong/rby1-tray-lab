@@ -1,0 +1,410 @@
+<mujoco model="rby1">
+  <compiler angle="radian" autolimits="true" eulerseq="xyz" meshdir="assets" />
+  <default>
+    <joint armature="0.01" damping="5" range="-3.14 3.14" />
+    <material specular="0.5" shininess="0.25" />
+    <motor ctrllimited="true" ctrlrange="-100 100" />
+    <velocity ctrllimited="true" />
+    <position ctrllimited="true" kp="4000" kv="400" />
+    <default class="visual">
+      <geom group="2" type="mesh" contype="0" conaffinity="0" />
+    </default>
+    <default class="collision">
+      <geom group="3" type="mesh" />
+    </default>
+    <default class="in-model-collision">
+      <geom group="2" contype="1" conaffinity="1" rgba="0.3 0 0 0.0" />
+    </default>
+  </default>
+  <asset>
+    
+    <material name="0,0,0" specular="1.0" shininess="1.0" rgba="0.000000 0.000000 0.000000 1.000000" />
+    <material name="10,10,10_LINK_6" specular="1.0" shininess="0.2" rgba="0.039216 0.039216 0.039216 1.000000" />
+    <material name="10,10,10" specular="0.039216" shininess="1.0" rgba="0.039216 0.039216 0.039216 1.000000" />
+    <material name="163,163,175" specular="1.0" shininess="0.2" rgba="0.639216 0.639216 0.686275 1.000000" />
+    <material name="178,0,0" specular="1.0" shininess="0.2" rgba="0.698039 0.000000 0.000000 1.000000" />
+    <material name="190,188,186" specular="1.0" shininess="0.2" rgba="0.745098 0.737255 0.729412 1.000000" />
+    <material name="191,191,191" specular="0.0" shininess="0.3" rgba="0.749020 0.749020 0.749020 1.000000" />
+    <material name="192,192,192" specular="1.0" shininess="0.2" rgba="0.752941 0.752941 0.752941 1.000000" />
+    <material name="216,214,214" specular="1.0" shininess="0.2" rgba="0.847059 0.839216 0.839216 1.000000" />
+    <material name="237,255,168" specular="1.0" shininess="0.2" rgba="0.929412 1.000000 0.658824 1.000000" />
+    <material name="242,236,238" specular="1.0" shininess="0.2" rgba="0.949020 0.925490 0.933333 1.000000" />
+    <material name="244,244,244" specular="0.9568629999999999" shininess="1.0" rgba="0.956863 0.956863 0.956863 1.000000" />
+    <material name="25,25,25" specular="1.0" shininess="0.8" rgba="0.100000 0.100000 0.100000 1.000000" />
+    <material name="254,254,255_LINK_6" specular="1.0" shininess="0.2" rgba="0.996078 0.996078 1.000000 1.000000" />
+    <material name="254,254,255" specular="0.9973853333333333" shininess="1.0" rgba="0.996078 0.996078 1.000000 1.000000" />
+    <material name="65,55,50" specular="1.0" shininess="0.2" rgba="0.254902 0.215686 0.196078 1.000000" />
+    <material name="65,65,65" specular="0.254902" shininess="1.0" rgba="0.254902 0.254902 0.254902 1.000000" />
+    <material name="69,69,69_1" specular="0.0" shininess="1.0" rgba="0.270588 0.270588 0.270588 1.000000" />
+    <material name="69,69,69" specular="1.0" shininess="1.0" rgba="0.270588 0.270588 0.270588 1.000000" />
+    <material name="70,70,70_FINGER" specular="0.27451" shininess="1.0" rgba="0.274510 0.274510 0.274510 1.000000" />
+    <material name="70,70,70" specular="1.0" shininess="0.2" rgba="0.274510 0.274510 0.274510 1.000000" />
+    <material name="79,79,79" specular="1.0" shininess="0.2" rgba="0.309804 0.309804 0.309804 1.000000" />
+    <material name="80,80,80" specular="0.0" shininess="0.5" rgba="0.313725 0.313725 0.313725 1.000000" />
+    <material name="235,235,235" specular="1.0" shininess="0.2" rgba="0.921569 0.921569 0.921569 1.000000" />
+    
+    <mesh name="m_base_1" file="m_base_1.obj" />
+    <mesh name="m_base_2" file="m_base_2.obj" />
+    <mesh name="m_base_3" file="m_base_3.obj" />
+    <mesh name="m_base_4" file="m_base_4.obj" />
+    <mesh name="m_base_5" file="m_base_5.obj" />
+    <mesh name="m_base_6" file="m_base_6.obj" />
+    <mesh name="m_base_7" file="m_base_7.obj" />
+    <mesh name="EE_BODY" file="EE_BODY.obj" />
+    <mesh name="EE_FINGER_0" file="EE_FINGER_0.obj" />
+    <mesh name="EE_FINGER_1" file="EE_FINGER_1.obj" />
+    <mesh name="LINK_1" file="LINK_1.obj" />
+    <mesh name="LINK_2_0" file="LINK_2_0.obj" />
+    <mesh name="LINK_2_1" file="LINK_2_1.obj" />
+    <mesh name="LINK_3_0" file="LINK_3_0.obj" />
+    <mesh name="LINK_3_1" file="LINK_3_1.obj" />
+    <mesh name="LINK_4" file="LINK_4.obj" />
+    <mesh name="LINK_5" file="LINK_5.obj" />
+    <mesh name="LINK_6_0" file="LINK_6_0.obj" />
+    <mesh name="LINK_6_1" file="LINK_6_1.obj" />
+    <mesh name="LINK_6_2" file="LINK_6_2.obj" />
+    <mesh name="LINK_6_3" file="LINK_6_3.obj" />
+    <mesh name="LINK_6_4" file="LINK_6_4.obj" />
+    <mesh name="LINK_6_5" file="LINK_6_5.obj" />
+    <mesh name="LINK_7" file="LINK_7.obj" />
+    <mesh name="LINK_8" file="LINK_8.obj" />
+    <mesh name="LINK_9_0" file="LINK_9_0.obj" />
+    <mesh name="LINK_9_1" file="LINK_9_1.obj" />
+    <mesh name="LINK_10_0" file="LINK_10_0.obj" />
+    <mesh name="LINK_10_1" file="LINK_10_1.obj" />
+    <mesh name="LINK_11" file="LINK_11.obj" />
+    <mesh name="LINK_12_0_V1.1" file="LINK_12_0_V1.1.obj" />
+    <mesh name="LINK_12_1_V1.1" file="LINK_12_1_V1.1.obj" />
+    <mesh name="LINK_13_0_V1.1" file="LINK_13_0_V1.1.obj" />
+    <mesh name="LINK_13_1_V1.1" file="LINK_13_1_V1.1.obj" />
+    <mesh name="LINK_14" file="LINK_14.obj" />
+    <mesh name="LINK_15" file="LINK_15.obj" />
+    <mesh name="LINK_16_0" file="LINK_16_0.obj" />
+    <mesh name="LINK_16_1" file="LINK_16_1.obj" />
+    <mesh name="LINK_17_0" file="LINK_17_0.obj" />
+    <mesh name="LINK_17_1" file="LINK_17_1.obj" />
+    <mesh name="LINK_18" file="LINK_18.obj" />
+    <mesh name="LINK_19_0_V1.1" file="LINK_19_0_V1.1.obj" />
+    <mesh name="LINK_19_1_V1.1" file="LINK_19_1_V1.1.obj" />
+    <mesh name="LINK_20_0_V1.1" file="LINK_20_0_V1.1.obj" />
+    <mesh name="LINK_20_1_V1.1" file="LINK_20_1_V1.1.obj" />
+    <mesh name="NECK_0" file="NECK_0.obj" />
+    <mesh name="NECK_1" file="NECK_1.obj" />
+    <mesh name="NECK_2_0" file="NECK_2_0.obj" />
+    <mesh name="NECK_2_1" file="NECK_2_1.obj" />
+    <mesh name="MECANUM_WHEEL" file="MECANUM_WHEEL.obj" />
+    <mesh name="MECANUM_WHEEL_M" file="MECANUM_WHEEL_M.obj" />
+  <texture type="skybox" builtin="gradient" rgb1=".035 .055 .075" rgb2=".13 .18 .22" width="256" height="256" /><texture name="concrete_grid" type="2d" builtin="checker" rgb1=".14 .18 .21" rgb2=".17 .21 .24" width="512" height="512" /><material name="concrete" texture="concrete_grid" texrepeat="10 10" reflectance=".08" shininess=".1" /></asset>
+  <worldbody>
+    <body name="base">
+      <inertial pos="-0.0615794 -0.00142271 0.135139" quat="0.00383057 0.733861 -0.00742942 0.679248" mass="60.0804" diaginertia="3.77525 2.99424 1.36264" />
+      <joint name="world_j" type="free" limited="false" actuatorfrclimited="false" />
+      <geom mesh="m_base_1" material="10,10,10" class="visual" name="robot_geom_0" />
+      <geom mesh="m_base_2" material="25,25,25" class="visual" name="robot_geom_1" />
+      <geom mesh="m_base_3" material="10,10,10" class="visual" name="robot_geom_2" />
+      <geom mesh="m_base_4" material="25,25,25" class="visual" name="robot_geom_3" />
+      <geom mesh="m_base_5" material="10,10,10" class="visual" name="robot_geom_4" />
+      <geom mesh="m_base_6" material="10,10,10" class="visual" name="robot_geom_5" />
+      <geom mesh="m_base_7" material="10,10,10" class="visual" name="robot_geom_6" />
+      <geom mesh="m_base_1" class="collision" name="robot_geom_7" />
+      <geom mesh="m_base_2" class="collision" name="robot_geom_8" />
+      <geom mesh="m_base_3" class="collision" name="robot_geom_9" />
+      <geom mesh="m_base_4" class="collision" name="robot_geom_10" />
+      <geom mesh="m_base_5" class="collision" name="robot_geom_11" />
+      <geom mesh="m_base_6" class="collision" name="robot_geom_12" />
+      <geom mesh="m_base_7" class="collision" name="robot_geom_13" />
+      <body name="wheel_fr_link" pos="0.243 -0.245 0.076">
+        <inertial pos="-0.00010511 0.0009458 0" quat="0.707046 0 0 0.707168" mass="2.5441" diaginertia="0.00616429 0.00470985 0.00470754" />
+        <joint name="wheel_fr" pos="0 0 0" axis="0 1 0" limited="false" />
+        <geom material="191,191,191" mesh="MECANUM_WHEEL" class="visual" name="robot_geom_14" />
+        <geom mesh="MECANUM_WHEEL" class="collision" name="robot_geom_15" />
+      </body>
+      <body name="wheel_fl_link" pos="0.243 0.245 0.076">
+        <inertial pos="-0.00010433 -0.00094577 0" quat="0.707168 0 0 0.707046" mass="2.54418" diaginertia="0.00616468 0.00471013 0.00470782" />
+        <joint name="wheel_fl" pos="0 0 0" axis="0 1 0" limited="false" />
+        <geom material="191,191,191" mesh="MECANUM_WHEEL_M" class="visual" name="robot_geom_16" />
+        <geom mesh="MECANUM_WHEEL_M" class="collision" name="robot_geom_17" />
+      </body>
+      <body name="wheel_rr_link" pos="-0.247 -0.245 0.076">
+        <inertial pos="-0.00010511 0.0009458 0" quat="0.707046 0 0 0.707168" mass="2.5441" diaginertia="0.00616429 0.00470985 0.00470754" />
+        <joint name="wheel_rr" pos="0 0 0" axis="0 1 0" limited="false" />
+        <geom material="191,191,191" mesh="MECANUM_WHEEL_M" class="visual" name="robot_geom_18" />
+        <geom mesh="MECANUM_WHEEL_M" class="collision" name="robot_geom_19" />
+      </body>
+      <body name="wheel_rl_link" pos="-0.247 0.245 0.076">
+        <inertial pos="-0.00010433 -0.00094577 0" quat="0.707168 0 0 0.707046" mass="2.54418" diaginertia="0.00616468 0.00471013 0.00470782" />
+        <joint name="wheel_rl" pos="0 0 0" axis="0 1 0" limited="false" />
+        <geom material="191,191,191" mesh="MECANUM_WHEEL" class="visual" name="robot_geom_20" />
+        <geom mesh="MECANUM_WHEEL" class="collision" name="robot_geom_21" />
+      </body>
+      <body name="link_torso_0" pos="0 0 0.2805">
+        <inertial pos="-0.0884841 0.00021367 4.6e-07" quat="0.443798 0.550483 -0.443815 0.55049" mass="2.24282" diaginertia="0.0189253 0.0143368 0.00985172" />
+        <joint name="torso_0" pos="0 0 0" axis="1 0 0" limited="true" range="-0.349066 0.349066" />
+        <geom material="254,254,255" mesh="LINK_1" class="visual" name="robot_geom_22" />
+        <geom mesh="LINK_1" class="in-model-collision" name="robot_geom_23" />
+        <geom size="0.105 0.115" pos="-0.115 0 0" quat="0.707105 0 0.707108 0" class="in-model-collision" name="robot_geom_24" />
+        <body name="link_torso_1">
+          <inertial pos="0.00728955 -0.0172852 0.0691138" quat="0.997768 -0.0453891 0.0382115 -0.0306483" mass="9.72163" diaginertia="0.149421 0.139376 0.0275059" />
+          <joint name="torso_1" pos="0 0 0" axis="0 1 0" limited="true" range="-1.0472 1.52173" />
+          <geom mesh="LINK_2_0" material="0,0,0" class="visual" name="robot_geom_25" />
+          <geom mesh="LINK_2_1" material="254,254,255" class="visual" name="robot_geom_26" />
+          <geom mesh="LINK_2_0" class="in-model-collision" name="robot_geom_27" />
+          <geom mesh="LINK_2_1" class="in-model-collision" name="robot_geom_28" />
+          <geom size="0.115 0.11" pos="0.01 0 0.24" class="in-model-collision" name="robot_geom_29" />
+          <body name="link_torso_2" pos="0 0 0.35">
+            <inertial pos="0.00653835 -0.0176954 0.0563658" quat="0.99687 -0.052526 0.0433482 -0.0401474" mass="9.21692" diaginertia="0.12242 0.116748 0.0292915" />
+            <joint name="torso_2" pos="0 0 0" axis="0 1 0" limited="true" range="-2.47837 1.5708" />
+            <geom mesh="LINK_3_0" material="10,10,10" class="visual" name="robot_geom_30" />
+            <geom mesh="LINK_3_1" material="254,254,255" class="visual" name="robot_geom_31" />
+            <geom mesh="LINK_3_0" class="in-model-collision" name="robot_geom_32" />
+            <geom mesh="LINK_3_1" class="in-model-collision" name="robot_geom_33" />
+            <geom size="0.095 0.08" pos="0.025 0 0.23" class="in-model-collision" name="robot_geom_34" />
+            <body name="link_torso_3" pos="0 0 0.35">
+              <inertial pos="-0.00574156 -0.0172598 5.61e-05" quat="0.0913806 0.682262 -0.18841 0.700478" mass="4.18679" diaginertia="0.00955618 0.00946572 0.00832635" />
+              <joint name="torso_3" pos="0 0 0" axis="0 1 0" limited="true" range="-0.785398 1.5708" />
+              <geom mesh="LINK_4" material="10,10,10" class="visual" name="robot_geom_35" />
+              <geom mesh="LINK_4" class="in-model-collision" name="robot_geom_36" />
+              <body name="link_torso_4">
+                <inertial pos="-0.0909709 5.085e-05 0.0260195" quat="-0.0536434 0.4399 -0.0270045 0.896036" mass="4.45566" diaginertia="0.0255574 0.0255082 0.00942882" />
+                <joint name="torso_4" pos="0 0 0" axis="1 0 0" limited="true" range="-0.523599 0.523599" />
+                <geom material="10,10,10" mesh="LINK_5" class="visual" name="robot_geom_37" />
+                <geom mesh="LINK_5" class="in-model-collision" name="robot_geom_38" />
+                <geom size="0.105 0.1" pos="-0.07 0 0.0385" quat="0.707105 0 0.707108 0" class="in-model-collision" name="robot_geom_39" />
+                <body name="link_torso_5" pos="0 0 0.309427">
+                  <inertial pos="-0.0132199 0.000254676 -0.0318761" quat="0.998675 -0.00438307 -0.0510462 0.00477378" mass="12.6659" diaginertia="0.21618 0.167212 0.132309" />
+                  <joint name="torso_5" pos="0 0 0" axis="0 0 1" limited="true" range="-1.5708 1.5708" />
+                  <geom mesh="LINK_6_0" material="254,254,255_LINK_6" class="visual" name="robot_geom_40" />
+                  <geom mesh="LINK_6_1" material="191,191,191" class="visual" name="robot_geom_41" />
+                  <geom mesh="LINK_6_2" material="70,70,70" class="visual" name="robot_geom_42" />
+                  <geom mesh="LINK_6_3" material="178,0,0" class="visual" name="robot_geom_43" />
+                  <geom mesh="LINK_6_4" material="10,10,10_LINK_6" class="visual" name="robot_geom_44" />
+                  <geom mesh="LINK_6_5" material="254,254,255_LINK_6" class="visual" name="robot_geom_45" />
+                  <geom mesh="LINK_6_0" class="in-model-collision" name="robot_geom_46" />
+                  <geom mesh="LINK_6_1" class="in-model-collision" name="robot_geom_47" />
+                  <geom mesh="LINK_6_2" class="in-model-collision" name="robot_geom_48" />
+                  <geom mesh="LINK_6_3" class="in-model-collision" name="robot_geom_49" />
+                  <geom mesh="LINK_6_4" class="in-model-collision" name="robot_geom_50" />
+                  <geom mesh="LINK_6_5" class="in-model-collision" name="robot_geom_51" />
+                  <geom size="0.155 0.0675" pos="0 0 0.0075" class="in-model-collision" name="robot_geom_52" />
+                  <body name="NECK_0" pos="0.022 0 0.120073">
+                    <inertial pos="0 0 0" mass="0" />
+                    <geom mesh="NECK_0" material="254,254,255" class="visual" name="robot_geom_53" />
+                    <geom mesh="NECK_0" class="in-model-collision" name="robot_geom_54" />
+                  </body>
+                  <body name="link_right_arm_0" pos="0 -0.22 0.0800735" quat="0.984808 -0.173648 0 0">
+                    <inertial pos="-0.00316662 0.0343718 -3e-07" quat="0.536676 0.553304 0.439546 0.461122" mass="1.26164" diaginertia="0.00433912 0.00432154 0.00223129" />
+                    <joint name="right_arm_0" pos="0 0 0" axis="0 1 0" limited="true" range="-2.35619 2.35619" />
+                    <geom material="10,10,10" mesh="LINK_7" class="visual" name="robot_geom_55" />
+                    <geom mesh="LINK_7" class="in-model-collision" name="robot_geom_56" />
+                    <geom size="0.075 0.035" pos="-0.015 0.018 -0.008" quat="0.707105 0 0.707108 0" class="in-model-collision" name="robot_geom_57" />
+                    <body name="link_right_arm_1" quat="0.984808 0.173648 0 0">
+                      <inertial pos="-0.00307855 -0.00124741 -0.0129432" quat="0.691024 -0.061096 -0.016345 0.72006" mass="2.27287" diaginertia="0.00447747 0.0038967 0.00286448" />
+                      <joint name="right_arm_1" pos="0 0 0" axis="1 0 0" limited="true" range="-3.14159 0.05" />
+                      <geom material="10,10,10" mesh="LINK_8" class="visual" name="robot_geom_58" />
+                      <geom mesh="LINK_8" class="in-model-collision" name="robot_geom_59" />
+                      <geom size="0.05 0.1" pos="0 0 -0.1" class="in-model-collision" name="robot_geom_60" />
+                      <body name="link_right_arm_2">
+                        <inertial pos="0.00115434 -0.00196635 -0.161925" quat="0.998316 -0.0390505 -0.0388849 0.0181103" mass="2.46909" diaginertia="0.0098447 0.00928024 0.00322202" />
+                        <joint name="right_arm_2" pos="0 0 0" axis="0 0 1" limited="true" range="-2.0944 2.0944" />
+                        <geom mesh="LINK_9_0" material="254,254,255" class="visual" name="robot_geom_61" />
+                        <geom mesh="LINK_9_1" material="10,10,10" class="visual" name="robot_geom_62" />
+                        <geom mesh="LINK_9_0" class="in-model-collision" name="robot_geom_63" />
+                        <geom mesh="LINK_9_1" class="in-model-collision" name="robot_geom_64" />
+                        <geom size="0.05 0.04" pos="0.026 0 -0.276" quat="0.707105 0.707108 0 0" class="in-model-collision" name="robot_geom_65" />
+                        <body name="link_right_arm_3" pos="0.031 0 -0.276">
+                          <inertial pos="-0.0160313 -0.00692891 -0.0454981" quat="0.950945 0.0932571 0.100342 0.277377" mass="2.26099" diaginertia="0.0086724 0.00849326 0.00187523" />
+                          <joint name="right_arm_3" pos="0 0 0" axis="0 1 0" limited="true" range="-2.61799 0.01" />
+                          <geom mesh="LINK_10_0" material="254,254,255" class="visual" name="robot_geom_66" />
+                          <geom mesh="LINK_10_1" material="10,10,10" class="visual" name="robot_geom_67" />
+                          <geom mesh="LINK_10_0" class="in-model-collision" name="robot_geom_68" />
+                          <geom mesh="LINK_10_1" class="in-model-collision" name="robot_geom_69" />
+                          <geom size="0.04 0.0575" pos="-0.031 0 -0.1075" class="in-model-collision" name="robot_geom_70" />
+                          <body name="link_right_arm_4" pos="-0.031 0 -0.256">
+                            <inertial pos="-1.1e-07 -0.0269604 0.0618211" quat="0.686909 -0.167796 0.167796 0.686909" mass="0.425087" diaginertia="0.000885625 0.00082466 0.000266295" />
+                            <joint name="right_arm_4" pos="0 0 0" axis="0 0 1" limited="true" range="-6.28319 6.28319" />
+                            <geom material="254,254,255" mesh="LINK_11" class="visual" name="robot_geom_71" />
+                            <geom mesh="LINK_11" class="in-model-collision" name="robot_geom_72" />
+                            <geom size="0.035 0.0475" pos="0 -0.038 0.0175" class="in-model-collision" name="robot_geom_73" />
+                            <body name="link_right_arm_5">
+                              <inertial pos="0.00318034 -0.00532264 -0.0280966" quat="0.559407 0.0608226 -0.0803636 0.822743" mass="1.59194" diaginertia="0.00262685 0.00255036 0.00151658" />
+                              <joint name="right_arm_5" pos="0 0 0" axis="0 1 0" limited="true" range="-1.74533 2.00713" />
+                              <geom mesh="LINK_12_0_V1.1" material="254,254,255" class="visual" name="robot_geom_74" />
+                              <geom mesh="LINK_12_1_V1.1" material="10,10,10" class="visual" name="robot_geom_75" />
+                              <geom mesh="LINK_12_0_V1.1" class="in-model-collision" name="robot_geom_76" />
+                              <geom mesh="LINK_12_1_V1.1" class="in-model-collision" name="robot_geom_77" />
+                              <geom size="0.075 0.026" pos="0 0 -0.024" class="in-model-collision" name="robot_geom_78" />
+                              <body name="link_right_arm_6">
+                                <inertial pos="0.00024951 -0.00019562 -0.10711314" mass="0.42751673" fullinertia="0.00029613 0.00030651 0.00048946 -0.00000186 -0.00000157 0.00000221" />
+                                <joint name="right_arm_6" pos="0 0 0" axis="0 0 1" limited="true" range="-2.96706 2.96706" />
+                                <geom material="244,244,244" mesh="LINK_13_0_V1.1" class="visual" name="robot_geom_79" />
+                                <geom mesh="LINK_13_0_V1.1" class="in-model-collision" name="robot_geom_80" />
+                                <geom material="69,69,69" mesh="LINK_13_1_V1.1" class="visual" name="robot_geom_81" />
+                                <geom mesh="LINK_13_1_V1.1" class="in-model-collision" name="robot_geom_82" />
+                                <site name="right_tcp" pos="0 0 -0.228" size=".008" rgba="1 .4 0 1" /><camera name="right_wrist_rgbd" pos="0.075 0.0 -0.12" fovy="58" quat="0.9542981624401505 0.0 0.2988561814039524 0.0" /><body name="right_wrist_camera_case" pos="0.08155955180919645 0.0 -0.1105542453947571" quat="-0.0 0.9542981624401505 0.0 -0.2988561814039524"><geom name="robot_geom_right_camera_case" type="box" size="0.021 0.021 0.0115" mass="0.06" rgba=".16 .18 .20 1" /></body><body name="right_ft_mount" pos="0.0 0.0 -0.1261"><body name="EE_BODY_R" pos="0.0 0.0 0.0">
+                                  <inertial pos="0.00212703 0.00000615 -0.04287176" mass="0.46704998" fullinertia="0.00032067 0.00059559 0.00052732 0.00002383 -0.00000785 -0.00000007" />
+                                  <geom material="70,70,70" mesh="EE_BODY" class="visual" name="robot_geom_83" />
+                                  <geom mesh="EE_BODY" class="in-model-collision" name="robot_geom_84" type="mesh" />
+                                </body>
+                                <body name="ee_finger_r1" pos="0.003 0.0 -0.07400000000000001">
+                                  <inertial pos="0.00278346 -3.29e-06 -0.0257011" quat="0.999784 0 0.0208044 0" mass="0.03327" diaginertia="1.23275e-05 1.066e-05 2.22251e-06" />
+                                  <joint name="gripper_finger_r1" pos="0 0 0" axis="-1 0 0" type="slide" limited="true" range="-0.05 0" />
+                                  <geom mesh="EE_FINGER_0" material="191,191,191" class="visual" name="robot_geom_85" />
+                                  <geom mesh="EE_FINGER_1" material="70,70,70_FINGER" class="visual" name="robot_geom_86" />
+                                  <geom mesh="EE_FINGER_0" class="in-model-collision" condim="4" friction="2 0.05 0.01" name="right_pad_1_native_2" type="mesh" />
+                                  <geom mesh="EE_FINGER_1" class="in-model-collision" condim="4" friction="2 0.05 0.01" name="right_pad_1_native_3" type="mesh" />
+                                </body>
+                                <body name="ee_finger_r2" pos="-0.003 0.0 -0.07400000000000001">
+                                  <inertial pos="0.00278346 -3.29e-06 -0.0257011" quat="0.999784 0 0.0208044 0" mass="0.03327" diaginertia="1.23275e-05 1.066e-05 2.22251e-06" />
+                                  <joint name="gripper_finger_r2" pos="0 0 0" axis="1 0 0" type="slide" limited="true" range="-0.05 0" />
+                                  <geom mesh="EE_FINGER_0" material="191,191,191" class="visual" name="robot_geom_89" />
+                                  <geom mesh="EE_FINGER_1" material="70,70,70_FINGER" class="visual" name="robot_geom_90" />
+                                  <geom mesh="EE_FINGER_0" class="in-model-collision" condim="4" friction="2 0.05 0.01" name="right_pad_2_native_2" type="mesh" />
+                                  <geom mesh="EE_FINGER_1" class="in-model-collision" condim="4" friction="2 0.05 0.01" name="right_pad_2_native_3" type="mesh" />
+                                </body>
+                              <site name="right_ft_frame" size=".004" rgba="0 0 0 0" /></body></body>
+                            </body>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                  <body name="link_left_arm_0" pos="0 0.22 0.0800735" quat="0.984808 0.173648 0 0">
+                    <inertial pos="-0.00316662 -0.0343715 2.42e-06" quat="0.441442 0.459281 0.538276 0.551768" mass="1.26164" diaginertia="0.0043391 0.00432158 0.00223133" />
+                    <joint name="left_arm_0" pos="0 0 0" axis="0 1 0" limited="true" range="-2.35619 2.35619" />
+                    <geom material="10,10,10" mesh="LINK_14" class="visual" name="robot_geom_93" />
+                    <geom mesh="LINK_14" class="in-model-collision" name="robot_geom_94" />
+                    <geom size="0.075 0.035" pos="-0.015 -0.018 -0.008" quat="0.707105 0 0.707108 0" class="in-model-collision" name="robot_geom_95" />
+                    <body name="link_left_arm_1" quat="0.984808 -0.173648 0 0">
+                      <inertial pos="-0.0018347 0.00040596 -0.0100873" quat="0.701113 -0.0246572 -0.049881 0.710875" mass="1.88139" diaginertia="0.00355382 0.00296561 0.0022966" />
+                      <joint name="left_arm_1" pos="0 0 0" axis="1 0 0" limited="true" range="-0.05 3.14159" />
+                      <geom material="10,10,10" mesh="LINK_15" class="visual" name="robot_geom_96" />
+                      <geom mesh="LINK_15" class="in-model-collision" name="robot_geom_97" />
+                      <geom size="0.05 0.1" pos="0 0 -0.1" class="in-model-collision" name="robot_geom_98" />
+                      <body name="link_left_arm_2">
+                        <inertial pos="0.00066086 -0.00038583 -0.15743" quat="0.999413 -0.00635373 -0.0335732 -0.00246859" mass="2.35634" diaginertia="0.00845197 0.00802394 0.00293109" />
+                        <joint name="left_arm_2" pos="0 0 0" axis="0 0 1" limited="true" range="-2.0944 2.0944" />
+                        <geom mesh="LINK_16_0" material="254,254,255" class="visual" name="robot_geom_99" />
+                        <geom mesh="LINK_16_1" material="10,10,10" class="visual" name="robot_geom_100" />
+                        <geom mesh="LINK_16_0" class="in-model-collision" name="robot_geom_101" />
+                        <geom mesh="LINK_16_1" class="in-model-collision" name="robot_geom_102" />
+                        <geom size="0.05 0.04" pos="0.026 0 -0.276" quat="0.707105 0.707108 0 0" class="in-model-collision" name="robot_geom_103" />
+                        <body name="link_left_arm_3" pos="0.031 0 -0.276">
+                          <inertial pos="-0.015653 0.00793126 -0.0499794" quat="0.977098 -0.0897025 0.113811 -0.15582" mass="2.00906" diaginertia="0.00798526 0.00783637 0.00146823" />
+                          <joint name="left_arm_3" pos="0 0 0" axis="0 1 0" limited="true" range="-2.61799 0.01" />
+                          <geom mesh="LINK_17_0" material="254,254,255" class="visual" name="robot_geom_104" />
+                          <geom mesh="LINK_17_1" material="10,10,10" class="visual" name="robot_geom_105" />
+                          <geom mesh="LINK_17_0" class="in-model-collision" name="robot_geom_106" />
+                          <geom mesh="LINK_17_1" class="in-model-collision" name="robot_geom_107" />
+                          <geom size="0.04 0.0575" pos="-0.031 0 -0.1075" class="in-model-collision" name="robot_geom_108" />
+                          <body name="link_left_arm_4" pos="-0.031 0 -0.256">
+                            <inertial pos="1.1e-07 0.0269604 0.0618211" quat="0.686909 0.167796 -0.167796 0.686909" mass="0.425087" diaginertia="0.000885625 0.00082466 0.000266295" />
+                            <joint name="left_arm_4" pos="0 0 0" axis="0 0 1" limited="true" range="-6.28319 6.28319" />
+                            <geom material="254,254,255" mesh="LINK_18" class="visual" name="robot_geom_109" />
+                            <geom mesh="LINK_18" class="in-model-collision" name="robot_geom_110" />
+                            <geom size="0.035 0.0475" pos="0 0.038 0.0175" class="in-model-collision" name="robot_geom_111" />
+                            <body name="link_left_arm_5">
+                              <inertial pos="0.00592398 -0.01167056 -0.02584035" mass="1.60424243" fullinertia="0.00247523 0.00268221 0.00166703 -0.00004992 -0.00009867 0.00021464" />
+                              <joint name="left_arm_5" pos="0 0 0" axis="0 1 0" limited="true" range="-1.74533 2.00713" />
+                              <geom mesh="LINK_19_0_V1.1" material="254,254,255" class="visual" name="robot_geom_112" />
+                              <geom mesh="LINK_19_1_V1.1" material="10,10,10" class="visual" name="robot_geom_113" />
+                              <geom mesh="LINK_19_0_V1.1" class="in-model-collision" name="robot_geom_114" />
+                              <geom mesh="LINK_19_1_V1.1" class="in-model-collision" name="robot_geom_115" />
+                              <geom size="0.075 0.026" pos="0 0 -0.024" class="in-model-collision" name="robot_geom_116" />
+                              <body name="link_left_arm_6">
+                                <inertial pos="-0.00024951 0.00019562 -0.10711314" mass="0.42751673" fullinertia="0.00029613 0.00030651 0.00048946 -0.00000186 0.00000157 -0.00000221" />
+                                <joint name="left_arm_6" pos="0 0 0" axis="0 0 1" limited="true" range="-2.96706 2.96706" />
+                                <geom material="244,244,244" mesh="LINK_20_0_V1.1" class="visual" name="robot_geom_117" />
+                                <geom mesh="LINK_20_0_V1.1" class="in-model-collision" name="robot_geom_118" />
+                                <geom material="69,69,69" mesh="LINK_20_1_V1.1" class="visual" name="robot_geom_119" />
+                                <geom mesh="LINK_20_1_V1.1" class="in-model-collision" name="robot_geom_120" />
+                                <site name="left_tcp" pos="0 0 -0.228" size=".008" rgba="1 .4 0 1" /><camera name="left_wrist_rgbd" pos="0.075 0.0 -0.12" fovy="58" quat="0.9542981624401505 0.0 0.2988561814039524 0.0" /><body name="left_wrist_camera_case" pos="0.08155955180919645 0.0 -0.1105542453947571" quat="-0.0 0.9542981624401505 0.0 -0.2988561814039524"><geom name="robot_geom_left_camera_case" type="box" size="0.021 0.021 0.0115" mass="0.06" rgba=".16 .18 .20 1" /></body><body name="left_ft_mount" pos="0.0 0.0 -0.1261"><body name="EE_BODY_L" pos="0.0 0.0 0.0">
+                                  <inertial pos="0.00212703 0.00000615 -0.04287176" mass="0.46704998" fullinertia="0.00032067 0.00059559 0.00052732 0.00002383 -0.00000785 -0.00000007" />
+                                  <geom material="70,70,70" mesh="EE_BODY" class="visual" name="robot_geom_121" />
+                                  <geom mesh="EE_BODY" class="in-model-collision" name="robot_geom_122" type="mesh" />
+                                </body>
+                                <body name="ee_finger_l1" pos="-0.003 0.0 -0.07400000000000001">
+                                  <inertial pos="0.00278346 -3.29e-06 -0.0257011" quat="0.999784 0 0.0208044 0" mass="0.03327" diaginertia="1.23275e-05 1.066e-05 2.22251e-06" />
+                                  <joint name="gripper_finger_l1" pos="0 0 0" axis="-1 0 0" type="slide" limited="true" range="-0.05 0" />
+                                  <geom mesh="EE_FINGER_0" material="191,191,191" class="visual" name="robot_geom_123" />
+                                  <geom mesh="EE_FINGER_1" material="70,70,70_FINGER" class="visual" name="robot_geom_124" />
+                                  <geom mesh="EE_FINGER_0" class="in-model-collision" condim="4" friction="2 0.05 0.01" name="left_pad_1_native_2" type="mesh" />
+                                  <geom mesh="EE_FINGER_1" class="in-model-collision" condim="4" friction="2 0.05 0.01" name="left_pad_1_native_3" type="mesh" />
+                                </body>
+                                <body name="ee_finger_l2" pos="0.003 0.0 -0.07400000000000001">
+                                  <inertial pos="0.00278346 -3.29e-06 -0.0257011" quat="0.999784 0 0.0208044 0" mass="0.03327" diaginertia="1.23275e-05 1.066e-05 2.22251e-06" />
+                                  <joint name="gripper_finger_l2" pos="0 0 0" axis="1 0 0" type="slide" limited="true" range="-0.05 0" />
+                                  <geom mesh="EE_FINGER_0" material="191,191,191" class="visual" name="robot_geom_127" />
+                                  <geom mesh="EE_FINGER_1" material="70,70,70_FINGER" class="visual" name="robot_geom_128" />
+                                  <geom mesh="EE_FINGER_0" class="in-model-collision" condim="4" friction="2 0.05 0.01" name="left_pad_2_native_2" type="mesh" />
+                                  <geom mesh="EE_FINGER_1" class="in-model-collision" condim="4" friction="2 0.05 0.01" name="left_pad_2_native_3" type="mesh" />
+                                </body>
+                              <site name="left_ft_frame" size=".004" rgba="0 0 0 0" /></body></body>
+                            </body>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                  <body name="link_head_1" pos="0.022 0 0.200073">
+                    <inertial pos="-0.00041643 0.00593524 -0.00289916" quat="0.686943 0.726608 -0.0122145 -4.20643e-05" mass="0.704765" diaginertia="0.000662227 0.000593368 0.000359954" />
+                    <joint name="head_0" pos="0 0 0" axis="0 0 1" limited="true" range="-1.57 1.57" />
+                    <geom mesh="NECK_1" material="254,254,255" class="visual" name="robot_geom_131" />
+                    <geom mesh="NECK_1" class="in-model-collision" name="robot_geom_132" />
+                    <body name="link_head_2">
+                      <inertial pos="0.0531532 0.00547509 0.0591391" quat="0.221288 0.46561 -0.261859 0.815885" mass="0.952627" diaginertia="0.00173533 0.00136285 0.000633984" />
+                      <joint name="head_1" pos="0 0 0" axis="0 1 0" limited="true" range="-1.57 1.57" />
+                      <geom mesh="NECK_2_0" material="254,254,255" class="visual" name="robot_geom_133" />
+                      <geom mesh="NECK_2_1" material="69,69,69" class="visual" name="robot_geom_134" />
+                      <geom mesh="NECK_2_0" class="in-model-collision" name="robot_geom_135" />
+                      <geom mesh="NECK_2_1" class="in-model-collision" name="robot_geom_136" />
+                    <camera name="head_rgbd" pos="0.08 0.0 0.04" fovy="60" quat="0.6532814824381883 0.2705980500730985 -0.2705980500730985 -0.6532814824381882" /><body name="head_camera_case" pos="0.06702459056522685 0.0 0.05297540943477315" quat="0.2705980500730985 -0.6532814824381882 0.6532814824381883 -0.2705980500730985"><geom name="robot_geom_head_camera_case" type="box" size="0.0468 0.0159 0.01835" mass="0.151" rgba=".12 .15 .17 1" /></body></body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  <light pos="0 -1 3.5" dir=".15 .2 -1" directional="true" diffuse=".85 .88 .92" castshadow="true" /><light pos="1.5 2 3" dir="-.25 -.3 -1" diffuse=".45 .6 .65" castshadow="false" /><geom name="floor" type="plane" size="4 4 .1" material="concrete" friction="0.8 0.01 0.001" /><geom name="cell_back_wall" type="box" pos="2.5 0 1.5" size=".06 3 1.5" rgba=".09 .13 .16 1" /><geom name="wall_service_line" type="box" pos="2.435 0 1.1" size=".005 3 .012" rgba=".85 .48 .12 1" contype="0" conaffinity="0" /><geom name="zone_line_0_-1" type="box" pos="-0.49999999999999994 0.4 0.001" size="0.008 1.05 0.001" rgba=".9 .55 .16 1" contype="0" conaffinity="0" /><geom name="zone_line_0_1" type="box" pos="1.4 0.4 0.001" size="0.008 1.05 0.001" rgba=".9 .55 .16 1" contype="0" conaffinity="0" /><geom name="zone_line_1_-1" type="box" pos="0.45 -0.65 0.001" size="0.95 0.008 0.001" rgba=".9 .55 .16 1" contype="0" conaffinity="0" /><geom name="zone_line_1_1" type="box" pos="0.45 1.4500000000000002 0.001" size="0.95 0.008 0.001" rgba=".9 .55 .16 1" contype="0" conaffinity="0" /><body name="tray" pos="0.65 0.0 0.012"><freejoint name="tray_free" /><geom name="tray_floor" type="box" size="0.18 0.27 0.012" mass="0.28" rgba=".16 .45 .66 1" friction=".8 .01 .001" /><geom name="tray_xrim_-1" type="box" size="0.006 0.27 0.025" pos="-0.18 0.0 0.037000000000000005" mass=".012" rgba=".12 .35 .52 1" /><geom name="tray_yrim_-1" type="box" size="0.18 0.006 0.025" pos="0.0 -0.27 0.037000000000000005" mass=".012" rgba=".12 .35 .52 1" /><geom name="tray_xrim_1" type="box" size="0.006 0.27 0.025" pos="0.18 0.0 0.037000000000000005" mass=".012" rgba=".12 .35 .52 1" /><geom name="tray_yrim_1" type="box" size="0.18 0.006 0.025" pos="0.0 0.27 0.037000000000000005" mass=".012" rgba=".12 .35 .52 1" /></body><body name="payload_0" pos="0.5810956934985717 -0.08184170628988904 0.059"><freejoint name="payload_0_free" /><geom name="payload_0_geom" type="sphere" size="0.023" mass="0.035" rgba=".95 .3 .2 1" friction=".5 .01 .001" condim="4" /></body><body name="payload_1" pos="0.7163277881914896 -0.023867778915771767 0.06"><freejoint name="payload_1_free" /><geom name="payload_1_geom" type="box" size="0.025 0.025 0.024" mass="0.055" rgba=".95 .75 .15 1" friction=".5 .01 .001" condim="4" /></body><body name="payload_2" pos="0.6525061619136022 0.10330204461822177 0.082"><freejoint name="payload_2_free" /><geom name="payload_2_geom" type="cylinder" size="0.02 0.047" mass="0.045" rgba=".25 .7 .4 1" friction=".5 .01 .001" condim="4" /></body><geom name="stand_deck" type="box" pos="1.2 0.0 1.1624999999999999" size="0.25 0.36 0.0075" rgba=".16 .23 .28 1" /><geom name="stand_leg_-1_-1" type="box" pos="0.975 -0.33499999999999996 0.5775" size="0.025 0.025 0.5775" rgba=".22 .30 .35 1" /><geom name="stand_foot_-1_-1" type="box" pos="0.975 -0.33499999999999996 0.012" size="0.045 0.045 0.012" rgba=".08 .11 .13 1" /><geom name="stand_leg_-1_1" type="box" pos="0.975 0.33499999999999996 0.5775" size="0.025 0.025 0.5775" rgba=".22 .30 .35 1" /><geom name="stand_foot_-1_1" type="box" pos="0.975 0.33499999999999996 0.012" size="0.045 0.045 0.012" rgba=".08 .11 .13 1" /><geom name="stand_leg_1_-1" type="box" pos="1.425 -0.33499999999999996 0.5775" size="0.025 0.025 0.5775" rgba=".22 .30 .35 1" /><geom name="stand_foot_1_-1" type="box" pos="1.425 -0.33499999999999996 0.012" size="0.045 0.045 0.012" rgba=".08 .11 .13 1" /><geom name="stand_leg_1_1" type="box" pos="1.425 0.33499999999999996 0.5775" size="0.025 0.025 0.5775" rgba=".22 .30 .35 1" /><geom name="stand_foot_1_1" type="box" pos="1.425 0.33499999999999996 0.012" size="0.045 0.045 0.012" rgba=".08 .11 .13 1" /><geom name="stand_brace_-1" type="box" pos="0.975 0.0 0.18" size="0.025 0.36 0.02" rgba=".20 .28 .32 1" /><geom name="stand_brace_1" type="box" pos="1.425 0.0 0.18" size="0.025 0.36 0.02" rgba=".20 .28 .32 1" /><geom name="container_bottom" type="box" pos="1.2 0.0 1.185" size="0.25 0.36 0.015" rgba=".30 .38 .42 1" /><geom name="container_xwall_-1" type="box" pos="0.938 0.0 1.2349999999999999" size="0.012 0.384 0.035" rgba=".9 .50 .12 1" /><geom name="container_ywall_-1" type="box" pos="1.2 -0.372 1.2349999999999999" size="0.25 0.012 0.035" rgba=".9 .50 .12 1" /><geom name="container_xwall_1" type="box" pos="1.462 0.0 1.2349999999999999" size="0.012 0.384 0.035" rgba=".9 .50 .12 1" /><geom name="container_ywall_1" type="box" pos="1.2 0.372 1.2349999999999999" size="0.25 0.012 0.035" rgba=".9 .50 .12 1" /><camera name="task_camera" pos="1.0 0 2.7" xyaxes="1 0 0 0 1 0" fovy="55" /></worldbody>
+  <contact>
+    <exclude body1="base" body2="link_torso_1" />
+    <exclude body1="link_torso_2" body2="link_torso_4" />
+    <exclude body1="ee_finger_r1" body2="ee_finger_r2" />
+    <exclude body1="ee_finger_l1" body2="ee_finger_l2" />
+  </contact>
+  <actuator>
+    <velocity name="front_right_wheel_act" joint="wheel_fr" ctrlrange="-3.14 3.14" kv="100.0" />
+    <velocity name="front_left_wheel_act" joint="wheel_fl" ctrlrange="-3.14 3.14" kv="100.0" />
+    <velocity name="rear_right_wheel_act" joint="wheel_rr" ctrlrange="-3.14 3.14" kv="100.0" />
+    <velocity name="rear_left_wheel_act" joint="wheel_rl" ctrlrange="-3.14 3.14" kv="100.0" />
+    <position name="link1_act" joint="torso_0" ctrlrange="-0.261799388 0.261799388" forcelimited="true" forcerange="-270 270" kp="2000.0" kv="200.0" />
+    <position name="link2_act" joint="torso_1" ctrlrange="-0.523598776 1.570796327" forcelimited="true" forcerange="-270 270" kp="2000.0" kv="200.0" />
+    <position name="link3_act" joint="torso_2" ctrlrange="-2.617993878 1.570796327" forcelimited="true" forcerange="-270 270" kp="2000.0" kv="200.0" />
+    <position name="link4_act" joint="torso_3" ctrlrange="-0.785398163 1.570796327" forcelimited="true" forcerange="-270 270" kp="2000.0" kv="200.0" />
+    <position name="link5_act" joint="torso_4" ctrlrange="-0.523598776 0.523598776" forcelimited="true" forcerange="-120 120" kp="2000.0" kv="200.0" />
+    <position name="link6_act" joint="torso_5" ctrlrange="-2.35619449 2.35619449" forcelimited="true" forcerange="-120 120" kp="2000.0" kv="200.0" />
+    <position name="right_arm_1_act" joint="right_arm_0" ctrlrange="-3.141592654 3.141592654" forcelimited="true" forcerange="-70 70" kp="2000.0" kv="200.0" />
+    <position name="right_arm_2_act" joint="right_arm_1" ctrlrange="-3.141592654 0.017453293" forcelimited="true" forcerange="-70 70" kp="2000.0" kv="200.0" />
+    <position name="right_arm_3_act" joint="right_arm_2" ctrlrange="-3.141592654 3.141592654" forcelimited="true" forcerange="-70 70" kp="2000.0" kv="200.0" />
+    <position name="right_arm_4_act" joint="right_arm_3" ctrlrange="-2.617993878 0.017453293" forcelimited="true" forcerange="-40 40" kp="2000.0" kv="200.0" />
+    <position name="right_arm_5_act" joint="right_arm_4" ctrlrange="-3.141592654 3.141592654" forcelimited="true" forcerange="-10 10" kp="2000.0" kv="200.0" />
+    <position name="right_arm_6_act" joint="right_arm_5" ctrlrange="-1.570796327 1.919862177" forcelimited="true" forcerange="-10 10" kp="2000.0" kv="200.0" />
+    <position name="right_arm_7_act" joint="right_arm_6" ctrlrange="-2.792526803 2.792526803" forcelimited="true" forcerange="-8 8" kp="2000.0" kv="200.0" />
+    <position name="left_arm_1_act" joint="left_arm_0" ctrlrange="-3.141592654 3.141592654" forcelimited="true" forcerange="-70 70" kp="2000.0" kv="200.0" />
+    <position name="left_arm_2_act" joint="left_arm_1" ctrlrange="-0.017453293 3.141592654" forcelimited="true" forcerange="-70 70" kp="2000.0" kv="200.0" />
+    <position name="left_arm_3_act" joint="left_arm_2" ctrlrange="-3.141592654 3.141592654" forcelimited="true" forcerange="-70 70" kp="2000.0" kv="200.0" />
+    <position name="left_arm_4_act" joint="left_arm_3" ctrlrange="-2.617993878 0.017453293" forcelimited="true" forcerange="-40 40" kp="2000.0" kv="200.0" />
+    <position name="left_arm_5_act" joint="left_arm_4" ctrlrange="-3.141592654 3.141592654" forcelimited="true" forcerange="-10 10" kp="2000.0" kv="200.0" />
+    <position name="left_arm_6_act" joint="left_arm_5" ctrlrange="-1.570796327 1.919862177" forcelimited="true" forcerange="-10 10" kp="2000.0" kv="200.0" />
+    <position name="left_arm_7_act" joint="left_arm_6" ctrlrange="-2.792526803 2.792526803" forcelimited="true" forcerange="-8 8" kp="2000.0" kv="200.0" />
+    <position name="head_0_act" joint="head_0" ctrlrange="-0.523 0.523" forcelimited="true" forcerange="-7.3 7.3" />
+    <position name="head_1_act" joint="head_1" ctrlrange="-0.35 1.57" forcelimited="true" forcerange="-7.3 7.3" />
+    <position name="right_finger_act" joint="gripper_finger_r1" ctrllimited="true" ctrlrange="-0.05 0" kp="1500" kv="120" forcelimited="true" forcerange="-80 80" />
+    <position name="left_finger_act" joint="gripper_finger_l1" ctrllimited="true" ctrlrange="-0.05 0" kp="1500" kv="120" forcelimited="true" forcerange="-80 80" />
+  </actuator>
+  <equality>
+    <joint name="right_finger" joint1="gripper_finger_r1" joint2="gripper_finger_r2" polycoef="0 1 0 0 0" solref="0.004 1" />
+    <joint name="left_finger" joint1="gripper_finger_l1" joint2="gripper_finger_l2" polycoef="0 1 0 0 0" solref="0.004 1" />
+  </equality>
+<option timestep="0.002" integrator="implicitfast" solver="Newton" iterations="40" cone="elliptic" impratio="100" /><size memory="64M" /><visual><global offwidth="1280" offheight="960" /><headlight ambient="0.3 0.3 0.34" diffuse="0.6 0.65 0.7" /></visual><sensor><force name="left_wrist_force_n" site="left_ft_frame" /><torque name="left_wrist_torque_nm" site="left_ft_frame" /><force name="right_wrist_force_n" site="right_ft_frame" /><torque name="right_wrist_torque_nm" site="right_ft_frame" /></sensor></mujoco>

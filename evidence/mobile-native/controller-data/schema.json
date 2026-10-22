@@ -1,0 +1,141 @@
+{
+  "array_order": {
+    "gripper_command": "one shared position reference applied to right and left native grippers",
+    "head_joint_position_and_velocity": [
+      "head_0",
+      "head_1"
+    ],
+    "upper_body_joint_position_and_velocity": [
+      "torso_0",
+      "torso_1",
+      "torso_2",
+      "torso_3",
+      "torso_4",
+      "torso_5",
+      "right_arm_0",
+      "right_arm_1",
+      "right_arm_2",
+      "right_arm_3",
+      "right_arm_4",
+      "right_arm_5",
+      "right_arm_6",
+      "left_arm_0",
+      "left_arm_1",
+      "left_arm_2",
+      "left_arm_3",
+      "left_arm_4",
+      "left_arm_5",
+      "left_arm_6"
+    ],
+    "wheel_command": [
+      "front_right_wheel_act",
+      "front_left_wheel_act",
+      "rear_right_wheel_act",
+      "rear_left_wheel_act"
+    ],
+    "wheel_encoder_and_velocity": [
+      "wheel_fr",
+      "wheel_fl",
+      "wheel_rr",
+      "wheel_rl"
+    ]
+  },
+  "commands": {
+    "gripper_position_reference_m": 1,
+    "head_position_reference_rad": 2,
+    "observation_alignment": "same pre-mj_step controller tick as command",
+    "upper_body_position_reference_rad": 20,
+    "upper_body_velocity_reference_rad_s": 20,
+    "wheel_velocity_reference_rad_s": 4
+  },
+  "control_timing": {
+    "control_dt_s": 0.002,
+    "physics_dt_s": 0.002,
+    "record_dt_s": 0.02,
+    "source": "simulation configuration; replace with measured SDK timing"
+  },
+  "controller_ground_truth_policy": "task-object qpos and live free-base cam_xpos are excluded",
+  "hardware_adapters": {
+    "actuation": "20 upper-body position loops, two grippers, four wheel velocity loops",
+    "base": "four wheel encoders and optional IMU yaw",
+    "head_rgbd": "registered RGB/depth + measured K and robot-to-camera extrinsic",
+    "wrench": "left/right wrist six-axis force-torque",
+    "wrist_rgbd": "registered RGB/depth + measured K and flange extrinsic"
+  },
+  "limits": {
+    "gripper_position_m": [
+      -0.05,
+      0.0
+    ],
+    "head_joint_lower_rad": [
+      -1.57,
+      -1.57
+    ],
+    "head_joint_upper_rad": [
+      1.57,
+      1.57
+    ],
+    "upper_body_joint_lower_rad": [
+      -0.256799388,
+      -0.518598776,
+      -2.47337,
+      -0.780398,
+      -0.518598776,
+      -1.5658,
+      -2.35119,
+      -3.13659,
+      -2.0894,
+      -2.61299,
+      -3.136592654,
+      -1.5657963270000002,
+      -2.787526803,
+      -2.35119,
+      -0.012453293,
+      -2.0894,
+      -2.61299,
+      -3.136592654,
+      -1.5657963270000002,
+      -2.787526803
+    ],
+    "upper_body_joint_upper_rad": [
+      0.256799388,
+      1.5167300000000001,
+      1.5657963270000002,
+      1.5657963270000002,
+      0.518598776,
+      1.5658,
+      2.35119,
+      0.012453293,
+      2.0894,
+      0.005,
+      3.136592654,
+      1.914862177,
+      2.787526803,
+      2.35119,
+      3.13659,
+      2.0894,
+      0.005,
+      3.136592654,
+      1.914862177,
+      2.787526803
+    ]
+  },
+  "observations": {
+    "K": "3x3 pinhole intrinsics",
+    "T_world_optical": "4x4 extrinsics from odometry and joint FK",
+    "depth_m": "float metric optical-axis depth",
+    "gripper_position_m": "two finger joint positions per hand",
+    "rgb": "uint8 HxWx3 RGB",
+    "wheel_encoder_angle_rad": "four wheel angles",
+    "wrist_force_n": "three-axis local sensor-frame force",
+    "wrist_torque_nm": "three-axis local sensor-frame torque"
+  },
+  "purpose": "sim-to-real controller interface replay",
+  "schema_version": 1,
+  "wrist_force_torque": {
+    "left_frame": "left_ft_frame",
+    "measurement_boundary": "flange fixed-child boundary including downstream tool mass",
+    "right_frame": "right_ft_frame",
+    "source": "MuJoCo force/torque sensors; hardware adapter uses RB-Y1 FT freshness and tare"
+  }
+}
