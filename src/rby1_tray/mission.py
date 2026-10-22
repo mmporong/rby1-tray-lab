@@ -740,7 +740,13 @@ class MobileSession(Session):
                 leg_start + (index / samples) * (leg_target - leg_start)
                 for index in range(1, samples + 1)
             )
-        if phase in {"pickup_approach", "pickup_descend", "grasp", "grasp_hold"}:
+        if phase == "pickup_approach":
+            # Keep the torso crouched while the hands clear the base and loose
+            # payloads.  The first point moves only the arms to a forward,
+            # raised pre-approach; the high-pose numerical seed selects the
+            # final arm branch but is never sent as a joint reference.
+            sampled_centers = [target_center + [0.05, 0.0, 0.11], target_center]
+        elif phase in {"pickup_descend", "grasp", "grasp_hold"}:
             sampled_centers = [target_center]
         elif not sampled_centers:
             # Hold-only phases such as settle/release may intentionally keep
@@ -749,17 +755,9 @@ class MobileSession(Session):
             sampled_centers = [target_center]
         segment_count = len(sampled_centers)
         path = [self.command_rad.copy()]
-        if phase == "pickup_approach":
-            # Reconfigure in free space before descending on the arm branch
-            # that remains feasible at the high placement pose.
-            path.append(HIGH_CARRY_WARM_START_RAD.copy())
         segment_metrics = []
         phase_start = self.command_rad.copy()
-        seed = (
-            HIGH_CARRY_WARM_START_RAD.copy()
-            if phase == "pickup_approach"
-            else phase_start.copy()
-        )
+        seed = phase_start.copy()
         continuation_phase = phase in {
             "lift", "retract_low", "raise_high", "seat", "settle", "release", "withdraw"
         }
@@ -794,9 +792,14 @@ class MobileSession(Session):
                     if continuation_phase
                     else self.robot.crouched_pickup_posture()
                 )
+            solve_seed = (
+                HIGH_CARRY_WARM_START_RAD.copy()
+                if phase == "pickup_approach" and index == segment_count
+                else seed
+            )
             solved, result = self.robot.solve(
                 point_positions,
-                seed=seed,
+                seed=solve_seed,
                 posture=posture,
                 gripper_m=segment_gripper,
                 target_rotations=rotations,
@@ -811,12 +814,11 @@ class MobileSession(Session):
                 self._detected_tray.center_world_m,
                 self._detected_tray.yaw_rad,
             )
-            for segment_index, (before, after) in enumerate(
-                zip(path[:-1], path[1:])
-            ):
+            for segment_index in range(len(path) - 1):
                 for alpha in np.linspace(0.0, 1.0, 51):
                     self.robot._prepare(
-                        before + alpha * (after - before), target_gripper_m
+                        interpolate_joint_path(path, segment_index + alpha),
+                        target_gripper_m,
                     )
                     forbidden = self.robot._forbidden_contacts()
                     if forbidden:
@@ -830,9 +832,7 @@ class MobileSession(Session):
             for before, after in zip(path[:-1], path[1:])
         ])
         joint_limit_violation = (
-            0.0
-            if phase == "pickup_approach"
-            else joint_path_limit_violation(path, self.robot.low, self.robot.high)
+            joint_path_limit_violation(path, self.robot.low, self.robot.high)
         )
         if joint_limit_violation > 1e-10:
             raise ValueError(
@@ -919,7 +919,7 @@ class MobileSession(Session):
                 "seed_policy": (
                     "continuous_seed_with_gradual_validated_high_torso_posture"
                     if phase == "raise_high"
-                    else "validated_high_branch_via_free_space_waypoint"
+                    else "crouched_arm_clearance_preapproach_then_high_branch_ik_seed_without_executed_waypoint"
                     if phase == "pickup_approach"
                     else "previous_command_continuation"
                 ),
@@ -936,6 +936,9 @@ class MobileSession(Session):
                 "interpolated_orientation_error_max_rad": max(
                     (item["orientation_error_rad"] for item in interpolation_metrics),
                     default=0.0,
+                ),
+                "pickup_preapproach_offset_m": (
+                    [0.05, 0.0, 0.11] if phase == "pickup_approach" else None
                 ),
             }
         )
@@ -1307,21 +1310,11 @@ class MobileSession(Session):
         elapsed = max(0.0, float(self.data.time) - self.phase_started_s)
         raw = np.clip(elapsed / motion.duration_s, 0.0, 1.0)
         segment_count = len(motion.joint_path_rad) - 1
-        # Time-scale loaded Cartesian paths once.  Applying smoothstep to
-        # every 10 mm segment repeatedly stops and restarts the loaded tray.
-        # The free-space pickup route has a deliberate posture waypoint and
-        # must stop there before changing direction.
-        progress = raw if motion.phase == "pickup_approach" else smoothstep(raw)
+        # Time-scale every path once.  Applying smoothstep to each Cartesian
+        # segment would repeatedly stop and restart the carried tray.
+        progress = smoothstep(raw)
         scaled = min(progress * segment_count, float(segment_count))
-        if motion.phase == "pickup_approach":
-            segment = min(int(scaled), segment_count - 1)
-            local = scaled - segment
-            blend = smoothstep(local)
-            joints = motion.joint_path_rad[segment] + blend * (
-                motion.joint_path_rad[segment + 1] - motion.joint_path_rad[segment]
-            )
-        else:
-            joints = interpolate_joint_path(motion.joint_path_rad, scaled)
+        joints = interpolate_joint_path(motion.joint_path_rad, scaled)
         gripper = motion.start_gripper_m + smoothstep(raw) * (
             motion.target_gripper_m - motion.start_gripper_m
         )

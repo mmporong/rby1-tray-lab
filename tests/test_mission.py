@@ -7,6 +7,7 @@ import numpy as np
 from rby1_tray.camera import RGBDFrame
 from rby1_tray.mission import (
     ArmMotion,
+    HIGH_CARRY_WARM_START_RAD,
     MobileSession,
     interpolate_joint_path,
     joint_path_limit_violation,
@@ -179,6 +180,14 @@ class MissionContractTests(unittest.TestCase):
             observation_provider=lambda _data: frame,
             pose_estimator=lambda *_args, **_kwargs: estimate,
         )
+        solve_seeds = []
+        solve = session.robot.solve
+
+        def capture_solve(*args, **kwargs):
+            solve_seeds.append(np.asarray(kwargs["seed"], dtype=float).copy())
+            return solve(*args, **kwargs)
+
+        session.robot.solve = capture_solve
         session._enter_phase("observe_close")
         result = session.step()
         packet = result["mission"]["command"]
@@ -201,6 +210,39 @@ class MissionContractTests(unittest.TestCase):
             session.sensor_frames[0].metadata["ground_truth_extrinsics_in_controller_packet"]
         )
         self.assertFalse(result["audit"]["runtime_state_overwrite"])
+        motion = session._active_motion
+        self.assertIsNotNone(motion)
+        self.assertEqual(len(motion.joint_path_rad), 3)
+        self.assertFalse(any(
+            np.array_equal(waypoint, HIGH_CARRY_WARM_START_RAD)
+            for waypoint in motion.joint_path_rad
+        ))
+        np.testing.assert_allclose(solve_seeds[0], motion.start_joints_rad)
+        np.testing.assert_allclose(solve_seeds[1], HIGH_CARRY_WARM_START_RAD)
+        self.assertLess(
+            float(np.max(np.abs(
+                motion.joint_path_rad[1][:6] - motion.start_joints_rad[:6]
+            ))),
+            0.01,
+        )
+        pickup_curve = np.array([
+            interpolate_joint_path(motion.joint_path_rad, segment + alpha)
+            for segment in range(len(motion.joint_path_rad) - 1)
+            for alpha in np.linspace(0.0, 1.0, 51)
+        ])
+        self.assertLess(
+            float(np.max(np.abs(
+                pickup_curve[:, :6] - motion.start_joints_rad[:6]
+            ))),
+            0.03,
+        )
+        self.assertEqual(
+            motion.ik_metrics["seed_policy"],
+            "crouched_arm_clearance_preapproach_then_high_branch_ik_seed_without_executed_waypoint",
+        )
+        self.assertEqual(
+            motion.ik_metrics["pickup_preapproach_offset_m"], [0.05, 0.0, 0.11]
+        )
         class FakeWristCamera:
             def __init__(self, supplied):
                 self.supplied = supplied
