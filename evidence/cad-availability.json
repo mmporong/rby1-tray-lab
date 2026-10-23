@@ -1,6 +1,6 @@
 {
   "retrieved_at": "2026-10-23",
-  "scope": "RB-Y1 structural-FEM CAD availability; no login, purchase, form submission, personal-data consent, or external message was performed.",
+  "scope": "RB-Y1 structural-FEM CAD availability. Initial research used anonymous access; a later browser download succeeded after the user completed the manufacturer consent form. The agent did not resubmit personal data or export browser cookies. CAD source files remain local and are not redistributed in this repository.",
   "official_cad_distribution": {
     "product_page": "https://www.rainbow-robotics.com/en/products/rb-y1",
     "official_contributor_confirmation": "https://github.com/RainbowRobotics/rby1-sdk/discussions/54",
@@ -26,7 +26,7 @@
         ]
       },
       "policy_text": "Downloads are unavailable without consent.",
-      "implication": "The ZIPs were not downloaded. Their byte size, archive members, CAD format, internal geometry, material data, and any CAD-specific license are unverified."
+      "implication": "Anonymous access requires the manufacturer consent flow. After user-completed consent, the bare-domain file link still returned Download access required. The identical resource downloaded successfully on the www origin where consent was stored. Only the V1.2 Mecanum archive has now been inspected."
     },
     "cad_specific_license": {
       "status": "not displayed on the public download listing; do not infer Apache-2.0 from the SDK",
@@ -67,9 +67,74 @@
         "advertised_filename": "RB-Y1_V1.2_3D_Mecanum-wheel-typed-Mobile.zip",
         "download_url": "https://rainbow-robotics.com/wp-admin/admin-post.php?action=rainbow_download_file&file=a7b26128-2fd8-40d1-abc9-83dbb018a597",
         "unauthorized_http_status": 403,
-        "recommended_for": "RB-Y1 M/Mecanum configuration only; archive content remains unverified"
+        "recommended_for": "RB-Y1 M/Mecanum v1.2; acquired archive filename specifies Fast Grip and KCs, which still need comparison to the simulator configuration",
+        "consented_download_verified": true
       }
-    ]
+    ],
+    "consented_download": {
+      "verified_date": "2026-10-23",
+      "requested_filename": "RB-Y1_V1.2_3D_Mecanum-wheel-typed-Mobile.zip",
+      "download_origin": "https://www.rainbow-robotics.com",
+      "published_link_origin": "https://rainbow-robotics.com",
+      "failure_observation": "The product/consent page used www; the published bare-domain download endpoint displayed Download access required.",
+      "working_url": "https://www.rainbow-robotics.com/wp-admin/admin-post.php?action=rainbow_download_file&file=a7b26128-2fd8-40d1-abc9-83dbb018a597",
+      "repair_scope": "Only the hostname changed to the already-consented product origin; endpoint and resource identifier unchanged. No cookie copying, permission mutation, or new personal-data submission.",
+      "bytes": 19607169,
+      "sha256": "a1dba1545a5302637a84a8dbd34759a17c27d08617d292d4cb65bbd9c98305fc",
+      "zip_crc_check": "PASS",
+      "file_count": 2,
+      "uncompressed_bytes": 98919759,
+      "archive_members": [
+        {
+          "name": "RB-Y1_V1.2_3D_Mecanum-wheel-typed-Mobile/RB-Y1_v1.2_3D_Fast Grip_MW_KCs_260107.step",
+          "bytes": 98877141
+        },
+        {
+          "name": "RB-Y1_V1.2_3D_Mecanum-wheel-typed-Mobile/[ RB-Y1 Data File Naming Convention Guide ].png",
+          "bytes": 42618
+        }
+      ],
+      "step_entity_inventory": {
+        "step_file": "RB-Y1_v1.2_3D_Fast Grip_MW_KCs_260107.step",
+        "entity_counts": {
+          "MANIFOLD_SOLID_BREP": 1577,
+          "BREP_WITH_VOIDS": 93,
+          "CLOSED_SHELL": 2460,
+          "OPEN_SHELL": 10,
+          "SHELL_BASED_SURFACE_MODEL": 10,
+          "ADVANCED_FACE": 32577,
+          "PRODUCT": 25,
+          "NEXT_ASSEMBLY_USAGE_OCCURRENCE": 26,
+          "MATERIAL_DESIGNATION": 0,
+          "MECHANICAL_DESIGN_GEOMETRIC_PRESENTATION_REPRESENTATION": 1
+        },
+        "file_schema": [
+          "('AUTOMOTIVE_DESIGN { 1 0 10303 214 3 1 1 }')"
+        ],
+        "scope": "STEP text entity inventory only; not kernel solidity, internal structure or FEA material validation"
+      },
+      "naming_guide_interpretation": {
+        "version": "v1.2",
+        "Fast Grip": "high-speed gripper",
+        "MW": "Mecanum-wheel mobile base",
+        "KCs": "KC-certified configuration; filename marker only, not a new verification of certification"
+      },
+      "local_storage": "Original ZIP remains in user Downloads; extracted working copy in gitignored artifacts/cad-official-v1.2-mecanum.",
+      "redistribution": "No manufacturer ZIP, STEP or PNG file is committed; CAD-specific redistribution rights remain unverified.",
+      "remaining_geometry_checks": [
+        "CAD-kernel import and BRep validity",
+        "assembly and per-part identity",
+        "actual solid/body count, volume and internal cavities",
+        "unit and placement alignment with the simulated model",
+        "Fast Grip compatibility with the current native simulator gripper"
+      ],
+      "remaining_structural_inputs": [
+        "part-specific material properties",
+        "fastener, bearing and mounting constraints",
+        "load transfer/contact patches",
+        "mesh convergence and equilibrium checks"
+      ]
+    }
   },
   "official_sdk_surface": {
     "repository": "https://github.com/RainbowRobotics/rby1-sdk",
@@ -257,5 +322,5 @@
       "contact/boundary conditions"
     ]
   },
-  "next_step": "A stress contour that claims RB-Y1 component stress needs a manufacturer-authorized part-level solid/assembly plus material and joint/fastener specifications. If an authorized user later obtains the gated V1.2 Mecanum ZIP, first inventory its archive and license; accept STEP/Parasolid/IGES only as geometry, then check that the load-bearing part is a watertight solid with internal features before assigning material and constraints."
+  "next_step": "Import the acquired V1.2 Fast Grip/Mecanum STEP in a CAD kernel, validate BRep topology and units, identify load-bearing parts and mounting interfaces, and compare the assembly/gripper to the current simulation. STEP text entity counts are an inventory and do not prove geometric validity or an FEA-ready part. Material, boundary and mesh-convergence checks remain required before component stress claims."
 }

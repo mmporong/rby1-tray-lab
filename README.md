@@ -127,7 +127,7 @@ python3 -m venv .venv
 
 이는 강체 동역학의 관절 부하와 접촉력 분석이다. 고정 Menagerie 모델의 힘 제한은 실측 하드웨어 정격이 아니며, 링크의 von Mises 응력·변형·피로·파손 또는 접촉 압력을 산출하지 않는다. 그런 구조 CAE에는 별도의 구조 메시·재료·경계조건과 검증이 필요하다. MuJoCo의 [힘·토크 센서](https://mujoco.readthedocs.io/en/stable/XMLreference.html#sensor-force)와 [변형체 모델](https://mujoco.readthedocs.io/en/stable/modeling.html#deformable-objects)의 범위를 구분한다.
 
-제조사 공식 페이지에는 **RB-Y1 V1.2 Mecanum 3D CAD ZIP**이 공개 목록에 있다. 다운로드에는 개인정보 입력·이용 동의가 필요해 아직 내부 포맷·솔리드·재료·라이선스를 확인하지 못했다. 공개 SDK 릴리스와 인접 공식 모델 저장소는 별도로 조사했다. [CAD 배포처와 구조해석 적합성 확인](docs/structural-cad.md)에 확보한 근거와 남은 확인 항목을 기록한다. 부품 내부 응력 분포는 현재 관절 부하 표시와 별도 기능이며, 계산 완료 결과로 제시하지 않는다.
+제조사 **RB-Y1 V1.2 Mecanum 3D CAD ZIP과 약 98.9 MB STEP**을 확보하고 압축 무결성과 텍스트 엔티티를 검사했다. 솔리드·중공 BRep 정의가 포함되지만 CAD 커널에서 유효 체적·내부 구조·단위·부품 구성을 검증하기 전이며, 재료·체결 조건과 재배포 라이선스도 미확인이다. 원본 CAD는 로컬에만 보관한다. [CAD 배포처와 구조해석 적합성 확인](docs/structural-cad.md)에 다운로드 주소 불일치 해결과 검사 결과를 기록한다. 부품 내부 응력 분포는 현재 관절 부하 표시와 별도 기능이며, 계산 완료 결과로 제시하지 않는다.
 
 ```bash
 .venv/bin/python tools/build_load_view.py --bundle evidence/playback-native --output artifacts/load-view-check

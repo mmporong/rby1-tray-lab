@@ -21,8 +21,8 @@
     "evidence/playback-native/manifest.json": "d36eaa46dd90e97ecb67692b2df7a0e7ee81e22c3cf7c9552e723bfab91f9d9c",
     "evidence/playback-native/browser-qa.json": "0dea59699b54b7dcbcb3d1733d754dcd5945ea10ad3ba811f80269ca1edc3131",
     "evidence/robustness/compact-manifest.json": "4b52f3136a9ad1c1ef23f2dc535389e96f97c381f43539c015d17cb1bf8d2a3d",
-    "evidence/cad-availability.json": "9133e0b35ac8bb5665a3822f6b6f166c5e65ece1eca544af99e0daa5f34a159c",
-    "docs/structural-cad.md": "3db7ff894976a36712b0796c9d82e8b4cbfbc66204d626687250a94866fcfa49"
+    "evidence/cad-availability.json": "99919661016552eb7766eef0f041fff08916d7e0e3df38065e5c5b8180ab164a",
+    "docs/structural-cad.md": "0a5eea095b450eb8883a087a2560abbfabcf9fc9957f4b5e44b461115ab8ecbf"
   },
   "source_script_sha256": {
     "tools/build_load_view.py": "e8aae2b24cd7395e959408c5c7475da7b5eca7a27e198173962c249994868e18",
