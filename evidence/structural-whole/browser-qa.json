@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "browser": "Chrome, existing background tab; CUA",
+  "local_url": "http://127.0.0.1:8786/",
+  "recorded_video_fps": 60,
+  "master_clock": "requestVideoFrameCallback metadata.mediaTime while playing; pause/seeked/source-load completion currentTime commit; ended duration",
+  "frame_mapping": "min(1135,floor(video_time*60+1e-3))",
+  "observations": [
+    {
+      "case": "running 1x (8x physics)",
+      "sync_video_time_s": 0.033333,
+      "frame_index": 2,
+      "expected_frame_index": 2
+    },
+    {
+      "case": "running 2x (16x physics)",
+      "sync_video_time_s": 0.083333,
+      "frame_index": 5,
+      "expected_frame_index": 5
+    },
+    {
+      "case": "latest pause",
+      "video_time_s": 1.008097,
+      "sync_video_time_s": 1.008097,
+      "frame_index": 60,
+      "expected_frame_index": 60,
+      "paused": true
+    },
+    {
+      "case": "latest reset settled",
+      "video_time_s": 0,
+      "sync_video_time_s": 0,
+      "frame_index": 0,
+      "paused": true
+    },
+    {
+      "case": "latest single frame settled",
+      "video_time_s": 0.016666,
+      "sync_video_time_s": 0.016666,
+      "frame_index": 1,
+      "expected_frame_index": 1,
+      "paused": true
+    },
+    {
+      "case": "latest 1.5x source view switch settled",
+      "video_time_s": 2.858315,
+      "sync_video_time_s": 2.858315,
+      "frame_index": 171,
+      "expected_frame_index": 171,
+      "paused": true
+    },
+    {
+      "case": "latest FEM cutaway 2x terminal",
+      "video_time_s": 18.933333,
+      "sync_video_time_s": 18.933333,
+      "frame_index": 1135,
+      "expected_frame_index": 1135,
+      "paused": true,
+      "fem_whole_peak_label": "현재 전체 FEM 최대 4.57 kPa"
+    },
+    {
+      "case": "final whole",
+      "frame_index": 1135,
+      "selected_part": "whole",
+      "peak_label": "현재 최대 0.330 MPa",
+      "rgb_depth_images_loaded": 6,
+      "rgb_depth_image_width_px": 320
+    }
+  ],
+  "part_modes_checked": [
+    "whole robot with intra-body gradient",
+    "left arm 4 isolated with current 6-axis wrench",
+    "NECK_0 gray/미계산",
+    "CAD FEM surface",
+    "CAD FEM actual tetrahedral cutaway"
+  ],
+  "responsive_observations": [
+    {
+      "viewport_width": 1842,
+      "horizontal_overflow": false,
+      "canvas_px": [
+        311,
+        232
+      ]
+    },
+    {
+      "viewport_width": 1024,
+      "horizontal_overflow": false,
+      "canvas_px": [
+        242,
+        181
+      ]
+    },
+    {
+      "viewport_width": 390,
+      "horizontal_overflow": false,
+      "canvas_px": [
+        303,
+        227
+      ]
+    }
+  ],
+  "viewport_override_reset": true,
+  "fault_injection": {
+    "blocked_url": "/structural-scene/frames.bin",
+    "visible_error": "동기 구조 응력 사용 불가 / 동기 구조 응력 화면을 초기화하지 못했습니다. Failed to fetch",
+    "fixed_snapshot_not_shown": true,
+    "main_play_enabled": true,
+    "network_block_and_cache_override_removed": true,
+    "normal_reload_recovered": true
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 1,
+    "warning_scope": "intentional blocked-asset isolation only"
+  },
+  "render_observation": {
+    "whole_last_render_ms": 0.8,
+    "whole_max_render_ms": 6.0,
+    "fem_last_render_ms": 1.4,
+    "fem_max_render_ms": 16.1,
+    "scope": "canvas instrumentation CPU render-call samples, not sustained displayed FPS or GPU completion latency"
+  },
+  "limits": [
+    "Finite UI observations, not an exhaustive cross-browser or continuous zero-drift benchmark.",
+    "Background Chrome and compositor scheduling can skip presented frames; state and stress follow the same presented frame metadata.",
+    "No real robot or hardware safety validation.",
+    "Screenshots were visually inspected in CUA output; no screenshot file is claimed."
+  ],
+  "result": "PASS"
+}

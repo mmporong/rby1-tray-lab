@@ -102,6 +102,15 @@
     .structural-context { margin-top: 8px !important; color: #aab7be !important; }
     .structural-assumptions { margin: 7px 0 0; padding-left: 17px; color: #8797a1; font-size: .62rem; line-height: 1.5; }
     .structural-assumptions li + li { margin-top: 3px; }
+    .structural-scene-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 9px 0; }
+    .structural-scene-controls label { display: grid; gap: 4px; color: #8797a1; font-size: .6rem; }
+    .structural-scene-controls select { min-width: 0; min-height: 40px; border: 1px solid #34424d; border-radius: 6px; background: #111920; color: #e4edf1; padding: 6px 8px; }
+    .structural-canvas-wrap { position: relative; aspect-ratio: 4 / 3; border: 1px solid #2c3942; background: #030506; overflow: hidden; }
+    .structural-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
+    .structural-overlay { position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; gap: 8px; padding: 7px 9px; background: rgba(5,7,9,.88); color: #c2cdd3; font: .58rem/1.35 ui-monospace, monospace; }
+    .stress-ramp { height: 8px; margin-top: 7px; border-radius: 3px; background: linear-gradient(90deg,#143f94,#0dc7e0,#4cdb61,#ffc41f,#ed1f1f); }
+    .structural-scene-meta { display: flex; justify-content: space-between; gap: 8px; margin-top: 5px; color: #8797a1; font: .58rem/1.4 ui-monospace, monospace; }
+    .structural-scene-error { margin: 9px 0; border: 1px solid #74433f; background: #281615; color: #ffaaa4; padding: 11px; font-size: .7rem; line-height: 1.5; }
     aside { display: grid; gap: 14px; }
     .section { padding: 15px; }
     .section-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
@@ -200,7 +209,7 @@
             <header><h3 id="loadTitle">하중·응력 진단</h3><p>관절 한계 사용률과 부품 내부의 정적 응력 결과를 구분해 확인합니다.</p></header>
             <div class="diagnostic-tabs" role="group" aria-label="진단 결과 선택">
               <button id="jointModeButton" type="button" aria-pressed="true">관절 부하</button>
-              <button id="structuralModeButton" type="button" aria-pressed="false" hidden>부품 응력</button>
+              <button id="structuralModeButton" type="button" aria-pressed="false" hidden>구조 응력</button>
             </div>
             <div id="jointPane">
               <p>관절 토크를 모델 힘 제한과 비교한 색상입니다. 구조 응력·파손 해석이 아닙니다.</p>
@@ -211,6 +220,34 @@
               <output id="loadClock" class="load-clock">주 영상과 같은 기록 시각 · —</output>
             </div>
             <div id="structuralPane" hidden>
+              <div id="structuralSceneRoot" hidden>
+                <p id="structuralSceneTitle">전체 로봇 · 등가 단면 응력 추정</p>
+                <p id="structuralSceneError" class="structural-scene-error" role="alert" hidden></p>
+                <div id="structuralSceneContent">
+                <div class="structural-scene-controls">
+                  <label>표시 범위<select id="structuralPart" aria-label="응력 표시 범위"></select></label>
+                  <label>색상 척도<select id="structuralScale" aria-label="응력 색상 척도"><option value="log">로그</option><option value="linear">선형</option></select></label>
+                </div>
+                <div id="structuralSceneViews" class="structural-view-tabs" role="group" aria-label="CAD FEM 표시 방식" hidden>
+                  <button type="button" data-scene-view="surface" aria-pressed="true">표면</button>
+                  <button type="button" data-scene-view="cutaway" aria-pressed="false">단면</button>
+                </div>
+                <div class="structural-canvas-wrap">
+                  <canvas id="structuralCanvas" width="480" height="360" aria-label="기록 시각과 동기화된 로봇 응력 분포"></canvas>
+                  <div class="structural-overlay"><output id="structuralSceneClock">기록 프레임 —</output><output id="structuralSceneMaximum">현재 최대 —</output></div>
+                </div>
+                <div class="stress-ramp" aria-hidden="true"></div>
+                <div class="structural-scene-meta"><span id="structuralLegend">응력 범례 · MPa</span><span>von Mises</span></div>
+                <dl class="structural-summary">
+                  <div><dt>현재 힘 · 선택 좌표계</dt><dd id="structuralForce">부품 선택 시 표시</dd></div>
+                  <div><dt>현재 모멘트 · 선택 좌표계</dt><dd id="structuralMoment">부품 선택 시 표시</dd></div>
+                </dl>
+                <p id="structuralScope" class="structural-context"></p>
+                <ul id="structuralPartAssumptions" class="structural-assumptions" aria-label="선택 부품 해석 가정"></ul>
+                <details><summary>전체 해석 가정</summary><ul id="structuralSceneAssumptions" class="structural-assumptions"></ul></details>
+                </div>
+              </div>
+              <div id="structuralLegacy">
               <p id="structuralTitle">부품 응력 결과를 불러오는 중입니다.</p>
               <div class="structural-view-tabs" role="group" aria-label="응력 결과 단면 선택">
                 <button type="button" data-structural-view="surface" aria-pressed="true">표면</button>
@@ -233,6 +270,7 @@
               </dl>
               <p class="structural-context">고정된 한 시점의 단방향 선형 정적 해석입니다. 재생 영상과 시간 동기화되지 않으며 로봇 움직임에 변형을 되돌려 적용하지 않습니다.</p>
               <ul id="structuralAssumptions" class="structural-assumptions" aria-label="구조 해석 가정"></ul>
+              </div>
             </div>
           </section>
           </div>
@@ -266,6 +304,7 @@
     </div>
   </main>
 
+  <script src="/structural-scene.js"></script>
   <script>
     const $ = (id) => document.getElementById(id);
     const ui = {
@@ -281,15 +320,17 @@
       structuralSnapshot: $('structuralSnapshot'), structuralMaterial: $('structuralMaterial'), structuralDisplacement: $('structuralDisplacement'), structuralP95: $('structuralP95'), structuralPeak: $('structuralPeak'), structuralConvergence: $('structuralConvergence'),
       structuralForceBalance: $('structuralForceBalance'), structuralMomentBalance: $('structuralMomentBalance'), structuralAssumptions: $('structuralAssumptions'),
       structuralViewButtons: [...document.querySelectorAll('[data-structural-view]')],
+      structuralSceneRoot: $('structuralSceneRoot'), structuralSceneContent: $('structuralSceneContent'), structuralLegacy: $('structuralLegacy'), structuralSceneTitle: $('structuralSceneTitle'), structuralSceneError: $('structuralSceneError'), structuralPart: $('structuralPart'), structuralScale: $('structuralScale'), structuralSceneViews: $('structuralSceneViews'), structuralSceneViewButtons: [...document.querySelectorAll('[data-scene-view]')], structuralCanvas: $('structuralCanvas'), structuralSceneClock: $('structuralSceneClock'), structuralSceneMaximum: $('structuralSceneMaximum'), structuralLegend: $('structuralLegend'), structuralForce: $('structuralForce'), structuralMoment: $('structuralMoment'), structuralScope: $('structuralScope'), structuralPartAssumptions: $('structuralPartAssumptions'), structuralSceneAssumptions: $('structuralSceneAssumptions'),
       viewButtons: [...document.querySelectorAll('[data-view]')], timeline: [...document.querySelectorAll('.timeline-step')]
     };
     let playing = false, actionPromise = null, playGeneration = 0, framePromise = null, frameDirty = false;
     let azimuth = 105, selectedView = 'overview', currentState = null, frameObjectUrl = null;
     let sensorGeneration = 0, sensorEventKey = '', sensorObjectUrls = [];
     let playbackInfo = null, playbackStates = [], videoGeneration = 0, animationFrame = null;
+    let videoFrameCallback = null, videoFrameSyncGeneration = 0;
     let videoLoading = false;
     let loadReady = false, loadFailed = false;
-    let diagnosticMode = 'joint', structuralInfo = null;
+    let diagnosticMode = 'joint', structuralInfo = null, structuralScene = null;
     let lastStateFrame = -1, lastStatePaint = 0;
     const elevation = -20;
     const phaseLabels = {
@@ -415,13 +456,31 @@
       }
       sensorObjectUrls.forEach((url)=>URL.revokeObjectURL(url)); sensorObjectUrls=nextUrls;
     }
-    function syncRecordedState(force=false) {
+    const hasDecodedFrameClock = () => typeof ui.video.requestVideoFrameCallback === 'function';
+    function cancelDecodedFrameSync() {
+      videoFrameSyncGeneration+=1;
+      if(videoFrameCallback!==null && typeof ui.video.cancelVideoFrameCallback==='function')ui.video.cancelVideoFrameCallback(videoFrameCallback);
+      videoFrameCallback=null;
+    }
+    function scheduleDecodedFrameSync(sourceGeneration=videoGeneration) {
+      if(!hasDecodedFrameClock()||videoFrameCallback!==null)return;
+      const syncGeneration=videoFrameSyncGeneration;
+      videoFrameCallback=ui.video.requestVideoFrameCallback((_,metadata)=>{
+        videoFrameCallback=null;
+        if(syncGeneration!==videoFrameSyncGeneration||sourceGeneration!==videoGeneration)return;
+        if(!ui.video.seeking&&!videoLoading)syncRecordedState(false,metadata.mediaTime);
+        if(!ui.video.paused&&!ui.video.ended)scheduleDecodedFrameSync(sourceGeneration);
+      });
+    }
+    function syncRecordedState(force=false, videoTime=ui.video.currentTime) {
       if (!playbackInfo || !playbackStates.length) return;
-      const index = Math.min(playbackStates.length-1, Math.max(0, Math.floor(ui.video.currentTime*playbackInfo.fps+1e-3)));
+      const selectedTime=Number.isFinite(Number(videoTime))?Number(videoTime):Number(ui.video.currentTime)||0;
+      const index = Math.min(playbackStates.length-1, Math.max(0, Math.floor(selectedTime*playbackInfo.fps+1e-3)));
       if (force || index!==lastStateFrame) {
         lastStateFrame=index; updateState(playbackStates[index].state);
         ui.backendBadge.textContent='MuJoCo · 기록 재생';
       }
+      structuralScene?.seekFrame(index,selectedTime);
       syncLoadVideo(force);
     }
     function setDiagnosticMode(mode) {
@@ -430,7 +489,7 @@
       ui.jointPane.hidden=mode!=='joint';ui.structuralPane.hidden=mode!=='structural';
       ui.jointModeButton.setAttribute('aria-pressed',String(mode==='joint'));
       ui.structuralModeButton.setAttribute('aria-pressed',String(mode==='structural'));
-      if(mode==='structural')ui.loadVideo.pause();
+      if(mode==='structural'){ui.loadVideo.pause();structuralScene?.render();}
       else if(playbackInfo&&!ui.video.paused)playLoadVideo();
     }
     function setStructuralView(name) {
@@ -444,11 +503,31 @@
       ui.structuralViewButtons.forEach((button)=>button.setAttribute('aria-pressed',String(button.dataset.structuralView===name)));
     }
     async function initializeStructural(jointAvailable) {
+      let sceneInfo;
+      try {
+        sceneInfo=await request('/api/structural-scene');
+        if(sceneInfo.enabled){
+          structuralScene=new window.StructuralScene({root:ui.structuralSceneRoot,title:ui.structuralSceneTitle,part:ui.structuralPart,scale:ui.structuralScale,viewGroup:ui.structuralSceneViews,views:ui.structuralSceneViewButtons,canvas:ui.structuralCanvas,clock:ui.structuralSceneClock,maximum:ui.structuralSceneMaximum,legend:ui.structuralLegend,force:ui.structuralForce,moment:ui.structuralMoment,scope:ui.structuralScope,partAssumptions:ui.structuralPartAssumptions,assumptions:ui.structuralSceneAssumptions});
+          await structuralScene.load(sceneInfo);
+          structuralInfo={synchronized:true};ui.structuralSceneError.hidden=true;ui.structuralSceneContent.hidden=false;ui.structuralLegacy.hidden=true;ui.loadPanel.hidden=false;ui.structuralModeButton.hidden=false;ui.structuralModeButton.textContent='구조 응력';ui.jointModeButton.hidden=!jointAvailable;
+          if(!jointAvailable)setDiagnosticMode('structural');
+          return;
+        }
+      } catch(error) {
+        sceneInfo={enabled:false,configured:true,error:`동기 구조 응력 화면을 초기화하지 못했습니다. ${error.message}`};
+        console.warn(`동기 구조 응력 결과를 격리했습니다: ${error.message}`);
+      }
+      if(sceneInfo?.configured){
+        structuralScene=null;structuralInfo={synchronized:false,error:true};ui.structuralLegacy.hidden=true;ui.structuralSceneRoot.hidden=false;ui.structuralSceneContent.hidden=true;ui.structuralSceneTitle.textContent='동기 구조 응력 사용 불가';ui.structuralSceneError.textContent=sceneInfo.error||'동기 구조 응력 데이터 검증에 실패했습니다.';ui.structuralSceneError.hidden=false;ui.loadPanel.hidden=false;ui.structuralModeButton.hidden=false;ui.structuralModeButton.textContent='구조 응력 오류';ui.jointModeButton.hidden=!jointAvailable;
+        if(!jointAvailable)setDiagnosticMode('structural');
+        return;
+      }
       try {
         const info=await request('/api/structural');
         if(!info.enabled)return;
         const summary=info.summary, metrics=summary.metrics, material=summary.material;
         structuralInfo=info;ui.loadPanel.hidden=false;ui.structuralModeButton.hidden=false;
+        ui.structuralModeButton.textContent='고정 응력 스냅샷';
         ui.jointModeButton.hidden=!jointAvailable;
         ui.structuralTitle.textContent=summary.title;
         ui.structuralSnapshot.textContent=`${formatNumber(summary.snapshot_time_s,3)} s · ${summary.phase}`;
@@ -500,8 +579,7 @@
     function animateRecorded(now) {
       animationFrame=null;
       if (!playing || !playbackInfo) return;
-      // Video decoding stays native; status text only needs twenty updates/s.
-      if (now-lastStatePaint>=50) { lastStatePaint=now; syncRecordedState(); }
+      if(!hasDecodedFrameClock())syncRecordedState();lastStatePaint=now;
       animationFrame=requestAnimationFrame(animateRecorded);
     }
     function recordedCameraLabel() {
@@ -511,6 +589,7 @@
     }
     async function loadRecordedView(view, resume=false) {
       const generation=++videoGeneration, previousTime=ui.video.currentTime || 0;
+      cancelDecodedFrameSync();
       videoLoading=true;
       ui.loadVideo.pause();
       stopPlayback(); ui.play.disabled=true; setControlsBusy(true);
@@ -535,7 +614,10 @@
           ui.video.currentTime=targetTime;await seeked;
         }
         if(generation!==videoGeneration)return;
-        ui.video.hidden=false; ui.frame.hidden=true; lastStateFrame=-1; syncRecordedState(true); recordedCameraLabel();
+        ui.video.hidden=false; ui.frame.hidden=true; lastStateFrame=-1;
+        syncRecordedState(true,ui.video.currentTime);
+        if(hasDecodedFrameClock())scheduleDecodedFrameSync(generation);
+        recordedCameraLabel();
         syncLoadVideo(true);
         if (resume && !document.hidden && !isTerminal(currentState)) await ui.video.play();
         showError();
@@ -543,8 +625,10 @@
       finally { if (generation===videoGeneration) {videoLoading=false;ui.play.disabled=false;setControlsBusy(false);} }
     }
     function seekRecorded(seconds) {
+      cancelDecodedFrameSync();
       ui.video.currentTime=Math.min(ui.video.duration,Math.max(0,seconds));
-      lastStateFrame=-1; syncRecordedState(true);syncLoadVideo(true);
+      lastStateFrame=-1;syncLoadVideo(true);
+      if(!hasDecodedFrameClock())syncRecordedState(true);
     }
     function setControlsBusy(value) {
       const busy=value||videoLoading;
@@ -560,7 +644,7 @@
     const advance = (steps=50) => runAction(() => request('/api/step', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({steps}) }));
     function stopPlayback(preserveStatus=false) {
       playing=false; playGeneration+=1;
-      if (playbackInfo) {ui.video.pause();ui.loadVideo.pause();if(animationFrame!==null)cancelAnimationFrame(animationFrame);animationFrame=null;syncRecordedState();}
+      if (playbackInfo) {cancelDecodedFrameSync();ui.video.pause();ui.loadVideo.pause();if(animationFrame!==null)cancelAnimationFrame(animationFrame);animationFrame=null;if(!hasDecodedFrameClock())syncRecordedState();}
       if (!preserveStatus && currentState && !isTerminal(currentState)) ui.runStatus.textContent='일시정지';
       updatePlayLabel(); if (playbackInfo) setControlsBusy(false);
     }
@@ -583,18 +667,20 @@
     }
     ui.video.addEventListener('play',()=>{
       playing=true;ui.runStatus.textContent='재생 중';updatePlayLabel();setControlsBusy(false);
+      scheduleDecodedFrameSync(videoGeneration);
       if (animationFrame===null) animationFrame=requestAnimationFrame(animateRecorded);
     });
     ui.video.addEventListener('playing',()=>{playLoadVideo();});
     ui.video.addEventListener('pause',()=>{
       ui.loadVideo.pause();syncLoadVideo(true);
+      cancelDecodedFrameSync();
       playing=false;if(animationFrame!==null)cancelAnimationFrame(animationFrame);animationFrame=null;
-      syncRecordedState(true);if(!isTerminal(currentState))ui.runStatus.textContent='일시정지';updatePlayLabel();setControlsBusy(false);
+      syncRecordedState(true,ui.video.currentTime);if(!isTerminal(currentState))ui.runStatus.textContent='일시정지';updatePlayLabel();setControlsBusy(false);
     });
-    ui.video.addEventListener('ended',()=>{syncRecordedState(true);stopPlayback(true);});
-    ui.video.addEventListener('seeking',()=>{ui.loadVideo.pause();syncLoadVideo(true);});
-    ui.video.addEventListener('seeked',()=>{syncRecordedState(true);syncLoadVideo(true);if(!ui.video.paused)playLoadVideo();});
-    ui.video.addEventListener('timeupdate',()=>syncLoadVideo(false));
+    ui.video.addEventListener('ended',()=>{cancelDecodedFrameSync();syncRecordedState(true,ui.video.duration);stopPlayback(true);});
+    ui.video.addEventListener('seeking',()=>{cancelDecodedFrameSync();ui.loadVideo.pause();syncLoadVideo(true);});
+    ui.video.addEventListener('seeked',()=>{syncRecordedState(true,ui.video.currentTime);if(hasDecodedFrameClock())scheduleDecodedFrameSync(videoGeneration);syncLoadVideo(true);if(!ui.video.paused)playLoadVideo();});
+    ui.video.addEventListener('timeupdate',()=>{if(!hasDecodedFrameClock())syncRecordedState();syncLoadVideo(false);});
     ui.play.addEventListener('click', () => { if (playing) stopPlayback(); else startPlayback(); });
     ui.single.addEventListener('click', () => {if(playbackInfo)seekRecorded(ui.video.currentTime+1/playbackInfo.fps);else advance(50).catch(()=>{});});
     ui.reset.addEventListener('click', async () => {

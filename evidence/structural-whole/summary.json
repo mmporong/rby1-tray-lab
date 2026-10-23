@@ -1,0 +1,511 @@
+{
+  "schema_version": 1,
+  "physics_source_commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
+  "scope": "영상 프레임에 동기화한 전신 등가 단면 응력 추정과 선택 플랜지의 준정적 CAD FEM 후처리",
+  "frame_count": 1136,
+  "physics_time_range_s": [
+    0.0,
+    151.231999999994
+  ],
+  "recorded_video_fps": 60,
+  "display_1x_physics_speed": 8,
+  "visual_robot_body_count": 37,
+  "visual_geom_count": 63,
+  "section_analysis_body_count": 36,
+  "visual_only_body_ids": [
+    "NECK_0"
+  ],
+  "geometry_vertices": 710142,
+  "fem_surface_vertices": 37734,
+  "fem_cutaway_vertices": 5922,
+  "global_display_max_von_mises_pa": 848567.1875,
+  "parts": [
+    {
+      "id": "base",
+      "label": "차체 · 지배 부착부 하중 근사",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 144781.609375,
+      "peak_frame_index": 297,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다.",
+        "자유 베이스의 cfrc_int를 차체 응력으로 사용하지 않습니다. 휠 4개·몸통 1개 부착부의 개별 반력을 차체 등가 단면에 전달한 뒤 최대 지표의 부착부 한 개를 표시합니다."
+      ]
+    },
+    {
+      "id": "wheel_fr_link",
+      "label": "휠 FR",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 388465.03125,
+      "peak_frame_index": 342,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "wheel_fl_link",
+      "label": "휠 FL",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 371579.5,
+      "peak_frame_index": 342,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "wheel_rr_link",
+      "label": "휠 RR",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 238101.953125,
+      "peak_frame_index": 95,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "wheel_rl_link",
+      "label": "휠 RL",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 239994.015625,
+      "peak_frame_index": 96,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_torso_0",
+      "label": "몸통 1",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 800551.6875,
+      "peak_frame_index": 345,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_torso_1",
+      "label": "몸통 2",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 704893.125,
+      "peak_frame_index": 345,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_torso_2",
+      "label": "몸통 3",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 510695.5625,
+      "peak_frame_index": 345,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_torso_3",
+      "label": "몸통 4",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 848567.1875,
+      "peak_frame_index": 345,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_torso_4",
+      "label": "몸통 5",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 163632.078125,
+      "peak_frame_index": 345,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_torso_5",
+      "label": "몸통 6",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 102021.7109375,
+      "peak_frame_index": 1102,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "NECK_0",
+      "label": "목 연결부",
+      "kind": "section",
+      "analysis_status": "visual_only",
+      "timeline_peak_pa": 0.0,
+      "peak_frame_index": 0,
+      "assumptions": [
+        "질량·관성이 없는 시각 외장입니다. 별도 구조 하중 경로가 정의되지 않아 응력을 계산하지 않으며 회색으로 표시합니다."
+      ]
+    },
+    {
+      "id": "link_right_arm_0",
+      "label": "오른팔 1",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 221163.140625,
+      "peak_frame_index": 1102,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_right_arm_1",
+      "label": "오른팔 2",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 187505.203125,
+      "peak_frame_index": 1097,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_right_arm_2",
+      "label": "오른팔 3",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 138770.125,
+      "peak_frame_index": 528,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_right_arm_3",
+      "label": "오른팔 4",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 112765.1796875,
+      "peak_frame_index": 850,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_right_arm_4",
+      "label": "오른팔 5",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 41947.69921875,
+      "peak_frame_index": 241,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_right_arm_5",
+      "label": "오른팔 6",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 28967.513671875,
+      "peak_frame_index": 243,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_right_arm_6",
+      "label": "오른팔 7",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 10564.87109375,
+      "peak_frame_index": 242,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "right_wrist_camera_case",
+      "label": "오른쪽 손목 카메라",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 3536.119384765625,
+      "peak_frame_index": 228,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "EE_BODY_R",
+      "label": "오른쪽 그리퍼 하우징",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 8129.8720703125,
+      "peak_frame_index": 242,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "ee_finger_r1",
+      "label": "오른손 손가락 1",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 374747.375,
+      "peak_frame_index": 854,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "ee_finger_r2",
+      "label": "오른손 손가락 2",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 354294.65625,
+      "peak_frame_index": 538,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_left_arm_0",
+      "label": "왼팔 1",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 211786.28125,
+      "peak_frame_index": 1102,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_left_arm_1",
+      "label": "왼팔 2",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 179421.046875,
+      "peak_frame_index": 1097,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_left_arm_2",
+      "label": "왼팔 3",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 132070.203125,
+      "peak_frame_index": 1100,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_left_arm_3",
+      "label": "왼팔 4",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 119441.6953125,
+      "peak_frame_index": 244,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_left_arm_4",
+      "label": "왼팔 5",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 51519.64453125,
+      "peak_frame_index": 243,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_left_arm_5",
+      "label": "왼팔 6",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 31691.568359375,
+      "peak_frame_index": 244,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_left_arm_6",
+      "label": "왼팔 7",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 13452.3876953125,
+      "peak_frame_index": 861,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "left_wrist_camera_case",
+      "label": "왼쪽 손목 카메라",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 4679.32470703125,
+      "peak_frame_index": 244,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "EE_BODY_L",
+      "label": "왼쪽 그리퍼 하우징",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 10388.8134765625,
+      "peak_frame_index": 243,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "ee_finger_l1",
+      "label": "왼손 손가락 1",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 610285.9375,
+      "peak_frame_index": 854,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "ee_finger_l2",
+      "label": "왼손 손가락 2",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 494503.53125,
+      "peak_frame_index": 855,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_head_1",
+      "label": "헤드 회전부",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 22696.005859375,
+      "peak_frame_index": 39,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "link_head_2",
+      "label": "헤드 틸트부",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 8588.474609375,
+      "peak_frame_index": 345,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "head_camera_case",
+      "label": "헤드 카메라",
+      "kind": "section",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 14171.529296875,
+      "peak_frame_index": 39,
+      "assumptions": [
+        "원형 중공 등가 단면과 명시된 가정 두께를 사용합니다. 외피 위치에 사상한 공칭 응력 추정이며 전신 CAD FEM이 아닙니다.",
+        "횡방향 전단 V/A는 공칭 평균 지표입니다. 링크 안의 분포 관성·접촉과 실제 체결부 국부 응력은 해석하지 않습니다."
+      ]
+    },
+    {
+      "id": "left_flange_fem",
+      "label": "왼쪽 연결 플랜지 · CAD FEM",
+      "kind": "fem",
+      "analysis_status": "section_assumption",
+      "timeline_peak_pa": 114246.734375,
+      "peak_frame_index": 862,
+      "assumptions": [
+        "공식 Fast Grip CAD와 현재 손가락의 형상이 다릅니다. 동일 축·원점을 가정해 손목 wrench를 전달합니다.",
+        "E=69 GPa, ν=0.33과 상단 완전 고정 가정. 각 시각의 준정적 선형 응답이며 부품 자체 관성·볼트 접촉은 포함하지 않습니다."
+      ]
+    }
+  ],
+  "local_artifact_sha256": {
+    "manifest.json": "e54758e0fa5e447a243e72866987b245e4b1875a3fe444d916b6ac3aff3db7ea",
+    "geometry.bin": "27a53c752336620ac763f388d8f1826aae9bcd531e7d20729b4c995b0bd944ae",
+    "frames.bin": "f498f7b28eb03110980ce12336d4c435624a4c4203f78d8e2253b3c5b74d2bc5",
+    "fem-surface.bin": "2125767a87dfd038870f3c425fc5de896a0debbcbb7a1f6edcce6a513daed796",
+    "fem-cutaway.bin": "1b99171d660ff75257c9107f6a8078ff2cb092f09800da06f061db49db3ba743"
+  },
+  "local_artifact_bytes": {
+    "manifest.json": 140012,
+    "geometry.bin": 17043408,
+    "frames.bin": 3280768,
+    "fem-surface.bin": 6339312,
+    "fem-cutaway.bin": 994896
+  },
+  "reference_states_sha256": "b6b975a89f8b1b0a0a0532c83fb97a2f002ce4dab829fe47d8e2fc99be9a8bbc",
+  "source": {
+    "physics_commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
+    "basis_metadata_sha256": "b0ea2dbfd6fae96a1fd55799d2dbac5a1ffe3c16ab5d4f07970b0e369bf263ec",
+    "script_sha256": "fc1ca396a5ea106032cb8189e734644660822b937088c99fa63fc5fe562c9e62",
+    "section_module_sha256": "122db397000253321687d022812fa1bbca339d5aa29217e2354c4ed0b82b9df2"
+  },
+  "limitations": [
+    "전신은 가정 중공 원형 단면과 6축 내력을 이용한 공칭 응력 추정이며 제조사 전체 CAD FEM이 아니다.",
+    "차체는 몸통/4휠 부착부 반력 중 순간 표면 최대가 큰 한 하중 사례로 표시한다. 실제 차체의 공간 하중 분포나 전체 부착부 중첩 해석이 아니다.",
+    "NECK_0는 정의된 내력이 없는 무질량 외장으로 회색 미계산 표시한다.",
+    "선택 CAD 플랜지는 재료 E=69GPa,nu=0.33,고정면과 센서/CAD 동축 동일원점을 가정한다. Fast Grip 구성 차이가 있고 실측 정합은 미확인이다.",
+    "FEM은 6기저 응력 텐서를 합산한 준정적 결과다. 파동/진동/소성/피로/볼트 프리로드/접촉 분리를 해석하지 않는다.",
+    "공칭 전단 V/A는 평균 지표이며 중공 단면의 실제 최대 전단 분포가 아니다.",
+    "CAD 및 파생 binary는 재배포 허용 범위 미확인으로 로컬에만 보존한다. 새 clone은 별도 CAD 확보 및 생성이 필요하다.",
+    "강도 정격,안전율,실물 전이 성공은 검증하지 않았다."
+  ]
+}

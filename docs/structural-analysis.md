@@ -1,8 +1,22 @@
-# 공식 CAD 플랜지의 정적 하중 전달 연구
+# 전신 동기 응력 추정과 공식 CAD 플랜지 해석
 
-MuJoCo의 손목 6축 기록을 공식 STEP의 개별 솔리드에 전달하고, 선형탄성 FEM으로 부품 내부 응력과 변위를 계산한다. 표면은 경계 삼각형에 인접한 요소 응력을, 단면은 사면체와 평면의 교차 영역을 표시한다. 한 부품의 모든 면에 같은 색을 칠하는 관절 부하 모드와 별도로 제공한다.
+1,136개 재생 프레임에서 전신의 등가 단면 응력 추정과 공식 STEP 플랜지의 준정적 FEM을 같은 영상 시각에 표시한다. 전신 표시는 제조사 전체 CAD의 요소 해석이 아니다. 플랜지는 6개 단위 wrench의 응력 텐서 기저를 현재 힘·모멘트로 합성해 표면과 실제 단면에 표시한다. 두 결과는 관절 구동기 토크 비율을 칠하는 관절 부하 모드와 구분한다.
 
-## 대상과 확인 범위
+## 전신 동기 구조 모드
+
+- 시각 범위는 37개 body와 63개 geom이다. 36개 body는 가정한 등가 원형 단면으로 축응력·굽힘·비틀림·전단을 계산한다. 실제 시각 외피는 위치와 자세를 보여 주며, 그 외피 자체를 구조 메시로 해석한 결과는 아니다.
+- 질량이 없는 `NECK_0`는 내력이 0인 안전 부품으로 해석하지 않고 회색의 **비구조 외장·응력 미계산**으로 표시한다.
+- 베이스는 자유 관절의 `cfrc_int`를 사용하지 않는다. torso와 네 바퀴 장착부 반력을 베이스 좌표계로 옮기고, 각 프레임에서 가정 단면의 순간 표면 peak가 큰 한 사례를 proxy로 표시한다. 실제 차체 FEA가 아니다.
+- 왼쪽 플랜지는 별도 CAD FEM 상세다. 단위 Fx·Fy·Fz·Mx·My·Mz에 대한 응력 텐서 6성분 기저를 선형 합성한 뒤 von Mises를 계산한다. 비선형 스칼라인 von Mises 값을 하중별로 합산하지 않는다.
+- 주 영상의 `requestVideoFrameCallback` `mediaTime`이 프레임 선택 기준이다. 미지원 브라우저에서는 영상 시간 이벤트로 보완한다. 시간·선택 부품·FEM 표면/단면 모드는 뷰 전환 뒤에도 유지한다.
+
+원본 상태 1,136개와 물리 소스 커밋 `c7967a9aab6a31fafc574150d959c36477f9cf59`를 유지하고, 파생 동역학은 scratch 데이터에서만 계산했다. 정의된 관절 위치·토크, 베이스, 트레이와 적재물 위치·속도 및 단계 대조의 최대 차이는 0이다. 원본에 없는 적재물 회전은 대조하지 않았다. 손목 FT 교차검증 절댓값 최대는 `1.7763568394002505e-15`다. 기준 번들 생성은 136.403초가 걸렸다. [전신 요약](../evidence/structural-whole/summary.json), [수치 검증](../evidence/structural-whole/validation.json), [브라우저 동기화 검증](../evidence/structural-whole/browser-qa.json)에 공개 가능한 근거를 둔다.
+
+`cfrc_int`의 순서는 모멘트·힘이며, 세계축을 사용하고 원점은 해당 운동학 트리의 `subtree_com[body_rootid[b]]`다. 단면 원점 p로 옮길 때 `M_p = M_c + (c-p)×F`를 적용하고, 힘과 모멘트를 단면 좌표계로 회전한다. 렌더 시점에 맞춘 `mj_forward`와 `mj_rnePostConstraint`는 복제한 데이터에만 적용한다. 정의와 좌표 변환은 [MuJoCo 3.11.0 데이터 선언](https://github.com/google-deepmind/mujoco/blob/3.11.0/include/mujoco/mjdata.h), [공간 벡터 변환 소스](https://github.com/google-deepmind/mujoco/blob/3.11.0/src/engine/engine_util_spatial.c), [시뮬레이션 파이프라인](https://mujoco.readthedocs.io/en/3.11.0/programming/simulation.html)을 따른다.
+
+등가 단면은 외피의 반경 범위를 감싸는 원형 관으로 가정하며, 두께는 `clamp(0.10R, 1 mm, 6 mm)`다. 실제 CAD의 내부 두께가 아니다. 축·굽힘 응력, 비틀림 전단과 공칭 평균 횡전단 `V/A`를 조합한다. 길이 방향으로 `Mx(z)=Mx(0)+z·Fy`, `My(z)=My(0)-z·Fx`를 적용한다. 분포 체적력·국부 체결 응력은 복원하지 않는다. 플랜지의 화면 수치는 표면/단면에 나타난 부분 최대가 아닌 전체 Tet4의 현재 최대값이다.
+
+## 플랜지 대상과 확인 범위
 
 - 원본: RB-Y1 V1.2 Mecanum의 `Fast Grip` STEP. SHA-256은 `387276a46fccbce4a48f50928710633305f525ec3aff825deabb086c8d524854`다.
 - Gmsh 4.15.2/OpenCASCADE로 m 단위 가져오기 후 volume tag 1672를 선택했다. 왼쪽 손목과 그리퍼 사이의 원형 연결 플랜지 후보이며, 제조사 부품 번호·재료 카드는 제공되지 않았다.
@@ -12,7 +26,7 @@ MuJoCo의 손목 6축 기록을 공식 STEP의 개별 솔리드에 전달하고,
 
 공식 CAD의 Fast Grip 손가락과 현재 Menagerie 손가락의 치수가 다르다. 이 해석은 **다른 구성의 CAD 부품에 시뮬레이션 하중을 전달하는 연구**다. 실물과 같은 조립체의 검증 결과로 해석하지 않는다.
 
-## 입력 하중과 경계조건
+## 정적 검증 사례의 입력 하중과 경계조건
 
 기존 `evidence/mobile-native/controller-data/commands.jsonl.gz`의 500 Hz 패킷을 사용한다. `retract_low`, `drive_loaded`, `raise_high`, `drive_high` 중 왼쪽 손목의 raw torque norm이 가장 큰 패킷을 FEM 실행 전에 고른다. 선택 시점은 `raise_high`의 **71.704 s**, 패킷 index 35,852다. FEM 응력이 가장 큰 시점을 탐색한 결과는 아니다.
 
@@ -34,7 +48,7 @@ MuJoCo의 손목 6축 기록을 공식 STEP의 개별 솔리드에 전달하고,
 
 볼트 프리로드, 마찰·분리 접촉, 해당 CAD 부품의 자중·관성 체적력, 동적 진동, 소성·피로는 포함하지 않는다. 기록 wrench가 전달하는 하부 subtree의 동역학적 결과력과 CAD 부품 자체의 관성 응답을 구분한다. 제조사 정격·허용 응력·실물 안전율은 산출하지 않는다.
 
-## 수치 결과와 검증
+## 정적 검증 사례의 수치 결과와 검증
 
 | 목표 메시 길이 | 노드 | Tet4 | 최대 변위 | 체적 가중 P95 von Mises | 요소 최대 von Mises |
 |---|---:|---:|---:|---:|---:|
@@ -54,13 +68,13 @@ MuJoCo의 손목 6축 기록을 공식 STEP의 개별 솔리드에 전달하고,
 
 ## 화면과 배포 범위
 
-상단 원본 영상 아래 RGB·깊이 모니터 옆에서 **부품 응력 → 표면/단면**을 선택한다. 단면은 `x+y=0` 평면과 실제 Tet4의 교차다. 홈·홀을 임의로 메우거나 요소 안에 임의 응력 경사를 만들지 않는다. 실제 형상 크기로 표시하며 변형은 확대해 그리지 않는다.
+상단 원본 영상 아래 RGB·깊이 모니터 옆에서 **구조 응력**을 선택한다. 기본 화면은 전신 등가 단면 응력 추정이며, 목록에서 부품을 고르면 격리해 확대한다. 왼쪽 플랜지에서는 표면/단면을 선택할 수 있다. 단면은 `x+y=0` 평면과 실제 Tet4의 교차다. 홈·홀을 임의로 메우거나 요소 안에 임의 응력 경사를 만들지 않는다. 실제 형상 크기로 표시하며 변형은 확대해 그리지 않는다.
 
-응력은 71.704초의 고정 시점 결과다. 영상 재생 시각에 따라 변하는 동적 응력처럼 표시하지 않는다. 원본 시뮬레이션의 위치·질량·관성·접촉·제어에는 이 결과를 되돌려 적용하지 않는다.
+전신과 플랜지 하중은 영상의 같은 기록 프레임을 사용한다. 결과는 기록 하중을 이용한 단방향 후처리이며, 원본 시뮬레이션의 위치·질량·관성·접촉·제어에 되돌려 적용하지 않는다. 71.704초의 정적 플랜지 결과는 메시 수렴과 경계조건 민감도 검증 사례로 보존한다.
 
-STEP/BREP/NPZ와 CAD 렌더 PNG의 재배포 허용 범위가 확인되지 않아 이 자료는 `artifacts/` 아래 로컬에만 둔다. 저장소에는 계산 코드·설정·수치 요약·해시·재현 절차를 포함한다. **새 clone에서는 구조 모드가 비활성**이며, CAD를 확보해 결과를 생성하면 나타난다. 원본 3개 영상·관절 부하·RGB-D 재생은 계속 사용할 수 있다.
+STEP/BREP/NPZ와 CAD 파생 데이터가 포함된 동기 구조 번들의 네 바이너리의 재배포 허용 범위가 확인되지 않아 `artifacts/` 아래 로컬에만 둔다. **새 clone에서는 동기 구조 모드가 비활성**이며, 원본 3개 영상·관절 부하·RGB-D 재생은 계속 사용할 수 있다. 구조 번들이 아예 없을 때만 기존 71.704초 고정 스냅샷을 명시해 표시한다.
 
-뷰어는 고정된 PNG 2개만 제공한다. 보고서·파일 해시·형식·픽셀 크기·심볼릭 링크를 검사하며, 오류가 있으면 구조 모드를 격리한다. 서버는 CAD·NPZ를 다운로드 경로로 노출하지 않는다.
+서버는 허용한 네 바이너리만 고정 경로로 제공하며 해시·스키마·수치 유한성·버퍼 길이·회전축·단면 물성을 검사한다. 구성된 번들이 검증에 실패하면 구조 패널에 오류를 표시하고 고정 스냅샷으로 우회하지 않는다. CAD·NPZ와 내부 파일 경로는 다운로드 경로로 노출하지 않는다.
 
 ## 재현
 
@@ -77,8 +91,12 @@ uv pip install --python .venv-cae/bin/python numpy==2.5.2 scipy==1.18.1 -r requi
   --brep artifacts/structural-cad-selected/left-interface-flange.brep \
   --output artifacts/structural-flange
 .venv-cae/bin/python tools/render_structural_case.py --directory artifacts/structural-flange
+.venv-cae/bin/python tools/build_structural_basis.py \
+  --input artifacts/structural-flange/level-2.npz \
+  --output artifacts/structural-basis
+.venv/bin/python tools/build_whole_structural.py --output artifacts/structural-whole
 MUJOCO_GL=egl .venv/bin/python -m unittest discover -s tests -v
-.venv/bin/python -m rby1_tray.cli view --structural-directory artifacts/structural-flange
+.venv/bin/python -m rby1_tray.cli view
 ```
 
-원본 STEP은 ZIP 안의 하위 폴더에 있으므로 압축 해제 위치가 다르면 `--step` 경로를 바꾼다. 선택 형상은 원본 해시·bbox·체적으로 검사한다. Gmsh 가져오기·visible-only BREP 내보내기와 메시 API는 [공식 Gmsh 4.15.2 매뉴얼](https://gmsh.info/doc/texinfo/gmsh.html)을 따른다. Gmsh의 GPL-2.0-or-later 및 upstream 링크 예외는 [공식 배포 조건](https://gmsh.info/)을 확인한다. Gmsh를 프로젝트 코드의 MIT 라이선스로 재배포하지 않는다.
+각 `--output` 경로는 실행 전에 존재하지 않아야 한다. `view`는 기본 경로 `artifacts/structural-whole`을 자동 확인하며, 다른 위치는 `--structural-scene-directory`로 지정한다. 원본 STEP은 ZIP 안의 하위 폴더에 있으므로 압축 해제 위치가 다르면 `--step` 경로를 바꾼다. 선택 형상은 원본 해시·bbox·체적으로 검사한다. Gmsh 가져오기·visible-only BREP 내보내기와 메시 API는 [공식 Gmsh 4.15.2 매뉴얼](https://gmsh.info/doc/texinfo/gmsh.html)을 따른다. Gmsh의 GPL-2.0-or-later 및 upstream 링크 예외는 [공식 배포 조건](https://gmsh.info/)을 확인한다. Gmsh를 프로젝트 코드의 MIT 라이선스로 재배포하지 않는다.

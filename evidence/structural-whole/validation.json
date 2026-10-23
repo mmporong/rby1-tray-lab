@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "physics_source_commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
+  "reference_frames": 1136,
+  "maximum_matched_physical_difference": 0.0,
+  "matched_fields_scope": "tools.build_load_view.physical_vector의 관절 위치/토크,베이스,트레이,적재물 위치/속도 및 단계. 원본에 없는 적재물 회전은 대조 제외.",
+  "maximum_wrist_ft_crosscheck_absolute": 1.7763568394002505e-15,
+  "wrench_crosscheck_units": "force N / moment N m; two wrist sensors, all frames",
+  "derived_dynamics_on_scratch_only": true,
+  "fem_basis_validation": {
+    "basis_cases": [
+      {
+        "component": "Fx",
+        "equilibrium_relative": 4.02820418021655e-15,
+        "energy_identity_relative": 1.1705844339519813e-16,
+        "strain_energy_j": 1.1041234358043107e-10
+      },
+      {
+        "component": "Fy",
+        "equilibrium_relative": 1.7814391259320228e-15,
+        "energy_identity_relative": 0.0,
+        "strain_energy_j": 1.1013376737595283e-10
+      },
+      {
+        "component": "Fz",
+        "equilibrium_relative": 2.4773464389330374e-15,
+        "energy_identity_relative": 4.131992566629632e-16,
+        "strain_energy_j": 3.127957483641705e-11
+      },
+      {
+        "component": "Mx",
+        "equilibrium_relative": 1.084505116283185e-15,
+        "energy_identity_relative": 3.664026153292753e-16,
+        "strain_energy_j": 1.0836349889823773e-07
+      },
+      {
+        "component": "My",
+        "equilibrium_relative": 1.3354742021790342e-15,
+        "energy_identity_relative": 2.4940055012488454e-16,
+        "strain_energy_j": 1.0613360551306896e-07
+      },
+      {
+        "component": "Mz",
+        "equilibrium_relative": 3.3966744475297843e-15,
+        "energy_identity_relative": 6.592824276103121e-16,
+        "strain_energy_j": 1.6059751325477541e-07
+      }
+    ],
+    "random_full_solve_cases": [
+      {
+        "index": 0,
+        "coefficients": [
+          -29.536387937213604,
+          15.450225711901439,
+          72.01520200335213,
+          -1.4689288124065483,
+          3.5431028137504468,
+          -1.9053123165624415
+        ],
+        "stress_relative_l2": 9.99008046043252e-15,
+        "displacement_relative_l2": 1.302183926227822e-15
+      },
+      {
+        "index": 1,
+        "coefficients": [
+          -52.74420089211343,
+          56.55949482847373,
+          70.35678347001357,
+          -2.5537476842377753,
+          2.0328137140876175,
+          -1.9044708617648807
+        ],
+        "stress_relative_l2": 1.1928397742549632e-14,
+        "displacement_relative_l2": 1.2198393041634028e-15
+      },
+      {
+        "index": 2,
+        "coefficients": [
+          68.46121021575667,
+          71.82729601854473,
+          4.253322846279403,
+          2.6734952930992426,
+          3.3963139449630786,
+          -1.0603051687948968
+        ],
+        "stress_relative_l2": 1.0972418249093535e-14,
+        "displacement_relative_l2": 1.190742624835168e-15
+      }
+    ],
+    "thresholds": {
+      "basis_equilibrium_and_energy_relative": 1e-07,
+      "random_superposition_relative_l2": 2e-09
+    },
+    "passed": true
+  },
+  "maximum_fem_displacement_m": 1.4083483868066525e-08,
+  "replay_elapsed_s": 136.40292937704362,
+  "basis_metadata_sha256": "b0ea2dbfd6fae96a1fd55799d2dbac5a1ffe3c16ab5d4f07970b0e369bf263ec",
+  "local_scene_manifest_sha256": "e54758e0fa5e447a243e72866987b245e4b1875a3fe444d916b6ac3aff3db7ea",
+  "unit_tests": {
+    "passed": 196,
+    "independent_fresh_rerun": true,
+    "command": "MUJOCO_GL=egl PYOPENGL_PLATFORM=egl EGL_PLATFORM=surfaceless __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json .venv/bin/python -m unittest discover -s tests -p test_*.py",
+    "elapsed_s": 33.704,
+    "independent_elapsed_s": 33.996
+  },
+  "static_analysis": {
+    "tool": "pyright",
+    "errors": 0,
+    "warnings": 0,
+    "scope": [
+      "src/rby1_tray/section_stress.py",
+      "src/rby1_tray/structural_basis.py",
+      "src/rby1_tray/structural_scene.py",
+      "src/rby1_tray/viewer.py",
+      "src/rby1_tray/cli.py",
+      "tests/test_section_stress.py",
+      "tests/test_structural_basis.py",
+      "tests/test_structural_scene.py",
+      "tools/build_structural_basis.py",
+      "tools/build_whole_structural.py"
+    ]
+  },
+  "source_sha256": {
+    "tools/build_whole_structural.py": "fc1ca396a5ea106032cb8189e734644660822b937088c99fa63fc5fe562c9e62",
+    "tools/build_structural_basis.py": "3d387dd97ce8acc5ebf2e7fbed00204c4587be92a29164fd86bea9467f4d1ead",
+    "src/rby1_tray/section_stress.py": "122db397000253321687d022812fa1bbca339d5aa29217e2354c4ed0b82b9df2",
+    "src/rby1_tray/structural_basis.py": "ece117b77ea6fe926cd0846d6e85382996ba1bda01fdd3a768ba39124d634800"
+  },
+  "browser_qa": "PASS: evidence/structural-whole/browser-qa.json",
+  "packaging": {
+    "wheel_build": "PASS",
+    "html_js_packaged_exact_source_match": true,
+    "wheel_sha256": "f7414b301c525aefd4ff18c756cb2976a63af9a4321d79997d08016f732614ac"
+  }
+}

@@ -16,4 +16,4 @@ rby1-tray = "rby1_tray.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-rby1_tray = ["web/*.html"]
+rby1_tray = ["web/*.html", "web/*.js"]

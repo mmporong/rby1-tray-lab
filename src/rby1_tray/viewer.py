@@ -27,6 +27,20 @@ from .playback import encode_sensor_preview
 _INDEX_PATH = Path(__file__).with_name("web") / "index.html"
 
 
+class _UnavailableStructuralScene:
+    """Expose a safe configured-but-invalid status without serving any bytes."""
+
+    def info(self) -> dict[str, Any]:
+        return {
+            "enabled": False,
+            "configured": True,
+            "error": "동기 구조 응력 데이터가 무결성 검증을 통과하지 못했습니다.",
+        }
+
+    def asset(self, name: str) -> None:
+        return None
+
+
 def _json_bytes(value: Any) -> bytes:
     return json.dumps(
         value,
@@ -165,7 +179,10 @@ def _byte_range(header: str | None, size: int) -> tuple[int, int] | None:
 
 
 def _make_handler(
-    session: Any, playback: Any = None, structural: Any = None
+    session: Any,
+    playback: Any = None,
+    structural: Any = None,
+    structural_scene: Any = None,
 ) -> type[BaseHTTPRequestHandler]:
     class ViewerHandler(BaseHTTPRequestHandler):
         server_version = "RBY1TrayViewer/0.1"
@@ -186,6 +203,24 @@ def _make_handler(
                     HTTPStatus.OK,
                     structural.info() if structural else {"enabled": False},
                 )
+                return
+            if request.path == "/api/structural-scene":
+                self._send_json(
+                    HTTPStatus.OK,
+                    structural_scene.info()
+                    if structural_scene
+                    else {"enabled": False, "configured": False},
+                )
+                return
+            if request.path == "/structural-scene.js":
+                self._send(
+                    HTTPStatus.OK,
+                    (Path(__file__).with_name("web") / "structural-scene.js").read_bytes(),
+                    "text/javascript; charset=utf-8",
+                )
+                return
+            if request.path.startswith("/structural-scene/"):
+                self._serve_structural_scene(request.path)
                 return
             if request.path.startswith("/playback/"):
                 self._serve_playback(request.path)
@@ -251,10 +286,36 @@ def _make_handler(
             request = urlsplit(self.path)
             if request.path.startswith("/playback/"):
                 self._serve_playback(request.path, head_only=True)
+            elif request.path.startswith("/structural-scene/"):
+                self._serve_structural_scene(request.path, head_only=True)
+            elif request.path == "/structural-scene.js":
+                body = (Path(__file__).with_name("web") / "structural-scene.js").read_bytes()
+                self.send_response(HTTPStatus.OK)
+                self.send_header("Content-Type", "text/javascript; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self.send_header("X-Content-Type-Options", "nosniff")
+                self.end_headers()
             elif request.path.startswith("/structural/"):
                 self._serve_structural(request.path, head_only=True)
             else:
                 self.send_error(HTTPStatus.NOT_FOUND)
+
+        def _serve_structural_scene(
+            self, request_path: str, head_only: bool = False
+        ) -> None:
+            name = request_path.removeprefix("/structural-scene/")
+            body = structural_scene.asset(name) if structural_scene else None
+            if body is None:
+                self.send_error(HTTPStatus.NOT_FOUND)
+                return
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Type", "application/octet-stream")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "private, max-age=0, must-revalidate")
+            self.send_header("X-Content-Type-Options", "nosniff")
+            self.end_headers()
+            if not head_only:
+                self.wfile.write(body)
 
         def _serve_structural(
             self, request_path: str, head_only: bool = False
@@ -383,7 +444,7 @@ def _make_handler(
             self.send_header("Content-Length", str(len(body)))
             self.send_header("Cache-Control", "no-store")
             self.send_header("X-Content-Type-Options", "nosniff")
-            self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' blob:; media-src 'self'")
+            self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' blob:; media-src 'self'")
             for name, value in (headers or {}).items():
                 self.send_header(name, value)
             self.end_headers()
@@ -400,6 +461,7 @@ def serve(
     host: str = "127.0.0.1",
     port: int = 8786,
     structural_directory: str | Path | None = None,
+    structural_scene_directory: str | Path | None = None,
 ) -> None:
     """Serve the local viewer until interrupted.
 
@@ -427,7 +489,20 @@ def serve(
                 "[viewer] Structural result unavailable; primary playback remains "
                 f"available: {exc}"
             )
-    server = HTTPServer((host, port), _make_handler(session, playback, structural))
+    structural_scene = None
+    if structural_scene_directory is not None:
+        from .structural_scene import StructuralSceneAssets
+        try:
+            structural_scene = StructuralSceneAssets(structural_scene_directory, playback)
+        except (OSError, ValueError) as exc:
+            print(
+                "[viewer] Synchronized structural scene unavailable; other viewer "
+                f"modes remain available: {exc}"
+            )
+            structural_scene = _UnavailableStructuralScene()
+    server = HTTPServer(
+        (host, port), _make_handler(session, playback, structural, structural_scene)
+    )
     print(f"RB-Y1 Tray Lab: http://{host}:{server.server_port}")
     try:
         server.serve_forever(poll_interval=0.2)

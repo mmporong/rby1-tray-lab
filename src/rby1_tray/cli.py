@@ -23,7 +23,7 @@ def save_json(path, value):
 
 def source_hashes():
     root = Path(__file__).parent
-    paths = sorted([*root.glob("*.py"), *root.glob("web/*.html")])
+    paths = sorted([*root.glob("*.py"), *root.glob("web/*.html"), *root.glob("web/*.js")])
     return {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 
 
@@ -163,6 +163,10 @@ def main(argv=None):
         "--structural-directory",
         help="local directory containing a validated structural report and PNGs",
     )
+    parser.add_argument(
+        "--structural-scene-directory",
+        help="local directory containing synchronized whole-robot structural buffers",
+    )
     parser.add_argument("--heights", default="0.45,0.65,0.85")
     parser.add_argument("--seeds", default="0,1,2")
     args = parser.parse_args(argv)
@@ -203,11 +207,20 @@ def main(argv=None):
             if args.structural_directory
             else default_structural if default_structural.is_dir() else None
         )
+        default_structural_scene = (
+            Path(__file__).resolve().parents[2] / "artifacts" / "structural-whole"
+        )
+        structural_scene_directory = (
+            Path(args.structural_scene_directory)
+            if args.structural_scene_directory
+            else default_structural_scene if default_structural_scene.is_dir() else None
+        )
         try:
             serve(
                 session,
                 port=args.port,
                 structural_directory=structural_directory,
+                structural_scene_directory=structural_scene_directory,
             )
         finally: session.close()
         return 0
