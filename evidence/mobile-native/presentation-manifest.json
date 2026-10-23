@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "physics_source_commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
-  "interface_source_commit": "c6da06f7ba1d009d92ccc28972da7fb143d5d7c2",
+  "interface_source_commit": "4194e4d760331d7ce4baa13f9d8ca5ceed7cebb1",
   "scope": "Derived presentation evidence, separate from original captured-run manifest",
   "artifact_sha256": {
     "README.md": "74856f5f32cf6da718b1b2b9ef57e7e074135443c38ed4e2c25a1e4a957a11a1",
@@ -23,19 +23,19 @@
     "evidence/robustness/compact-manifest.json": "4b52f3136a9ad1c1ef23f2dc535389e96f97c381f43539c015d17cb1bf8d2a3d",
     "evidence/cad-availability.json": "254fa38d094809dcc944cac3e67c79b24555cd70d0f70f2119aac648ff116ead",
     "docs/structural-cad.md": "5b360c73dc30176498b073c36ff9896d0de91418bb88d127fa5f578b388944c3",
-    "docs/structural-analysis.md": "b1cebafce7324170515c6d1daffb8096745ec3aa52ac131ecdbc1172d77994d7",
+    "docs/structural-analysis.md": "55aaf2165a948e7f57c87769a5e28e9e4340e0f4a96ba2ac2b1ea6c8d2a5de52",
     "evidence/structural-flange/summary.json": "172e7dc5cb5332bab97b43ea11a20443e2f6b60b286910ccd25ad512305b3a86",
     "evidence/structural-flange/validation.json": "c7242f7cd569493db22a490d0aa7c55066b4cc4c1813492897be4bc0a225a8ae",
     "evidence/structural-flange/browser-qa.json": "42e43ce8142837c10f751f949102cb066a2dddbe8366258d71dd62098a938096",
     "configs/structural-flange.json": "1b7333967983c7ff1d6cf5153e477aeb48fdc743ec2a1133e88d1bef26e329dd",
     "requirements-cae.txt": "cd7831b73ffea2e84a6df9ba9bc1154ca0564b7771a0ee54fe4bd6401bfa2dc2",
     "evidence/structural-whole/summary.json": "09795f68890ea5d5225908d0cdc44dc555dcea8e46eeae627671dffe967d8d91",
-    "evidence/structural-whole/validation.json": "b3ca518404e7d6a4bb8f37b692ccedc06bcccb7a2c4820076f4447d867d68678",
-    "evidence/structural-whole/browser-qa.json": "9eff2825138740cf77726b5ff3dd77670f5be1d9828dd7db2f7c99adb127acb0",
+    "evidence/structural-whole/validation.json": "a579c6abc213dde89595a54acd34d707900f797be8afecfb9404784411bbffe5",
+    "evidence/structural-whole/browser-qa.json": "cf12f6b7c0ed859d615536688dbdf1ef0d7dda6bc31a1e2a2b7f608aec9756c7",
     "evidence/structural-whole/load-diagnostics.json": "5f51dde69ab8a2d3aeda237e4fb03222902e4f1e87dacbfa47b752ac7ece19ad",
     "src/rby1_tray/web/structural-diagnostics.js": "c2de4bb91caf6d64052a773429975e927d26034223f3dc558ad7e5c75f23d2c1",
-    "README.md": "bc1ea13ce36accad4745b6908a063f66f208d65b06134f6390060c635bb92746",
-    "evidence/structural-whole/joint-overlay.json": "52cdf7ba69f0c69ee22de910b07ff736d56479059799eab049b3b8926864ace6"
+    "README.md": "7f6f0fe5dbedee86f966b13d6201d91e74aebac21a9caa850bd55c2397c450cc",
+    "evidence/structural-whole/joint-overlay.json": "44879c6fc990913142447fc56dfbdb158046c8f1f2dadae026d5570775ea1d67"
   },
   "source_script_sha256": {
     "tools/build_load_view.py": "e8aae2b24cd7395e959408c5c7475da7b5eca7a27e198173962c249994868e18",
@@ -47,13 +47,13 @@
     "src/rby1_tray/structural_loads.py": "8551652f59c14a1c038e72369203ded5850235569ea274b6c58ac2bf68f7d1c1",
     "src/rby1_tray/structural_evidence.py": "d5bdc9025844e9b6df3b67e1d1eda66153d77f4aa96b125fc7286622a1bbf983",
     "src/rby1_tray/structural_view.py": "1717e1a5bcc66779abebaed6f88ab3107730863746cabc6dc2d342e11bcdb06c",
-    "src/rby1_tray/web/index.html": "3c62734a9b14251b7e782e60be6027a24010018d61af11c3e6803fb585d2b8be",
+    "src/rby1_tray/web/index.html": "0b83e4ac2eb920f6749b3d50aec09d0f54a970e69c08a3b77d03790da8cdade5",
     "tools/build_whole_structural.py": "fc1ca396a5ea106032cb8189e734644660822b937088c99fa63fc5fe562c9e62",
     "tools/build_structural_basis.py": "3d387dd97ce8acc5ebf2e7fbed00204c4587be92a29164fd86bea9467f4d1ead",
     "src/rby1_tray/section_stress.py": "122db397000253321687d022812fa1bbca339d5aa29217e2354c4ed0b82b9df2",
     "src/rby1_tray/structural_basis.py": "ece117b77ea6fe926cd0846d6e85382996ba1bda01fdd3a768ba39124d634800",
     "src/rby1_tray/structural_scene.py": "9d923a966ea6faa8d8692b9d65f789ac2ad57affda7f49571a3d85c04bb0dba8",
-    "src/rby1_tray/web/structural-scene.js": "8ec0095d48bc0e8330b576c869e10c3fdd3701fac3e2e234b79b2efc7c9a4826",
+    "src/rby1_tray/web/structural-scene.js": "15a9ec298080322577119519c99eac45e98bb1b79acc3ea009aa03d6d2b62cb4",
     "src/rby1_tray/viewer.py": "8577b0b8732ed7c66a9c23e3b34c85b0457aa524c217ad73e077e70b4d0b6a17",
     "src/rby1_tray/cli.py": "59cff8ee78465fba481bec3fb20ed25604ec168e564ccca3bc2310d5e140df6e",
     "tests/test_section_stress.py": "9be052f2b4eb5f87774c0cd2dd5f7948b0bc9482b3907ebb23fde1016e02d9f1",
@@ -80,7 +80,7 @@
     "condition_trials": 18,
     "task_completions": 12,
     "expected_stale_rejections": 1,
-    "unit_tests_scope": "fresh final 217-test suite, independently rerun after line-only UI refinement",
+    "unit_tests_scope": "fresh final 217-test suite after force/moment model annotation removal; independent targeted 26-test review",
     "structural_tetrahedra": 55946,
     "structural_snapshot_s": 71.70400000001429,
     "structural_convergence_tolerance": 0.05,
@@ -106,16 +106,16 @@
     "joint overlay uses validated scalar +1 hinge actuator torque and active symmetric model limits; leader labels and the full 20-joint table preserve unclamped numeric percentages"
   ],
   "interface_validation": {
-    "source_commit": "c6da06f7ba1d009d92ccc28972da7fb143d5d7c2",
+    "source_commit": "4194e4d760331d7ce4baa13f9d8ca5ceed7cebb1",
     "javascript_syntax": "PASS",
     "static_python": "Python source unchanged in UI refinement; prior pyright 0 errors/warnings retained. Current HTML/JS syntax and independent ESLint PASS.",
     "independent_code_review": "APPROVE",
-    "browser_qa": "PASS: circle-free top3/narrow1/selected1/CAD0 leaders and table20; matching media heights and shared toolbar; keyboard, 390/1024/1842px, 200% text, reduced motion, actual camera enlargement",
+    "browser_qa": "PASS: force/moment arrows and F/M/xyz model labels omitted in whole/section/FEM/playback; Korean peak leaders and joint callouts retained; frame977 stress=joint; console0; previous responsive checks retained at recorded source commit",
     "physics_not_rerun": "original captured episode kept at c7967a9; derived 1136-frame replay matched defined physical fields exactly, dynamics evaluated on scratch data"
   },
   "prior_full_suite": {
     "test_count": 151,
     "interface_source_commit": "c483f0e5138a7630394627c65fd6c086c9ebcf3f"
   },
-  "structural_source_commit": "c6da06f7ba1d009d92ccc28972da7fb143d5d7c2"
+  "structural_source_commit": "4194e4d760331d7ce4baa13f9d8ca5ceed7cebb1"
 }
