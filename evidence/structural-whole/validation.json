@@ -184,5 +184,6 @@
     "html_ids_unique": 77,
     "browser_evidence": "evidence/structural-whole/browser-qa.json#white_theme",
     "all_five_original_binary_assets_unchanged": true
-  }
+  },
+  "implementation_source_commit": "e4cd087a3e72090c67b9e71b2b3c3e3352d45033"
 }
