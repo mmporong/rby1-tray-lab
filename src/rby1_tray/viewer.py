@@ -19,8 +19,9 @@ import re
 from typing import Any
 from urllib.parse import parse_qs, urlsplit
 
-import numpy as np
 from PIL import Image
+
+from .playback import encode_sensor_preview
 
 
 _INDEX_PATH = Path(__file__).with_name("web") / "index.html"
@@ -65,43 +66,82 @@ _SENSOR_CAMERAS = {"head_rgbd", "left_wrist_rgbd", "right_wrist_rgbd"}
 _SENSOR_KINDS = {"rgb", "depth"}
 
 
-def _sensor_png(session: Any, camera_name: str, kind: str) -> tuple[bytes, float] | None:
+def _latest_sensor_frame(session: Any, camera_name: str) -> Any | None:
+    controller_frames = list(getattr(session, "sensor_frames", ()))
+    monitor_frames = list(getattr(session, "monitor_frames", ()))
+    batches: dict[str, list[Any]] = {}
+    for frame in monitor_frames:
+        batch_id = frame.metadata.get("capture_batch_id")
+        if isinstance(batch_id, str) and batch_id:
+            batches.setdefault(batch_id, []).append(frame)
+    complete_batches = [
+        batch
+        for batch in batches.values()
+        if {frame.metadata.get("camera_name") for frame in batch} == _SENSOR_CAMERAS
+        and len(batch) == len(_SENSOR_CAMERAS)
+        and max(float(frame.timestamp_sim_s) for frame in batch)
+        - min(float(frame.timestamp_sim_s) for frame in batch)
+        <= 1e-9
+    ]
+    if complete_batches:
+        batch = max(
+            complete_batches,
+            key=lambda frames: max(float(frame.timestamp_sim_s) for frame in frames),
+        )
+        return next(
+            frame
+            for frame in batch
+            if frame.metadata.get("camera_name") == camera_name
+        )
+    return max(
+        (
+            frame
+            for frame in [*controller_frames, *monitor_frames]
+            if frame.metadata.get("camera_name") == camera_name
+        ),
+        key=lambda frame: float(frame.timestamp_sim_s),
+        default=None,
+    )
+
+
+def _sensor_png(
+    session: Any, camera_name: str, kind: str
+) -> tuple[bytes, float, dict[str, Any]] | None:
     """Encode the latest stored sensor frame without capturing a new frame.
 
     Depth PNGs are display-only grayscale previews.  Metric depth remains in
     the session frame and exported NPZ dataset.
     """
 
-    frames = getattr(session, "sensor_frames", ())
-    frame = next(
-        (
-            candidate
-            for candidate in reversed(frames)
-            if candidate.metadata.get("camera_name") == camera_name
-        ),
-        None,
-    )
+    frame = _latest_sensor_frame(session, camera_name)
     if frame is None:
         return None
-    if kind == "rgb":
-        image = Image.fromarray(np.asarray(frame.rgb, dtype=np.uint8), mode="RGB")
-    else:
-        depth = np.asarray(frame.depth_m, dtype=float)
-        valid = np.isfinite(depth) & (depth > 0)
-        preview = np.zeros(depth.shape, dtype=np.uint8)
-        if np.any(valid):
-            low = float(np.min(depth[valid]))
-            high = float(np.max(depth[valid]))
-            if high > low:
-                preview[valid] = np.rint(
-                    1.0 + 254.0 * (high - depth[valid]) / (high - low)
-                ).astype(np.uint8)
-            else:
-                preview[valid] = 255
-        image = Image.fromarray(preview, mode="L")
-    payload = BytesIO()
-    image.save(payload, format="PNG", optimize=True)
-    return payload.getvalue(), float(frame.timestamp_sim_s)
+    payload, _preview_metadata = encode_sensor_preview(frame, kind)
+    return payload, float(frame.timestamp_sim_s), dict(frame.metadata)
+
+
+def _sensor_headers(
+    camera_name: str, timestamp_sim_s: float, metadata: dict[str, Any]
+) -> dict[str, str]:
+    depth_range = metadata.get("depth_range_m", {})
+    headers = {
+        "X-Sensor-Timestamp-S": f"{timestamp_sim_s:.9g}",
+        "X-Sensor-Camera": camera_name,
+        "X-Sensor-Profile": str(metadata.get("sensor_profile", "unspecified")),
+        "X-Sensor-Observation-Role": str(metadata.get("observation_role", "controller")),
+        "X-Sensor-Clock-Domain": str(metadata.get("clock_domain", "unspecified")),
+        "X-Sensor-Calibration-Source": str(metadata.get("calibration_source", "unspecified")),
+    }
+    batch_id = metadata.get("capture_batch_id")
+    if isinstance(batch_id, str) and batch_id:
+        headers["X-Sensor-Capture-Batch-Id"] = batch_id
+    if isinstance(depth_range, dict):
+        minimum, maximum = depth_range.get("minimum"), depth_range.get("maximum")
+        if isinstance(minimum, (int, float)) and math.isfinite(minimum):
+            headers["X-Sensor-Depth-Min-M"] = f"{float(minimum):.9g}"
+        if isinstance(maximum, (int, float)) and math.isfinite(maximum):
+            headers["X-Sensor-Depth-Max-M"] = f"{float(maximum):.9g}"
+    return headers
 
 
 def _byte_range(header: str | None, size: int) -> tuple[int, int] | None:
@@ -186,12 +226,12 @@ def _make_handler(session: Any, playback: Any = None) -> type[BaseHTTPRequestHan
                         {"error": "아직 저장된 센서 프레임이 없습니다."},
                     )
                     return
-                body, timestamp_sim_s = encoded
+                body, timestamp_sim_s, metadata = encoded
                 self._send(
                     HTTPStatus.OK,
                     body,
                     "image/png",
-                    {"X-Sensor-Timestamp-S": f"{timestamp_sim_s:.9g}"},
+                    _sensor_headers(camera_name, timestamp_sim_s, metadata),
                 )
                 return
             self._send_json(HTTPStatus.NOT_FOUND, {"error": "요청한 경로를 찾을 수 없습니다."})

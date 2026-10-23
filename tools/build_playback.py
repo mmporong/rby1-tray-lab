@@ -162,12 +162,6 @@ class _VideoEncoder:
         return f"{prefix} for {self.output.name}: {detail or f'exit {return_code}'}"
 
 
-def _selected_sensor_indices(count: int, limit: int = 5) -> list[int]:
-    if count <= limit:
-        return list(range(count))
-    return sorted({round(index * (count - 1) / (limit - 1)) for index in range(limit)})
-
-
 def _verify_video(path: Path, ffprobe: str, expected_frames: int) -> None:
     completed = subprocess.run(
         [
@@ -214,15 +208,16 @@ def _verify_video(path: Path, ffprobe: str, expected_frames: int) -> None:
 
 
 def _write_sensor_previews(output: Path, frames: list[Any]) -> dict[str, Any]:
-    if len(frames) < 5:
+    if len(frames) < len(SENSOR_CAMERAS):
         raise RuntimeError(
-            f"playback requires five recorded RGB-D observations, received {len(frames)}"
+            "playback requires head and both wrist RGB-D observations, "
+            f"received {len(frames)} frames"
         )
     sensor_directory = output / "sensors"
     sensor_directory.mkdir()
     rows = []
-    for preview_index, source_index in enumerate(_selected_sensor_indices(len(frames))):
-        frame = frames[source_index]
+    ordered_frames = sorted(frames, key=lambda frame: float(frame.timestamp_sim_s))
+    for preview_index, frame in enumerate(ordered_frames):
         camera_name = str(frame.metadata.get("camera_name", "rgbd"))
         if camera_name not in SENSOR_CAMERAS:
             raise RuntimeError(f"unsupported recorded RGB-D camera: {camera_name!r}")
@@ -239,7 +234,7 @@ def _write_sensor_previews(output: Path, frames: list[Any]) -> dict[str, Any]:
         rows.append(
             {
                 "preview_index": preview_index,
-                "source_frame_index": source_index,
+                "source_frame_index": preview_index,
                 "camera_name": camera_name,
                 "timestamp_sim_s": float(frame.timestamp_sim_s),
                 "rgb_path": encoded["rgb"],
@@ -248,6 +243,8 @@ def _write_sensor_previews(output: Path, frames: list[Any]) -> dict[str, Any]:
                 "recorded_frame_provenance": {
                     "sensor_profile": frame.metadata.get("sensor_profile"),
                     "data_source": frame.metadata.get("data_source"),
+                    "observation_role": frame.metadata.get("observation_role", "controller"),
+                    "capture_batch_id": frame.metadata.get("capture_batch_id"),
                     "depth_range_m": frame.metadata.get("depth_range_m"),
                     "calibration_source": frame.metadata.get("calibration_source"),
                     "clock_domain": frame.metadata.get("clock_domain"),
@@ -257,11 +254,11 @@ def _write_sensor_previews(output: Path, frames: list[Any]) -> dict[str, Any]:
     coverage = {row["camera_name"] for row in rows}
     if coverage != SENSOR_CAMERAS:
         raise RuntimeError(
-            "five playback sensor previews must cover head and both wrist RGB-D cameras"
+            "playback sensor previews must cover head and both wrist RGB-D cameras"
         )
     document = {
         "schema_version": 1,
-        "selection": "five chronological frames sampled evenly from the mission's recorded RGB-D controller observations",
+        "selection": "all controller and monitor RGB-D frames in chronological order",
         "preview_only": True,
         "metric_depth_location": "controller-data observations in the validated mission evidence, not these PNG previews",
         "frames": rows,
@@ -355,7 +352,13 @@ def build_playback(config: dict[str, Any], output: str | Path) -> dict[str, Any]
                         allow_nan=False,
                     ).encode("utf-8")
                 )
-        _write_sensor_previews(destination, list(session.sensor_frames))
+        _write_sensor_previews(
+            destination,
+            [
+                *list(session.sensor_frames),
+                *list(getattr(session, "monitor_frames", ())),
+            ],
+        )
         result = {
             **final_result,
             "simulation_time_s": float(final_state["time_s"]),

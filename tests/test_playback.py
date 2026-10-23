@@ -5,13 +5,20 @@ import math
 from pathlib import Path
 import tempfile
 import unittest
+from io import BytesIO
+from types import SimpleNamespace
+
+import numpy as np
+from PIL import Image
 
 from rby1_tray.playback import (
     PlaybackAssets,
     StagedOutput,
     canonical_config_sha256,
+    encode_sensor_preview,
     nearest_step_count,
 )
+from tools.build_playback import _write_sensor_previews
 
 
 def _write_json(path: Path, value):
@@ -45,6 +52,13 @@ class PlaybackBundleFixture:
                     "timestamp_sim_s": timestamp,
                     "rgb_path": paths["rgb"],
                     "depth_path": paths["depth"],
+                    "recorded_frame_provenance": {
+                        "sensor_profile": "test_rgbd",
+                        "observation_role": "monitor_only",
+                        "depth_range_m": {"minimum": 0.1, "maximum": 4.0},
+                        "calibration_source": "test",
+                        "clock_domain": "simulation_time",
+                    },
                 }
             )
         _write_json(root / "sensors.json", {"schema_version": 1, "frames": sensor_rows})
@@ -144,14 +158,149 @@ class PlaybackAssetsTests(unittest.TestCase):
         assets = PlaybackAssets(self.root, self.config)
 
         self.assertIsNone(assets.sensor_png("head_rgbd", "rgb", 0.999))
-        payload, timestamp = assets.sensor_png("head_rgbd", "rgb", 1.5)
+        payload, timestamp, metadata = assets.sensor_png("head_rgbd", "rgb", 1.5)
         self.assertEqual(timestamp, 1.0)
         self.assertEqual(payload, b"rgb:1.0")
-        payload, timestamp = assets.sensor_png("right_wrist_rgbd", "depth", 99.0)
+        self.assertEqual(metadata["sensor_profile"], "test_rgbd")
+        payload, timestamp, _metadata = assets.sensor_png(
+            "right_wrist_rgbd", "depth", 2.5
+        )
+        self.assertEqual(timestamp, 2.0)
+        self.assertEqual(payload, b"depth:2.0")
+        payload, timestamp, metadata = assets.sensor_png("right_wrist_rgbd", "depth", 99.0)
         self.assertEqual(timestamp, 3.0)
         self.assertEqual(payload, b"depth:3.0")
         with self.assertRaisesRegex(ValueError, "finite"):
             assets.sensor_png("head_rgbd", "rgb", math.nan)
+
+    def test_depth_preview_uses_fixed_sensor_range_and_marks_invalid(self):
+        frame = SimpleNamespace(
+            rgb=np.zeros((2, 3, 3), dtype=np.uint8),
+            depth_m=np.array([[0.1, 2.05, 4.0], [np.nan, 0.05, 4.1]]),
+            timestamp_sim_s=1.0,
+            metadata={
+                "camera_name": "head_rgbd",
+                "depth_range_m": {"minimum": 0.1, "maximum": 4.0},
+            },
+        )
+
+        payload, metadata = encode_sensor_preview(frame, "depth")
+        pixels = np.asarray(Image.open(BytesIO(payload)))
+
+        self.assertTrue(np.all(pixels[0, 0] == 255))
+        self.assertTrue(np.all(pixels[0, 1] == 128))
+        self.assertTrue(np.all(pixels[0, 2] == 1))
+        self.assertTrue(np.all(pixels[1] == [230, 55, 135]))
+        self.assertEqual(metadata["display_depth_min_m"], 0.1)
+        self.assertEqual(metadata["display_depth_max_m"], 4.0)
+
+    def test_sensor_preview_rejects_lossy_rgb_and_mismatched_rgbd_shapes(self):
+        metadata = {
+            "camera_name": "head_rgbd",
+            "depth_range_m": {"minimum": 0.1, "maximum": 4.0},
+        }
+        invalid_rgb = SimpleNamespace(
+            rgb=np.full((2, 3, 3), 300.5),
+            depth_m=np.ones((2, 3), dtype=float),
+            timestamp_sim_s=1.0,
+            metadata=metadata,
+        )
+        mismatched = SimpleNamespace(
+            rgb=np.zeros((2, 3, 3), dtype=np.uint8),
+            depth_m=np.ones((9, 11), dtype=float),
+            timestamp_sim_s=1.0,
+            metadata=metadata,
+        )
+
+        with self.assertRaisesRegex(ValueError, "uint8"):
+            encode_sensor_preview(invalid_rgb, "rgb")
+        with self.assertRaisesRegex(ValueError, "dimensions must match"):
+            encode_sensor_preview(mismatched, "depth")
+
+    def test_sensor_preview_validates_timestamp_camera_and_metric_range(self):
+        base = {
+            "rgb": np.zeros((2, 3, 3), dtype=np.uint8),
+            "depth_m": np.ones((2, 3), dtype=float),
+        }
+        invalid = (
+            SimpleNamespace(**base, timestamp_sim_s=math.nan, metadata={
+                "camera_name": "head_rgbd",
+                "depth_range_m": {"minimum": 0.1, "maximum": 4.0},
+            }),
+            SimpleNamespace(**base, timestamp_sim_s=1.0, metadata={
+                "camera_name": "unknown",
+                "depth_range_m": {"minimum": 0.1, "maximum": 4.0},
+            }),
+            SimpleNamespace(**base, timestamp_sim_s=1.0, metadata={
+                "camera_name": "head_rgbd",
+                "depth_range_m": {"minimum": 4.0, "maximum": 0.1},
+            }),
+        )
+        for frame in invalid:
+            with self.subTest(metadata=frame.metadata):
+                with self.assertRaises(ValueError):
+                    encode_sensor_preview(frame, "rgb")
+
+    def test_playback_builder_keeps_all_sensor_frames_in_timestamp_order(self):
+        output = Path(self.temporary.name) / "sensor-previews"
+        output.mkdir()
+        cameras = [
+            "head_rgbd",
+            "left_wrist_rgbd",
+            "right_wrist_rgbd",
+            "head_rgbd",
+            "left_wrist_rgbd",
+            "right_wrist_rgbd",
+            "head_rgbd",
+        ]
+        frames = []
+        for index, camera in enumerate(cameras):
+            timestamp = float(len(cameras) - index)
+            frames.append(SimpleNamespace(
+                rgb=np.full((2, 3, 3), index, dtype=np.uint8),
+                depth_m=np.full((2, 3), 1.0),
+                timestamp_sim_s=timestamp,
+                metadata={
+                    "camera_name": camera,
+                    "sensor_profile": "test_rgbd",
+                    "observation_role": "monitor_only",
+                    "data_source": "synthetic_renderer",
+                    "depth_range_m": {"minimum": 0.1, "maximum": 4.0},
+                    "calibration_source": "test",
+                    "clock_domain": "simulation_time",
+                },
+            ))
+
+        document = _write_sensor_previews(output, frames)
+
+        self.assertEqual(len(document["frames"]), len(frames))
+        self.assertEqual(
+            [row["timestamp_sim_s"] for row in document["frames"]],
+            sorted(frame.timestamp_sim_s for frame in frames),
+        )
+        self.assertTrue(all(
+            row["recorded_frame_provenance"]["observation_role"] == "monitor_only"
+            for row in document["frames"]
+        ))
+
+    def test_playback_prefers_latest_complete_monitor_batch(self):
+        document = json.loads((self.root / "sensors.json").read_text())
+        for row in document["frames"][:3]:
+            row["timestamp_sim_s"] = 1.0
+            row["recorded_frame_provenance"].update({
+                "observation_role": "monitor_only",
+                "capture_batch_id": "monitor-1.000000",
+            })
+        _write_json(self.root / "sensors.json", document)
+        self.fixture.refresh_manifest()
+        assets = PlaybackAssets(self.root, self.config)
+
+        _payload, timestamp, metadata = assets.sensor_png(
+            "right_wrist_rgbd", "depth", 99.0
+        )
+
+        self.assertEqual(timestamp, 1.0)
+        self.assertEqual(metadata["capture_batch_id"], "monitor-1.000000")
 
     def test_noncontiguous_frame_index_is_rejected_even_with_valid_hash(self):
         self.fixture.states[1]["frame_index"] = 4

@@ -182,6 +182,7 @@ class DriveController:
         target_xy_yaw: Iterable[float],
         dt: float,
         sensors: DriveSensors | None = None,
+        *, speed_scale: float = 1.0,
     ) -> dict[str, float]:
         """Advance control memory and write only the four wheel controls.
 
@@ -191,6 +192,8 @@ class DriveController:
         """
         if not np.isfinite(dt) or dt <= 0:
             raise ValueError("dt must be finite and positive")
+        if not np.isfinite(speed_scale) or not 0 <= speed_scale <= 1:
+            raise ValueError("speed_scale must be finite and in [0, 1]")
         target = np.asarray(tuple(target_xy_yaw), dtype=float)
         if target.shape != (3,) or not np.all(np.isfinite(target)):
             raise ValueError("target_xy_yaw must contain three finite values")
@@ -234,6 +237,8 @@ class DriveController:
         ):
             desired_yaw_rate = 0.0
 
+        desired_linear *= speed_scale
+        desired_yaw_rate *= speed_scale
         right = (
             desired_linear + self.config.half_track_m * desired_yaw_rate
         ) / self.config.wheel_radius_m

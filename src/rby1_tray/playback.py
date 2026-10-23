@@ -27,6 +27,61 @@ SENSOR_CAMERAS = frozenset({"head_rgbd", "left_wrist_rgbd", "right_wrist_rgbd"})
 SENSOR_KINDS = ("rgb", "depth")
 
 
+def _depth_display_range(metadata: dict[str, Any]) -> tuple[float, float]:
+    """Return the fixed metric display range recorded for one sensor."""
+
+    value = metadata.get("depth_range_m")
+    if not isinstance(value, dict):
+        raise ValueError("sensor frame is missing depth_range_m metadata")
+    minimum = value.get("minimum")
+    maximum = value.get("maximum")
+    if (
+        isinstance(minimum, bool)
+        or isinstance(maximum, bool)
+        or not isinstance(minimum, (int, float))
+        or not isinstance(maximum, (int, float))
+        or not math.isfinite(minimum)
+        or not math.isfinite(maximum)
+        or minimum < 0
+        or maximum <= minimum
+    ):
+        raise ValueError("sensor depth_range_m must contain a finite increasing range")
+    return float(minimum), float(maximum)
+
+
+def _validated_sensor_arrays(
+    frame: Any,
+) -> tuple[np.ndarray, np.ndarray, float, float]:
+    """Validate one RGB-D frame before any display conversion can hide defects."""
+
+    metadata = getattr(frame, "metadata", None)
+    if not isinstance(metadata, dict):
+        raise ValueError("sensor frame metadata must be an object")
+    camera_name = metadata.get("camera_name")
+    if camera_name not in SENSOR_CAMERAS:
+        raise ValueError(f"unsupported sensor camera_name: {camera_name!r}")
+    timestamp = getattr(frame, "timestamp_sim_s", None)
+    if (
+        isinstance(timestamp, bool)
+        or not isinstance(timestamp, (int, float))
+        or not math.isfinite(timestamp)
+        or timestamp < 0
+    ):
+        raise ValueError("sensor timestamp_sim_s must be finite and non-negative")
+    rgb = np.asarray(frame.rgb)
+    depth = np.asarray(frame.depth_m)
+    if rgb.dtype != np.uint8:
+        raise ValueError("RGB sensor preview source must use uint8 pixels")
+    if rgb.ndim != 3 or rgb.shape[2] != 3:
+        raise ValueError("RGB sensor preview must have shape HxWx3")
+    if depth.ndim != 2 or not np.issubdtype(depth.dtype, np.floating):
+        raise ValueError("depth sensor preview must be a floating-point HxW array")
+    if rgb.shape[:2] != depth.shape:
+        raise ValueError("RGB and depth sensor preview dimensions must match")
+    low, high = _depth_display_range(metadata)
+    return rgb, depth.astype(float, copy=False), low, high
+
+
 def canonical_config_bytes(config: dict[str, Any]) -> bytes:
     """Serialize the effective configuration for stable cache validation."""
 
@@ -110,37 +165,28 @@ def nearest_step_count(current_time_s: float, target_time_s: float, step_s: floa
 def encode_sensor_preview(frame: Any, kind: str) -> tuple[bytes, dict[str, Any]]:
     """Encode a display preview and describe its source and value mapping."""
 
+    pixels, depth, low, high = _validated_sensor_arrays(frame)
     if kind == "rgb":
-        pixels = np.asarray(frame.rgb, dtype=np.uint8)
-        if pixels.ndim != 3 or pixels.shape[2] != 3:
-            raise ValueError("RGB sensor preview must have shape HxWx3")
         image = Image.fromarray(pixels, mode="RGB")
         metadata = {
             "encoding": "uint8 RGB copied from the recorded controller frame",
             "metric_data": False,
         }
     elif kind == "depth":
-        depth = np.asarray(frame.depth_m, dtype=float)
-        if depth.ndim != 2:
-            raise ValueError("depth sensor preview must have shape HxW")
-        valid = np.isfinite(depth) & (depth > 0)
-        preview = np.zeros(depth.shape, dtype=np.uint8)
-        low = high = None
+        valid = np.isfinite(depth) & (depth > 0) & (depth >= low) & (depth <= high)
+        preview = np.empty((*depth.shape, 3), dtype=np.uint8)
+        preview[:] = [230, 55, 135]
         if np.any(valid):
-            low = float(np.min(depth[valid]))
-            high = float(np.max(depth[valid]))
-            if high > low:
-                preview[valid] = np.rint(
-                    1.0 + 254.0 * (high - depth[valid]) / (high - low)
-                ).astype(np.uint8)
-            else:
-                preview[valid] = 255
-        image = Image.fromarray(preview, mode="L")
+            grayscale = np.rint(
+                1.0 + 254.0 * (high - depth[valid]) / (high - low)
+            ).astype(np.uint8)
+            preview[valid] = grayscale[:, None]
+        image = Image.fromarray(preview, mode="RGB")
         metadata = {
-            "encoding": "display-only inverse grayscale; invalid depth is 0",
+            "encoding": "fixed-range inverse grayscale; invalid depth is magenta RGB(230,55,135)",
             "metric_data": False,
-            "valid_depth_min_m": low,
-            "valid_depth_max_m": high,
+            "display_depth_min_m": low,
+            "display_depth_max_m": high,
             "valid_pixel_count": int(np.count_nonzero(valid)),
             "metric_source": "recorded RGBDFrame.depth_m; use controller data for metric depth",
         }
@@ -187,6 +233,16 @@ class _SensorEntry:
     timestamp_sim_s: float
     rgb_path: str
     depth_path: str
+    metadata: dict[str, Any]
+
+    @property
+    def capture_batch_id(self) -> str | None:
+        value = self.metadata.get("capture_batch_id")
+        return value if isinstance(value, str) and value else None
+
+    @property
+    def observation_role(self) -> str:
+        return str(self.metadata.get("observation_role", "controller"))
 
 
 class PlaybackAssets:
@@ -350,8 +406,8 @@ class PlaybackAssets:
         if not isinstance(document, dict) or document.get("schema_version") != 1:
             raise ValueError("invalid playback sensor index")
         rows = document.get("frames")
-        if not isinstance(rows, list) or len(rows) != 5:
-            raise ValueError("playback sensor index must contain exactly five frames")
+        if not isinstance(rows, list) or len(rows) < len(SENSOR_CAMERAS):
+            raise ValueError("playback sensor index must contain all RGB-D cameras")
         entries = []
         for row in rows:
             if not isinstance(row, dict):
@@ -361,12 +417,18 @@ class PlaybackAssets:
                 raise ValueError("sensor timestamps must be finite")
             camera = row.get("camera_name")
             rgb_path, depth_path = row.get("rgb_path"), row.get("depth_path")
+            provenance = row.get("recorded_frame_provenance")
             if camera not in SENSOR_CAMERAS:
                 raise ValueError(f"unsupported playback sensor camera_name: {camera!r}")
+            if not isinstance(provenance, dict):
+                raise ValueError("sensor frame provenance must be an object")
+            _depth_display_range(provenance)
             for path in (rgb_path, depth_path):
                 if _safe_artifact_name(path) is None or path not in self._assets:
                     raise ValueError("sensor preview path is not a verified artifact")
-            entries.append(_SensorEntry(camera, float(timestamp), rgb_path, depth_path))
+            entries.append(
+                _SensorEntry(camera, float(timestamp), rgb_path, depth_path, provenance)
+            )
         coverage = {entry.camera_name for entry in entries}
         if coverage != SENSOR_CAMERAS:
             raise ValueError(
@@ -407,18 +469,41 @@ class PlaybackAssets:
             return path, "application/json", "gzip"
         return path, "application/json; charset=utf-8", None
 
-    def sensor_png(self, camera: str, kind: str, time_s: float) -> tuple[bytes, float] | None:
+    def sensor_png(
+        self, camera: str, kind: str, time_s: float
+    ) -> tuple[bytes, float, dict[str, Any]] | None:
         if not isinstance(time_s, (int, float)) or not math.isfinite(time_s):
             raise ValueError("sensor playback time must be finite")
         if kind not in SENSOR_KINDS:
             return None
-        candidates = [
+        eligible = [
             entry
             for entry in self._sensor_entries
-            if entry.camera_name == camera and entry.timestamp_sim_s <= float(time_s) + 1e-12
+            if entry.timestamp_sim_s <= float(time_s) + 1e-12
         ]
+        monitor_batches: dict[str, list[_SensorEntry]] = {}
+        for entry in eligible:
+            if entry.observation_role == "monitor_only" and entry.capture_batch_id:
+                monitor_batches.setdefault(entry.capture_batch_id, []).append(entry)
+        complete_batches = [
+            batch
+            for batch in monitor_batches.values()
+            if {entry.camera_name for entry in batch} == SENSOR_CAMERAS
+            and len(batch) == len(SENSOR_CAMERAS)
+            and max(entry.timestamp_sim_s for entry in batch)
+            - min(entry.timestamp_sim_s for entry in batch)
+            <= 1e-9
+        ]
+        if complete_batches:
+            selected_batch = max(
+                complete_batches,
+                key=lambda batch: max(entry.timestamp_sim_s for entry in batch),
+            )
+            candidates = [entry for entry in selected_batch if entry.camera_name == camera]
+        else:
+            candidates = [entry for entry in eligible if entry.camera_name == camera]
         if not candidates:
             return None
         selected = candidates[-1]
         name = selected.rgb_path if kind == "rgb" else selected.depth_path
-        return self._assets[name].read_bytes(), selected.timestamp_sim_s
+        return self._assets[name].read_bytes(), selected.timestamp_sim_s, selected.metadata

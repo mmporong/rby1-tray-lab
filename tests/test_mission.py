@@ -23,6 +23,7 @@ class MissionContractTests(unittest.TestCase):
     def _pickup_config():
         config = load_config("configs/mobile-native.json")
         config["base"]["initial_pose_xy_yaw"] = [0.0, 0.0, 0.0]
+        config["monitoring"]["enabled"] = False
         return config
 
     @staticmethod
@@ -181,7 +182,7 @@ class MissionContractTests(unittest.TestCase):
             observation_provider=lambda data: replace(frame, timestamp_sim_s=float(data.time)),
             pose_estimator=lambda *_args, **_kwargs: estimate,
         )
-        while session.phase in {"home_start", "prepare_pickup"} and not session.finished:
+        while session.phase in {"home_start", "prepare_navigation"} and not session.finished:
             session.step(100)
         self.assertFalse(session.finished)
         self.assertEqual(session.phase, "drive_approach")
@@ -195,6 +196,9 @@ class MissionContractTests(unittest.TestCase):
         session.robot.solve = capture_solve
         session._enter_phase("observe_close")
         result = session.step()
+        self.assertEqual(result["phase"], "prepare_pickup")
+        while session.phase in {"prepare_pickup", "observe_pickup"} and not session.finished:
+            result = session.step(100)
         packet = result["mission"]["command"]
         self.assertEqual(result["phase"], "pickup_approach")
         self.assertEqual(packet["controller_inputs"]["tray_pose"], "rgbd_estimate")
@@ -209,7 +213,7 @@ class MissionContractTests(unittest.TestCase):
         self.assertEqual(len(observation["wheel_encoder_velocity_rad_s"]), 4)
         self.assertFalse(observation["ground_truth_body_pose_or_contact_included"])
         self.assertEqual(set(observation["wrist_wrench_local"]), {"left", "right"})
-        self.assertEqual(len(session.sensor_frames), 1)
+        self.assertEqual(len(session.sensor_frames), 2)
         self.assertNotIn("model_calibration", session.sensor_frames[0].metadata)
         self.assertFalse(
             session.sensor_frames[0].metadata["ground_truth_extrinsics_in_controller_packet"]
@@ -290,6 +294,8 @@ class MissionContractTests(unittest.TestCase):
             self.assertFalse(session.snapshot()["result"]["success"])
             self.assertIn("returned_home", session.snapshot()["result"]["milestones"])
             session._planned_tray_center = np.array([1.2, 0.0, 1.212])
+            from types import SimpleNamespace
+            session._detected_tray = SimpleNamespace(yaw_rad=0.0)
             session.phase = "withdraw"
             session._advance_phase()
             self.assertEqual(session.phase, "drive_return")
@@ -319,6 +325,40 @@ class MissionContractTests(unittest.TestCase):
         self.assertIn("stale RGB-D frame", result["mission"]["failure"]["detail"])
         self.assertFalse(estimator_called)
         session.close()
+
+    def test_delayed_frame_preserves_exposure_time_and_waits_before_planning(self):
+        config = self._pickup_config()
+        config["sensors"]["head"]["delivery_delay_s"] = .05
+        estimate = TrayEstimate(
+            center_world_m=(.65, 0, .012), yaw_rad=0,
+            dimensions_m=(.372, .552), covariance_xyzyaw=tuple(map(tuple, np.eye(4))),
+            plane_normal_world=(0, 0, 1), pixel_count=1000,
+            quality={"score_0_to_1": .95}, grasps=(),
+        )
+        session = MobileSession(config, observation_provider=lambda data: self._head_frame(float(data.time)),
+                                pose_estimator=lambda *_args, **_kwargs: estimate)
+        try:
+            session._enter_phase("observe_close")
+            session.step(10)
+            self.assertEqual(session.phase, "observe_close")
+            self.assertIsNone(session._detected_tray)
+            session.step(20)
+            self.assertEqual(session.phase, "prepare_pickup")
+            self.assertEqual(session.sensor_frames[0].timestamp_sim_s, 0.0)
+            self.assertGreaterEqual(session.perception_history[0]["observation_age_s"], .05 - 1e-9)
+        finally:
+            session.close()
+
+    def test_future_frame_is_rejected_without_waiting_for_its_timestamp(self):
+        session = MobileSession(self._pickup_config(), observation_provider=lambda _data: self._head_frame(1.0))
+        try:
+            session._enter_phase("observe_close")
+            result = session.step()
+            self.assertTrue(result["finished"])
+            self.assertLess(result["time_s"], .01)
+            self.assertEqual(result["mission"]["failure"]["reason"], "perception_failed")
+        finally:
+            session.close()
 
 
 if __name__ == "__main__":

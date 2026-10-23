@@ -125,7 +125,17 @@ def build_scene(config):
     elif not native:
         for equality in root.find("equality"):
             equality.set("solref", ".003 1")
-    tray = ET.SubElement(world, "body", name="tray", pos=numbers(config["tray_initial_pos_m"]))
+    tray_yaw = float(config.get("tray_initial_yaw_rad", 0.0))
+    friction_scale = float(config.get("tray_friction_scale", 1.0))
+    tray_rgba = config.get("tray_rgba")
+    if not np.isfinite(tray_yaw) or not np.isfinite(friction_scale) or friction_scale <= 0:
+        raise ValueError("tray yaw and friction scale must be finite with positive friction")
+    if tray_rgba is not None and (np.asarray(tray_rgba).shape != (4,)
+                                 or not np.all(np.isfinite(tray_rgba)) or np.any(np.asarray(tray_rgba) < 0)
+                                 or np.any(np.asarray(tray_rgba) > 1)):
+        raise ValueError("tray_rgba must contain four values in [0, 1]")
+    tray = ET.SubElement(world, "body", name="tray", pos=numbers(config["tray_initial_pos_m"]),
+                        quat=numbers([np.cos(tray_yaw / 2), 0, 0, np.sin(tray_yaw / 2)]))
     ET.SubElement(tray, "freejoint", name="tray_free")
     hx, hy, hz = config["tray_half_extents_m"]
     ET.SubElement(tray, "geom", name="tray_floor", type="box", size=numbers([hx, hy, hz]),
@@ -135,6 +145,12 @@ def build_scene(config):
                       pos=numbers([sign * hx, 0, hz + .025]), mass=".012", rgba=".12 .35 .52 1")
         ET.SubElement(tray, "geom", name=f"tray_yrim_{sign}", type="box", size=numbers([hx, .006, .025]),
                       pos=numbers([0, sign * hy, hz + .025]), mass=".012", rgba=".12 .35 .52 1")
+    for geom in tray.findall("geom"):
+        if tray_rgba is not None:
+            geom.set("rgba", numbers(tray_rgba))
+        friction = np.fromstring(geom.get("friction", "1 .005 .0001"), sep=" ")
+        friction[0] *= friction_scale
+        geom.set("friction", numbers(friction))
     for side, sign in ([] if native else [("left", 1), ("right", -1)]):
         y, z = sign * config["handle_y_m"], config["handle_z_m"]
         ET.SubElement(tray, "geom", name=f"handle_{side}", type="box", size=".014 .048 .012",
@@ -148,7 +164,10 @@ def build_scene(config):
         ("box", [.07, -.02, .048], [.025, .025, .024], .055, ".95 .75 .15 1"),
         ("cylinder", [0, .1, .07], [.02, .047], .045, ".25 .7 .4 1"),
     ]):
-        pos = np.array(config["tray_initial_pos_m"]) + offset
+        c, s = np.cos(tray_yaw), np.sin(tray_yaw)
+        local = np.asarray(offset)
+        rotated = [c * local[0] - s * local[1], s * local[0] + c * local[1], local[2]]
+        pos = np.array(config["tray_initial_pos_m"]) + rotated
         pos[:2] += rng.uniform(-.004, .004, 2)
         body = ET.SubElement(world, "body", name=f"payload_{index}", pos=numbers(pos))
         ET.SubElement(body, "freejoint", name=f"payload_{index}_free")

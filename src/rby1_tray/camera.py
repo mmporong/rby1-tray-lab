@@ -135,6 +135,7 @@ class NamedRGBDCamera:
         self.clock_domain = str(clock_domain)
         self._rng = np.random.default_rng(noise.seed)
         self._renderer = mujoco.Renderer(model, height=height, width=width)
+        self._render_data = mujoco.MjData(model)
 
     def _model_calibration(self, data: mujoco.MjData) -> CameraCalibration:
         fovy = math_radians(float(self.model.cam_fovy[self.camera_id]))
@@ -152,6 +153,10 @@ class NamedRGBDCamera:
         return CameraCalibration(K, transform, "synthetic_model")
 
     def capture(self, data: mujoco.MjData) -> RGBDFrame:
+        # Rendering must not alter live solver caches or warm-start state.
+        # Monitoring frequency can then change without changing the rollout.
+        mujoco.mj_copyData(self._render_data, self.model, data)
+        data = self._render_data
         mujoco.mj_forward(self.model, data)
         self._renderer.disable_depth_rendering()
         self._renderer.update_scene(data, camera=self.name)

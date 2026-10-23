@@ -62,16 +62,23 @@
     .sensor-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
     .sensor-heading h2 { margin: 0; font-size: .82rem; }
     .sensor-heading p { margin: 5px 0 0; color: var(--muted); font-size: .68rem; line-height: 1.45; }
-    .sensor-select { min-width: 205px; display: grid; gap: 5px; }
-    .sensor-select label { display: block; }
-    .sensor-select select { width: 100%; }
-    .sensor-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; min-height: 190px; }
-    .sensor-media { min-width: 0; margin: 0; border: 1px solid #2c3942; background: #050709; }
-    .sensor-media img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: #030506; }
+    .sensor-grid { position: relative; display: grid; gap: 10px; }
+    .sensor-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border: 1px solid #27343d; background: #0e1419; padding: 9px; transition: background .18s, border-color .18s; }
+    .sensor-row.expanded { border-color: var(--cyan); background: #101c22; }
+    .sensor-row-header { grid-column: 1 / -1; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .sensor-row-header h3 { margin: 0; color: #dce8ed; font-size: .76rem; }
+    .sensor-row-header p { margin: 3px 0 0; color: #71818b; font: .62rem/1.45 ui-monospace, monospace; }
+    .sensor-row-header button { min-height: 30px; padding: 4px 8px; font-size: .62rem; }
+    .sensor-media { position: relative; min-width: 0; margin: 0; border: 1px solid #2c3942; background: #050709; cursor: zoom-in; }
+    .sensor-row.expanded .sensor-media { cursor: zoom-out; }
+    .sensor-media img { display: block; width: 100%; height: 160px; object-fit: contain; background: #030506; transition: height .18s; }
+    .sensor-row.expanded .sensor-media img { height: clamp(260px, 31vw, 480px); }
     .sensor-media figcaption { display: flex; justify-content: space-between; gap: 10px; padding: 8px 10px; color: #b8c5cd; font-size: .67rem; }
     .sensor-media figcaption span:last-child { color: #6f828e; }
-    .sensor-empty { grid-column: 1 / -1; display: grid; place-items: center; min-height: 190px; border: 1px dashed #34424d; color: var(--muted); padding: 24px; text-align: center; font-size: .75rem; line-height: 1.55; }
-    .sensor-meta { display: flex; flex-wrap: wrap; gap: 7px 16px; margin: 10px 0 0; color: #8697a1; font: .66rem/1.45 ui-monospace, monospace; }
+    .sensor-empty { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); padding: 24px; text-align: center; font-size: .7rem; line-height: 1.5; background: #050709; }
+    .depth-legend { position: absolute; inset: 8px 8px auto auto; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,.18); background: rgba(5,7,9,.82); padding: 4px 6px; color: #c7d3d9; font: .58rem/1 ui-monospace, monospace; }
+    .depth-ramp { width: 72px; height: 8px; background: linear-gradient(90deg,#fff,#737373,#080808); }
+    .invalid-swatch { display: inline-block; width: 8px; height: 8px; background: rgb(230,55,135); }
     aside { display: grid; gap: 14px; }
     .section { padding: 15px; }
     .section-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
@@ -95,7 +102,7 @@
     pre { max-height: 320px; margin: 0 14px 14px; overflow: auto; border: 1px solid #26313a; background: #090d11; color: #adbbc4; padding: 12px; font: 11px/1.55 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
     .help { margin: 10px 0 0; color: var(--muted); font-size: .7rem; line-height: 1.5; }
     @media (max-width: 1050px) { header { align-items: flex-start; flex-direction: column; } .condition { justify-content: flex-start; } .layout { grid-template-columns: 1fr; } aside { grid-template-columns: 1fr 1fr; } aside .result-panel { grid-column: 1 / -1; } }
-    @media (max-width: 680px) { .shell { padding: 10px; } .stage { height: auto; min-height: 0; aspect-ratio: 1 / 1; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(3, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-select { min-width: 0; } .sensor-grid { grid-template-columns: 1fr; min-height: 150px; } .sensor-empty { grid-column: auto; min-height: 150px; } aside { grid-template-columns: 1fr; } aside .result-panel { grid-column: auto; } }
+    @media (max-width: 680px) { .shell { padding: 10px; } .stage { height: auto; min-height: 0; aspect-ratio: 1 / 1; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(3, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-row { grid-template-columns: 1fr; } .sensor-row-header { grid-column: auto; } .sensor-media img, .sensor-row.expanded .sensor-media img { height: auto; aspect-ratio: 16 / 9; } aside { grid-template-columns: 1fr; } aside .result-panel { grid-column: auto; } }
     @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
   </style>
 </head>
@@ -142,15 +149,25 @@
         </div>
         <section class="sensor-strip" aria-labelledby="sensorTitle">
           <div class="sensor-header">
-            <div class="sensor-heading"><h2 id="sensorTitle">단계 경계 RGB-D 관측</h2><p>제어 단계에서 저장된 최신 프레임입니다. 깊이 PNG는 확인용이며 원본 미터 데이터는 NPZ에 보존됩니다.</p></div>
-            <div class="sensor-select"><label for="sensorCamera">센서 카메라</label><select id="sensorCamera"><option value="head_rgbd">헤드 · ZED X Mini 대응</option><option value="left_wrist_rgbd">왼쪽 손목 · RealSense D405 대응</option><option value="right_wrist_rgbd">오른쪽 손목 · RealSense D405 대응</option></select></div>
+            <div class="sensor-heading"><h2 id="sensorTitle">RGB·깊이 모니터</h2><p id="sensorBatchMeta">재생 시각 이전의 카메라별 최신 관측을 불러옵니다. 패널을 누르면 해당 카메라가 확대됩니다.</p></div>
           </div>
-          <div class="sensor-grid">
-            <figure id="sensorRgbFigure" class="sensor-media" hidden><img id="sensorRgb" alt="선택한 카메라의 저장된 RGB 관측" width="640" height="360"><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
-            <figure id="sensorDepthFigure" class="sensor-media" hidden><img id="sensorDepth" alt="선택한 카메라의 저장된 깊이 관측" width="640" height="360"><figcaption><span>깊이</span><span>가까울수록 밝게 표시</span></figcaption></figure>
-            <div id="sensorEmpty" class="sensor-empty" role="status">아직 이 카메라에서 기록된 관측이 없습니다. 재생하면 해당 작업 단계에서 프레임이 저장됩니다.</div>
+          <div id="sensorGrid" class="sensor-grid">
+            <section class="sensor-row" data-sensor-camera="head_rgbd">
+              <header class="sensor-row-header"><div><h3>헤드 · ZED X Mini 대응</h3><p data-sensor-meta>관측 대기 · depth —</p></div><button type="button" data-sensor-expand aria-pressed="false">확대</button></header>
+              <figure class="sensor-media" data-sensor-kind="rgb"><img alt="헤드 카메라 RGB 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
+              <figure class="sensor-media" data-sensor-kind="depth"><img alt="헤드 카메라 metric depth 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><div class="depth-legend"><span data-depth-near>—</span><i class="depth-ramp"></i><span data-depth-far>—</span><i class="invalid-swatch"></i><span>invalid</span></div><figcaption><span>깊이</span><span>고정 범위 · m</span></figcaption></figure>
+            </section>
+            <section class="sensor-row" data-sensor-camera="left_wrist_rgbd">
+              <header class="sensor-row-header"><div><h3>왼쪽 손목 · RealSense D405 대응</h3><p data-sensor-meta>관측 대기 · depth —</p></div><button type="button" data-sensor-expand aria-pressed="false">확대</button></header>
+              <figure class="sensor-media" data-sensor-kind="rgb"><img alt="왼쪽 손목 카메라 RGB 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
+              <figure class="sensor-media" data-sensor-kind="depth"><img alt="왼쪽 손목 카메라 metric depth 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><div class="depth-legend"><span data-depth-near>—</span><i class="depth-ramp"></i><span data-depth-far>—</span><i class="invalid-swatch"></i><span>invalid</span></div><figcaption><span>깊이</span><span>고정 범위 · m</span></figcaption></figure>
+            </section>
+            <section class="sensor-row" data-sensor-camera="right_wrist_rgbd">
+              <header class="sensor-row-header"><div><h3>오른쪽 손목 · RealSense D405 대응</h3><p data-sensor-meta>관측 대기 · depth —</p></div><button type="button" data-sensor-expand aria-pressed="false">확대</button></header>
+              <figure class="sensor-media" data-sensor-kind="rgb"><img alt="오른쪽 손목 카메라 RGB 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
+              <figure class="sensor-media" data-sensor-kind="depth"><img alt="오른쪽 손목 카메라 metric depth 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><div class="depth-legend"><span data-depth-near>—</span><i class="depth-ramp"></i><span data-depth-far>—</span><i class="invalid-swatch"></i><span>invalid</span></div><figcaption><span>깊이</span><span>고정 범위 · m</span></figcaption></figure>
+            </section>
           </div>
-          <p class="sensor-meta"><span id="sensorModel">ZED X Mini 대응 · 합성 RGB-D</span><span id="sensorTime">관측 시각 —</span><span id="sensorQuality">추정 품질 —</span></p>
         </section>
       </section>
 
@@ -189,24 +206,23 @@
       simTime: $('simTime'), trayHeight: $('trayHeight'), contact: $('contact'), payload: $('payload'), result: $('result'),
       targetHeight: $('targetHeight'), checkTarget: $('checkTarget'), checkSupport: $('checkSupport'), checkPayload: $('checkPayload'),
       checkWithdraw: $('checkWithdraw'), backendBadge: $('backendBadge'), baseBadge: $('baseBadge'), modelBadge: $('modelBadge'),
-      sensorCamera: $('sensorCamera'), sensorRgb: $('sensorRgb'), sensorDepth: $('sensorDepth'), sensorRgbFigure: $('sensorRgbFigure'),
-      sensorDepthFigure: $('sensorDepthFigure'), sensorEmpty: $('sensorEmpty'), sensorModel: $('sensorModel'), sensorTime: $('sensorTime'), sensorQuality: $('sensorQuality'),
+      sensorGrid: $('sensorGrid'), sensorBatchMeta: $('sensorBatchMeta'), sensorRows: [...document.querySelectorAll('[data-sensor-camera]')],
       viewButtons: [...document.querySelectorAll('[data-view]')], timeline: [...document.querySelectorAll('.timeline-step')]
     };
     let playing = false, actionPromise = null, playGeneration = 0, framePromise = null, frameDirty = false;
     let azimuth = 105, selectedView = 'overview', currentState = null, frameObjectUrl = null;
-    let selectedCamera = 'head_rgbd', sensorGeneration = 0, sensorEventKey = '', sensorObjectUrls = [];
+    let sensorGeneration = 0, sensorEventKey = '', sensorObjectUrls = [];
     let playbackInfo = null, playbackStates = [], videoGeneration = 0, animationFrame = null;
     let videoLoading = false;
     let lastStateFrame = -1, lastStatePaint = 0;
     const elevation = -20;
     const phaseLabels = {
       approach:'바닥 접근', descend:'트레이 테두리 정렬', grasp:'양손 파지', lift:'초기 상승', raise:'상승', transport:'컨테이너 이송', seat:'안착', settle:'안정화', release:'손 분리', withdraw:'손 회수', hold:'완료 유지',
-      home_start:'모델 기본 자세 출발', prepare_pickup:'낮은 작업 자세 준비', drive_return:'출발 위치로 후진', return_home:'모델 기본 자세 복귀', home_settle:'복귀 정지 확인', drive_approach:'픽업 위치로 주행', observe_close:'헤드 RGB-D 근접 관측', pickup_approach:'트레이 상단 접근', pickup_descend:'트레이 테두리 정렬', grasp_hold:'파지 유지·손목 검증', retract_low:'저상 운반 자세', drive_loaded:'적재 상태 주행', raise_high:'고위치 상승', drive_high:'고위치 정렬 주행', complete:'작업 완료'
+      home_start:'모델 기본 자세 출발', prepare_navigation:'이동 자세 준비', drive_approach:'픽업 위치로 주행', observe_close:'헤드 RGB-D 근접 관측', prepare_pickup:'파지 자세 준비', observe_pickup:'파지 영역 재관측', pickup_approach:'트레이 상단 접근', observe_pregrasp:'파지 직전 위치 재관측', pickup_descend:'트레이 테두리 정렬', grasp_hold:'파지 유지·손목 검증', retract_low:'저상 운반 자세', drive_loaded:'적재 상태 주행', raise_high:'고위치 상승', drive_high:'고위치 정렬 주행', seat:'안착', settle:'안정화', release:'손 분리', withdraw:'손 회수', drive_return:'출발 위치로 후진', return_home:'모델 기본 자세 복귀', home_settle:'복귀 정지 확인', complete:'작업 완료'
     };
     const phaseStage = {
       approach:0, descend:0, grasp:1, lift:2, raise:2, transport:2, seat:3, settle:3, release:4, withdraw:4, hold:4,
-      home_start:0, prepare_pickup:0, drive_return:4, return_home:4, home_settle:4, drive_approach:0, observe_close:0, pickup_approach:0, pickup_descend:0, grasp_hold:1, retract_low:2, drive_loaded:2, raise_high:2, drive_high:2, complete:4
+      home_start:0, prepare_navigation:0, drive_approach:0, observe_close:0, prepare_pickup:0, observe_pickup:0, pickup_approach:0, observe_pregrasp:0, pickup_descend:0, grasp_hold:1, retract_low:2, drive_loaded:2, raise_high:2, drive_high:2, seat:3, settle:3, release:4, withdraw:4, drive_return:4, return_home:4, home_settle:4, complete:4
     };
 
     const formatNumber = (value, digits=3) => new Intl.NumberFormat('ko-KR', { maximumFractionDigits: digits }).format(value);
@@ -251,7 +267,8 @@
       if (failed) ui.runStatus.textContent = `실패 · ${state.result.failure_reason}`; else if (succeeded) ui.runStatus.textContent = '작업 성공';
       else if (state.finished) ui.runStatus.textContent = '실행 종료'; else ui.runStatus.textContent = playing ? '재생 중' : '일시정지';
       const perceptionTime = state.mission?.perception?.timestamp_sim_s ?? 'none';
-      const nextSensorEventKey = `${state.phase || ''}|${perceptionTime}`;
+      const sensorTick = Number.isFinite(state.time_s) ? Math.floor(state.time_s * 2) : 0;
+      const nextSensorEventKey = `${state.phase || ''}|${perceptionTime}|${sensorTick}`;
       if (nextSensorEventKey !== sensorEventKey) { sensorEventKey=nextSensorEventKey; refreshSensor(); }
       if (isTerminal(state) && playing && !playbackInfo) stopPlayback(true); updatePlayLabel();
     }
@@ -277,53 +294,50 @@
         ui.camera.value = `${labels[selectedView]} 시점 · 방위 ${azimuth}° · 고도 −20°`; ui.camera.textContent = ui.camera.value;
       })().finally(() => { framePromise = null; }); return framePromise;
     }
-    function sensorDescription(camera) {
-      return camera === 'head_rgbd' ? 'ZED X Mini 대응 · 합성 RGB-D' : 'RealSense D405 대응 · 합성 RGB-D';
-    }
-    function sensorQuality(state, camera) {
-      const perception = state?.mission?.perception;
-      if (camera === 'head_rgbd' && state?.mission?.detected_tray) {
-        const score = Number(state.mission.detected_tray.quality?.score_0_to_1);
-        return Number.isFinite(score) ? `추정 품질 ${formatNumber(score,2)} / 1` : '추정 품질 기록됨';
-      }
-      const verification = perception?.wrist_verification;
-      if (camera.endsWith('wrist_rgbd') && verification) {
-        const side = camera.startsWith('left') ? 'left' : 'right';
-        const observed = verification.wrist_observations?.[side];
-        if (observed) return `깊이 범위 ${observed.depth_in_sensor_range ? 'PASS' : '미충족'} · ROI ${formatNumber(Number(observed.roi_valid_depth_fraction || 0),2)}`;
-      }
-      return '추정 품질 —';
-    }
     async function fetchSensorImage(camera, kind) {
       const params = new URLSearchParams({camera,kind,v:String(Date.now())});
       if (playbackInfo) params.set('time_s', String(currentState?.time_s || 0));
       const response = await fetch(`/sensor.png?${params}`, {cache:'no-store'});
       if (response.status === 404) return null;
       if (!response.ok) throw new Error(`센서 프레임 요청 실패 (${response.status})`);
-      return {url:URL.createObjectURL(await response.blob()), timestamp:response.headers.get('X-Sensor-Timestamp-S')};
+      return {url:URL.createObjectURL(await response.blob()), timestamp:response.headers.get('X-Sensor-Timestamp-S'), profile:response.headers.get('X-Sensor-Profile'), role:response.headers.get('X-Sensor-Observation-Role'), batchId:response.headers.get('X-Sensor-Capture-Batch-Id'), depthMin:response.headers.get('X-Sensor-Depth-Min-M'), depthMax:response.headers.get('X-Sensor-Depth-Max-M')};
     }
     async function refreshSensor() {
-      const camera = selectedCamera, generation = ++sensorGeneration;
-      ui.sensorModel.textContent=sensorDescription(camera); ui.sensorTime.textContent='관측 시각 —';
-      ui.sensorQuality.textContent=sensorQuality(currentState,camera); ui.sensorEmpty.textContent='저장된 관측을 확인하는 중…';
-      ui.sensorEmpty.hidden=false; ui.sensorRgbFigure.hidden=true; ui.sensorDepthFigure.hidden=true;
-      let images;
-      try { images=await Promise.all([fetchSensorImage(camera,'rgb'),fetchSensorImage(camera,'depth')]); }
-      catch (error) { if (generation===sensorGeneration) ui.sensorEmpty.textContent=error.message; return; }
-      if (generation!==sensorGeneration || camera!==selectedCamera) { images.filter(Boolean).forEach((item)=>URL.revokeObjectURL(item.url)); return; }
-      if (!images[0] || !images[1]) {
-        images.filter(Boolean).forEach((item)=>URL.revokeObjectURL(item.url));
-        ui.sensorEmpty.textContent='아직 이 카메라에서 기록된 관측이 없습니다. 재생하면 해당 작업 단계에서 프레임이 저장됩니다.';
-        return;
+      const generation = ++sensorGeneration;
+      const batches = await Promise.all(ui.sensorRows.map(async (row) => {
+        const camera=row.dataset.sensorCamera;
+        try { return {row,camera,images:await Promise.all([fetchSensorImage(camera,'rgb'),fetchSensorImage(camera,'depth')])}; }
+        catch (error) { return {row,camera,error}; }
+      }));
+      if (generation!==sensorGeneration) { batches.flatMap((batch)=>batch.images||[]).filter(Boolean).forEach((item)=>URL.revokeObjectURL(item.url)); return; }
+      await Promise.all(batches.map(async (batch)=>{
+        if (batch.error || !batch.images?.[0] || !batch.images?.[1]) return;
+        try { await Promise.all(batch.images.map((item)=>preloadImage(item.url))); }
+        catch (error) { batch.preloadError=error; }
+      }));
+      if (generation!==sensorGeneration) { batches.flatMap((batch)=>batch.images||[]).filter(Boolean).forEach((item)=>URL.revokeObjectURL(item.url)); return; }
+      const nextUrls=[];
+      for (const batch of batches) {
+        const figures=[...batch.row.querySelectorAll('.sensor-media')], meta=batch.row.querySelector('[data-sensor-meta]');
+        if (batch.error || batch.preloadError || !batch.images?.[0] || !batch.images?.[1]) {
+          (batch.images||[]).filter(Boolean).forEach((item)=>URL.revokeObjectURL(item.url));
+          figures.forEach((figure)=>{figure.querySelector('.sensor-empty').hidden=false;});
+          meta.textContent=batch.error?.message || batch.preloadError?.message || '이 시각 이전 관측 없음 · depth —'; continue;
+        }
+        batch.images.forEach((item,index)=>{figures[index].querySelector('img').src=item.url; figures[index].querySelector('.sensor-empty').hidden=true; nextUrls.push(item.url);});
+        const item=batch.images[0], timestamp=Number(item.timestamp), now=Number(currentState?.time_s), latency=Number.isFinite(now)&&Number.isFinite(timestamp)?Math.max(0,now-timestamp):NaN;
+        meta.textContent=`${item.profile||batch.camera} · 관측 ${formatNumber(timestamp,3)} s · 지연 ${Number.isFinite(latency)?formatNumber(latency,3)+' s':'—'} · ${item.role||'controller'}`;
+        const depthFigure=figures[1]; depthFigure.querySelector('[data-depth-near]').textContent=item.depthMin?`${item.depthMin} m`:'—'; depthFigure.querySelector('[data-depth-far]').textContent=item.depthMax?`${item.depthMax} m`:'—';
       }
-      try { await Promise.all([preloadImage(images[0].url),preloadImage(images[1].url)]); }
-      catch (error) { images.forEach((item)=>URL.revokeObjectURL(item.url)); ui.sensorEmpty.textContent=error.message; return; }
-      if (generation!==sensorGeneration || camera!==selectedCamera) { images.forEach((item)=>URL.revokeObjectURL(item.url)); return; }
-      ui.sensorRgb.src=images[0].url; ui.sensorDepth.src=images[1].url;
-      sensorObjectUrls.forEach((url)=>URL.revokeObjectURL(url)); sensorObjectUrls=images.map((item)=>item.url);
-      ui.sensorRgbFigure.hidden=false; ui.sensorDepthFigure.hidden=false; ui.sensorEmpty.hidden=true;
-      const timestamp=Number(images[0].timestamp); ui.sensorTime.textContent=Number.isFinite(timestamp) ? `관측 시각 ${formatNumber(timestamp,3)} s` : '관측 시각 —';
-      ui.sensorQuality.textContent=sensorQuality(currentState,camera);
+      const displayed=batches.filter((batch)=>batch.images?.[0]&&batch.images?.[1]&&!batch.error&&!batch.preloadError).map((batch)=>batch.images[0]);
+      const batchIds=new Set(displayed.map((item)=>item.batchId).filter(Boolean)), times=new Set(displayed.map((item)=>item.timestamp));
+      if (displayed.length===3&&batchIds.size===1&&times.size===1) {
+        const item=displayed[0], timestamp=Number(item.timestamp), now=Number(currentState?.time_s), latency=Number.isFinite(now)&&Number.isFinite(timestamp)?Math.max(0,now-timestamp):NaN;
+        ui.sensorBatchMeta.textContent=`공통 모니터 배치 ${item.batchId} · 관측 ${formatNumber(timestamp,3)} s · 전체 지연 ${Number.isFinite(latency)?formatNumber(latency,3)+' s':'—'} · 패널을 누르면 확대됩니다.`;
+      } else {
+        ui.sensorBatchMeta.textContent='재생 시각 이전의 카메라별 최신 관측입니다. 관측 시각이 서로 다를 수 있습니다. 패널을 누르면 확대됩니다.';
+      }
+      sensorObjectUrls.forEach((url)=>URL.revokeObjectURL(url)); sensorObjectUrls=nextUrls;
     }
     function syncRecordedState(force=false) {
       if (!playbackInfo || !playbackStates.length) return;
@@ -436,7 +450,7 @@
       selectedView=button.dataset.view;ui.viewButtons.forEach((item)=>item.setAttribute('aria-pressed',String(item===button)));
       if(playbackInfo)loadRecordedView(selectedView,playing);else refreshFrame().catch((error)=>showError(error.message));
     }));
-    ui.sensorCamera.addEventListener('change', () => { selectedCamera=ui.sensorCamera.value; refreshSensor(); });
+    ui.sensorRows.forEach((row)=>{ const toggle=()=>{ const expand=!row.classList.contains('expanded'); ui.sensorRows.forEach((other)=>{other.classList.toggle('expanded',expand&&other===row); const button=other.querySelector('[data-sensor-expand]'); button.setAttribute('aria-pressed',String(expand&&other===row)); button.textContent=expand&&other===row?'축소':'확대';}); }; row.querySelector('[data-sensor-expand]').addEventListener('click',toggle); row.querySelectorAll('.sensor-media').forEach((figure)=>figure.addEventListener('click',toggle)); });
     ui.raw.closest('details').addEventListener('toggle',()=>{if(currentState&&ui.raw.closest('details').open)ui.raw.textContent=JSON.stringify(currentState,null,2);});
     document.addEventListener('visibilitychange', () => { if (document.hidden) stopPlayback(); });
     async function initialize() {

@@ -21,6 +21,7 @@ from scipy.spatial.transform import Rotation
 
 from .camera import CameraCalibration, NamedRGBDCamera, RGBDFrame, RGBDNoise
 from .evaluation import Evaluator
+from .cooperation import CooperationConfig, CooperationSupervisor
 from .mobility import DriveConfig, DriveController, WHEEL_JOINT_NAMES
 from .perception import PerceptionError, TrayCAD, TrayEstimate, estimate_tray_pose
 from .planning import Robot, smoothstep
@@ -200,6 +201,7 @@ class MobileSession(Session):
     PRESEAT_EXPECTED_LOAD_FRACTION_MIN = 0.25
 
     ARM_PHASES = {
+        "prepare_navigation",
         "prepare_pickup",
         "pickup_approach",
         "pickup_descend",
@@ -214,6 +216,9 @@ class MobileSession(Session):
         "withdraw",
         "return_home",
     }
+    POSTURE_PHASES = {"prepare_navigation", "prepare_pickup", "return_home"}
+    OBSERVATION_PHASES = {"observe_close", "observe_pickup", "observe_pregrasp"}
+    COOPERATIVE_PHASES = {"retract_low", "drive_loaded", "raise_high", "drive_high"}
     DRIVE_PHASE_TARGET = {
         "drive_approach": "pickup_pose_xy_yaw",
         "drive_loaded": "low_carry_pose_xy_yaw",
@@ -254,6 +259,7 @@ class MobileSession(Session):
         self.renderer = None
         self._camera = None
         self._wrist_cameras: dict[str, NamedRGBDCamera] = {}
+        self._monitor_cameras: dict[str, NamedRGBDCamera] = {}
         self._observation_provider = observation_provider
         self._pose_estimator = pose_estimator
         self._wrist_verifier = wrist_verifier or self._contact_wrist_verifier
@@ -285,6 +291,9 @@ class MobileSession(Session):
         for camera in self._wrist_cameras.values():
             camera.close()
         self._wrist_cameras = {}
+        for camera in self._monitor_cameras.values():
+            camera.close()
+        self._monitor_cameras = {}
         self.data = mujoco.MjData(self.model)
         base_qpos = self.data.joint("world_j").qpos
         initial_base = np.asarray(self.config["base"]["initial_pose_xy_yaw"], dtype=float)
@@ -365,14 +374,28 @@ class MobileSession(Session):
         self._motion_settled_since_s: float | None = None
         self._preseat_hand_load_n: float | None = None
         self._pregrasp_wrist_verification: dict | None = None
+        self._pending_head_frame = None
         self._next_control_s = 0.0
         self._held_velocity_rad_s = np.zeros(20)
+        self._motion_clock_s = 0.0
+        self._reference_finished_s = None
+        self._next_cooperation_s = 0.0
+        self._next_monitor_s = 0.0
+        self._feedback_fk = mujoco.MjData(self.model)
+        self._reference_fk = mujoco.MjData(self.model)
+        cooperation_values = self.config.get("cooperation", {})
+        self.cooperation = CooperationSupervisor(CooperationConfig(**{
+            name: cooperation_values[name] for name in CooperationConfig.__dataclass_fields__
+            if name in cooperation_values
+        }))
+        self.cooperation_history = []
         self._last_record_s = -0.1
         self.max_tracking_error_rad = 0.0
         self.max_joint_torque_nm = 0.0
         self.max_finger_force_n = 0.0
         self.log = []
         self.sensor_frames = []
+        self.monitor_frames = []
         self.perception_history = []
         self.command_history = []
         self.ik_errors = []
@@ -380,9 +403,48 @@ class MobileSession(Session):
         self._record(force_log=True)
         return self.snapshot()
 
-    def _capture_and_estimate(self) -> TrayEstimate:
+    def _navigation_posture(self):
+        """Reference the SDK mobile example; validate against this scene first."""
+        degrees = [0, 45, -90, 45, 0, 0,
+                   0, -5, 0, -120, 0, 45, 0,
+                   0, 5, 0, -120, 0, 45, 0]
+        return np.clip(np.deg2rad(degrees), self.robot.low, self.robot.high)
+
+    def _capture_monitors(self):
+        cfg = self.config.get("monitoring", {})
+        if not cfg.get("enabled", False) or float(self.data.time) + 1e-9 < self._next_monitor_s:
+            return
+        interval = float(cfg.get("period_s", 0.5))
+        if not np.isfinite(interval) or interval <= 0:
+            raise ValueError("monitoring.period_s must be finite and positive")
+        self._next_monitor_s = float(self.data.time) + interval
+        for sensor in self.config["sensors"].values():
+            name = sensor["camera_name"]
+            source_width, source_height = sensor["resolution_px"]
+            width = int(cfg.get("width_px", 320))
+            height = round(width * source_height / source_width)
+            calibration = self._controller_camera_calibration(name, width, height)
+            if name not in self._monitor_cameras:
+                self._monitor_cameras[name] = NamedRGBDCamera(
+                    self.model, name, width=width, height=height,
+                    calibration=calibration, noise=self._camera_noise(sensor),
+                    depth_min_m=float(sensor["range_m"][0]), depth_max_m=float(sensor["range_m"][1]),
+                    sensor_profile=sensor["model"], distortion_model=sensor["distortion_model"],
+                    rectified_aligned=bool(sensor["rgb_depth_aligned"]),
+                )
+            camera = self._monitor_cameras[name]
+            camera.calibration_override = calibration
+            frame = self._controller_frame(self._apply_sensor_range(camera.capture(self.data), sensor))
+            frame.metadata["observation_role"] = "monitor_only"
+            frame.metadata["capture_batch_id"] = f"monitor-{float(self.data.time):.6f}"
+            frame.metadata["sample_period_s"] = interval
+            self.monitor_frames.append(frame)
+
+    def _capture_and_estimate(self) -> TrayEstimate | None:
         sensor_cfg = self.config["sensors"]["head"]
-        if self._observation_provider is None:
+        if self._pending_head_frame is not None:
+            frame = self._pending_head_frame
+        elif self._observation_provider is None:
             if self._camera is None:
                 width, height = sensor_cfg["resolution_px"]
                 self._camera = NamedRGBDCamera(
@@ -411,26 +473,48 @@ class MobileSession(Session):
         if not isinstance(frame, RGBDFrame):
             raise PerceptionError("observation_provider must return RGBDFrame")
         self._validate_rgbd_frame(frame, sensor_cfg)
+        delay_s = float(sensor_cfg.get("delivery_delay_s", 0.0))
+        if not np.isfinite(delay_s) or delay_s < 0:
+            raise PerceptionError("RGB-D delivery delay must be finite and nonnegative")
+        if float(self.data.time) + 1e-9 < float(frame.timestamp_sim_s) + delay_s:
+            self._pending_head_frame = frame
+            return None
+        self._pending_head_frame = None
+        self._validate_rgbd_frame(frame, sensor_cfg)
         frame = self._controller_frame(self._apply_sensor_range(frame, sensor_cfg))
         self.sensor_frames.append(frame)
         cad = TrayCAD(
             half_extents_m=tuple(self.config["tray_half_extents_m"]),
             grasp_height_m=self._tcp_height_m(),
         )
-        estimate = self._pose_estimator(
-            frame.rgb,
-            frame.depth_m,
-            frame.K,
-            frame.T_world_optical,
-            cad=cad,
-            dimension_relative_tolerance=0.15,
-        )
+        if (self.config.get("perception", {}).get("estimator") == "depth_cad"
+                and self._pose_estimator is estimate_tray_pose):
+            from .perception import estimate_tray_pose_from_depth
+            estimate = estimate_tray_pose_from_depth(
+                frame.depth_m, frame.K, frame.T_world_optical,
+                cad=cad, dimension_relative_tolerance=0.15,
+            )
+        else:
+            estimate = self._pose_estimator(
+                frame.rgb, frame.depth_m, frame.K, frame.T_world_optical,
+                cad=cad, dimension_relative_tolerance=0.15,
+            )
+        innovation = None
+        if self._detected_tray is not None:
+            from .perception import validate_tray_estimate_update
+            innovation = validate_tray_estimate_update(
+                self._detected_tray, estimate,
+                max_position_innovation_m=float(self.config.get("perception", {}).get("max_update_position_m", 0.025)),
+                max_yaw_innovation_rad=float(self.config.get("perception", {}).get("max_update_yaw_rad", 0.08)),
+            )
         if self.phase == "observe_close" and float(
             estimate.quality.get("score_0_to_1", 0.0)
         ) < 0.30:
             raise PerceptionError("close-range tray estimate quality is below 0.30")
         record = {
             "timestamp_sim_s": frame.timestamp_sim_s,
+            "delivery_time_sim_s": float(self.data.time),
+            "observation_age_s": float(self.data.time) - frame.timestamp_sim_s,
             "camera_name": frame.metadata.get("camera_name", sensor_cfg["camera_name"]),
             "resolution_px": [int(frame.rgb.shape[1]), int(frame.rgb.shape[0])],
             "calibration_source": frame.metadata.get("calibration_source", "unspecified"),
@@ -438,6 +522,8 @@ class MobileSession(Session):
             "live_model_calibration_role": "evaluation_only",
             "valid_depth_fraction": float(np.mean(np.isfinite(frame.depth_m) & (frame.depth_m > 0))),
             "estimate": estimate.to_dict(),
+            "phase": self.phase,
+            "innovation_gate": innovation,
         }
         self.perception_history.append(record)
         return estimate
@@ -452,6 +538,7 @@ class MobileSession(Session):
             "encoder odometry plus measured robot-joint forward kinematics"
         )
         metadata["ground_truth_extrinsics_in_controller_packet"] = False
+        metadata.setdefault("observation_role", "controller_observation")
         return RGBDFrame(
             rgb=frame.rgb,
             depth_m=frame.depth_m,
@@ -574,6 +661,15 @@ class MobileSession(Session):
         transform = np.eye(4)
         transform[:3, :3] = rotation_world_gl @ np.diag([1.0, -1.0, -1.0])
         transform[:3, 3] = scratch.cam_xpos[camera_id]
+        profile = next(p for p in self.config["sensors"].values() if p["camera_name"] == camera_name)
+        translation = np.asarray(profile.get("calibration_translation_bias_m", [0, 0, 0]), dtype=float)
+        angles = np.asarray(profile.get("calibration_rotation_bias_rad", [0, 0, 0]), dtype=float)
+        if translation.shape != (3,) or angles.shape != (3,) or not np.all(np.isfinite([translation, angles])):
+            raise ValueError("synthetic camera calibration bias must contain finite 3-vectors")
+        bias = np.eye(4)
+        bias[:3, :3] = Rotation.from_euler("xyz", angles).as_matrix()
+        bias[:3, 3] = translation
+        transform = transform @ bias
         return CameraCalibration(intrinsic, transform, "synthetic_model")
 
     def _set_work_base(self, base_pose_xy_yaw) -> None:
@@ -597,7 +693,8 @@ class MobileSession(Session):
             joint_name = f"payload_{index}_free"
             address = int(self.model.jnt_qposadr[self.model.joint(joint_name).id])
             initial = self.model.qpos0[address: address + 3]
-            predicted = center + rotation @ (initial - tray_initial)
+            initial_rotation = Rotation.from_euler("z", -float(self.config.get("tray_initial_yaw_rad", 0.0))).as_matrix()
+            predicted = center + rotation @ initial_rotation @ (initial - tray_initial)
             qpos = self.robot.work.joint(joint_name).qpos
             qpos[:3] = predicted
             qpos[3:7] = tray_qpos[3:7]
@@ -989,17 +1086,24 @@ class MobileSession(Session):
         """Validate an unloaded posture change using the executed cubic path."""
 
         preparing = phase == "prepare_pickup"
-        target = self.robot.crouched_pickup_posture() if preparing else self.home_joints_rad
+        navigating = phase == "prepare_navigation"
+        target = (self.robot.crouched_pickup_posture() if preparing
+                  else self._navigation_posture() if navigating else self.home_joints_rad)
         target_gripper = (
             float(self.config["grasp"]["open_gripper_m"])
             if preparing else self.home_gripper_m
         )
         base = tuple(self.drive.metrics(self.model, self.data)["wheel_odometry_pose_xy_yaw"])
-        if preparing:
+        if phase == "prepare_navigation":
             # Surveyed initial CAD is used only to reject a preparation path;
             # the subsequent grasp still waits for a complete RGB-D estimate.
             center = np.asarray(self.config["tray_initial_pos_m"], dtype=float)
             yaw = 0.0
+        elif preparing:
+            if self._detected_tray is None:
+                raise RuntimeError("pickup posture requires RGB-D perception")
+            center = np.asarray(self._detected_tray.center_world_m, dtype=float)
+            yaw = float(self._detected_tray.yaw_rad)
         else:
             center = np.array([
                 *self.config["target"]["center_xy_m"],
@@ -1023,10 +1127,11 @@ class MobileSession(Session):
             max_gravity_ratio = max(max_gravity_ratio, ratio)
             if forbidden or ratio > self.robot.TORQUE_LIMIT_RATIO:
                 raise ValueError(f"{phase} free-joint path rejected at {alpha:.3f}: collision={forbidden}, gravity={ratio:.6f}")
-        duration_key = "prepare_duration_s" if preparing else "return_duration_s"
+        duration_key = "prepare_duration_s" if preparing or navigating else "return_duration_s"
         metrics = {
             "phase": phase,
-            "pose_source": "model_qpos0" if not preparing else "task_crouched_pickup_posture",
+            "pose_source": ("SDK_mobile_example_scene_validated" if navigating
+                            else "task_crouched_pickup_posture" if preparing else "model_qpos0"),
             "collision_samples": 101,
             "gravity_torque_ratio": max_gravity_ratio,
             "interpolated_joint_limit_violation_rad": limit_error,
@@ -1098,6 +1203,9 @@ class MobileSession(Session):
         self._active_motion = None
         self._drive_start_pose = None
         self._drive_start_tray_center = None
+        self._motion_clock_s = 0.0
+        self._reference_finished_s = None
+        self._pending_head_frame = None
         if phase == "grasp":
             # Tare in the final open-gripper pose.  Hardware uses the same
             # boundary immediately before closure.
@@ -1117,7 +1225,9 @@ class MobileSession(Session):
                     "pregrasp_depth_residual_max_m",
                     self.PREGRASP_DEPTH_RESIDUAL_MAX_M,
                 ))
-                and item["blue_rim_pixel_fraction"] >= 0.05
+                and (item["depth_cad_rim"]["passed"]
+                     if self.config.get("perception", {}).get("estimator") == "depth_cad"
+                     else item["blue_rim_pixel_fraction"] >= 0.05)
                 for item in observations.values()
             )
             self._pregrasp_wrist_verification = {
@@ -1125,7 +1235,9 @@ class MobileSession(Session):
                 "timestamp_sim_s": float(self.data.time),
                 "gripper_state": "open_before_closure",
                 "wrist_observations": observations,
-                "source": "wrist_rgbd_expected_depth_plus_blue_rim",
+                "source": ("wrist_depth_CAD_rim_plus_expected_depth"
+                           if self.config.get("perception", {}).get("estimator") == "depth_cad"
+                           else "wrist_rgbd_expected_depth_plus_blue_rim"),
                 "depth_residual_gate_provenance": (
                     "synthetic CAD and camera-noise assumption; replace with "
                     "measured D405 registration calibration"
@@ -1143,7 +1255,7 @@ class MobileSession(Session):
                     repr(self._pregrasp_wrist_verification),
                 )
                 return
-        if phase in {"prepare_pickup", "return_home"}:
+        if phase in self.POSTURE_PHASES:
             self._active_motion = self._joint_home_motion(phase)
         elif phase in self.ARM_PHASES:
             center, base, duration, gripper = self._phase_motion_spec(phase)
@@ -1157,8 +1269,9 @@ class MobileSession(Session):
 
     def _advance_phase(self) -> None:
         sequence = (
-            "home_start", "prepare_pickup",
-            "drive_approach", "observe_close", "pickup_approach", "pickup_descend",
+            "home_start", "prepare_navigation",
+            "drive_approach", "observe_close", "prepare_pickup", "observe_pickup",
+            "pickup_approach", "observe_pregrasp", "pickup_descend",
             "grasp", "grasp_hold", "lift", "retract_low", "drive_loaded",
             "raise_high", "drive_high", "seat", "settle", "release",
             "withdraw", "drive_return", "return_home", "home_settle",
@@ -1279,6 +1392,13 @@ class MobileSession(Session):
                 "depth_in_sensor_range": in_range,
                 "calibration_input": "encoder_odometry_plus_joint_encoder_fk",
             }
+            from .perception import confirm_grasp_rim_from_depth
+            wrist_observations[side]["depth_cad_rim"] = confirm_grasp_rim_from_depth(
+                frame.depth_m, frame.K, frame.T_world_optical, grasp_by_side[side],
+                self._detected_tray.center_world_m, self._detected_tray.yaw_rad,
+                cad=TrayCAD(half_extents_m=tuple(self.config["tray_half_extents_m"]),
+                            grasp_height_m=self._tcp_height_m()),
+            )
         closed_depth_valid = all(
             observation["expected_grasp_in_frame"]
             and observation["depth_in_sensor_range"]
@@ -1393,7 +1513,7 @@ class MobileSession(Session):
         motion = self._active_motion
         if motion is None:
             return self.command_rad.copy(), self.command_gripper_m, np.zeros(20)
-        elapsed = max(0.0, float(self.data.time) - self.phase_started_s)
+        elapsed = self._motion_clock_s
         raw = np.clip(elapsed / motion.duration_s, 0.0, 1.0)
         segment_count = len(motion.joint_path_rad) - 1
         # Time-scale every path once.  Applying smoothstep to each Cartesian
@@ -1411,12 +1531,57 @@ class MobileSession(Session):
         if self.phase in self.DRIVE_PHASE_TARGET:
             target = self._drive_target()
             self.drive.update(
-                self.model, self.data, target, float(self.config["control_dt_s"])
+                self.model, self.data, target, float(self.config["control_dt_s"]),
+                speed_scale=self.cooperation.speed_scale,
             )
         else:
             self.drive.stop(
                 self.model, self.data, float(self.config["control_dt_s"])
             )
+
+    def _feedback_kinematics(self, scratch, joints):
+        """Use encoders and wheel odometry; no task pose or live base TF."""
+        odom = self.drive.metrics(self.model, self.data)["wheel_odometry_pose_xy_yaw"]
+        x, y, yaw = map(float, odom)
+        base = scratch.joint("world_j").qpos
+        base[:3] = (x, y, 0)
+        base[3:7] = (math.cos(yaw / 2), 0, 0, math.sin(yaw / 2))
+        scratch.qpos[self.robot.qadr] = joints
+        mujoco.mj_kinematics(self.model, scratch)
+        right, left = self.robot.tcp
+        rotation = scratch.site_xmat[right].reshape(3, 3)
+        relative_position = rotation.T @ (scratch.site_xpos[left] - scratch.site_xpos[right])
+        relative_rotation = rotation.T @ scratch.site_xmat[left].reshape(3, 3)
+        return relative_position, relative_rotation
+
+    def _update_cooperation(self):
+        now = float(self.data.time)
+        if now + 1e-9 < self._next_cooperation_s:
+            return
+        self._next_cooperation_s = now + self.cooperation.config.sample_period_s
+        active = self.phase in self.COOPERATIVE_PHASES
+        if not active:
+            self.cooperation.update(now, 0.0, 0.0, [0.0, 0.0], active=False)
+            return
+        measured_p, measured_r = self._feedback_kinematics(self._feedback_fk, self.data.qpos[self.robot.qadr])
+        reference_p, reference_r = self._feedback_kinematics(self._reference_fk, self.command_rad)
+        position_error = float(np.linalg.norm(measured_p - reference_p))
+        orientation_error = float(np.linalg.norm(Rotation.from_matrix(reference_r.T @ measured_r).as_rotvec()))
+        loads = []
+        for side in ("left", "right"):
+            rotation = self._feedback_fk.site(f"{side}_ft_frame").xmat.reshape(3, 3)
+            raw_world = rotation @ np.asarray(self._read_wrist_ft(side)["force_n"])
+            mount = self.model.body(f"{side}_ft_mount").id
+            tool_mass = sum(float(self.model.body_mass[index]) for index in range(self.model.nbody)
+                            if self.robot._is_descendant(index, mount))
+            # The flange force sensor is positive opposite gravity at rest.
+            # Remove model tool weight in world axes rather than subtracting
+            # a local-frame tare taken at a different wrist orientation.
+            loads.append(float(raw_world[2] - tool_mass * abs(self.model.opt.gravity[2])))
+        decision = self.cooperation.update(now, position_error, orientation_error, loads, active=True)
+        self.cooperation_history.append(copy.deepcopy(decision))
+        if decision["abort"]:
+            self._fail("cooperative_transport_fault", json.dumps(decision))
 
     def _drive_target(self) -> list[float]:
         key = self.DRIVE_PHASE_TARGET[self.phase]
@@ -1520,7 +1685,9 @@ class MobileSession(Session):
                 self._advance_phase()
                 return
             if self.phase in self.ARM_PHASES and self._active_motion is not None:
-                if float(self.data.time) - self.phase_started_s >= self._active_motion.duration_s:
+                if self._motion_clock_s + 1e-9 >= self._active_motion.duration_s:
+                    if self._reference_finished_s is None:
+                        self._reference_finished_s = float(self.data.time)
                     tracking_error = float(np.max(np.abs(
                         self.data.qpos[self.robot.qadr]
                         - self._active_motion.target_joints_rad
@@ -1529,8 +1696,7 @@ class MobileSession(Session):
                     if tracking_error > 0.01 or joint_speed > 0.02:
                         self._motion_settled_since_s = None
                         if (
-                            float(self.data.time) - self.phase_started_s
-                            > self._active_motion.duration_s + 4.0
+                            float(self.data.time) - self._reference_finished_s > 4.0
                         ):
                             self._fail(
                                 "arm_tracking_timeout",
@@ -1564,7 +1730,7 @@ class MobileSession(Session):
                         if not verification["passed"]:
                             self._fail("seat_verification_failed", repr(verification))
                             return
-                    if self.phase not in {"prepare_pickup", "return_home"}:
+                    if self.phase not in self.POSTURE_PHASES:
                         self._planned_tray_center = np.asarray(
                             self._active_motion.tray_center_world_m, dtype=float
                         )
@@ -1573,6 +1739,10 @@ class MobileSession(Session):
             self._fail("ik_planning_failed", str(exc))
 
     def _check_phase_timeout(self) -> None:
+        if self.phase in self.OBSERVATION_PHASES:
+            if float(self.data.time) - self.phase_started_s > 2.0:
+                self._fail("rgbd_delivery_timeout", "stationary RGB-D delivery exceeded 2 s")
+            return
         if self.phase == "home_settle" and not self.finished:
             if float(self.data.time) - self.phase_started_s > 4.0 + self.home_reference["settle_hold_s"]:
                 self._fail("home_settle_timeout", "model qpos0 return and stationary base were not verified")
@@ -1592,24 +1762,32 @@ class MobileSession(Session):
         for _ in range(n_steps):
             if self.finished:
                 break
+            if float(self.data.time) > float(self.config.get("max_episode_time_s", 300.0)):
+                self._fail("mission_timeout", "configured episode time limit exceeded")
+                break
             self._audit_external_state()
-            if self.phase == "observe_close":
+            if self.phase in self.OBSERVATION_PHASES:
                 try:
-                    self._detected_tray = self._capture_and_estimate()
+                    observation = self._capture_and_estimate()
                 except (PerceptionError, ValueError, RuntimeError) as exc:
                     self._fail("perception_failed", str(exc))
                     self._record(force_log=True)
                     break
-                self._planned_tray_center = np.asarray(
-                    self._detected_tray.center_world_m, dtype=float
-                )
-                try:
-                    self._advance_phase()
-                except (ValueError, RuntimeError) as exc:
-                    self._fail("ik_planning_failed", str(exc))
-                    self._record(force_log=True)
-                    break
+                if observation is not None:
+                    self._detected_tray = observation
+                    self._planned_tray_center = np.asarray(observation.center_world_m, dtype=float)
+                    try:
+                        self._advance_phase()
+                    except (ValueError, RuntimeError) as exc:
+                        self._fail("ik_planning_failed", str(exc))
+                        self._record(force_log=True)
+                        break
             if self.data.time + 1e-9 >= self._next_control_s:
+                self._update_cooperation()
+                if self.finished:
+                    break
+                if self._active_motion is not None:
+                    self._motion_clock_s += float(self.config["control_dt_s"]) * self.cooperation.speed_scale
                 previous = self.command_rad.copy()
                 self.command_rad, self.command_gripper_m, velocity = self._arm_reference()
                 self._held_velocity_rad_s = velocity
@@ -1631,6 +1809,7 @@ class MobileSession(Session):
                             "base_pose": "wheel_encoder_odometry",
                             "simulator_object_pose_used": False,
                         },
+                        "cooperative_transport": copy.deepcopy(self.cooperation.last),
                     }
                 )
             mujoco.mj_step(self.model, self.data)
@@ -1649,6 +1828,7 @@ class MobileSession(Session):
             drive_metrics = self.drive.metrics(self.model, self.data)
             if not drive_metrics["within_tilt_limit"]:
                 self._fail("base_tilt_limit", repr(drive_metrics["base_tilt_rad"]))
+            self._capture_monitors()
             self._check_phase_timeout()
             self._check_transition()
             self._record()
@@ -1678,6 +1858,13 @@ class MobileSession(Session):
             "command": copy.deepcopy(self.command_history[-1]) if self.command_history else None,
             "drive": drive,
             "home_reference": copy.deepcopy(self.home_reference),
+            "cooperation": copy.deepcopy(self.cooperation.last),
+            "cooperation_summary": copy.deepcopy(self.cooperation.summary),
+            "monitoring": {
+                "frame_count": len(self.monitor_frames),
+                "sample_period_s": self.config.get("monitoring", {}).get("period_s"),
+                "source": "recorded_named_RGBD_cameras_not_external_view",
+            },
             "wrist_proprioception": self._wrist_proprioception(),
             "data_contract": {
                 "head_observation": "registered RGB uint8 + metric axial depth + K + T_world_optical",
@@ -1796,6 +1983,23 @@ class MobileSession(Session):
         (output / "schema.json").write_text(
             json.dumps(schema, indent=2, sort_keys=True) + "\n"
         )
+        monitor_index = []
+        for index, frame in enumerate(self.monitor_frames):
+            relative = Path("monitor-observations") / f"{index:05d}_{frame.metadata['camera_name']}.npz"
+            path = output / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            # Monitor exports retain metric depth, not just display PNGs.
+            # Ideal renderer channels are omitted from this auxiliary stream.
+            np.savez_compressed(path, rgb=frame.rgb, depth_m=frame.depth_m,
+                                K=frame.K, T_world_optical=frame.T_world_optical,
+                                timestamp_sim_s=np.array(frame.timestamp_sim_s),
+                                metadata_json=np.array(json.dumps(frame.metadata, sort_keys=True)))
+            monitor_index.append({"path": relative.as_posix(), "camera_name": frame.metadata["camera_name"],
+                                  "timestamp_sim_s": frame.timestamp_sim_s, "role": "monitor_only"})
+        (output / "monitor-frames.json").write_text(json.dumps(monitor_index, indent=2) + "\n")
+        with (output / "cooperation.jsonl").open("w") as stream:
+            for item in self.cooperation_history:
+                stream.write(json.dumps(item, allow_nan=False) + "\n")
         return output
 
     def close(self) -> None:
@@ -1805,6 +2009,9 @@ class MobileSession(Session):
         for camera in self._wrist_cameras.values():
             camera.close()
         self._wrist_cameras = {}
+        for camera in self._monitor_cameras.values():
+            camera.close()
+        self._monitor_cameras = {}
         if self.renderer is not None:
             self.renderer.close()
             self.renderer = None

@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
-from rby1_tray.perception import TrayCAD, estimate_tray_pose, validate_calibration
+from rby1_tray.perception import TrayCAD, estimate_tray_pose, estimate_tray_pose_from_depth, validate_calibration
 
 
 def finite_vector(value, size, label):
@@ -63,11 +63,12 @@ def verify(run_directory, require_complete=True):
             if not valid.size or valid.min() < profile['range_m'][0] or valid.max() > profile['range_m'][1]:
                 raise ValueError('Depth operating range violation')
             if row['camera_name'] == 'head_rgbd':
-                estimate = estimate_tray_pose(
-                    rgb, depth, frame['K'], frame['T_world_optical'],
-                    cad=TrayCAD(half_extents_m=tuple(config['tray_half_extents_m']),
-                                grasp_height_m=config['grasp']['tcp_height_m']),
-                )
+                cad=TrayCAD(half_extents_m=tuple(config['tray_half_extents_m']),
+                            grasp_height_m=config['grasp']['tcp_height_m'])
+                if config.get('perception', {}).get('estimator') == 'depth_cad':
+                    estimate = estimate_tray_pose_from_depth(depth, frame['K'], frame['T_world_optical'], cad=cad)
+                else:
+                    estimate = estimate_tray_pose(rgb, depth, frame['K'], frame['T_world_optical'], cad=cad)
                 head_estimates.append(estimate.to_dict())
             seen.add(row['camera_name'])
     if require_complete and seen != {'head_rgbd', 'left_wrist_rgbd', 'right_wrist_rgbd'}:

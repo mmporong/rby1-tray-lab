@@ -1,4 +1,6 @@
 import unittest
+from dataclasses import replace
+from pathlib import Path
 
 import numpy as np
 
@@ -7,7 +9,10 @@ from rby1_tray.perception import (
     PerceptionError,
     TrayCAD,
     backproject_pixels,
+    confirm_grasp_rim_from_depth,
     estimate_tray_pose,
+    estimate_tray_pose_from_depth,
+    validate_tray_estimate_update,
 )
 
 
@@ -32,6 +37,24 @@ class PerceptionTests(unittest.TestCase):
         depth = np.full((self.height, self.width), 2.5, dtype=float)
         depth[inside] = surface_z
         return rgb, depth
+
+    def recorded_pregrasp(self):
+        observations = (
+            Path(__file__).resolve().parents[1]
+            / "evidence/mobile-native/controller-data/observations"
+        )
+        with np.load(observations / "0000_head_rgbd.npz") as frame:
+            estimate = estimate_tray_pose(
+                frame["rgb"], frame["depth_m"], frame["K"],
+                frame["T_world_optical"],
+            )
+        frames = {}
+        for index, side in ((1, "left"), (2, "right")):
+            with np.load(observations / f"{index:04d}_{side}_wrist_rgbd.npz") as frame:
+                frames[side] = {key: frame[key].copy() for key in (
+                    "depth_m", "K", "T_world_optical",
+                )}
+        return estimate, frames
 
     def test_backprojection_round_trip(self):
         points = np.array([[0.1, -0.2, 1.2], [-0.3, 0.15, 2.0]])
@@ -134,6 +157,162 @@ class PerceptionTests(unittest.TestCase):
         np.testing.assert_allclose(result.center_world_m[:2], [.22, .12], atol=.006)
         self.assertAlmostEqual(result.yaw_rad, np.deg2rad(-9), delta=np.deg2rad(1.0))
         self.assertGreaterEqual(result.quality["candidate_count"], 2)
+
+    def test_depth_cad_estimator_ignores_tray_colour(self):
+        rgb, depth = self.synthetic_tray(center=(.08, -.06), yaw=np.deg2rad(27))
+        rgb[np.any(rgb != [35, 39, 44], axis=2)] = [170, 70, 45]
+        with self.assertRaisesRegex(PerceptionError, "no blue tray"):
+            estimate_tray_pose(rgb, depth, self.K, self.T)
+
+        result = estimate_tray_pose_from_depth(depth, self.K, self.T)
+        np.testing.assert_allclose(result.center_world_m[:2], [.08, -.06], atol=.004)
+        self.assertAlmostEqual(result.yaw_rad, np.deg2rad(27), delta=np.deg2rad(1.2))
+        self.assertEqual(result.quality["source"], "depth_cad_observation")
+        self.assertEqual(result.quality["mask"], "world_height_connected_component")
+
+    def test_depth_cad_estimator_tolerates_payload_occlusion(self):
+        _, depth = self.synthetic_tray(center=(.04, -.03), yaw=np.deg2rad(16))
+        depth[205:250, 300:345] = np.nan
+        depth[270:300, 370:405] = np.nan
+        result = estimate_tray_pose_from_depth(depth, self.K, self.T)
+        np.testing.assert_allclose(result.center_world_m[:2], [.04, -.03], atol=.008)
+        self.assertAlmostEqual(result.yaw_rad, np.deg2rad(16), delta=np.deg2rad(2.0))
+        self.assertGreater(result.quality["footprint_hull_coverage"], .60)
+
+    def test_depth_cad_estimator_rejects_boundary_truncation_and_missing_depth(self):
+        _, truncated = self.synthetic_tray(center=(-.55, 0), yaw=0)
+        with self.assertRaisesRegex(PerceptionError, "touches image boundary"):
+            estimate_tray_pose_from_depth(truncated, self.K, self.T)
+        with self.assertRaisesRegex(PerceptionError, "insufficient valid depth"):
+            estimate_tray_pose_from_depth(
+                np.full_like(truncated, np.nan), self.K, self.T
+            )
+
+    def test_depth_cad_estimator_rejects_wrong_size_distractor(self):
+        _, depth = self.synthetic_tray(center=(.20, .12), yaw=np.deg2rad(-11))
+        depth[30:130, 40:140] = 1.2
+        result = estimate_tray_pose_from_depth(depth, self.K, self.T)
+        np.testing.assert_allclose(result.center_world_m[:2], [.20, .12], atol=.006)
+        self.assertAlmostEqual(result.yaw_rad, np.deg2rad(-11), delta=np.deg2rad(1.2))
+        self.assertGreaterEqual(result.quality["candidate_count"], 2)
+
+    def test_two_spatially_distinct_cad_trays_are_rejected_as_ambiguous(self):
+        rows, cols = np.indices((self.height, self.width))
+        x = (cols - self.K[0, 2]) / self.K[0, 0]
+        y = (rows - self.K[1, 2]) / self.K[1, 1]
+        first = (np.abs(x + .25) <= .186) & (np.abs(y) <= .276)
+        second = (np.abs(x - .25) <= .186) & (np.abs(y) <= .276)
+        rgb = np.zeros((self.height, self.width, 3), dtype=np.uint8)
+        rgb[:] = [35, 39, 44]
+        rgb[first | second] = [38, 108, 164]
+        depth = np.full((self.height, self.width), 2.5, dtype=float)
+        depth[first | second] = 1.0
+
+        with self.assertRaisesRegex(
+            PerceptionError, "multiple spatial tray hypotheses"
+        ):
+            estimate_tray_pose_from_depth(depth, self.K, self.T)
+        with self.assertRaisesRegex(
+            PerceptionError, "selection_prior=none_ambiguity_reject"
+        ):
+            estimate_tray_pose(rgb, depth, self.K, self.T)
+
+    def test_recorded_head_depth_merges_floor_and_rim_into_one_hypothesis(self):
+        observations = (
+            Path(__file__).resolve().parents[1]
+            / "evidence/mobile-native/controller-data/observations"
+        )
+        with np.load(observations / "0000_head_rgbd.npz") as frame:
+            result = estimate_tray_pose_from_depth(
+                frame["depth_m"], frame["K"], frame["T_world_optical"]
+            )
+        self.assertEqual(result.quality["hypothesis_count"], 1)
+        self.assertEqual(result.quality["selection_prior"], "none_ambiguity_reject")
+        self.assertIsNone(result.quality["score_margin"])
+        np.testing.assert_allclose(
+            result.center_world_m, [.65031, .00006, .01225], atol=.001
+        )
+
+    def test_reobservation_innovation_gate_accepts_consistent_pose(self):
+        _, depth = self.synthetic_tray(center=(.02, -.03), yaw=np.deg2rad(8))
+        previous = estimate_tray_pose_from_depth(depth, self.K, self.T)
+        candidate = replace(
+            previous,
+            center_world_m=(.025, -.034, previous.center_world_m[2] + .002),
+            yaw_rad=previous.yaw_rad + np.deg2rad(2),
+        )
+        result = validate_tray_estimate_update(previous, candidate)
+        self.assertTrue(result["accepted"])
+        self.assertLess(result["position_innovation_m"], .01)
+        self.assertAlmostEqual(result["yaw_innovation_rad"], np.deg2rad(2))
+
+    def test_reobservation_innovation_gate_rejects_biased_pose(self):
+        _, depth = self.synthetic_tray(center=(.02, -.03), yaw=np.deg2rad(8))
+        previous = estimate_tray_pose_from_depth(depth, self.K, self.T)
+        shifted = replace(previous, center_world_m=(.10, -.03, .988))
+        with self.assertRaisesRegex(PerceptionError, "position innovation"):
+            validate_tray_estimate_update(previous, shifted)
+        rotated = replace(previous, yaw_rad=previous.yaw_rad + np.deg2rad(12))
+        with self.assertRaisesRegex(PerceptionError, "yaw innovation"):
+            validate_tray_estimate_update(previous, rotated)
+
+    def test_reobservation_yaw_gate_respects_rectangle_pi_symmetry(self):
+        _, depth = self.synthetic_tray(yaw=np.deg2rad(-6))
+        previous = estimate_tray_pose_from_depth(depth, self.K, self.T)
+        equivalent = replace(previous, yaw_rad=previous.yaw_rad + np.pi)
+        result = validate_tray_estimate_update(previous, equivalent)
+        self.assertAlmostEqual(result["yaw_innovation_rad"], 0.0, delta=1e-12)
+
+    def test_recorded_pregrasp_depth_confirms_both_native_rims(self):
+        estimate, frames = self.recorded_pregrasp()
+        for grasp in estimate.grasps:
+            frame = frames[grasp.side]
+            result = confirm_grasp_rim_from_depth(
+                frame["depth_m"], frame["K"], frame["T_world_optical"],
+                grasp.position_world_m, estimate.center_world_m, estimate.yaw_rad,
+            )
+            self.assertTrue(result["passed"], grasp.side)
+            self.assertGreater(result["rim_geometry_support_fraction"], .95)
+            self.assertLess(result["rim_plane_rms_m"], .006)
+            self.assertIn("single depth view", result["ambiguity"])
+
+    def test_wrist_rim_confirmation_rejects_empty_and_finger_only_depth(self):
+        estimate, frames = self.recorded_pregrasp()
+        grasp = estimate.grasps[0]
+        frame = frames["left"]
+        empty = np.full_like(frame["depth_m"], np.nan)
+        result = confirm_grasp_rim_from_depth(
+            empty, frame["K"], frame["T_world_optical"],
+            grasp.position_world_m, estimate.center_world_m, estimate.yaw_rad,
+        )
+        self.assertFalse(result["passed"])
+        self.assertIn("insufficient valid depth", result["rejection_reason"])
+
+        optical = np.linalg.inv(frame["T_world_optical"]) @ np.append(
+            grasp.position_world_m, 1.0
+        )
+        pixel = frame["K"] @ optical[:3]
+        col, row = np.rint(pixel[:2] / pixel[2]).astype(int)
+        finger_only = empty.copy()
+        finger_only[row - 24: row + 25, col - 24: col + 25] = optical[2] - .03
+        result = confirm_grasp_rim_from_depth(
+            finger_only, frame["K"], frame["T_world_optical"],
+            grasp.position_world_m, estimate.center_world_m, estimate.yaw_rad,
+        )
+        self.assertFalse(result["passed"])
+        self.assertEqual(result["rim_geometry_support_pixels"], 0)
+
+    def test_wrist_rim_confirmation_rejects_offset_expected_grasp(self):
+        estimate, frames = self.recorded_pregrasp()
+        frame = frames["left"]
+        offset = np.asarray(estimate.grasps[0].position_world_m) + [0, -.08, 0]
+        result = confirm_grasp_rim_from_depth(
+            frame["depth_m"], frame["K"], frame["T_world_optical"],
+            offset, estimate.center_world_m, estimate.yaw_rad,
+        )
+        self.assertFalse(result["passed"])
+        self.assertFalse(result["expected_grasp_on_known_rim"])
+        self.assertIn("not on the known CAD rim", result["rejection_reason"])
 
     def test_image_boundary_truncation_is_rejected(self):
         rgb, depth = self.synthetic_tray(center=(-.55, 0), yaw=0)

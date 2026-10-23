@@ -21,6 +21,7 @@ class FakeSession:
         self.reset_calls = 0
         self.render_calls = []
         self.sensor_frames = []
+        self.monitor_frames = []
 
     def snapshot(self):
         return {"time_s": 0.0, "phase": "approach", "finished": self.finished, "result": {}}
@@ -52,7 +53,14 @@ class ViewerContractTests(unittest.TestCase):
                 return (video, 'video/mp4', None) if name == 'overview.mp4' else None
 
             def sensor_png(inner, camera, kind, time_s):
-                return (self.recorded_sensor, 1.0) if time_s >= 1.0 else None
+                metadata = {
+                    "sensor_profile": "test_rgbd",
+                    "observation_role": "monitor_only",
+                    "depth_range_m": {"minimum": 0.1, "maximum": 4.0},
+                    "calibration_source": "test",
+                    "clock_domain": "simulation_time",
+                }
+                return (self.recorded_sensor, 1.0, metadata) if time_s >= 1.0 else None
         self.server = HTTPServer(("127.0.0.1", 0), _make_handler(self.session, FakePlayback()))
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
@@ -137,7 +145,10 @@ class ViewerContractTests(unittest.TestCase):
                 rgb=rgb,
                 depth_m=np.ones((2, 3), dtype=float),
                 timestamp_sim_s=timestamp,
-                metadata={"camera_name": "head_rgbd"},
+                metadata={
+                    "camera_name": "head_rgbd",
+                    "depth_range_m": {"minimum": 0.1, "maximum": 4.0},
+                },
             ))
 
         with urlopen(
@@ -150,11 +161,18 @@ class ViewerContractTests(unittest.TestCase):
         self.assertEqual(timestamp, "2.5")
 
     def test_sensor_depth_preview_marks_invalid_pixels_black(self):
-        self.session.sensor_frames.append(SimpleNamespace(
+        self.session.monitor_frames.append(SimpleNamespace(
             rgb=np.zeros((2, 2, 3), dtype=np.uint8),
             depth_m=np.array([[0.1, 0.3], [np.nan, 0.2]]),
             timestamp_sim_s=4.0,
-            metadata={"camera_name": "left_wrist_rgbd"},
+            metadata={
+                "camera_name": "left_wrist_rgbd",
+                "sensor_profile": "D405",
+                "observation_role": "monitor_only",
+                "depth_range_m": {"minimum": 0.1, "maximum": 0.3},
+                "calibration_source": "test_mount",
+                "clock_domain": "simulation_time",
+            },
         ))
 
         with urlopen(
@@ -163,9 +181,56 @@ class ViewerContractTests(unittest.TestCase):
         ) as response:
             image = np.asarray(Image.open(response))
 
-        self.assertEqual(image[1, 0], 0)
-        self.assertEqual(image[0, 0], 255)
-        self.assertEqual(image[0, 1], 1)
+        self.assertTrue(np.all(image[1, 0] == [230, 55, 135]))
+        self.assertTrue(np.all(image[0, 0] == 255))
+        self.assertTrue(np.all(image[0, 1] == 1))
+
+    def test_sensor_endpoint_selects_latest_across_monitor_and_controller_frames(self):
+        common = {
+            "camera_name": "head_rgbd",
+            "sensor_profile": "ZED X Mini",
+            "depth_range_m": {"minimum": 0.2, "maximum": 8.0},
+            "calibration_source": "synthetic_mount_design",
+            "clock_domain": "simulation_time",
+        }
+        self.session.sensor_frames.append(SimpleNamespace(
+            rgb=np.full((2, 2, 3), 20, dtype=np.uint8),
+            depth_m=np.ones((2, 2)), timestamp_sim_s=1.0,
+            metadata={**common, "observation_role": "controller"},
+        ))
+        self.session.monitor_frames.append(SimpleNamespace(
+            rgb=np.full((2, 2, 3), 230, dtype=np.uint8),
+            depth_m=np.ones((2, 2)), timestamp_sim_s=2.0,
+            metadata={
+                **common,
+                "observation_role": "monitor_only",
+                "capture_batch_id": "monitor-2.000000",
+            },
+        ))
+        for camera in ("left_wrist_rgbd", "right_wrist_rgbd"):
+            self.session.monitor_frames.append(SimpleNamespace(
+                rgb=np.full((2, 2, 3), 100, dtype=np.uint8),
+                depth_m=np.ones((2, 2)), timestamp_sim_s=2.0,
+                metadata={
+                    **common,
+                    "camera_name": camera,
+                    "observation_role": "monitor_only",
+                    "capture_batch_id": "monitor-2.000000",
+                },
+            ))
+
+        with urlopen(
+            f"{self.base_url}/sensor.png?camera=head_rgbd&kind=rgb", timeout=3
+        ) as response:
+            image = np.asarray(Image.open(response))
+            headers = response.headers
+
+        self.assertTrue(np.all(image == 230))
+        self.assertEqual(headers["X-Sensor-Timestamp-S"], "2")
+        self.assertEqual(headers["X-Sensor-Observation-Role"], "monitor_only")
+        self.assertEqual(headers["X-Sensor-Capture-Batch-Id"], "monitor-2.000000")
+        self.assertEqual(headers["X-Sensor-Depth-Min-M"], "0.2")
+        self.assertEqual(headers["X-Sensor-Depth-Max-M"], "8")
 
     def test_sensor_endpoint_reports_missing_and_invalid_requests(self):
         for path, status in (
