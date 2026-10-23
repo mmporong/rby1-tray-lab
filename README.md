@@ -4,6 +4,8 @@
 
 주행과 몸통 상승 중 트레이 접촉과 세 적재물을 유지하고, 컨테이너 지지면에 내려놓는 과제를 다룬다. 관측·계획·제어와 독립 평가를 연결하고, 실패 원인과 실물 전이에 필요한 데이터를 실행별로 보존한다.
 
+MuJoCo는 손가락 접촉, 적재물의 자유 운동, 관절 토크와 안착 지지를 같은 물리 실행에서 계산하고 조건별 실패를 재현하는 데 사용한다. 현재 비교실험은 CPU 프로세스로 실행하며, MJX의 GPU 배치 학습이나 강화학습 정책은 사용하지 않는다.
+
 ![트레이 안착 후 출발 위치와 모델 기본 자세로 복귀한 MuJoCo 실행](evidence/mobile-native/final.png)
 
 [성공 영상 · 약 4배속 MP4](evidence/mobile-native/rollout.mp4) · [GIF](evidence/mobile-native/rollout.gif) · [센서 관측 미리보기](evidence/mobile-native/sensor-preview.png) · [실행 근거와 데이터](evidence/mobile-native/README.md) · [대표 실패 영상 2개](evidence/failures/README.md)
@@ -108,6 +110,8 @@ MUJOCO_GL=egl PYOPENGL_PLATFORM=egl EGL_PLATFORM=surfaceless \
 `evidence/demo`, `evidence/dataset`, `evidence/ablations`는 **과거 A형 고정 지그·손잡이·패드 프록시·정답 상태 실험**이다. 그 결과를 현재 RGB-D·기본 CAD 그리퍼·주행 성과로 합산하지 않는다. 과거 자료도 manifest에 기록한 소스 커밋에서 해시 검증할 수 있다.
 
 ## 조건별 비교실험
+
+회전한 트레이의 림이 상승 중 컨테이너 벽에 걸리는 실패를 재현하고, 관측 yaw와 CAD 외곽·벽의 외부 면으로 운반 여유를 계산하는 경로를 추가했다. `configs/mobile-native-improved.json`으로 실행할 수 있으며, 기존 경로는 같은 조건의 비교군으로 남긴다. [개선 연구의 방법·관측 경계·재현 절차](docs/improvement-study.md)를 제공한다. 뷰어 하단의 **개선 전후 검증**은 경로 비교·센서 이상 거부·협조 감속 비용을 구분하고, 각 영상의 소스와 설정을 표시한다. 상단 원본 영상·센서·응력 기록과 개선 영상의 재생 시각은 독립적이다.
 
 현재 M형·기본 CAD 그리퍼·무손잡이 트레이에서 조건과 seed를 고정해 비교한다. 색상, 초기 위치·yaw, 질량, 마찰, 깊이 노이즈·누락, 보정 편향, 관측 지연과 목표 높이 case를 제공한다. 협조 감속 유무와 depth/CAD·기존 RGB-D 인식을 같은 조건에서 비교할 수 있다. 실행 전 행렬을 저장하고, 실패·입력 거부·실행 오류를 구분해 표본수와 Wilson 95% 구간을 기록한다. 높이 결과는 시험한 격자에서의 성공 범위다.
 

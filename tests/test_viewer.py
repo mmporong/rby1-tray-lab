@@ -61,7 +61,15 @@ class ViewerContractTests(unittest.TestCase):
                     "clock_domain": "simulation_time",
                 }
                 return (self.recorded_sensor, 1.0, metadata) if time_s >= 1.0 else None
-        self.server = HTTPServer(("127.0.0.1", 0), _make_handler(self.session, FakePlayback()))
+        class FakeImprovement:
+            def info(self):
+                return {"enabled": True, "schema_version": 1, "studies": {}}
+
+            def asset(self, name):
+                return (video, "video/mp4", None) if name == "videos/test.mp4" else None
+        self.server = HTTPServer(("127.0.0.1", 0), _make_handler(
+            self.session, FakePlayback(), improvement=FakeImprovement()
+        ))
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
         self.base_url = f"http://127.0.0.1:{self.server.server_port}"
@@ -78,6 +86,22 @@ class ViewerContractTests(unittest.TestCase):
         self.assertEqual(info['speed_options'], [1, 1.5, 2])
         self.assertEqual(info['base_speed'], 8)
         self.assertEqual(info['fps'], 60)
+
+    def test_improvement_endpoint_and_media_are_independent_of_original_playback(self):
+        with urlopen(f'{self.base_url}/api/improvement', timeout=3) as response:
+            self.assertEqual(json.load(response)["schema_version"], 1)
+        request = Request(f'{self.base_url}/improvement/videos/test.mp4', headers={"Range": "bytes=2-5"})
+        with urlopen(request, timeout=3) as response:
+            self.assertEqual(response.status, 206)
+            self.assertEqual(response.read(), b"2345")
+        request = Request(f'{self.base_url}/improvement/videos/test.mp4', method="HEAD")
+        with urlopen(request, timeout=3) as response:
+            self.assertEqual(response.headers["Accept-Ranges"], "bytes")
+            self.assertEqual(response.read(), b"")
+        with self.assertRaises(HTTPError) as caught:
+            urlopen(f'{self.base_url}/improvement/overview.mp4', timeout=3)
+        self.assertEqual(caught.exception.code, 404)
+        self.assertEqual(self.session.reset_calls, 0)
 
     def test_video_range_and_head_support_native_seeking(self):
         request = Request(f'{self.base_url}/playback/overview.mp4', headers={'Range': 'bytes=2-5'})

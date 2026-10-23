@@ -184,6 +184,7 @@ def _make_handler(
     structural: Any = None,
     structural_scene: Any = None,
     joint_load: dict[str, Any] | None = None,
+    improvement: Any = None,
 ) -> type[BaseHTTPRequestHandler]:
     class ViewerHandler(BaseHTTPRequestHandler):
         server_version = "RBY1TrayViewer/0.1"
@@ -198,6 +199,11 @@ def _make_handler(
                 return
             if request.path == "/api/playback":
                 self._send_json(HTTPStatus.OK, playback.info() if playback else {"enabled": False})
+                return
+            if request.path == "/api/improvement":
+                self._send_json(HTTPStatus.OK, improvement.info() if improvement else {
+                    "enabled": False, "error": "개선 실험 자료가 아직 연결되지 않았습니다."
+                })
                 return
             if request.path == "/api/structural":
                 self._send_json(
@@ -230,6 +236,9 @@ def _make_handler(
                 return
             if request.path.startswith("/playback/"):
                 self._serve_playback(request.path)
+                return
+            if request.path.startswith("/improvement/"):
+                self._serve_playback(request.path, source=improvement, prefix="/improvement/")
                 return
             if request.path.startswith("/structural/"):
                 self._serve_structural(request.path)
@@ -292,6 +301,8 @@ def _make_handler(
             request = urlsplit(self.path)
             if request.path.startswith("/playback/"):
                 self._serve_playback(request.path, head_only=True)
+            elif request.path.startswith("/improvement/"):
+                self._serve_playback(request.path, head_only=True, source=improvement, prefix="/improvement/")
             elif request.path.startswith("/structural-scene/"):
                 self._serve_structural_scene(request.path, head_only=True)
             elif request.path in {"/structural-scene.js", "/structural-diagnostics.js"}:
@@ -344,8 +355,10 @@ def _make_handler(
             if not head_only:
                 self.wfile.write(body)
 
-        def _serve_playback(self, request_path: str, head_only: bool = False) -> None:
-            asset = playback.asset(request_path.removeprefix("/playback/")) if playback else None
+        def _serve_playback(self, request_path: str, head_only: bool = False,
+                            source: Any = None, prefix: str = "/playback/") -> None:
+            provider = playback if prefix == "/playback/" else source
+            asset = provider.asset(request_path.removeprefix(prefix)) if provider else None
             if asset is None:
                 self.send_error(HTTPStatus.NOT_FOUND)
                 return
@@ -509,9 +522,13 @@ def serve(
     from .joint_overlay import joint_load_metadata
 
     joint_load = joint_load_metadata(session)
+    from .improvement_evidence import load_improvement_assets
+    improvement = load_improvement_assets(
+        Path(__file__).resolve().parents[2] / "evidence" / "improvement"
+    )
     server = HTTPServer(
         (host, port),
-        _make_handler(session, playback, structural, structural_scene, joint_load),
+        _make_handler(session, playback, structural, structural_scene, joint_load, improvement),
     )
     print(f"RB-Y1 Tray Lab: http://{host}:{server.server_port}")
     try:

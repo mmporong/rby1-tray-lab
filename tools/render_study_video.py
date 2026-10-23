@@ -148,6 +148,7 @@ def render_study_video(
 
         def capture() -> None:
             nonlocal frame_count
+            assert session is not None
             frame = session.render(
                 width=WIDTH,
                 height=HEIGHT,
@@ -194,7 +195,7 @@ def render_study_video(
         if sources_after != sources_before:
             raise RuntimeError("source changed during study video rendering")
         case = case_name or run.name.split("__", 1)[0]
-        profile = profile_name or (run.name.split("__", 1)[1] if "__" in run.name else "unspecified")
+        profile = profile_name or (run.name.split("__")[1] if "__" in run.name else "unspecified")
         manifest = {
             "schema_version": 1,
             "provenance_statement": "fresh deterministic MobileSession rerun of the source config; not trace interpolation",

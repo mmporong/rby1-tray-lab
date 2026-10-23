@@ -16,12 +16,13 @@
     [hidden] { display: none !important; }
     body { margin: 0; min-width: 300px; background: var(--void); color: var(--text); }
     button, select { font: inherit; }
-    button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+    button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible, a:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
     .shell { width: min(1680px, 100%); margin: 0 auto; padding: 18px; }
     .shell > header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 5px 3px 17px; }
     .eyebrow { margin: 0 0 6px; color: var(--cyan); font: 750 .69rem/1 ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; }
     h1 { margin: 0; font-size: clamp(1.55rem, 2.5vw, 2.35rem); font-weight: 730; letter-spacing: -.045em; }
     .subtitle { max-width: 690px; margin: 7px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.5; }
+    .study-jump { display: inline-flex; align-items: center; min-height: 44px; margin-top: 5px; color: var(--cyan); font-size: .8rem; font-weight: 700; text-underline-offset: 3px; }
     .condition { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
     .badge { border: 1px solid var(--line); background: var(--graphite); color: #465e73; padding: 7px 10px; font: 680 .7rem/1 ui-monospace, monospace; }
     .layout, .content-column { display: grid; min-width: 0; width: 100%; grid-template-columns: minmax(0, 1fr); gap: 14px; }
@@ -191,13 +192,50 @@
     .stress-settings { min-width: 0; padding: 16px; }
     .analysis-controls .structural-view-tabs { margin: 8px 0; }
     .analysis-controls summary { min-height: 44px; display: list-item; font-size: .72rem; }
+    .improvement-study { overflow: hidden; }
+    .improvement-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 20px; border-bottom: 1px solid var(--line); background: linear-gradient(135deg,#ffffff 0%,#f2f8fa 100%); }
+    .improvement-header h2 { margin: 0; font-size: clamp(1.15rem,2vw,1.55rem); letter-spacing: -.025em; }
+    .improvement-header p { max-width: 780px; margin: 7px 0 0; color: var(--muted); font-size: .78rem; line-height: 1.55; }
+    .assessment-badge { flex: none; border: 1px solid #aebdca; background: #ffffff; color: #465e73; padding: 9px 12px; font-size: .72rem; font-weight: 750; }
+    .assessment-badge.passed { border-color: #8fc4aa; background: #edf8f2; color: var(--green); }
+    .assessment-badge.partial { border-color: #d6ba86; background: #fff8e8; color: var(--amber); }
+    .assessment-badge.incomplete, .assessment-badge.is-error { border-color: #d7aaa5; background: #fff3f2; color: var(--red); }
+    .improvement-state { margin: 16px 20px; border-left: 3px solid var(--cyan); background: #f2f8fa; color: #354f65; padding: 11px 13px; font-size: .76rem; line-height: 1.55; }
+    .improvement-state.is-error { border-left-color: var(--red); background: #fff3f2; color: #8f2b23; }
+    .study-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; padding: 0 20px 20px; }
+    .study-card { min-width: 0; border: 1px solid var(--line); background: #ffffff; padding: 15px; }
+    .study-card h3 { margin: 0; color: #263e53; font-size: .85rem; }
+    .study-card > p { margin: 6px 0 12px; color: var(--muted); font-size: .68rem; line-height: 1.5; }
+    .study-metrics { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; margin: 0 0 12px; }
+    .study-metric { min-width: 0; background: #f4f7fa; padding: 9px; }
+    .study-metric dt { color: var(--muted); font-size: .6rem; line-height: 1.35; }
+    .study-metric dd { margin: 5px 0 0; overflow-wrap: anywhere; color: #263e53; font: 720 .76rem/1.4 ui-monospace,monospace; }
+    .study-table-wrap { max-width: 100%; overflow-x: auto; border: 1px solid var(--line); }
+    .study-table { width: 100%; min-width: 410px; border-collapse: collapse; color: #354f65; font-size: .65rem; line-height: 1.45; }
+    .study-table caption { padding: 8px; color: var(--muted); text-align: left; }
+    .study-table th, .study-table td { padding: 8px; border-top: 1px solid var(--line); text-align: right; white-space: nowrap; }
+    .study-table th:first-child, .study-table td:first-child { text-align: left; white-space: normal; }
+    .study-note { margin: 10px 0 0 !important; border-left: 2px solid #9fb2c1; padding-left: 9px; color: #465e73 !important; }
+    .evidence-videos { padding: 0 20px 20px; }
+    .evidence-videos h3 { margin: 0 0 5px; font-size: .88rem; }
+    .evidence-videos > p { margin: 0 0 11px; color: var(--muted); font-size: .68rem; line-height: 1.5; }
+    .evidence-video-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+    .evidence-video { min-width: 0; margin: 0; border: 1px solid var(--line); background: #f4f7fa; }
+    .evidence-video video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #e9eff4; object-fit: contain; }
+    .evidence-video figcaption { padding: 10px 12px; color: #354f65; font-size: .68rem; line-height: 1.5; }
+    .evidence-video figcaption strong, .evidence-video figcaption span { display: block; }
+    .evidence-video figcaption span { margin-top: 3px; color: var(--muted); }
+    .improvement-provenance { margin: 0 20px 20px; border: 1px solid var(--line); }
+    .improvement-provenance summary { border: 0; }
+    .provenance-list { display: grid; gap: 7px; margin: 0; padding: 0 14px 14px; list-style: none; color: #506478; font: .64rem/1.5 ui-monospace,monospace; }
+    .provenance-list li { overflow-wrap: anywhere; }
     @media (max-width: 1100px) { .sensor-grid { grid-template-columns: 1fr; } }
     @media (max-width: 880px) { .analysis-controls { grid-template-columns: 1fr; } .joint-load-card { border-left: 0; border-top: 1px solid var(--line); } }
     @media (max-width: 680px) { .panel-heading { align-items: flex-start; flex-direction: column; } .toolbar .camera-readout { text-align: left; } .controls select { flex: 1; } }
     @media (max-width: 1200px) { .structural-load-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 1050px) { .shell > header { align-items: flex-start; flex-direction: column; } .condition { justify-content: flex-start; } aside { grid-template-columns: 1fr 1fr; } aside .result-panel { grid-column: 1 / -1; } }
+    @media (max-width: 1050px) { .shell > header { align-items: flex-start; flex-direction: column; } .condition { justify-content: flex-start; } aside { grid-template-columns: 1fr 1fr; } aside .result-panel { grid-column: 1 / -1; } .study-grid { grid-template-columns: 1fr; } }
     @media (max-width: 880px) { .primary-grid { grid-template-columns: 1fr; } .primary-grid .stage, .primary-grid .load-media, .primary-grid .structural-media, .primary-grid .structural-canvas-wrap { height: auto; aspect-ratio: 4 / 3; min-height: 0; } }
-    @media (max-width: 680px) { .shell { padding: 10px; } .stage { min-height: 0; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(3, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-row { grid-template-columns: 1fr; } .sensor-row-header { grid-column: auto; } .sensor-media img, .sensor-row.expanded .sensor-media img { height: auto; aspect-ratio: 16 / 9; } aside { grid-template-columns: 1fr; } aside .result-panel, aside > .panel:last-child { grid-column: auto; } }
+    @media (max-width: 680px) { .shell { padding: 10px; } .stage { min-height: 0; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(3, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-row { grid-template-columns: 1fr; } .sensor-row-header { grid-column: auto; } .sensor-media img, .sensor-row.expanded .sensor-media img { height: auto; aspect-ratio: 16 / 9; } aside { grid-template-columns: 1fr; } aside .result-panel, aside > .panel:last-child { grid-column: auto; } .improvement-header { flex-direction: column; padding: 16px; } .study-grid, .evidence-videos { padding-right: 16px; padding-left: 16px; } .evidence-video-grid { grid-template-columns: 1fr; } .improvement-state, .improvement-provenance { margin-right: 16px; margin-left: 16px; } }
     @media (max-width: 680px) { .joint-load-top { grid-template-columns: 1fr; } }
     @media (max-width: 680px) { .sensor-row.expanded .sensor-media { overflow-x: auto; } .sensor-row.expanded .sensor-media img { width: 640px; height: auto; max-width: none; aspect-ratio: auto; } }
     @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
@@ -210,6 +248,7 @@
         <p class="eyebrow">MuJoCo · Bimanual manipulation cell</p>
         <h1>RB-Y1 적재 트레이 이송</h1>
         <p class="subtitle">바닥의 자유 강체 트레이를 양손으로 파지해 적재물을 유지하고, 높은 컨테이너에 안착한 뒤 후진해 출발 위치와 모델 기본 자세로 복귀합니다.</p>
+        <a class="study-jump" href="#improvementStudy">개선 전후 검증 보기 ↓</a>
       </div>
       <div class="condition" aria-label="실험 조건">
         <span id="backendBadge" class="badge">CPU MuJoCo</span><span id="baseBadge" class="badge">베이스 지그 고정</span>
@@ -391,6 +430,21 @@
         </section>
         <section class="panel"><details><summary>원본 상태 JSON 보기</summary><pre id="rawState" aria-live="polite">상태를 불러오는 중…</pre></details></section>
       </aside>
+
+      <section id="improvementStudy" class="panel improvement-study" aria-labelledby="improvementTitle">
+        <header class="improvement-header">
+          <div><p class="eyebrow">PREREGISTERED COMPARISON</p><h2 id="improvementTitle">개선 전후 검증</h2><p>같은 과제·시드에서 기존 경로와 회전 형상 여유를 반영한 경로를 비교합니다. 이 표본은 구현 결함의 재현과 수정 검증을 위한 것이며, 일반 성공률을 추정하지 않습니다.</p></div>
+          <span id="improvementAssessment" class="assessment-badge">근거 불러오는 중</span>
+        </header>
+        <p id="improvementState" class="improvement-state" role="status" aria-live="polite">개선 실험 기록을 확인하고 있습니다.</p>
+        <div id="studyGrid" class="study-grid" hidden>
+          <section class="study-card" aria-labelledby="controllerStudyTitle"><h3 id="controllerStudyTitle">경로 개선 비교</h3><p>동일 조건에서 기존 경로와 형상 여유 경로의 작업 결과를 짝지어 비교합니다.</p><div id="controllerStudy"></div></section>
+          <section class="study-card" aria-labelledby="safetyStudyTitle"><h3 id="safetyStudyTitle">안전 거부 검증</h3><p>센서 안전 거부가 관측됐는지와 작업 성공 여부를 서로 다른 판정으로 표시합니다.</p><div id="safetyStudy"></div></section>
+          <section class="study-card" aria-labelledby="cooperationStudyTitle"><h3 id="cooperationStudyTitle">양팔 협조 비교</h3><p>협조 제어 유무의 짝비교입니다. 결과가 갈린 경우에만 차이가 관측됐다고 표시합니다.</p><div id="cooperationStudy"></div></section>
+        </div>
+        <section id="evidenceVideos" class="evidence-videos" aria-labelledby="evidenceVideoTitle" hidden><h3 id="evidenceVideoTitle">실패·개선 실행 영상</h3><p>각 영상은 독립 재생됩니다. 위의 원본 동작·RGB·깊이·응력 타임라인과 연결되지 않습니다.</p><div id="evidenceVideoGrid" class="evidence-video-grid"></div></section>
+        <details id="improvementProvenance" class="improvement-provenance" hidden><summary>소스·설정 근거 보기</summary><ul id="provenanceList" class="provenance-list"></ul></details>
+      </section>
     </div>
   </main>
 
@@ -794,6 +848,105 @@
     ui.structuralViewButtons.forEach((button)=>button.addEventListener('click',()=>setStructuralView(button.dataset.structuralView)));
     ui.sensorRows.forEach((row)=>{ const toggle=()=>{ const expand=!row.classList.contains('expanded'); ui.sensorRows.forEach((other)=>{other.classList.toggle('expanded',expand&&other===row); const button=other.querySelector('[data-sensor-expand]'); button.setAttribute('aria-pressed',String(expand&&other===row)); button.textContent=expand&&other===row?'축소':'확대';}); }; row.querySelector('[data-sensor-expand]').addEventListener('click',toggle); row.querySelectorAll('.sensor-media').forEach((figure)=>figure.addEventListener('click',toggle)); });
     ui.raw.closest('details').addEventListener('toggle',()=>{if(currentState&&ui.raw.closest('details').open)ui.raw.textContent=JSON.stringify(currentState,null,2);});
+
+    const improvementUi={
+      assessment:$('improvementAssessment'),state:$('improvementState'),grid:$('studyGrid'),controller:$('controllerStudy'),safety:$('safetyStudy'),cooperation:$('cooperationStudy'),
+      videos:$('evidenceVideos'),videoGrid:$('evidenceVideoGrid'),provenance:$('improvementProvenance'),provenanceList:$('provenanceList')
+    };
+    const caseLabels={
+      nominal:'기준 조건','depth-noise-0.003-dropout-0.03':'깊이 잡음·누락','payload-mass-scale-1.2':'적재 질량 1.2배',
+      'tray-yaw-0.035':'트레이 회전 +2.0°','tray-yaw-minus-0.035':'트레이 회전 −2.0°','tray-yaw-0.025-heldout':'미사용 검증 +1.4°',
+      'rgbd-stale-0.15':'오래된 RGB-D','calibration-bias-0.005':'카메라 외부 보정 편향 +5 mm'
+    };
+    function makeElement(tag,className,text){const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;}
+    function finiteValue(value){if(value===null||value===undefined||value==='')return null;const number=Number(value);return Number.isFinite(number)?number:null;}
+    function formatOptional(value,digits=3,suffix=''){const number=finiteValue(value);return number===null?'—':`${formatNumber(number,digits)}${suffix}`;}
+    function mean(values){const numbers=values.map(finiteValue).filter((value)=>value!==null);return numbers.length?numbers.reduce((sum,value)=>sum+value,0)/numbers.length:null;}
+    function addMetric(container,label,value){const item=makeElement('div','study-metric');const term=makeElement('dt','',label),description=makeElement('dd','',value);item.append(term,description);container.append(item);}
+    function makeTable(caption,headers,rows){
+      const wrap=makeElement('div','study-table-wrap'),table=makeElement('table','study-table'),tableCaption=makeElement('caption','',caption),head=document.createElement('thead'),headRow=document.createElement('tr'),body=document.createElement('tbody');
+      headers.forEach((label)=>{const cell=makeElement('th','',label);cell.scope='col';headRow.append(cell);});head.append(headRow);
+      rows.forEach((values)=>{const row=document.createElement('tr');values.forEach((value,index)=>{const cell=makeElement(index?'td':'th','',value);if(!index)cell.scope='row';row.append(cell);});body.append(row);});
+      table.append(tableCaption,head,body);wrap.append(table);return wrap;
+    }
+    function completedRuns(summary){return Array.isArray(summary?.runs)?summary.runs.filter((run)=>run?.execution_status==='completed'):[];}
+    function profileCounts(runs,profile){const selected=runs.filter((run)=>run.controller_profile===profile);return {total:selected.length,success:selected.filter((run)=>run.success===true).length};}
+    function runMetric(run,key){return run?.[key]??run?.stability_metrics?.[key]??null;}
+    function renderControllerStudy(summary){
+      const runs=completedRuns(summary),metrics=makeElement('dl','study-metrics'),paired=summary?.paired_controller_profiles||{};
+      const baseline=profileCounts(runs,'legacy'),candidate=profileCounts(runs,'geometry_clearance');
+      addMetric(metrics,'기존 경로 성공',baseline.total?`${baseline.success} / ${baseline.total}`:'—');
+      addMetric(metrics,'형상 여유 경로 성공',candidate.total?`${candidate.success} / ${candidate.total}`:'—');
+      addMetric(metrics,'완성된 짝비교',formatOptional(paired.complete_pairs,0));
+      const delta=finiteValue(paired.paired_success_delta);
+      addMetric(metrics,'짝비교 성공 차이',delta===null?'—':`${delta>0?'+':''}${formatNumber(delta,0)}건`);
+      const cases=[...new Set(runs.map((run)=>String(run.case)))].sort();
+      const rows=cases.map((name)=>{const caseRuns=runs.filter((run)=>String(run.case)===name);const legacy=profileCounts(caseRuns,'legacy'),geometry=profileCounts(caseRuns,'geometry_clearance');return [caseLabels[name]||name,legacy.total?`${legacy.success}/${legacy.total}`:'—',geometry.total?`${geometry.success}/${geometry.total}`:'—'];});
+      const successfulBaseline=runs.filter((run)=>run.controller_profile==='legacy'&&run.success===true&&runs.some((other)=>other.controller_profile==='geometry_clearance'&&other.case===run.case&&other.seed===run.seed&&other.success===true));
+      const successfulCandidate=runs.filter((run)=>run.controller_profile==='geometry_clearance'&&run.success===true&&successfulBaseline.some((other)=>other.case===run.case&&other.seed===run.seed));
+      const detail=makeElement('dl','study-metrics');
+      addMetric(detail,`둘 다 성공한 ${successfulBaseline.length}쌍 평균 시간`,`${formatOptional(mean(successfulBaseline.map((run)=>run.simulation_time_s)),2,' s')} → ${formatOptional(mean(successfulCandidate.map((run)=>run.simulation_time_s)),2,' s')}`);
+      addMetric(detail,'최대 트레이 기울기',`${formatOptional(Math.max(...successfulBaseline.map((run)=>finiteValue(runMetric(run,'max_tray_tilt_rad'))).filter((v)=>v!==null)),4,' rad')} → ${formatOptional(Math.max(...successfulCandidate.map((run)=>finiteValue(runMetric(run,'max_tray_tilt_rad'))).filter((v)=>v!==null)),4,' rad')}`);
+      addMetric(detail,'최대 적재물 상대 변위',`${formatOptional(Math.max(...successfulBaseline.map((run)=>finiteValue(runMetric(run,'max_payload_to_tray_displacement_m'))).filter((v)=>v!==null)),4,' m')} → ${formatOptional(Math.max(...successfulCandidate.map((run)=>finiteValue(runMetric(run,'max_payload_to_tray_displacement_m'))).filter((v)=>v!==null)),4,' m')}`);
+      addMetric(detail,'후보 최대 관절 토크',formatOptional(Math.max(...successfulCandidate.map((run)=>finiteValue(run.max_joint_torque_nm)).filter((v)=>v!==null)),2,' N·m'));
+      const note=makeElement('p','study-note','시간·기울기·변위·토크는 둘 다 성공한 같은 조건만 비교합니다. 실패 종료시간은 완료시간에 합치지 않습니다. 상승 중 접촉은 20 ms 기록 표본을 재구성해 검사하며, 표본 사이의 무접촉까지 보증하지 않습니다. 경로는 등록된 컨테이너 지도와 RGB-D 보정에 의존합니다.');
+      improvementUi.controller.replaceChildren(metrics,rows.length?makeTable('케이스별 작업 성공 수',['조건','기존 경로','형상 여유 경로'],rows):makeElement('p','study-note','완료된 실행이 없습니다.'),detail,note);
+    }
+    function renderSafetyStudy(summary){
+      const allRuns=Array.isArray(summary?.runs)?summary.runs:[],completed=completedRuns(summary),expected=summary?.expected_rejections||{},metrics=makeElement('dl','study-metrics');
+      addMetric(metrics,'기대 거부 관측',finiteValue(expected.sample_size)===null?'—':`${formatOptional(expected.observed,0)} / ${formatOptional(expected.sample_size,0)}`);
+      addMetric(metrics,'작업 성공',completed.length?`${completed.filter((run)=>run.success===true).length} / ${completed.length}`:'—');
+      const rows=allRuns.map((run)=>{
+        const expectedCase=run.expected_rejection_observed!==null&&run.expected_rejection_observed!==undefined||String(run.expected_outcome||'').includes('rejection'),rejection=expectedCase?(run.expected_rejection_observed===true?'보호 거부 확인':run.expected_rejection_observed===false?'보호 거부 미확인':'판정 없음'):'기대 거부 아님';
+        const task=run.execution_status!=='completed'?`실행 오류 · ${run.execution_status||'상태 없음'}`:run.success===true?'작업 성공':`작업 실패 · ${run.failure_reason||run.mission_failure?.reason||'조건 미충족'}`;
+        return [caseLabels[String(run.case)]||String(run.case),rejection,task];
+      });
+      const note=makeElement('p','study-note','센서 이상을 감지해 작업을 멈춘 결과는 안전 거부 판정으로 따로 집계합니다. 작업 성공으로 바꾸어 세지 않습니다.');
+      improvementUi.safety.replaceChildren(metrics,rows.length?makeTable('안전 거부와 작업 결과',['조건','안전 판정','작업 판정'],rows):makeElement('p','study-note','안전성 실행 기록이 없습니다.'),note);
+    }
+    function renderCooperationStudy(summary,effect){
+      const paired=summary?.paired_cooperation||{},metrics=makeElement('dl','study-metrics');
+      addMetric(metrics,'완성된 짝비교',formatOptional(paired.complete_pairs,0));
+      addMetric(metrics,'둘 다 성공',formatOptional(paired.both_success,0));
+      addMetric(metrics,'협조 제어만 성공',formatOptional(paired.cooperation_only_success,0));
+      addMetric(metrics,'협조 해제만 성공',formatOptional(paired.no_cooperation_only_success,0));
+      const coopOnly=finiteValue(paired.cooperation_only_success),plainOnly=finiteValue(paired.no_cooperation_only_success);let finding='성공·실패 결과 차이는 확인되지 않았습니다. 속도·안정성 수치는 별도로 해석해야 합니다.';
+      if((coopOnly||0)>0||(plainOnly||0)>0)finding=`짝비교에서 협조 제어만 성공 ${coopOnly||0}건, 협조 해제만 성공 ${plainOnly||0}건이 관측됐습니다.`;
+      const note=makeElement('p','study-note',finding);
+      const costs=makeElement('dl','study-metrics'),deltas=effect?.metric_deltas||{};
+      for(const [key,label,digits,unit] of [['task_time_s','완료시간 차이',3,' s'],['max_tray_tilt_rad','최대 기울기 차이',5,' rad'],['max_payload_to_tray_displacement_m','적재물 상대 변위 차이',5,' m'],['max_bimanual_relative_position_error_m','양손 상대 위치 오차 차이',6,' m'],['max_bimanual_relative_orientation_error_rad','양손 상대 방향 오차 차이',6,' rad'],['max_joint_torque_nm','최대 토크 차이',3,' N·m']]){
+        const delta=deltas[key];addMetric(costs,`${label} · ${delta?.n??0}쌍`,formatOptional(delta?.mean,digits,unit));
+      }
+      const scope=makeElement('p','study-note','차이 = 협조 감속 사용 − 해제. 둘 다 성공한 동일 조건·seed 쌍의 평균입니다. 양수는 증가, 음수는 감소를 뜻하며 완료시간과 안정성의 비용을 함께 봅니다.');
+      improvementUi.cooperation.replaceChildren(metrics,note,costs,scope);
+    }
+    function renderEvidenceVideos(videos){
+      improvementUi.videoGrid.replaceChildren();
+      videos.forEach((item)=>{
+        const figure=makeElement('figure','evidence-video'),video=document.createElement('video'),caption=document.createElement('figcaption'),title=makeElement('strong','',item.label||`${caseLabels[String(item.case)]||item.case||'실행'} · ${item.profile||'프로필 없음'}`);
+        video.controls=true;video.preload='metadata';video.playsInline=true;video.src=String(item.url||'');video.setAttribute('aria-label',`${title.textContent} 실행 영상`);
+        const outcome=item.success===true?'성공':item.success===false?'실패':'결과 미기재';
+        const meta=makeElement('span','',`${caseLabels[String(item.case)]||item.case||'조건 없음'} · 시드 ${item.seed??'—'} · ${outcome} · 표시 1× = 물리 ${formatOptional(item.playback_speed,0,'×')}`);
+        video.addEventListener('error',()=>{meta.textContent=`${meta.textContent} · 영상을 불러오지 못했습니다.`;});caption.append(title,meta);figure.append(video,caption);improvementUi.videoGrid.append(figure);
+      });
+      improvementUi.videos.hidden=videos.length===0;
+    }
+    function renderProvenance(info){
+      const entries=[];if(info.provenance?.source_commit)entries.push(`비교 소스 커밋 · ${info.provenance.source_commit}`);
+      (Array.isArray(info.videos)?info.videos:[]).forEach((video)=>{if(video.source_commit||video.config_sha256)entries.push(`${video.label||video.case||'영상'} · source ${video.source_commit||'—'} · config ${video.config_sha256||'—'}`);});
+      improvementUi.provenanceList.replaceChildren(...entries.map((entry)=>makeElement('li','',entry)));improvementUi.provenance.hidden=entries.length===0;
+    }
+    async function initializeImprovement(){
+      try{
+        const info=await request('/api/improvement');
+        if(info?.enabled!==true){improvementUi.assessment.textContent='검증 근거 없음';improvementUi.assessment.className='assessment-badge incomplete';improvementUi.state.textContent=info?.error||'개선 실험 근거가 아직 준비되지 않았습니다.';return;}
+        if(info.schema_version!==1||!info.assessment||!info.studies?.improvement||!info.studies?.safety||!info.studies?.cooperation)throw new Error('개선 실험 응답 형식이 맞지 않습니다.');
+        const status=['passed','partial','incomplete'].includes(info.assessment.status)?info.assessment.status:'incomplete';
+        improvementUi.assessment.textContent=info.assessment.label||({passed:'검증 통과',partial:'일부 검증',incomplete:'검증 미완료'}[status]);improvementUi.assessment.className=`assessment-badge ${status}`;
+        improvementUi.state.textContent=info.assessment.summary||'평가 설명이 제공되지 않았습니다.';improvementUi.grid.hidden=false;
+        renderControllerStudy(info.studies.improvement);renderSafetyStudy(info.studies.safety);renderCooperationStudy(info.studies.cooperation,info.cooperation_effect);renderEvidenceVideos(Array.isArray(info.videos)?info.videos:[]);renderProvenance(info);
+      }catch(error){improvementUi.assessment.textContent='검증 근거 오류';improvementUi.assessment.className='assessment-badge is-error';improvementUi.state.textContent=`개선 실험 기록을 표시하지 못했습니다. ${error.message}`;improvementUi.state.classList.add('is-error');improvementUi.grid.hidden=true;improvementUi.videos.hidden=true;improvementUi.provenance.hidden=true;}
+    }
     document.addEventListener('visibilitychange', () => { if (document.hidden) stopPlayback(); });
     async function initialize() {
       ui.play.disabled=true;setControlsBusy(true);
@@ -817,6 +970,7 @@
       finally{ui.play.disabled=false;setControlsBusy(false);}
     }
     initialize();
+    initializeImprovement();
   </script>
 </body>
 </html>
