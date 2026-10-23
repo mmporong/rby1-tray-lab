@@ -125,12 +125,30 @@
     "tools/build_whole_structural.py": "fc1ca396a5ea106032cb8189e734644660822b937088c99fa63fc5fe562c9e62",
     "tools/build_structural_basis.py": "3d387dd97ce8acc5ebf2e7fbed00204c4587be92a29164fd86bea9467f4d1ead",
     "src/rby1_tray/section_stress.py": "122db397000253321687d022812fa1bbca339d5aa29217e2354c4ed0b82b9df2",
-    "src/rby1_tray/structural_basis.py": "ece117b77ea6fe926cd0846d6e85382996ba1bda01fdd3a768ba39124d634800"
+    "src/rby1_tray/structural_basis.py": "ece117b77ea6fe926cd0846d6e85382996ba1bda01fdd3a768ba39124d634800",
+    "src/rby1_tray/structural_scene.py": "bbb628f381987991ad5817966d69061a25ac08528ed67009e4d890a23b970e3b",
+    "src/rby1_tray/web/structural-scene.js": "cca0e8726ca0608a42646ec98a5bf3adaafe56ead0655abc9201f1e548e33001",
+    "src/rby1_tray/web/index.html": "4fd5caed025f8d58d39b704f2734203825bf804316686110f4ffb9050190cf8c",
+    "src/rby1_tray/viewer.py": "63529322ce3a97078f6e1b75dceff6c059d4ebea21e3a54fe017dc047ca523e7",
+    "src/rby1_tray/cli.py": "59cff8ee78465fba481bec3fb20ed25604ec168e564ccca3bc2310d5e140df6e",
+    "tests/test_section_stress.py": "9be052f2b4eb5f87774c0cd2dd5f7948b0bc9482b3907ebb23fde1016e02d9f1",
+    "tests/test_structural_scene.py": "abe37f966b9e625cba8772165b47d4f539f700ee4faea414b3bdf02befba9402",
+    "tests/test_structural_basis.py": "f58b1037b1ed4c8f732a5ed997de2e94a62a351796c15c80d02897e434ed6ab2",
+    "pyproject.toml": "8ea2b2621b8f0cd38440b31f50192ca016a153b607243a3c433204551429d71d"
   },
   "browser_qa": "PASS: evidence/structural-whole/browser-qa.json",
   "packaging": {
     "wheel_build": "PASS",
     "html_js_packaged_exact_source_match": true,
     "wheel_sha256": "f7414b301c525aefd4ff18c756cb2976a63af9a4321d79997d08016f732614ac"
+  },
+  "implementation_source_commit": "db0fef4884f53a13b5f802681454b41da43422cb",
+  "independent_review": {
+    "role": "code-reviewer",
+    "verdict": "APPROVE",
+    "remaining_findings": 0,
+    "full_suite_passed": 196,
+    "full_suite_elapsed_s": 33.996,
+    "scope": "19 changed/new files plus actual local manifest/buffers, tensor/section mathematics, security, browser QA and documentation"
   }
 }
