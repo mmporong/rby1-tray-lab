@@ -174,5 +174,6 @@
     "html_ids_unique": 78,
     "browser_qa": "evidence/structural-whole/browser-qa.json#front_refinement",
     "current_full_suite": "PASS: 217 tests in 33.473 s"
-  }
+  },
+  "implementation_source_commit": "c6da06f7ba1d009d92ccc28972da7fb143d5d7c2"
 }
