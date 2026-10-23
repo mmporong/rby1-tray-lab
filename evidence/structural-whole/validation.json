@@ -149,14 +149,14 @@
     "html_js_packaged_exact_source_match": true,
     "wheel_sha256": "70f6b5f104758a7ebfed380efb5e9f92440eddb1c7cb6e55b7d859a2f3c53603"
   },
-  "implementation_source_commit": "db0fef4884f53a13b5f802681454b41da43422cb",
+  "implementation_source_commit": "ef7bd8bb71c5224067b65f8e78a737d89a01a3cf",
   "independent_review": {
     "role": "code-reviewer",
     "verdict": "APPROVE",
     "remaining_findings": 0,
     "full_suite_passed": 211,
     "full_suite_elapsed_s": 34.014,
-    "scope": "19 changed/new files plus actual local manifest/buffers, tensor/section mathematics, security, browser QA and documentation"
+    "scope": "default split layout, stress/wrench mechanisms, G/E/I accounting, actual 5-asset bundle, metadata security, numerical regressions and UI evidence"
   },
   "load_diagnostics": {
     "maximum_matched_physical_defined_field_difference": 0.0,
