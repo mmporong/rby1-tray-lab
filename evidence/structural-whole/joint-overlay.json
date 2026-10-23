@@ -593,7 +593,8 @@
     "surface": "separate stress MPa color scale",
     "world_anchor": "recorded body pose * model.jnt_pos",
     "cad_detail": "Joint leader lines omitted; global 20-joint recorded numerical list retained.",
-    "joint_callout": "No joint circles. Top 3 load joints use leader lines and % / signed Nm labels; canvas width <500px uses top 1. Selected part uses its joint only. All 20 values remain in the foldable table and numeric percentages remain unclamped."
+    "joint_callout": "No joint circles. Top 3 load joints use leader lines and % / signed Nm labels; canvas width <500px uses top 1. Selected part uses its joint only. All 20 values remain in the foldable table and numeric percentages remain unclamped.",
+    "force_moment_annotations": "Force/moment arrows, model axes and their English letter labels are omitted. Numeric wrench diagnostics and Korean peak-point leaders remain."
   },
   "limits": [
     "Model actuator limits, not hardware ratings or safety factors.",

@@ -209,7 +209,7 @@
       "Existing original four binary files unchanged; only auxiliary diagnostic data and presentation changed."
     ]
   },
-  "current_ui": "front_refinement",
+  "current_ui": "clean_model_annotations",
   "front_refinement": {
     "request": "joint circles removed; leader lines only; aligned media and compact UI",
     "default_mode": "original / stress + joint load",
@@ -342,6 +342,61 @@
         44
       ]
     },
-    "console_errors_and_warnings_after_final_reload": 0
+    "console_errors_and_warnings_after_final_reload": 0,
+    "captured_source_commit": "c6da06f7ba1d009d92ccc28972da7fb143d5d7c2"
+  },
+  "clean_model_annotations": {
+    "removed": [
+      "force arrow",
+      "moment rotation arrow",
+      "x/y/z model axes",
+      "F/M model labels",
+      "vector legend"
+    ],
+    "whole": {
+      "wrench_text": [],
+      "joint_callouts": 3,
+      "frame_index": 0,
+      "joint_frame_index": 0
+    },
+    "selected_right_arm_4": {
+      "markers": 0,
+      "arrow_endpoints": 0,
+      "remaining_wrench_text": [
+        "최대점"
+      ],
+      "joint_callouts": 1
+    },
+    "fem_cutaway": {
+      "arrow_endpoints": 0,
+      "remaining_wrench_text": [
+        "최대점"
+      ],
+      "joint_callouts": 0
+    },
+    "running_sample": {
+      "sync_video_time_s": 16.283333,
+      "expected_frame_index": 977,
+      "stress_frame_index": 977,
+      "joint_frame_index": 977,
+      "markers": 0,
+      "wrench_text": [],
+      "paused": false
+    },
+    "numerical_loads_preserved_at_frame0": [
+      "-11.41 N",
+      "648.52 N",
+      "5.472 N·m",
+      "5.354 N·m"
+    ],
+    "final_settled": {
+      "paused": true,
+      "video_time_s": 0,
+      "frame_index": 0,
+      "joint_frame_index": 0,
+      "scroll_y": 0
+    },
+    "console_errors_and_warnings": 0,
+    "limit": "Finite desktop UI observations; previous responsive/keyboard checks retained at their recorded source commit."
   }
 }

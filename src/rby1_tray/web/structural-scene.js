@@ -52,7 +52,6 @@
     frame[offset],frame[offset+1],frame[offset+2],1,
   ]);
   const transform = (m,p) => [m[0]*p[0]+m[4]*p[1]+m[8]*p[2]+m[12],m[1]*p[0]+m[5]*p[1]+m[9]*p[2]+m[13],m[2]*p[0]+m[6]*p[1]+m[10]*p[2]+m[14]];
-  const applyBasis = (b,p) => [b[0]*p[0]+b[1]*p[1]+b[2]*p[2],b[3]*p[0]+b[4]*p[1]+b[5]*p[2],b[6]*p[0]+b[7]*p[1]+b[8]*p[2]];
   const fmt = (value,digits=2) => Number(value).toLocaleString('ko-KR',{maximumFractionDigits:digits,minimumFractionDigits:digits});
   const stressText = (value) => Math.abs(value)<1e4?`${fmt(value/1e3)} kPa`:`${fmt(value/1e6,3)} MPa`;
   const componentOptions = {total:'합성 등가응력',axial:'축력만 · |σN|',bending:'굽힘만 · |σB|',shear:'횡전단만 · √3|τV|',torsion:'비틀림만 · √3|τT|',normaldev:'법선 편차 성분',femshear:'좌표축 전단 성분'};
@@ -260,21 +259,19 @@
       else if(!fem&&selected){const sample=this.sectionPeak(part,force,moment),metrics=d.sectionPoint(sample.q,force,moment,part.section);point=sample.point;this.fields.point.textContent=`표시 외피의 합성 VM 최대점 · 단면 [${sample.q.map(x=>fmt(x*1000,1)).join(', ')}] mm · ${stressText(metrics.total_pa)}`;this.fields.components.textContent=`같은 점의 부호 있는 법선응력: 축력 ${stressText(metrics.axial_pa)} + 굽힘 ${stressText(metrics.bending_pa)}. 단독 등가응력: 횡전단 ${stressText(metrics.shear_vm_pa)} · 비틀림 ${stressText(metrics.torsion_vm_pa)}.`;this.fields.properties.textContent=`가정 단면 A=${fmt(part.section.area_m2*1e6)} mm² · I=${fmt(part.section.I_m4*1e12)} mm⁴ · J=${fmt(part.section.J_m4*1e12)} mm⁴. 횡전단 V/A는 공칭 평균이며 분포 체적력·국부 체결 응력은 복원하지 않습니다.`;}
       else{this.fields.point.textContent='목록이나 위 순위의 부품을 선택하면 같은 프레임의 상세 분해와 응력 최대점을 표시합니다.';this.fields.components.textContent='축력·굽힘은 법선응력을, 횡전단·비틀림은 전단응력을 만듭니다. 성분 선택으로 각 항의 분포를 비교할 수 있습니다.';this.fields.properties.textContent='전신은 가정 단면 추정이며 전체 CAD FEM이 아닙니다.';}
       if(peak)this.fields.properties.textContent+=` · 전 구간 합성 VM 최대 ${stressText(peak.value)} / ${fmt(this.info.frame_times_s[peak.index],3)} s`;
-      this.drawWrench(part,force,moment,projection,!selected,point);
+      this.drawPeakPoint(projection,point);
     }
 
-    drawWrench(part,force,moment,projection,whole,point) {
-      const svg=this.el.overlay;if(!svg)return;svg.replaceChildren();const ns='http://www.w3.org/2000/svg',make=(tag,attrs,text)=>{const node=document.createElementNS(ns,tag);for(const [key,value]of Object.entries(attrs))node.setAttribute(key,String(value));if(text)node.textContent=text;svg.append(node);return node;};
+    drawPeakPoint(projection,point) {
+      const svg=this.el.overlay;if(!svg)return;svg.replaceChildren();if(!point)return;
+      const w=projection[3]*point[0]+projection[7]*point[1]+projection[11]*point[2]+projection[15];if(w<=0)return;
+      const x=(projection[0]*point[0]+projection[4]*point[1]+projection[8]*point[2]+projection[12])/w*500+500,y=500-(projection[1]*point[0]+projection[5]*point[1]+projection[9]*point[2]+projection[13])/w*500;
       svg.setAttribute('viewBox','0 0 1000 1000');
-      const offset=this.frameIndex*this.info.frame_stride_floats+this.partIndex.get(part.id)*19,fem=part.kind==='fem',model=whole?poseMatrix(this.frames,offset):identity(),basis=fem?[1,0,0,0,1,0,0,0,1]:part.section.basis_body,origin=fem?[0,0,0]:part.section.origin_body_m,bounds=fem?this.femBounds[this.femView]:this.bounds.get(part.id),length=Math.max(.01,Math.hypot(...bounds.max.map((x,i)=>x-bounds.min[i]))*.30);
-      const project=(p)=>{const v=transform(model,p),w=projection[3]*v[0]+projection[7]*v[1]+projection[11]*v[2]+projection[15];if(w<=0)return null;return [(projection[0]*v[0]+projection[4]*v[1]+projection[8]*v[2]+projection[12])/w*500+500,500-(projection[1]*v[0]+projection[5]*v[1]+projection[9]*v[2]+projection[13])/w*500];};
-      const o=project(origin);if(!o)return;
-      const defs=make('defs',{});for(const [id,color]of [['force','#68edf4'],['moment','#ffbd61']]){const marker=document.createElementNS(ns,'marker');marker.setAttribute('id',`load-${id}`);marker.setAttribute('viewBox','0 0 10 10');marker.setAttribute('refX','9');marker.setAttribute('refY','5');marker.setAttribute('markerWidth','7');marker.setAttribute('markerHeight','7');marker.setAttribute('orient','auto');const p=document.createElementNS(ns,'path');p.setAttribute('d','M0 0 L10 5 L0 10z');p.setAttribute('fill',color);marker.append(p);defs.append(marker);}
-      for(let i=0;i<3;i++){const axis=[0,0,0];axis[i]=length*.7;const end=project(applyBasis(basis,axis).map((v,j)=>v+origin[j]));if(end){make('line',{x1:o[0],y1:o[1],x2:end[0],y2:end[1],stroke:['#ed7474','#82d995','#8caeff'][i],'stroke-width':3});make('text',{x:end[0]+6,y:end[1]-5,fill:['#ed7474','#82d995','#8caeff'][i],'font-size':23},['x','y','z'][i]);}}
-      const normF=Math.hypot(...force);if(normF>.01){const end=project(applyBasis(basis,Array.from(force,x=>x/normF*length)).map((v,j)=>v+origin[j]));if(end){make('line',{x1:o[0],y1:o[1],x2:end[0],y2:end[1],stroke:'#68edf4','stroke-width':5,'marker-end':'url(#load-force)'});make('text',{x:end[0]+8,y:end[1]+22,fill:'#68edf4','font-size':25},'F');}}
-      const normM=Math.hypot(...moment);if(normM>.001){const axis=normalize(applyBasis(basis,Array.from(moment))),helper=Math.abs(axis[2])<.9?[0,0,1]:[0,1,0],u=normalize(cross(axis,helper)),v=cross(axis,u),points=[];for(let i=0;i<=24;i++){const angle=i/24*Math.PI*1.5,p=project(origin.map((x,j)=>x+length*.52*(Math.cos(angle)*u[j]+Math.sin(angle)*v[j])));if(p)points.push(p);}if(points.length>1){make('polyline',{points:points.map(p=>p.join(',')).join(' '),fill:'none',stroke:'#ffbd61','stroke-width':4,'marker-end':'url(#load-moment)'});make('text',{x:points[0][0]+8,y:points[0][1]-8,fill:'#ffbd61','font-size':25},'M');}}
-      if(point){const p=project(point);if(p){make('line',{x1:p[0],y1:p[1],x2:p[0]+35,y2:p[1]-35,stroke:'#dde6f2','stroke-width':2});make('text',{x:p[0]+39,y:p[1]-35,fill:'#dde6f2','font-size':21},'최대점');}}
-      if(this.el.vectorLegend)this.el.vectorLegend.textContent='F 청록 화살표 · M 주황 회전 · 축 교차점=합력 원점 · 길이는 방향 표시용 정규화';
+      const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+      for(const [key,value]of Object.entries({x1:x,y1:y,x2:x+35,y2:y-35,stroke:'#dde6f2','stroke-width':2}))line.setAttribute(key,String(value));
+      const text=document.createElementNS('http://www.w3.org/2000/svg','text');
+      for(const [key,value]of Object.entries({x:x+39,y:y-35,fill:'#dde6f2','font-size':21}))text.setAttribute(key,String(value));
+      text.textContent='최대점';svg.append(line,text);
     }
 
     drawJointOverlay(projection,selected) {
