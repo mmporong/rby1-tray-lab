@@ -1,0 +1,261 @@
+{
+  "retrieved_at": "2026-10-23",
+  "scope": "RB-Y1 structural-FEM CAD availability; no login, purchase, form submission, personal-data consent, or external message was performed.",
+  "official_cad_distribution": {
+    "product_page": "https://www.rainbow-robotics.com/en/products/rb-y1",
+    "official_contributor_confirmation": "https://github.com/RainbowRobotics/rby1-sdk/discussions/54",
+    "status": "Official Rainbow Robotics contributor stated on 2025-02-19 that the 3D CAD model is at the official download page. Current product HTML lists five 3D ZIP resources.",
+    "download_gate": {
+      "tested_unauthorized_http_status": 403,
+      "consent_required": true,
+      "required_fields": {
+        "individual": [
+          "customer type",
+          "name",
+          "email",
+          "mobile number",
+          "personal-information collection/use consent"
+        ],
+        "business": [
+          "customer type",
+          "company/organization",
+          "contact name",
+          "email",
+          "mobile number",
+          "personal-information collection/use consent"
+        ]
+      },
+      "policy_text": "Downloads are unavailable without consent.",
+      "implication": "The ZIPs were not downloaded. Their byte size, archive members, CAD format, internal geometry, material data, and any CAD-specific license are unverified."
+    },
+    "cad_specific_license": {
+      "status": "not displayed on the public download listing; do not infer Apache-2.0 from the SDK",
+      "site_terms_url": "https://rainbow-robotics.com/en/terms-of-use/"
+    },
+    "resources": [
+      {
+        "version": "V1.0",
+        "base": "Mecanum wheel typed Mobile",
+        "advertised_filename": "RB-Y1_V1.0_3D_Mecanum-wheel-typed-Mobile.zip",
+        "download_url": "https://rainbow-robotics.com/wp-admin/admin-post.php?action=rainbow_download_file&file=b00cb9a5-bee6-4be7-a993-7d1e0401182f",
+        "unauthorized_http_status": 403
+      },
+      {
+        "version": "V1.1",
+        "base": "Differential gear typed Mobile",
+        "advertised_filename": "RB-Y1_V1.1_3D_Differential-gear-typed-Mobile.zip",
+        "download_url": "https://rainbow-robotics.com/wp-admin/admin-post.php?action=rainbow_download_file&file=83f85203-fdbd-44c4-93d4-c9237c53a393",
+        "unauthorized_http_status": 403
+      },
+      {
+        "version": "V1.1",
+        "base": "Mecanum wheel typed Mobile",
+        "advertised_filename": "RB-Y1_V1.1_3D_Mecanum-wheel-typed-Mobile.zip",
+        "download_url": "https://rainbow-robotics.com/wp-admin/admin-post.php?action=rainbow_download_file&file=b5bd8a17-0598-47b4-b048-8f158db20ca8",
+        "unauthorized_http_status": 403
+      },
+      {
+        "version": "V1.2",
+        "base": "Differential gear typed Mobile",
+        "advertised_filename": "RB-Y1_V1.2_3D_Differential-gear-typed-Mobile.zip",
+        "download_url": "https://rainbow-robotics.com/wp-admin/admin-post.php?action=rainbow_download_file&file=2c1a7332-002e-4635-904c-13f0785218bd",
+        "unauthorized_http_status": 403
+      },
+      {
+        "version": "V1.2",
+        "base": "Mecanum wheel typed Mobile",
+        "advertised_filename": "RB-Y1_V1.2_3D_Mecanum-wheel-typed-Mobile.zip",
+        "download_url": "https://rainbow-robotics.com/wp-admin/admin-post.php?action=rainbow_download_file&file=a7b26128-2fd8-40d1-abc9-83dbb018a597",
+        "unauthorized_http_status": 403,
+        "recommended_for": "RB-Y1 M/Mecanum configuration only; archive content remains unverified"
+      }
+    ]
+  },
+  "official_sdk_surface": {
+    "repository": "https://github.com/RainbowRobotics/rby1-sdk",
+    "license": "Apache-2.0 applies to this repository/release, not proven for the gated CAD ZIPs",
+    "main_commit": "ac7e83056e0775c4680a50d8c7cb3d9c3c66164d",
+    "latest_release": {
+      "tag": "v0.10.0",
+      "release_date": "2026-05-07",
+      "commit": "9af8a734b7bef0167545e3d9f0d559276a5b64ee",
+      "source_archive_url": "https://github.com/RainbowRobotics/rby1-sdk/releases/download/v0.10.0/rby1_sdk-0.10.0.tar.gz",
+      "bytes": 93367340,
+      "sha256": "441af9e1d852382473aacdcb0526546e7f6e95bb50f84fdddf2c6b8328d50dd8",
+      "archive_listing_extension_counts": {
+        "obj": 2081,
+        "dae": 107,
+        "glb": 98,
+        "urdf": 11,
+        "xml": 342
+      },
+      "archive_listing_cad_or_volume_fem_extension_count": 0,
+      "tested_extensions": [
+        "step",
+        "stp",
+        "iges",
+        "igs",
+        "x_t",
+        "x_b",
+        "sat",
+        "sldprt",
+        "sldasm",
+        "par",
+        "prt",
+        "catpart",
+        "catproduct",
+        "fcstd",
+        "brep",
+        "msh",
+        "vtk",
+        "vtu",
+        "inp",
+        "bdf",
+        "nas",
+        "cdb",
+        "med",
+        "xdmf"
+      ]
+    },
+    "interpretation": "This is a kinematic/dynamics simulator asset package, not a proven structural-FEM input package. The URDF references surface DAE meshes and the MJCF separates visual and collision geoms; it does not supply E, Poisson ratio, wall thickness, fasteners, or load-bearing solid topology."
+  },
+  "mesh_checks": {
+    "official_sdk_source": "RainbowRobotics/rby1-sdk@ac7e83056e0775c4680a50d8c7cb3d9c3c66164d:models/rby1a/mujoco/assets/LINK_6",
+    "downloaded_bytes_all_visual_pieces": 9109145,
+    "raw_index_diagnostic_method": "OBJ polygon-edge incidence over raw position indices. This can over-report open boundaries when an OBJ encodes UV/normal seams with duplicated position indices, so it is diagnostic only.",
+    "position_welded_method": "trimesh.load_mesh(process=True), which merges duplicate positions without adding faces or patching holes; is_watertight/is_volume/euler/components are then evaluated on the processed mesh.",
+    "pieces": [
+      {
+        "file": "LINK_6_0.obj",
+        "faces": 6,
+        "raw_index_boundary_edges": 12,
+        "raw_index_nonmanifold_edges": 0,
+        "processed_vertices": 12,
+        "processed_watertight": false,
+        "processed_is_volume": false,
+        "processed_euler_number": 3,
+        "processed_connected_components": 3
+      },
+      {
+        "file": "LINK_6_1.obj",
+        "faces": 478,
+        "raw_index_boundary_edges": 270,
+        "raw_index_nonmanifold_edges": 0,
+        "processed_vertices": 380,
+        "processed_watertight": false,
+        "processed_is_volume": false,
+        "processed_euler_number": 7,
+        "processed_connected_components": 8
+      },
+      {
+        "file": "LINK_6_2.obj",
+        "faces": 46738,
+        "raw_index_boundary_edges": 33658,
+        "raw_index_nonmanifold_edges": 0,
+        "processed_vertices": 40944,
+        "processed_watertight": false,
+        "processed_is_volume": false,
+        "processed_euler_number": 834,
+        "processed_connected_components": 1225
+      },
+      {
+        "file": "LINK_6_3.obj",
+        "faces": 4198,
+        "raw_index_boundary_edges": 3594,
+        "raw_index_nonmanifold_edges": 0,
+        "processed_vertices": 3975,
+        "processed_watertight": false,
+        "processed_is_volume": false,
+        "processed_euler_number": 150,
+        "processed_connected_components": 159
+      },
+      {
+        "file": "LINK_6_4.obj",
+        "faces": 5680,
+        "raw_index_boundary_edges": 5780,
+        "raw_index_nonmanifold_edges": 0,
+        "processed_vertices": 5922,
+        "processed_watertight": false,
+        "processed_is_volume": false,
+        "processed_euler_number": 281,
+        "processed_connected_components": 331
+      },
+      {
+        "file": "LINK_6_5.obj",
+        "faces": 5214,
+        "raw_index_boundary_edges": 5502,
+        "raw_index_nonmanifold_edges": 0,
+        "processed_vertices": 5850,
+        "processed_watertight": false,
+        "processed_is_volume": false,
+        "processed_euler_number": 496,
+        "processed_connected_components": 539
+      }
+    ]
+  },
+  "official_adjacent_repositories": [
+    {
+      "repo": "RainbowRobotics/rby1_ros2_moveit",
+      "commit": "f0f3c7eb5a174bb413d2bf3e679a06807890be9b",
+      "cad_or_volume_fem_extension_count": 0,
+      "formats": {
+        "dae": 32,
+        "urdf": 1,
+        "xml": 7
+      }
+    },
+    {
+      "repo": "RainbowRobotics/rby1-ros2",
+      "commit": "2493c8dd62dc835d5f3142d9d49ca7a8f8959f1b",
+      "cad_or_volume_fem_extension_count": 0,
+      "formats": {
+        "dae": 83,
+        "glb": 74,
+        "urdf": 7,
+        "xml": 14
+      }
+    },
+    {
+      "repo": "RainbowRobotics/rby1-sim-isaac",
+      "commit": "e2415548e5d6db712ecbff2074741b70261d0cbf",
+      "cad_or_volume_fem_extension_count": 0,
+      "formats": {
+        "usd": 4
+      }
+    },
+    {
+      "repo": "RainbowRobotics/rby1-release",
+      "cad_or_volume_fem_extension_count": 0,
+      "formats": {}
+    }
+  ],
+  "supplemental_public_mirror": {
+    "repository": "https://github.com/google-deepmind/mujoco_menagerie/tree/cda5236f98383f6fbaa4820c6b18dba892cd087f/rainbow_robotics_rby1",
+    "commit": "cda5236f98383f6fbaa4820c6b18dba892cd087f",
+    "license": "Apache-2.0 for the mirror's model package",
+    "formats": {
+      "obj": 70,
+      "xml": 10
+    },
+    "cad_or_volume_fem_extension_count": 0,
+    "provenance_limit": "The README says it was derived from Rainbow Robotics public URDF resources and converted/preprocessed for MJCF. It is not a manufacturer-issued original solid-CAD release."
+  },
+  "official_material_information": {
+    "source": "https://www.rainbow-robotics.com/en/products/rb-y1",
+    "published": [
+      "RB-Y1 exterior material: Aluminum",
+      "Neck Joint Module output-stage material: AL6061"
+    ],
+    "not_published_for_each_structural_part": [
+      "alloy/heat treatment",
+      "Young's modulus",
+      "Poisson ratio",
+      "yield/ultimate strength",
+      "wall thickness",
+      "internal cavities/ribs",
+      "fasteners/preload",
+      "contact/boundary conditions"
+    ]
+  },
+  "next_step": "A stress contour that claims RB-Y1 component stress needs a manufacturer-authorized part-level solid/assembly plus material and joint/fastener specifications. If an authorized user later obtains the gated V1.2 Mecanum ZIP, first inventory its archive and license; accept STEP/Parasolid/IGES only as geometry, then check that the load-bearing part is a watertight solid with internal features before assigning material and constraints."
+}

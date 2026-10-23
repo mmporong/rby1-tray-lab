@@ -1,112 +1,127 @@
 {
-  "schema_version": 2,
-  "checked_utc": "2026-10-23T01:19:17.294687+00:00",
+  "schema_version": 3,
+  "checked_utc": "2026-10-23T02:04:58.905102+00:00",
   "url": "http://127.0.0.1:8786/",
   "browser": "Chrome, existing tab, CUA UI operations",
-  "interface_source_commit": "c483f0e5138a7630394627c65fd6c086c9ebcf3f",
+  "interface_source_commit": "f58fe589772c689105da7d8b52c70010c7d0d243",
   "physics_source_commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
-  "html_sha256": "33a4a402b7cdabf4c0e7031e216f5e9a05581bdbcf11ebacce9eff2e8f8d4a28",
+  "html_sha256": "31551e14213feb20bc14bfbe4aa75ef69ec7a395554484b44f0adf3bcbbe2667",
   "playback_manifest_sha256": "d36eaa46dd90e97ecb67692b2df7a0e7ee81e22c3cf7c9552e723bfab91f9d9c",
+  "layout": {
+    "upper_original_views": [
+      "overview",
+      "pickup",
+      "placement"
+    ],
+    "lower": "six RGB/depth panels beside a smaller joint-load video; stacked on narrow screens",
+    "master_clock": "playbackVideo; auxiliary video never drives physics state"
+  },
   "observations": {
     "single_frame": {
-      "video_time_s": 0.016666,
-      "displayed_simulation_time_s": 0.13,
-      "paused": true,
-      "common_monitor_batch": "monitor-0.002000",
-      "sensor_timestamp_s": 0.002,
-      "displayed_age_s": 0.132
+      "main_video_s": 0.016666,
+      "load_video_s": 0.016666,
+      "both_paused": true,
+      "displayed_simulation_s": 0.13
     },
-    "sensor_panels": {
-      "image_count": 6,
-      "head_pixels": [
-        320,
-        200
-      ],
-      "wrist_pixels": [
-        320,
-        180
-      ],
-      "roles": "monitor_only",
-      "head_depth_range_m": [
-        0.1,
-        8.0
-      ],
-      "wrist_depth_range_m": [
-        0.07,
-        0.5
-      ],
-      "invalid_depth_color": "magenta"
+    "playing_rate_2": {
+      "main_video_s": 0.29697,
+      "load_video_s": 0.291022,
+      "difference_s": 0.005948,
+      "both_playing": true,
+      "both_rates": 2
     },
-    "optional_load_view": {
-      "current_src": "/playback/load.mp4",
-      "preserved_video_time_s": 0.016666,
-      "paused_during_view_switch": true,
-      "structural_stress_exclusion_visible": true,
-      "timeline_bottom_px": 54
+    "pause": {
+      "main_video_s": 15.991246,
+      "load_video_s": 15.991246,
+      "both_paused": true,
+      "displayed_simulation_s": 127.87
     },
-    "speed_change_while_paused": [
-      {
-        "rate": 1.5,
-        "paused": true
-      },
-      {
-        "rate": 2.0,
-        "paused": true
-      }
-    ],
-    "completion": {
-      "video_time_s": 18.933333,
-      "ended": true,
-      "paused": true,
-      "displayed_simulation_time_s": 151.23,
-      "result": "성공",
-      "home": "PASS",
-      "common_monitor_batch": "monitor-151.002000",
-      "sensor_timestamp_s": 151.002,
-      "displayed_age_s": 0.23
+    "paused_view_change": {
+      "main_src": "/playback/pickup.mp4",
+      "load_src": "/playback/load.mp4",
+      "both_video_s": 15.991246,
+      "both_paused": true
     },
-    "completed_replay": {
-      "playing": true,
-      "observed_video_time_s": 0.251274
+    "paused_rate_change": {
+      "both_rates": 1.5,
+      "both_paused": true
     },
     "reset": {
-      "video_time_s": 0,
-      "paused": true,
-      "displayed_simulation_time_s": 0
+      "main_video_s": 0,
+      "load_video_s": 0,
+      "both_paused": true,
+      "displayed_simulation_s": 0
+    },
+    "playing_view_change": {
+      "main_src": "/playback/placement.mp4",
+      "load_src": "/playback/load.mp4",
+      "main_video_s": 15.429636,
+      "load_video_s": 15.397808,
+      "difference_s": 0.031828,
+      "both_playing": true,
+      "both_rates": 1.5
+    },
+    "completion": {
+      "main_video_s": 18.933333,
+      "load_video_s": 18.933333,
+      "both_ended": true,
+      "both_paused": true,
+      "result": "성공",
+      "home": "PASS",
+      "displayed_simulation_s": 151.23
+    },
+    "replay_from_complete": {
+      "main_video_s": 0.227494,
+      "load_video_s": 0.222723,
+      "both_playing": true,
+      "both_rates": 1
+    },
+    "auxiliary_network_failure": {
+      "method": "tab-scoped CDP blocked only /playback/load.mp4; no app code or API response replaced",
+      "main_video_s": 0.053314,
+      "main_paused": false,
+      "main_ready_state": 4,
+      "main_error_text": "",
+      "auxiliary_error_status_visible": true,
+      "network_block_restored": true,
+      "cache_override_restored": true,
+      "after_reload_both_ready_state": 4,
+      "after_reload_auxiliary_error_hidden": true
+    },
+    "sensor_panels": {
+      "loaded_images": 6,
+      "monitor_only": true,
+      "mobile_expanded_width_px": 640,
+      "mobile_expansion_document_scroll_width_px": 375
     },
     "responsive": [
       {
-        "viewport_width_px": 390,
-        "document_scroll_width_px": 375,
-        "sensor_columns": 1,
-        "expand_button_minimum_px": [
-          44,
-          44
-        ],
-        "expanded_image_width_px": 640,
-        "expanded_image_height_px": 400,
-        "media_container_width_px": 305,
-        "scroll_contained_in_card": true
+        "viewport_width_px": 1862,
+        "sensor_column_width_px": 841.234375,
+        "load_panel_width_px": 332.59375,
+        "same_top": true
       },
       {
         "viewport_width_px": 980,
         "document_scroll_width_px": 965,
-        "sensor_columns": 2
+        "sensor_column_width_px": 637.109375,
+        "load_panel_width_px": 251.890625,
+        "same_top": true
       },
       {
-        "viewport_width_px": 1862,
-        "document_scroll_width_px": 1847,
-        "sensor_columns": 2,
-        "viewport_override_reset": true
+        "viewport_width_px": 390,
+        "document_scroll_width_px": 375,
+        "diagnostics_columns": 1,
+        "load_panel_width_px": 325,
+        "sensor_columns": 1
       }
     ],
-    "console_warning_error_entries": []
+    "viewport_override_reset": true,
+    "normal_load_console_warning_error_entries": []
   },
   "validation": "PASS",
-  "scope": "Observed browser behavior; does not measure rendering frame drops or real sensor throughput. MP4 encoding metadata checked separately.",
-  "proof_images": {
-    "source_sensor_contact_sheet": "../mobile-native/sensor-preview.png",
-    "source_load_frame": "../mobile-native/load-view.png",
-    "browser_screenshot": "emitted in task tool output; no local screenshot file claimed"
-  }
+  "code_review": "APPROVE",
+  "targeted_contract_tests_passed": 28,
+  "scope": "Discrete UI observations; paired video clocks are corrected above 0.1 s drift, not claimed frame-locked. No rendering frame-drop/throughput measurement. Missing optional asset layout reviewed statically; actual failed media fetch tested in browser.",
+  "proof_images": "Desktop and mobile screenshots emitted in task tool output; no local browser screenshot path claimed."
 }
