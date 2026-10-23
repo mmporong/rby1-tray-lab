@@ -8,8 +8,8 @@
     :root {
       color-scheme: dark;
       --void: #080b0e; --graphite: #0e1318; --panel: #151b21; --line: #34424d;
-      --text: #e9f0f4; --muted: #91a0aa; --cyan: #43d7e6; --amber: #f6b94a;
-      --red: #ff746c; --green: #6ee7a8;
+      --text: #e9f0f4; --muted: #a4b3bd; --cyan: #43d7e6; --amber: #f6b94a;
+      --red: #ff746c; --green: #6ee7a8; --media-height: clamp(280px, 42vh, 460px);
       font-family: Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, sans-serif;
     }
     * { box-sizing: border-box; }
@@ -18,19 +18,19 @@
     button, select { font: inherit; }
     button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
     .shell { width: min(1680px, 100%); margin: 0 auto; padding: 18px; }
-    header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 5px 3px 17px; }
+    .shell > header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 5px 3px 17px; }
     .eyebrow { margin: 0 0 6px; color: var(--cyan); font: 750 .69rem/1 ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; }
     h1 { margin: 0; font-size: clamp(1.55rem, 2.5vw, 2.35rem); font-weight: 730; letter-spacing: -.045em; }
     .subtitle { max-width: 690px; margin: 7px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.5; }
     .condition { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
     .badge { border: 1px solid var(--line); background: var(--graphite); color: #b8c5cd; padding: 7px 10px; font: 680 .7rem/1 ui-monospace, monospace; }
     .layout, .content-column { display: grid; min-width: 0; width: 100%; grid-template-columns: minmax(0, 1fr); gap: 14px; }
-    .primary-grid { display: grid; min-width: 0; width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
+    .primary-grid { display: grid; min-width: 0; width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: stretch; }
     .primary-grid > *, .panel, aside { min-width: 0; }
     .panel { border: 1px solid var(--line); background: var(--panel); box-shadow: 0 18px 45px rgba(0,0,0,.24); }
     .viewport-panel { overflow: hidden; }
     .stage { position: relative; aspect-ratio: 4 / 3; min-height: 360px; background: #050709; }
-    .primary-grid .stage, .primary-grid .load-media, .primary-grid .structural-media, .primary-grid .structural-canvas-wrap { height: clamp(360px, 30vw, 480px); aspect-ratio: auto; }
+    .primary-grid .stage, .primary-grid .load-media, .primary-grid .structural-media, .primary-grid .structural-canvas-wrap { height: var(--media-height); aspect-ratio: auto; }
     .stage::after { position: absolute; inset: 0; pointer-events: none; content: ""; box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), inset 0 -100px 100px rgba(0,0,0,.18); }
     .stage img, .stage video { width: 100%; height: 100%; display: block; object-fit: contain; }
     .stage-top { position: absolute; z-index: 2; inset: 14px 14px auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
@@ -49,7 +49,7 @@
     .timeline-step { min-width: 0; border-top: 2px solid rgba(255,255,255,.18); padding-top: 7px; color: rgba(233,240,244,.55); font-size: .68rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .timeline-step.done { border-color: var(--green); color: #bdeed4; }
     .timeline-step.active { border-color: var(--cyan); color: white; }
-    .toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; border-top: 1px solid var(--line); padding: 12px 14px; background: var(--graphite); }
+    .toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; border-top: 1px solid var(--line); padding: 12px 14px; background: var(--graphite); }
     .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
     button, select { min-height: 44px; border: 1px solid #465560; border-radius: 3px; background: #1b242b; color: #dbe5ea; padding: 8px 13px; font-weight: 700; cursor: pointer; }
     button:hover, select:hover { border-color: #6f828e; background: #222d35; }
@@ -59,24 +59,24 @@
     button:disabled, select:disabled { cursor: wait; opacity: .5; }
     label { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: .72rem; }
     .view-tabs { display: flex; align-items: center; gap: 4px; }
-    .view-tabs button { min-height: 38px; padding: 7px 10px; font-size: .72rem; }
-    .camera-readout { grid-column: 1 / -1; color: #71818b; font: .68rem/1.3 ui-monospace, monospace; }
+    .view-tabs button { min-width: 44px; min-height: 44px; padding: 7px 10px; font-size: .72rem; }
+    .camera-readout { text-align: right; color: #71818b; font: .68rem/1.3 ui-monospace, monospace; }
     .sensor-strip { padding: 14px; background: #0b1014; }
     .sensor-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
     .sensor-heading h2 { margin: 0; font-size: .82rem; }
     .sensor-heading p { margin: 5px 0 0; color: var(--muted); font-size: .68rem; line-height: 1.45; }
     .sensor-column { min-width: 0; }
-    .sensor-grid { position: relative; display: grid; gap: 10px; }
+    .sensor-grid { position: relative; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
     .sensor-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border: 1px solid #27343d; background: #0e1419; padding: 9px; transition: background .18s, border-color .18s; }
-    .sensor-row.expanded { border-color: var(--cyan); background: #101c22; }
+    .sensor-row.expanded { grid-column: 1 / -1; border-color: var(--cyan); background: #101c22; }
     .sensor-row-header { grid-column: 1 / -1; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
     .sensor-row-header h3 { margin: 0; color: #dce8ed; font-size: .76rem; }
     .sensor-row-header p { margin: 3px 0 0; color: #71818b; font: .62rem/1.45 ui-monospace, monospace; }
     .sensor-row-header button { min-height: 44px; min-width: 44px; padding: 7px 9px; font-size: .62rem; }
     .sensor-media { position: relative; min-width: 0; margin: 0; border: 1px solid #2c3942; background: #050709; cursor: zoom-in; }
     .sensor-row.expanded .sensor-media { cursor: zoom-out; }
-    .sensor-media img { display: block; width: 100%; height: 160px; object-fit: contain; background: #030506; transition: height .18s; }
-    .sensor-row.expanded .sensor-media img { height: clamp(260px, 31vw, 480px); }
+    .sensor-media img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; background: #030506; transition: height .18s; }
+    .sensor-row.expanded .sensor-media img { height: clamp(260px, 31vw, 480px); aspect-ratio: auto; }
     .sensor-media figcaption { display: flex; justify-content: space-between; gap: 10px; padding: 8px 10px; color: #b8c5cd; font-size: .67rem; }
     .sensor-media figcaption span:last-child { color: #6f828e; }
     .sensor-empty { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); padding: 24px; text-align: center; font-size: .7rem; line-height: 1.5; background: #050709; }
@@ -89,12 +89,15 @@
     .load-panel h3 { margin: 0; color: #dce8ed; font-size: .76rem; }
     .load-panel p { margin: 4px 0 0; color: #71818b; font-size: .65rem; line-height: 1.45; }
     .diagnostic-tabs, .structural-view-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin: 9px 12px; }
-    .diagnostic-tabs button, .structural-view-tabs button { min-height: 40px; padding: 6px 8px; font-size: .68rem; }
+    .diagnostic-tabs button, .structural-view-tabs button { min-height: 44px; padding: 6px 8px; font-size: .68rem; }
     .load-media { position: relative; aspect-ratio: 4 / 3; border: 1px solid #2c3942; background: #030506; overflow: hidden; }
     .load-media video { display: block; width: 100%; height: 100%; object-fit: contain; }
     .load-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 18px; background: #050709; color: var(--muted); text-align: center; font-size: .7rem; line-height: 1.5; }
     .load-clock { display: block; padding: 8px 12px 0; color: #9caab3; font: .62rem/1.4 ui-monospace, monospace; }
-    #jointPane > p { padding: 0 12px 10px; }
+    #jointPane { position: relative; }
+    .load-caption { position: absolute; inset: auto 0 0; padding: 8px 12px; background: rgba(5,7,9,.88); }
+    .load-caption .load-clock { padding: 0; }
+    .load-caption p { margin: 4px 0 0; color: #a4b3bd; font-size: .65rem; line-height: 1.45; }
     .structural-media { position: relative; aspect-ratio: 4 / 3; margin: 0; border: 1px solid #2c3942; background: #030506; overflow: hidden; }
     .structural-media img { display: block; width: 100%; height: 100%; object-fit: contain; }
     .structural-media figcaption { position: absolute; inset: auto 0 0; padding: 7px 9px; background: rgba(5,7,9,.88); color: #c2cdd3; font-size: .62rem; }
@@ -105,40 +108,35 @@
     .structural-context { margin: 8px 12px 0 !important; color: #aab7be !important; }
     .structural-assumptions { margin: 7px 0 0; padding-left: 17px; color: #8797a1; font-size: .62rem; line-height: 1.5; }
     .structural-assumptions li + li { margin-top: 3px; }
-    #structuralSceneTitle { margin: 10px 12px 0; }
-    .structural-scene-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 9px 12px; }
-    .structural-scene-controls label { display: grid; gap: 4px; color: #8797a1; font-size: .6rem; }
-    .structural-scene-controls select { min-width: 0; min-height: 40px; border: 1px solid #34424d; border-radius: 6px; background: #111920; color: #e4edf1; padding: 6px 8px; }
+    #structuralSceneTitle { margin: 0 0 12px; font-size: .78rem; color: #c6d4dd; }
+    .structural-scene-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 12px; }
+    .structural-scene-controls label { display: grid; gap: 6px; color: #a4b3bd; font-size: .72rem; }
+    .structural-scene-controls select { min-width: 0; min-height: 44px; border: 1px solid #34424d; border-radius: 6px; background: #111920; color: #e4edf1; padding: 6px 8px; }
     .structural-canvas-wrap { position: relative; aspect-ratio: 4 / 3; border: 1px solid #526773; background: linear-gradient(180deg,#a8bbc7 0%,#8fa6b5 47%,#738c9e 100%); overflow: hidden; }
     .structural-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
     .structural-wrench-overlay, .joint-load-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
     .structural-overlay { position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; gap: 8px; padding: 7px 9px; background: rgba(5,7,9,.88); color: #c2cdd3; font: .58rem/1.35 ui-monospace, monospace; }
-    .stress-ramp { height: 8px; margin: 7px 12px 0; border-radius: 3px; background: linear-gradient(90deg,#143f94,#0dc7e0,#4cdb61,#ffc41f,#ed1f1f); }
-    .structural-scene-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 8px; margin: 5px 12px 0; color: #8797a1; font: .58rem/1.4 ui-monospace, monospace; }
-    #structuralVectorLegend { margin-left: auto; text-align: right; }
-    .joint-load-card { margin: 8px 12px 0; border: 1px solid #344650; background: #0b1217; padding: 9px; }
+    .stress-ramp { height: 8px; margin: 10px 0 0; border-radius: 3px; background: linear-gradient(90deg,#143f94,#0dc7e0,#4cdb61,#ffc41f,#ed1f1f); }
+    .structural-scene-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 8px; margin: 8px 0 0; color: #a4b3bd; font: .68rem/1.5 ui-monospace, monospace; }
+    #structuralVectorLegend { width: 100%; }
+    .joint-load-card { min-width: 0; margin: 0; border: 0; border-left: 1px solid var(--line); background: #10171d; padding: 16px; }
     .joint-load-card-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; border-bottom: 1px solid #263842; padding-bottom: 7px; }
-    #jointLoadLegend { color: #e5f0f4; font: 700 .62rem/1.45 ui-monospace, monospace; }
-    .joint-load-toggle { display: inline-flex; min-height: 44px; align-items: center; color: #d6e1e6; font-size: .66rem; }
+    #jointLoadLegend { color: #e5f0f4; font: 700 .72rem/1.5 ui-monospace, monospace; }
+    .joint-load-toggle { display: inline-flex; min-height: 44px; align-items: center; color: #d6e1e6; font-size: .72rem; }
     .joint-load-toggle input { width: 18px; height: 18px; margin: 0; accent-color: var(--cyan); }
-    .joint-load-scale { display: flex; align-items: center; gap: 12px; margin-top: 8px; color: #91a0aa; font: .57rem/1.25 ui-monospace, monospace; }
-    .joint-load-ring-key { position: relative; flex: 0 0 26px; width: 26px; height: 26px; border-radius: 50%; background: conic-gradient(#c080ff 0 72%,#223445 72% 100%); transform: rotate(-90deg); }
-    .joint-load-ring-key::after { position: absolute; inset: 6px; border-radius: 50%; background: #0b1217; content: ""; }
-    .joint-load-scale strong { color: #d9b8ff; font-weight: 750; }
-    .joint-load-scale span:last-child { margin-left: auto; text-align: right; }
-    .joint-load-note { margin: 7px 0 0 !important; color: #8797a1 !important; font-size: .6rem !important; line-height: 1.45 !important; }
+    .joint-load-note { margin: 7px 0 0 !important; color: #a4b3bd !important; font-size: .7rem !important; line-height: 1.45 !important; }
     .joint-load-summary { min-width: 0; margin-top: 8px; }
-    .joint-load-status { margin: 0 0 6px; color: #91a0aa; font-size: .61rem; line-height: 1.45; }
+    .joint-load-status { margin: 0 0 6px; color: #91a0aa; font-size: .72rem; line-height: 1.5; }
     .joint-load-top { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
-    .joint-load-top > * { min-width: 0; min-height: 44px; border: 1px solid #3c4d57; border-left: 2px solid var(--amber); background: #111920; padding: 7px 8px; overflow-wrap: anywhere; color: #dce8ed; font: 650 .61rem/1.45 ui-monospace, monospace; text-align: left; }
+    .joint-load-top > * { min-width: 0; min-height: 44px; border: 1px solid #3c4d57; border-left: 2px solid var(--amber); background: #111920; padding: 7px 8px; overflow-wrap: anywhere; color: #dce8ed; font: 650 .7rem/1.45 ui-monospace, monospace; text-align: left; }
     .joint-load-summary details { margin-top: 8px; border: 1px solid #293740; }
-    .joint-load-summary summary { padding: 9px; font-size: .62rem; }
+    .joint-load-summary summary { padding: 9px; font-size: .72rem; }
     .joint-load-table { width: 100%; min-width: 0; overflow-x: auto; }
     .joint-load-table table { width: 100%; min-width: 540px; border-collapse: collapse; color: #aebcc4; font: .59rem/1.4 ui-monospace, monospace; }
     .joint-load-table th, .joint-load-table td { padding: 7px 8px; border-top: 1px solid #293740; text-align: right; white-space: nowrap; }
     .joint-load-table th:first-child, .joint-load-table td:first-child { position: sticky; left: 0; min-width: 150px; background: #0d151a; text-align: left; }
     .structural-diagnostics { width: 100%; min-width: 0; padding: 14px; }
-    .structural-support { margin: 8px 12px 0; border: 1px solid #293740; background: #0b1116; }
+    .structural-support { margin: 8px 0 0; border: 1px solid #293740; background: #0b1116; }
     .structural-support .structural-summary { margin: 0 12px 10px; }
     .structural-support .structural-assumptions { margin: 7px 12px 12px; }
     .structural-diagnostics .structural-diagnostic-summary { margin: 8px 0; border: 1px solid #2c3942; background: #0a1014; color: #c4d0d6; padding: 9px; font-size: .66rem; line-height: 1.5; }
@@ -186,13 +184,24 @@
     summary { padding: 13px 15px; color: #adbac2; cursor: pointer; font-size: .76rem; font-weight: 700; }
     pre { max-height: 320px; margin: 0 14px 14px; overflow: auto; border: 1px solid #26313a; background: #090d11; color: #adbbc4; padding: 12px; font: 11px/1.55 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
     .help { margin: 10px 0 0; color: var(--muted); font-size: .7rem; line-height: 1.5; }
+    .panel-heading { min-height: 66px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; background: var(--graphite); border-bottom: 1px solid var(--line); }
+    .panel-heading h2 { margin: 0; font-size: .85rem; white-space: nowrap; }
+    .panel-heading .diagnostic-tabs { display: flex; margin: 0; gap: 4px; }
+    .panel-heading .diagnostic-tabs button { min-height: 44px; font-size: .7rem; }
+    .analysis-controls { display: grid; grid-template-columns: 1fr 1fr; }
+    .stress-settings { min-width: 0; padding: 16px; }
+    .analysis-controls .structural-view-tabs { margin: 8px 0; }
+    .analysis-controls summary { min-height: 44px; display: list-item; font-size: .72rem; }
+    @media (max-width: 1100px) { .sensor-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 880px) { .analysis-controls { grid-template-columns: 1fr; } .joint-load-card { border-left: 0; border-top: 1px solid var(--line); } }
+    @media (max-width: 680px) { .panel-heading { align-items: flex-start; flex-direction: column; } .toolbar .camera-readout { text-align: left; } .controls select { flex: 1; } }
     @media (max-width: 1200px) { .structural-load-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 1050px) { header { align-items: flex-start; flex-direction: column; } .condition { justify-content: flex-start; } aside { grid-template-columns: 1fr 1fr; } aside .result-panel { grid-column: 1 / -1; } }
+    @media (max-width: 1050px) { .shell > header { align-items: flex-start; flex-direction: column; } .condition { justify-content: flex-start; } aside { grid-template-columns: 1fr 1fr; } aside .result-panel { grid-column: 1 / -1; } }
     @media (max-width: 880px) { .primary-grid { grid-template-columns: 1fr; } .primary-grid .stage, .primary-grid .load-media, .primary-grid .structural-media, .primary-grid .structural-canvas-wrap { height: auto; aspect-ratio: 4 / 3; min-height: 0; } }
     @media (max-width: 680px) { .shell { padding: 10px; } .stage { min-height: 0; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(3, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-row { grid-template-columns: 1fr; } .sensor-row-header { grid-column: auto; } .sensor-media img, .sensor-row.expanded .sensor-media img { height: auto; aspect-ratio: 16 / 9; } aside { grid-template-columns: 1fr; } aside .result-panel, aside > .panel:last-child { grid-column: auto; } }
     @media (max-width: 680px) { .joint-load-top { grid-template-columns: 1fr; } }
     @media (max-width: 680px) { .sensor-row.expanded .sensor-media { overflow-x: auto; } .sensor-row.expanded .sensor-media img { width: 640px; height: auto; max-width: none; aspect-ratio: auto; } }
-    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
   </style>
 </head>
 <body>
@@ -212,7 +221,10 @@
     <div class="layout">
       <div class="content-column">
       <div class="primary-grid">
-      <section class="panel viewport-panel" aria-label="MuJoCo 렌더 화면">
+      <section class="panel viewport-panel" aria-labelledby="originalViewTitle">
+        <div class="panel-heading"><h2 id="originalViewTitle">원본 동작</h2><div class="view-tabs" aria-label="표시 모드">
+            <button type="button" data-view="overview" aria-pressed="true">전체</button><button type="button" data-view="pickup" aria-pressed="false">파지</button><button type="button" data-view="placement" aria-pressed="false">안착</button>
+          </div></div>
         <div class="stage">
           <img id="frame" alt="RB-Y1이 적재 트레이를 높은 컨테이너로 옮기는 MuJoCo 시뮬레이션" width="960" height="720">
           <video id="playbackVideo" aria-label="검증된 MuJoCo 물리 실행 영상" width="960" height="720" muted playsinline preload="auto" hidden></video>
@@ -227,27 +239,21 @@
           </div>
           <p id="error" class="error hidden" role="alert"></p>
         </div>
-        <div class="toolbar">
-          <div class="controls" aria-label="시뮬레이션 제어">
-            <button id="play" class="primary" type="button" aria-pressed="false">재생</button><button id="single" type="button">50 스텝</button>
-            <button id="reset" type="button">처음으로</button>
-            <label for="speed">재생 배율<select id="speed"><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
-          </div>
-          <div class="view-tabs" aria-label="표시 모드">
-            <button type="button" data-view="overview" aria-pressed="true">전체</button><button type="button" data-view="pickup" aria-pressed="false">파지</button><button type="button" data-view="placement" aria-pressed="false">안착</button>
-          </div>
-          <output id="cameraReadout" class="camera-readout">전체 시점 · 방위 105° · 고도 −20°</output>
-        </div>
+
       </section>
 
       <section id="loadPanel" class="panel load-panel primary-diagnostic" aria-labelledby="loadTitle" hidden>
+        <div class="panel-heading"><h2 id="loadTitle">응력·관절 부하</h2><div class="diagnostic-tabs" role="group" aria-label="진단 결과 선택">
+          <button id="jointModeButton" type="button" aria-pressed="true">관절 부하 영상</button>
+          <button id="structuralModeButton" type="button" aria-pressed="false" hidden>응력 + 관절 부하</button>
+        </div></div>
         <div id="jointPane">
           <div class="load-media">
             <video id="loadVideo" aria-label="RB-Y1 관절 부하 기록" width="960" height="720" muted playsinline preload="auto"></video>
             <p id="loadStatus" class="load-status" role="status">부하 기록을 불러오는 중입니다.</p>
           </div>
-          <output id="loadClock" class="load-clock">주 영상과 같은 기록 시각 · —</output>
-          <p>관절 토크를 모델 힘 제한과 비교한 색상입니다. 구조 응력·파손 해석이 아닙니다.</p>
+          <div class="load-caption"><output id="loadClock" class="load-clock">주 영상과 같은 기록 시각 · —</output>
+          <p>관절 토크를 모델 힘 제한과 비교한 색상입니다. 구조 응력·파손 해석이 아닙니다.</p></div>
         </div>
         <div id="structuralPane" hidden>
           <div id="structuralSceneRoot" hidden>
@@ -259,35 +265,7 @@
               <svg id="structuralWrenchOverlay" class="structural-wrench-overlay" viewBox="0 0 480 360" preserveAspectRatio="none" aria-hidden="true"></svg>
               <div class="structural-overlay"><output id="structuralSceneClock">기록 프레임 —</output><output id="structuralSceneMaximum">현재 최대 —</output></div>
             </div>
-            <p id="structuralSceneTitle">전체 로봇 · 등가 단면 응력 추정</p>
-            <div class="structural-scene-controls">
-              <label>표시 범위<select id="structuralPart" aria-label="응력 표시 범위"></select></label>
-              <label>색상 척도<select id="structuralScale" aria-label="응력 색상 척도"><option value="log">로그</option><option value="linear">선형</option></select></label>
-            </div>
-            <div id="structuralSceneViews" class="structural-view-tabs" role="group" aria-label="CAD FEM 표시 방식" hidden>
-              <button type="button" data-scene-view="surface" aria-pressed="true">표면</button>
-              <button type="button" data-scene-view="cutaway" aria-pressed="false">단면</button>
-            </div>
-            <div class="stress-ramp" aria-hidden="true"></div>
-            <div class="structural-scene-meta"><span id="structuralLegend">응력 범례 · MPa</span><span id="structuralVectorLegend">von Mises · 하중 벡터</span></div>
-            <section class="joint-load-card" aria-label="관절 부하 오버레이 설정과 요약">
-              <div class="joint-load-card-header">
-                <span id="jointLoadLegend">관절 부하 · 몸통·양팔 20관절 · τ/모델 제한</span>
-                <label class="joint-load-toggle"><input id="showJointLoad" type="checkbox" checked aria-label="관절 부하 겹쳐 보기">관절 부하 겹쳐 보기</label>
-              </div>
-              <div class="joint-load-scale" aria-hidden="true"><i class="joint-load-ring-key"></i><strong>보라색 원호 길이 · 0–100%</strong><span>바탕 링=0% · 한 바퀴=100%</span></div>
-              <p class="joint-load-note">링은 현재 토크와 모델 제한의 비율이며 Nm 값을 함께 표시합니다. 응력 MPa 범례와 별도이고 하드웨어 정격을 뜻하지 않습니다.</p>
-              <div id="jointLoadSummary" class="joint-load-summary"><span>기록 관절 상태를 불러오는 중입니다.</span></div>
-            </section>
-            <details class="structural-support"><summary>선택 부품 하중·해석 기준</summary>
-              <dl class="structural-summary">
-                <div><dt>현재 힘 · 선택 좌표계</dt><dd id="structuralForce">부품 선택 시 표시</dd></div>
-                <div><dt>현재 모멘트 · 선택 좌표계</dt><dd id="structuralMoment">부품 선택 시 표시</dd></div>
-              </dl>
-              <p id="structuralScope" class="structural-context"></p>
-              <ul id="structuralPartAssumptions" class="structural-assumptions" aria-label="선택 부품 해석 가정"></ul>
-            </details>
-            <details class="structural-support"><summary>전체 해석 가정</summary><ul id="structuralSceneAssumptions" class="structural-assumptions"></ul></details>
+
             </div>
           </div>
           <div id="structuralLegacy">
@@ -315,13 +293,52 @@
           <ul id="structuralAssumptions" class="structural-assumptions" aria-label="구조 해석 가정"></ul>
           </div>
         </div>
-        <header><h3 id="loadTitle">통합 하중·응력 진단</h3><p>같은 기록 시각의 전신 구조 응력과 관절 한계 사용률을 겹쳐 보고, 기존 관절 부하 영상과 비교합니다.</p></header>
-        <div class="diagnostic-tabs" role="group" aria-label="진단 결과 선택">
-          <button id="jointModeButton" type="button" aria-pressed="true">관절 부하 영상</button>
-          <button id="structuralModeButton" type="button" aria-pressed="false" hidden>응력 + 관절 부하</button>
-        </div>
+
       </section>
       </div>
+
+        <div class="panel toolbar" aria-label="공통 재생 제어">
+          <div class="controls" aria-label="시뮬레이션 제어">
+            <button id="play" class="primary" type="button" aria-pressed="false">재생</button><button id="single" type="button">50 스텝</button>
+            <button id="reset" type="button">처음으로</button>
+            <label for="speed">재생 배율<select id="speed"><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
+          </div>
+
+          <output id="cameraReadout" class="camera-readout">전체 시점 · 방위 105° · 고도 −20°</output>
+        </div>
+      <section id="structuralControls" class="panel analysis-controls" aria-label="진단 표시 설정과 관절 부하" hidden>
+        <div class="stress-settings">
+            <h3 id="structuralSceneTitle">전체 로봇 · 등가 단면 응력 추정</h3>
+            <div class="structural-scene-controls">
+              <label>표시 범위<select id="structuralPart" aria-label="응력 표시 범위"></select></label>
+              <label>색상 척도<select id="structuralScale" aria-label="응력 색상 척도"><option value="log">로그</option><option value="linear">선형</option></select></label>
+            </div>
+            <div id="structuralSceneViews" class="structural-view-tabs" role="group" aria-label="CAD FEM 표시 방식" hidden>
+              <button type="button" data-scene-view="surface" aria-pressed="true">표면</button>
+              <button type="button" data-scene-view="cutaway" aria-pressed="false">단면</button>
+            </div>
+            <div class="stress-ramp" aria-hidden="true"></div>
+            <div class="structural-scene-meta"><span id="structuralLegend">응력 범례 · MPa</span><span id="structuralVectorLegend">von Mises · 하중 벡터</span></div>
+
+            <details class="structural-support"><summary>선택 부품 하중·해석 기준</summary>
+              <dl class="structural-summary">
+                <div><dt>현재 힘 · 선택 좌표계</dt><dd id="structuralForce">부품 선택 시 표시</dd></div>
+                <div><dt>현재 모멘트 · 선택 좌표계</dt><dd id="structuralMoment">부품 선택 시 표시</dd></div>
+              </dl>
+              <p id="structuralScope" class="structural-context"></p>
+              <ul id="structuralPartAssumptions" class="structural-assumptions" aria-label="선택 부품 해석 가정"></ul>
+            </details>
+            <details class="structural-support"><summary>전체 해석 가정</summary><ul id="structuralSceneAssumptions" class="structural-assumptions"></ul></details>
+        </div>
+            <section class="joint-load-card" aria-label="관절 부하 요약과 표시 설정">
+              <div class="joint-load-card-header">
+                <span id="jointLoadLegend">관절 부하 · 몸통·양팔 20관절</span>
+                <label class="joint-load-toggle"><input id="showJointLoad" type="checkbox" checked aria-label="관절 지시선 표시">관절 지시선 표시</label>
+              </div>
+              <p class="joint-load-note">지시선은 부하가 큰 관절을 가리킵니다. 수치는 |토크| / 모델 제한이며, 실물 정격이 아닙니다.</p>
+              <div id="jointLoadSummary" class="joint-load-summary"><span>기록 관절 상태를 불러오는 중입니다.</span></div>
+            </section>
+      </section>
 
       <section id="structuralDiagnostics" class="panel structural-diagnostics" aria-label="선택 부품 하중과 응력 성분" hidden></section>
 
@@ -395,7 +412,7 @@
       structuralSnapshot: $('structuralSnapshot'), structuralMaterial: $('structuralMaterial'), structuralDisplacement: $('structuralDisplacement'), structuralP95: $('structuralP95'), structuralPeak: $('structuralPeak'), structuralConvergence: $('structuralConvergence'),
       structuralForceBalance: $('structuralForceBalance'), structuralMomentBalance: $('structuralMomentBalance'), structuralAssumptions: $('structuralAssumptions'),
       structuralViewButtons: [...document.querySelectorAll('[data-structural-view]')],
-      structuralSceneRoot: $('structuralSceneRoot'), structuralSceneContent: $('structuralSceneContent'), structuralLegacy: $('structuralLegacy'), structuralSceneTitle: $('structuralSceneTitle'), structuralSceneError: $('structuralSceneError'), structuralPart: $('structuralPart'), structuralScale: $('structuralScale'), structuralSceneViews: $('structuralSceneViews'), structuralSceneViewButtons: [...document.querySelectorAll('[data-scene-view]')], structuralCanvas: $('structuralCanvas'), structuralWrenchOverlay: $('structuralWrenchOverlay'), jointLoadOverlay: $('jointLoadOverlay'), structuralSceneClock: $('structuralSceneClock'), structuralSceneMaximum: $('structuralSceneMaximum'), structuralLegend: $('structuralLegend'), structuralVectorLegend: $('structuralVectorLegend'), jointLoadLegend: $('jointLoadLegend'), jointLoadSummary: $('jointLoadSummary'), showJointLoad: $('showJointLoad'), structuralDiagnostics: $('structuralDiagnostics'), structuralForce: $('structuralForce'), structuralMoment: $('structuralMoment'), structuralScope: $('structuralScope'), structuralPartAssumptions: $('structuralPartAssumptions'), structuralSceneAssumptions: $('structuralSceneAssumptions'),
+      structuralSceneRoot: $('structuralSceneRoot'), structuralSceneContent: $('structuralSceneContent'), structuralLegacy: $('structuralLegacy'), structuralSceneTitle: $('structuralSceneTitle'), structuralSceneError: $('structuralSceneError'), structuralPart: $('structuralPart'), structuralScale: $('structuralScale'), structuralSceneViews: $('structuralSceneViews'), structuralSceneViewButtons: [...document.querySelectorAll('[data-scene-view]')], structuralCanvas: $('structuralCanvas'), structuralWrenchOverlay: $('structuralWrenchOverlay'), jointLoadOverlay: $('jointLoadOverlay'), structuralSceneClock: $('structuralSceneClock'), structuralSceneMaximum: $('structuralSceneMaximum'), structuralLegend: $('structuralLegend'), structuralVectorLegend: $('structuralVectorLegend'), jointLoadLegend: $('jointLoadLegend'), jointLoadSummary: $('jointLoadSummary'), showJointLoad: $('showJointLoad'), structuralDiagnostics: $('structuralDiagnostics'), structuralControls: $('structuralControls'), structuralForce: $('structuralForce'), structuralMoment: $('structuralMoment'), structuralScope: $('structuralScope'), structuralPartAssumptions: $('structuralPartAssumptions'), structuralSceneAssumptions: $('structuralSceneAssumptions'),
       viewButtons: [...document.querySelectorAll('[data-view]')], timeline: [...document.querySelectorAll('.timeline-step')]
     };
     let playing = false, actionPromise = null, playGeneration = 0, framePromise = null, frameDirty = false;
@@ -564,6 +581,7 @@
       diagnosticMode=mode;
       ui.jointPane.hidden=mode!=='joint';ui.structuralPane.hidden=mode!=='structural';
       ui.structuralDiagnostics.hidden=mode!=='structural'||!structuralScene;
+      ui.structuralControls.hidden=mode!=='structural'||!structuralScene;
       ui.jointModeButton.setAttribute('aria-pressed',String(mode==='joint'));
       ui.structuralModeButton.setAttribute('aria-pressed',String(mode==='structural'));
       if(mode==='structural'){ui.loadVideo.pause();structuralScene?.render();}

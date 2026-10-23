@@ -590,10 +590,10 @@
   "all_five_original_structural_assets_unchanged": true,
   "display": {
     "background": "blue-gray sky gradient and visual-only 0.25 m floor grid",
-    "joint_ring": "purple arc, fill clipped at 100%; numeric values remain unclamped",
     "surface": "separate stress MPa color scale",
     "world_anchor": "recorded body pose * model.jnt_pos",
-    "cad_detail": "joint location rings omitted; global recorded numerical list retained"
+    "cad_detail": "Joint leader lines omitted; global 20-joint recorded numerical list retained.",
+    "joint_callout": "No joint circles. Top 3 load joints use leader lines and % / signed Nm labels; canvas width <500px uses top 1. Selected part uses its joint only. All 20 values remain in the foldable table and numeric percentages remain unclamped."
   },
   "limits": [
     "Model actuator limits, not hardware ratings or safety factors.",

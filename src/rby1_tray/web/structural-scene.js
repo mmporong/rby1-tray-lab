@@ -106,7 +106,7 @@
           <div class="structural-load-metric"><dt>비틀림 T · z축</dt><dd data-torsion></dd><small>길이축 주위 모멘트</small></div>
         </dl>
         <p class="structural-axis-readout" data-origin></p>
-        <details class="structural-explain" open><summary>어디서 전달된 하중인가</summary><p data-path></p><p data-load-note></p>
+        <details class="structural-explain"><summary>어디서 전달된 하중인가</summary><p data-path></p><p data-load-note></p>
           <div class="structural-wrench-table"><table><caption>같은 원점·좌표계의 하중 분해</caption><thead><tr><th scope="col">지지 하중 항</th><th scope="col">Fx N</th><th scope="col">Fy N</th><th scope="col">Fz N</th><th scope="col">Mx N·m</th><th scope="col">My N·m</th><th scope="col">Mz N·m</th></tr></thead><tbody data-sources></tbody></table></div>
         </details>
         <details class="structural-explain"><summary>표시점의 응력과 계산 기준</summary><p data-point></p><p data-components></p><p data-properties></p>
@@ -271,40 +271,40 @@
       const o=project(origin);if(!o)return;
       const defs=make('defs',{});for(const [id,color]of [['force','#68edf4'],['moment','#ffbd61']]){const marker=document.createElementNS(ns,'marker');marker.setAttribute('id',`load-${id}`);marker.setAttribute('viewBox','0 0 10 10');marker.setAttribute('refX','9');marker.setAttribute('refY','5');marker.setAttribute('markerWidth','7');marker.setAttribute('markerHeight','7');marker.setAttribute('orient','auto');const p=document.createElementNS(ns,'path');p.setAttribute('d','M0 0 L10 5 L0 10z');p.setAttribute('fill',color);marker.append(p);defs.append(marker);}
       for(let i=0;i<3;i++){const axis=[0,0,0];axis[i]=length*.7;const end=project(applyBasis(basis,axis).map((v,j)=>v+origin[j]));if(end){make('line',{x1:o[0],y1:o[1],x2:end[0],y2:end[1],stroke:['#ed7474','#82d995','#8caeff'][i],'stroke-width':3});make('text',{x:end[0]+6,y:end[1]-5,fill:['#ed7474','#82d995','#8caeff'][i],'font-size':23},['x','y','z'][i]);}}
-      make('circle',{cx:o[0],cy:o[1],r:5,fill:'#fff'});
       const normF=Math.hypot(...force);if(normF>.01){const end=project(applyBasis(basis,Array.from(force,x=>x/normF*length)).map((v,j)=>v+origin[j]));if(end){make('line',{x1:o[0],y1:o[1],x2:end[0],y2:end[1],stroke:'#68edf4','stroke-width':5,'marker-end':'url(#load-force)'});make('text',{x:end[0]+8,y:end[1]+22,fill:'#68edf4','font-size':25},'F');}}
       const normM=Math.hypot(...moment);if(normM>.001){const axis=normalize(applyBasis(basis,Array.from(moment))),helper=Math.abs(axis[2])<.9?[0,0,1]:[0,1,0],u=normalize(cross(axis,helper)),v=cross(axis,u),points=[];for(let i=0;i<=24;i++){const angle=i/24*Math.PI*1.5,p=project(origin.map((x,j)=>x+length*.52*(Math.cos(angle)*u[j]+Math.sin(angle)*v[j])));if(p)points.push(p);}if(points.length>1){make('polyline',{points:points.map(p=>p.join(',')).join(' '),fill:'none',stroke:'#ffbd61','stroke-width':4,'marker-end':'url(#load-moment)'});make('text',{x:points[0][0]+8,y:points[0][1]-8,fill:'#ffbd61','font-size':25},'M');}}
-      if(point){const p=project(point);if(p)make('circle',{cx:p[0],cy:p[1],r:8,fill:'none',stroke:'#fff','stroke-width':3});}
-      if(this.el.vectorLegend)this.el.vectorLegend.textContent='F 청록 화살표 · M 주황 회전 · 흰 점=합력 원점 · 길이는 방향 표시용 정규화';
+      if(point){const p=project(point);if(p){make('line',{x1:p[0],y1:p[1],x2:p[0]+35,y2:p[1]-35,stroke:'#dde6f2','stroke-width':2});make('text',{x:p[0]+39,y:p[1]-35,fill:'#dde6f2','font-size':21},'최대점');}}
+      if(this.el.vectorLegend)this.el.vectorLegend.textContent='F 청록 화살표 · M 주황 회전 · 축 교차점=합력 원점 · 길이는 방향 표시용 정규화';
     }
 
     drawJointOverlay(projection,selected) {
       const svg=this.el.jointOverlay;if(!svg)return;svg.replaceChildren();
       const current=this.jointStateFrame===this.frameIndex,loads=window.StructuralDiagnostics.jointLoads(current?this.jointState:null,this.info.joint_load),enabled=this.el.jointToggle?.checked!==false;
-      svg.hidden=!enabled;svg.dataset.frameIndex=current?String(this.frameIndex):'';svg.dataset.jointCount='0';
+      svg.hidden=!enabled;svg.dataset.frameIndex=current?String(this.frameIndex):'';svg.dataset.jointCount='0';svg.dataset.jointCalloutCount='0';
       this.jointDetails.hidden=!loads.available;
       if(!loads.available){this.jointStatus.textContent=`관절 부하 표시 불가 · ${current?loads.reason:'같은 기록 프레임의 관절 상태 대기'}`;this.jointTop.replaceChildren();this.jointTopKey=null;if(this.el.jointLegend)this.el.jointLegend.textContent='관절 데이터 없음 · 0%로 대체하지 않습니다.';this.el.canvas.dataset.jointFrameIndex='';return;}
       this.el.canvas.dataset.jointFrameIndex=String(this.jointStateFrame);
       const ranked=loads.joints.slice().sort((a,b)=>b.load_fraction-a.load_fraction),peak=ranked[0];
-      this.jointStatus.textContent=`전신 20개 관절 중 최대 · ${peak.label} ${fmt(peak.load_fraction*100,1)}% · τ ${fmt(peak.torque_nm)} Nm / 모델 제한 ${fmt(peak.limit_nm,0)} Nm`;
+      this.jointStatus.textContent=`최대 · ${peak.label} · ${fmt(peak.load_fraction*100,1)}% · τ ${fmt(peak.torque_nm)} Nm / 제한 ${fmt(peak.limit_nm,0)} Nm`;
       const keys=ranked.slice(0,3).map(j=>j.name).join(',');if(keys!==this.jointTopKey){this.jointTopKey=keys;this.jointTop.replaceChildren(...ranked.slice(0,3).map(j=>{const button=element('button');button.type='button';button.dataset.joint=j.name;button.addEventListener('click',()=>{if(!this.partIndex.has(j.part_id))return;this.selection=j.part_id;this.el.part.value=j.part_id;this.updateControls();this.render();});return button;}));}
       [...this.jointTop.children].forEach((button,i)=>{const j=ranked[i];button.textContent=`${j.label} · ${fmt(j.load_fraction*100,1)}%`;});
       if(!this.jointCells){this.jointCells=new Map();this.jointRows.replaceChildren(...loads.joints.map(j=>{const row=element('tr'),cells=[element('th',j.label),element('td'),element('td'),element('td')];row.append(...cells);this.jointCells.set(j.name,cells);return row;}));}
       for(const j of loads.joints){const cells=this.jointCells.get(j.name);cells[1].textContent=fmt(j.torque_nm);cells[2].textContent=fmt(j.limit_nm,0);cells[3].textContent=fmt(j.load_fraction*100,1);}
       const fem=selected?.kind==='fem',shown=fem?[]:loads.joints.filter(j=>this.partIndex.has(j.part_id)&&(!selected||j.part_id===selected.id));
-      if(this.el.jointLegend)this.el.jointLegend.textContent=`관절 링 0–100% · |토크| / 모델 제한 · ${fem?'CAD 상세에서는 위치 링 생략':`표시 ${shown.length}/20관절`}${enabled?'':' · 겹쳐 보기 꺼짐'} · 실물 정격 아님`;
+      if(this.el.jointLegend)this.el.jointLegend.textContent=`관절 부하 · 20개 관절 기록${fem?' · CAD 상세에서는 지시선 생략':enabled?'':' · 지시선 꺼짐'}`;
       if(!enabled||fem)return;
-      const ns='http://www.w3.org/2000/svg',width=svg.clientWidth||this.el.canvas.clientWidth,height=svg.clientHeight||this.el.canvas.clientHeight,radius=Math.max(6,Math.min(10,width/85)),make=(tag,attrs,text)=>{const node=document.createElementNS(ns,tag);for(const [key,value]of Object.entries(attrs))node.setAttribute(key,String(value));if(text)node.textContent=text;svg.append(node);return node;};
+      const ns='http://www.w3.org/2000/svg',width=svg.clientWidth||this.el.canvas.clientWidth,height=svg.clientHeight||this.el.canvas.clientHeight,make=(tag,attrs,text)=>{const node=document.createElementNS(ns,tag);for(const [key,value]of Object.entries(attrs))node.setAttribute(key,String(value));if(text)node.textContent=text;svg.append(node);return node;};
       svg.setAttribute('viewBox',`0 0 ${width} ${height}`);const points=new Map();
       for(const j of shown){const offset=this.frameIndex*this.info.frame_stride_floats+this.partIndex.get(j.part_id)*19,world=transform(selected?identity():poseMatrix(this.frames,offset),j.anchor_body_m),w=projection[3]*world[0]+projection[7]*world[1]+projection[11]*world[2]+projection[15];if(w<=0)continue;
         const x=((projection[0]*world[0]+projection[4]*world[1]+projection[8]*world[2]+projection[12])/w*.5+.5)*width,y=(.5-(projection[1]*world[0]+projection[5]*world[1]+projection[9]*world[2]+projection[13])/w*.5)*height;
         if(x<0||x>width||y<0||y>height)continue;points.set(j.name,[x,y]);
-        make('circle',{cx:x,cy:y,r:radius,fill:'none',stroke:'#223445','stroke-width':7,opacity:.8});make('circle',{cx:x,cy:y,r:radius,fill:'none',stroke:'#d9e6f1','stroke-width':3});
-        const circumference=2*Math.PI*radius;make('circle',{cx:x,cy:y,r:radius,fill:'none',stroke:j.load_fraction>=1?'#ff557b':'#c080ff','stroke-width':4,'stroke-dasharray':`${circumference*j.fill_fraction} ${circumference}`,'transform':`rotate(-90 ${x} ${y})`});
+
       }
       svg.dataset.jointCount=String(points.size);
       const labelJoints=(selected?shown:ranked).filter(j=>points.has(j.name)).slice(0,width<500?1:3);
-      labelJoints.forEach((j,i)=>{const p=points.get(j.name),x=width-142,y=16+i*39;make('polyline',{points:`${p[0]},${p[1]} ${x-8},${y+13} ${x},${y+13}`,fill:'none',stroke:'#dde6f2','stroke-width':1,opacity:.65});make('rect',{x,y,width:132,height:31,rx:4,fill:'#26394b',opacity:.94});make('text',{x:x+7,y:y+12,fill:'#f0e3ff','font-size':10},j.label);make('text',{x:x+7,y:y+25,fill:'#fff','font-size':11,'font-weight':700},`${fmt(j.load_fraction*100,1)}% · ${fmt(j.torque_nm,1)} Nm`);});
+      svg.dataset.jointCalloutCount=String(labelJoints.length);
+      if(this.el.jointLegend)this.el.jointLegend.textContent=`관절 부하 · 전체 20개 중 ${selected?'선택 관절':'상위 부하'} ${labelJoints.length}개 지시선`;
+      labelJoints.forEach((j,i)=>{const p=points.get(j.name),x=width-154,y=16+i*48;make('polyline',{'data-joint':j.name,points:`${p[0]},${p[1]} ${x-10},${y+17} ${x},${y+17}`,fill:'none',stroke:j.load_fraction>=1?'#ff557b':'#d8b6fc','stroke-width':1.25,opacity:.9});make('rect',{x,y,width:144,height:38,rx:3,fill:'#26394b',opacity:.94});make('text',{x:x+8,y:y+14,fill:'#e6d3ff','font-size':11},j.label);make('text',{x:x+8,y:y+30,fill:'#fff','font-size':12,'font-weight':700},`${fmt(j.load_fraction*100,1)}% · ${fmt(j.torque_nm,1)} Nm`);});
     }
 
     localBounds(data,stride,offset,count){const min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];for(let i=0;i<count;i++){const base=(offset+i)*stride;for(let a=0;a<3;a++){min[a]=Math.min(min[a],data[base+a]);max[a]=Math.max(max[a],data[base+a]);}}return {min,max};}

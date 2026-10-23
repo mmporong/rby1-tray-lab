@@ -209,74 +209,139 @@
       "Existing original four binary files unchanged; only auxiliary diagnostic data and presentation changed."
     ]
   },
-  "merged_stress_joint_overlay": {
-    "default_button": "응력 + 관절 부하",
-    "default_joint_checked": true,
-    "joint_count": 20,
-    "background": "blue-gray gradient and 0.25 m visual floor grid, visually inspected in CUA",
-    "separate_legend": "MPa surface color and purple arc length 0–100%",
-    "same_frame_observations": [
-      {
-        "case": "running 2x (16x physics)",
-        "sync_video_time_s": 0.033333,
-        "expected_frame_index": 2,
-        "stress_frame": 2,
-        "joint_frame": 2
-      },
-      {
-        "case": "terminal",
-        "video_time_s": 18.933333,
-        "stress_frame": 1135,
-        "joint_frame": 1135
-      },
-      {
-        "case": "reset",
-        "stress_frame": 0,
-        "joint_frame": 0
-      },
-      {
-        "case": "single frame",
-        "video_time_s": 0.016666,
-        "stress_frame": 1,
-        "joint_frame": 1
-      }
-    ],
-    "toggle_off_svg_children": 0,
-    "toggle_on_whole_rings": 20,
-    "top_joint_selection": {
-      "part": "link_right_arm_3",
-      "rings": 1,
-      "preserved_frame_index": 1135,
-      "video_time_s": 18.933333
+  "current_ui": "front_refinement",
+  "front_refinement": {
+    "request": "joint circles removed; leader lines only; aligned media and compact UI",
+    "default_mode": "original / stress + joint load",
+    "circles_in_joint_and_wrench_overlays": 0,
+    "callouts": {
+      "whole_desktop": 3,
+      "whole_canvas_below_500px": 1,
+      "selected_right_arm_4": 1,
+      "cad_fem": 0,
+      "numeric_table_rows": 20
     },
-    "cad_selected": {
-      "part": "left_flange_fem",
-      "rings": 0,
-      "omission_reason_visible": true
+    "desktop": {
+      "viewport_px": [
+        1842,
+        971
+      ],
+      "primary_panel_heights_px": [
+        475.8125,
+        475.8125
+      ],
+      "media_heights_px": [
+        407.8125,
+        407.8125
+      ],
+      "same_media_top": true,
+      "page_height_before_px": 3160,
+      "page_height_after_px": 2126,
+      "overflow": false
     },
-    "responsive": [
-      {
-        "viewport_width": 390,
-        "canvas_px": [
-          351,
-          263
-        ],
-        "horizontal_overflow": false,
-        "joint_table_client_width": 307,
-        "joint_table_scroll_width": 540
-      },
-      {
-        "viewport_width": 1024,
-        "canvas_px": [
-          476,
-          358
-        ],
-        "horizontal_overflow": false
-      }
-    ],
+    "medium": {
+      "viewport_px": [
+        1024,
+        900
+      ],
+      "primary_panel_heights_px": [
+        446,
+        446
+      ],
+      "media_heights_px": [
+        378,
+        378
+      ],
+      "same_media_top": true,
+      "overflow": false
+    },
+    "mobile": {
+      "viewport_px": [
+        390,
+        900
+      ],
+      "primary_panel_heights_px": [
+        359.75,
+        359.75
+      ],
+      "media_heights_px": [
+        264.75,
+        264.75
+      ],
+      "media_stacked": true,
+      "overflow": false,
+      "visible_primary_controls_at_least_44px": true
+    },
+    "keyboard": {
+      "toggle_space": true,
+      "play_enter": true,
+      "sensor_expand_enter": true,
+      "load_detail_space": true,
+      "focus_outline_width_px": 3
+    },
+    "sensor_expansion": {
+      "before_px": [
+        249.65625,
+        140.421875
+      ],
+      "after_px": [
+        790.984375,
+        480
+      ],
+      "aria_pressed_true": true,
+      "source_image_width_px": 320
+    },
+    "toggle": {
+      "off_callouts": 0,
+      "numeric_table_rows_preserved": 20,
+      "on_mobile_callouts": 1
+    },
+    "mode_round_trip": {
+      "joint_mode_hides_settings_and_diagnostics": true,
+      "structural_restores_settings_and_table_20": true,
+      "comparison_caption_bottom_px": 626.078125,
+      "comparison_media_bottom_px": 626.078125,
+      "comparison_containing_block_position": "relative"
+    },
+    "maximum_point_label_sample": {
+      "selected_part": "link_right_arm_3",
+      "within_canvas": true
+    },
+    "font_enlargement": {
+      "method": "temporary CSS root font 200%, not browser chrome zoom",
+      "viewport_width_px": 390,
+      "computed_font_px": 32,
+      "overflow": false,
+      "restored_font_px": 16
+    },
+    "reduced_motion": {
+      "temporary_emulation": true,
+      "sensor_transition_duration": "0s",
+      "emulation_restored": true
+    },
+    "clock_samples": {
+      "initial_frame": 0,
+      "terminal_frame": 1135,
+      "stress_matches_joint_frame": true,
+      "terminal_video_time_s": 18.933333
+    },
+    "default_details_folded": true,
     "viewport_override_reset": true,
-    "limitations": "Finite DOM/visual samples, not continuous zero-drift, sustained FPS or cross-browser certification. No screenshot file claimed.",
-    "comparison_video_switch_returned_to_merged_mode": true,
-    "service_restart_loaded_same_frame_0_and_20_joint_rings": true
+    "no_persisted_test_styles_or_media_override": true,
+    "limits": [
+      "Finite CUA observations, not exhaustive cross-browser or performance certification.",
+      "Screenshots were inspected through CUA output; no screenshot file is claimed."
+    ],
+    "cad_touch_targets_px": {
+      "surface": [
+        392,
+        44
+      ],
+      "cutaway": [
+        392,
+        44
+      ]
+    },
+    "console_errors_and_warnings_after_final_reload": 0
   }
 }
