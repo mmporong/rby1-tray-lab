@@ -34,8 +34,9 @@
     "evidence/structural-whole/browser-qa.json": "27da9c09a5468476a5d5c917f18a503bb687ff95cd723a9504c7aa813f34ffbc",
     "evidence/structural-whole/load-diagnostics.json": "5f51dde69ab8a2d3aeda237e4fb03222902e4f1e87dacbfa47b752ac7ece19ad",
     "src/rby1_tray/web/structural-diagnostics.js": "c2de4bb91caf6d64052a773429975e927d26034223f3dc558ad7e5c75f23d2c1",
-    "README.md": "86a4f0ae5b07ca19151222c487084ea1e4bbc62e8532106098bd88a6ab2247fd",
-    "evidence/structural-whole/joint-overlay.json": "44879c6fc990913142447fc56dfbdb158046c8f1f2dadae026d5570775ea1d67"
+    "README.md": "b8c70c039bb0579156a2dd4a08a8a5d66416c046250e02cdd15d7a9331191e1a",
+    "evidence/structural-whole/joint-overlay.json": "44879c6fc990913142447fc56dfbdb158046c8f1f2dadae026d5570775ea1d67",
+    "docs/run-on-another-pc.md": "60ef506e1caa88a526f00c0db642a7f98c12f0d50908dc8f174103049c4d3350"
   },
   "source_script_sha256": {
     "tools/build_load_view.py": "e8aae2b24cd7395e959408c5c7475da7b5eca7a27e198173962c249994868e18",

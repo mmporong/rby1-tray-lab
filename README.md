@@ -62,22 +62,22 @@ flowchart LR
 
 ## 실행
 
-Linux, Python 3.12, CPU/EGL 환경에서 검증한다. 저장소 루트에서 실행한다.
+Linux, Python 3.12, CPU/EGL 환경에서 검증한다. [다른 PC 실행 가이드](docs/run-on-another-pc.md)에 Ubuntu·Windows WSL2 설치, 구조 번들 준비, SSH 접속과 문제 해결을 정리했다. 저장소 루트에서 실행한다. 기존 재생 자료를 보는 데 새 물리 실험은 필요하지 않다.
 
 ```bash
+cd "$HOME"
 git clone https://github.com/mmporong/rby1-tray-lab.git
-cd rby1-tray-lab
-python3 -m venv .venv
+cd "$HOME/rby1-tray-lab"
+python3.12 -m venv .venv
 .venv/bin/python -m pip install -r requirements-lock.txt
 .venv/bin/python -m pip install --no-deps -e .
 .venv/bin/python -m rby1_tray.cli fetch-assets
-.venv/bin/python -m unittest discover -s tests -v
 .venv/bin/python -m rby1_tray.cli audit
-.venv/bin/python -m rby1_tray.cli run --output artifacts/mobile-demo --render
-.venv/bin/python -m rby1_tray.cli view --port 8786
+MUJOCO_GL=egl PYOPENGL_PLATFORM=egl EGL_PLATFORM=surfaceless \
+  .venv/bin/python -m rby1_tray.cli view --port 8786
 ```
 
-뷰어는 `http://127.0.0.1:8786`이다. 인터페이스는 OS 테마와 관계없이 화이트 톤을 기본으로 사용하며 패널·표·조작부를 밝게 표시한다. 기본은 **검증된 물리 실행의 60 FPS 영상 재생**이며, **기존 8배속을 화면의 1배속으로 삼아 1·1.5·2배속으로 재생 중에 변경**할 수 있다. 첫 화면은 원본 동작과 **전신 구조 응력 + 몸통·양팔 20관절 부하**를 같은 높이로 나란히 놓고, 공통 재생 제어와 표시 설정을 두 화면 아래에 배치한다. 오른쪽 화면은 0.25 m 간격의 회청색 디지털 트윈 바닥에서 응력 색상과 관절 부하 지시선을 같은 기록 프레임에 겹친다. 이 격자는 시각 배경이며 물리 충돌체를 추가하지 않는다. 그 아래 전체 폭 하중 진단에서 선택 부품의 6축 합력, 하중 경로와 응력 성분을 확인하고, 다음 줄에서 머리·왼손목·오른손목의 RGB와 깊이 6패널을 본다. `관절 부하 영상`으로 바꾸면 기존 비교 영상을 같은 시각에 재생한다. 재생·일시정지·한 프레임·초기화·배율·완료 후 다시 재생과 시점 변경은 원본 영상 시각을 기준으로 적용한다. 좁은 화면에서는 두 주 화면과 RGB-D 패널을 세로로 배치한다. 카메라 행은 확대할 수 있다. 같은 실행의 1 Hz 공통 모니터 배치를 재생 시각에 맞춰 선택하며, 관측 시각·지연·센서별 고정 깊이 범례(m)를 표시한다. 유효하지 않은 깊이는 자홍색이고, 미래 시각의 센서 관측은 표시하지 않는다. 기존 성공 GIF는 약 4배속이다.
+뷰어는 `http://127.0.0.1:8786`이다. 인터페이스는 OS 테마와 관계없이 화이트 톤을 기본으로 사용하며 패널·표·조작부를 밝게 표시한다. 기본은 **검증된 물리 실행의 60 FPS 영상 재생**이며, **기존 8배속을 화면의 1배속으로 삼아 1·1.5·2배속으로 재생 중에 변경**할 수 있다. 구조 번들을 준비한 첫 화면은 원본 동작과 **전신 구조 응력 + 몸통·양팔 20관절 부하**를 같은 높이로 나란히 놓고, 공통 재생 제어와 표시 설정을 두 화면 아래에 배치한다. 오른쪽 화면은 0.25 m 간격의 회청색 디지털 트윈 바닥에서 응력 색상과 관절 부하 지시선을 같은 기록 프레임에 겹친다. 이 격자는 시각 배경이며 물리 충돌체를 추가하지 않는다. 그 아래 전체 폭 하중 진단에서 선택 부품의 6축 합력, 하중 경로와 응력 성분을 확인하고, 다음 줄에서 머리·왼손목·오른손목의 RGB와 깊이 6패널을 본다. `관절 부하 영상`으로 바꾸면 기존 비교 영상을 같은 시각에 재생한다. 재생·일시정지·한 프레임·초기화·배율·완료 후 다시 재생과 시점 변경은 원본 영상 시각을 기준으로 적용한다. 좁은 화면에서는 두 주 화면과 RGB-D 패널을 세로로 배치한다. 카메라 행은 확대할 수 있다. 같은 실행의 1 Hz 공통 모니터 배치를 재생 시각에 맞춰 선택하며, 관측 시각·지연·센서별 고정 깊이 범례(m)를 표시한다. 유효하지 않은 깊이는 자홍색이고, 미래 시각의 센서 관측은 표시하지 않는다. 기존 성공 GIF는 약 4배속이다.
 
 빠른 화면 재생과 새 물리 계산은 분리한다. `evidence/playback-native`의 영상은 기존 2 ms 물리/제어를 모두 계산하면서 실제 MuJoCo 상태를 샘플링한 기록이며, 브라우저에서는 원본 8배속 영상을 1·1.5·2의 재생률로 표시한다. 물리 시간 간격을 늘리거나 누락된 움직임을 영상 보간으로 합성하지 않는다. 재생 자료가 없거나 설정·해시 검증에 실패하면 실시간 계산 모드로 표시하며, 이 모드의 실제 속도는 CPU 성능에 따른다. 새 물리 실험은 `run`으로 실행한다.
 
@@ -135,7 +135,7 @@ python3 -m venv .venv
 
 38번째 상세 부품은 제조사 **RB-Y1 V1.2 Mecanum STEP의 왼쪽 연결 플랜지 후보**다. 6개 단위 wrench의 Tet4 응력 텐서 기저를 현재 프레임의 힘·모멘트로 선형 합성한 뒤 von Mises 응력을 계산하며, 스칼라 von Mises 값을 합산하지 않는다. 표면과 실제 단면을 바꿔 볼 수 있지만 준정적 해석이며 재료·체결·좌표 정합은 가정이다. 71.704초의 정적 메시 수렴 사례는 계산 검증으로 보존한다.
 
-동기화 기준은 주 영상의 디코딩된 `mediaTime`이며, 지원하지 않는 브라우저에서는 시간 이벤트를 사용한다. 재생 중 시간·선택 부품·표면/단면 모드는 유지된다. 필수 구조 바이너리 네 개와 선택 하중 진단 바이너리 `diagnostics.bin`은 해시·스키마·크기를 검사한다. `diagnostics.bin`은 1,136×38×18개의 little-endian float32 값이며 크기는 3,108,096 B다. CAD 파생 데이터가 포함된 번들은 재배포 범위 미확인으로 로컬에만 두므로 새 clone에서는 동기 구조 모드가 비활성이다. 구성이 없을 때만 기존 고정 응력 스냅샷을 표시하며, 구성된 번들의 검증이 실패하면 오류를 알리고 스냅샷으로 우회하지 않는다. [계산 가정·검증·재현 절차](docs/structural-analysis.md), [CAD 확보 근거](docs/structural-cad.md), [정적 검증 사례](evidence/structural-flange/summary.json)를 함께 기록했다. 이 후처리는 기존 MuJoCo 물리를 바꾸지 않는다.
+동기화 기준은 주 영상의 디코딩된 `mediaTime`이며, 지원하지 않는 브라우저에서는 시간 이벤트를 사용한다. 재생 중 시간·선택 부품·표면/단면 모드는 유지된다. 필수 구조 바이너리 네 개와 선택 하중 진단 바이너리 `diagnostics.bin`은 해시·스키마·크기를 검사한다. `diagnostics.bin`은 1,136×38×18개의 little-endian float32 값이며 크기는 3,108,096 B다. CAD 파생 데이터가 포함된 번들은 재배포 범위 미확인으로 로컬에만 두므로 새 clone에서는 동기 구조 모드가 비활성이다. 구조 번들이 없고 고정 스냅샷 데이터가 별도로 준비된 경우에만 고정 응력 화면을 표시한다. 새 clone에는 이 스냅샷 데이터도 없으며, 구성된 번들의 검증이 실패하면 오류를 알리고 스냅샷으로 우회하지 않는다. [계산 가정·검증·재현 절차](docs/structural-analysis.md), [CAD 확보 근거](docs/structural-cad.md), [정적 검증 사례](evidence/structural-flange/summary.json)를 함께 기록했다. 이 후처리는 기존 MuJoCo 물리를 바꾸지 않는다.
 
 ```bash
 .venv/bin/python tools/build_load_view.py --bundle evidence/playback-native --output artifacts/load-view-check
