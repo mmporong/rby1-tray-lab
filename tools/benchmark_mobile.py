@@ -12,6 +12,7 @@ import sys
 from rby1_tray.cli import run_episode
 from rby1_tray.experiments import (
     CASES,
+    STUDIES,
     VARIANTS,
     parse_names,
     parse_seeds,
@@ -50,10 +51,20 @@ def parser() -> argparse.ArgumentParser:
     )
     result.add_argument("--config", default=str(REPOSITORY / "configs/mobile-native.json"))
     result.add_argument("--output", required=True)
-    result.add_argument("--cases", default="nominal", help=f"comma-separated: {','.join(CASES)}")
-    result.add_argument("--seeds", default="0", help="comma-separated nonnegative integers")
     result.add_argument(
-        "--variants", default="coop-depth-cad", help=f"comma-separated: {','.join(VARIANTS)}"
+        "--study",
+        choices=tuple(STUDIES),
+        help="fixed preregistered matrix; cannot be combined with cases/seeds/variants",
+    )
+    result.add_argument("--cases", help=f"comma-separated: {','.join(CASES)}")
+    result.add_argument("--seeds", help="comma-separated nonnegative integers")
+    result.add_argument(
+        "--variants", help=f"comma-separated: {','.join(VARIANTS)}"
+    )
+    result.add_argument(
+        "--compress-jsonl",
+        action="store_true",
+        help="gzip trace and 500 Hz command JSONL after extracting summary metrics",
     )
     return result
 
@@ -61,9 +72,17 @@ def parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     try:
-        cases = parse_names(args.cases, CASES, "cases")
-        seeds = parse_seeds(args.seeds)
-        variants = parse_names(args.variants, VARIANTS, "variants")
+        if args.study:
+            if any(value is not None for value in (args.cases, args.seeds, args.variants)):
+                raise ValueError("--study cannot be combined with --cases, --seeds, or --variants")
+            study = STUDIES[args.study]
+            cases = list(study.cases)
+            seeds = list(study.seeds)
+            variants = list(study.variants)
+        else:
+            cases = parse_names(args.cases or "nominal", CASES, "cases")
+            seeds = parse_seeds(args.seeds or "0")
+            variants = parse_names(args.variants or "coop-depth-cad", VARIANTS, "variants")
         config_path = Path(args.config).resolve()
         base_config = load_config(config_path)
         summary = run_benchmark(
@@ -75,6 +94,8 @@ def main(argv: list[str] | None = None) -> int:
             run_episode=lambda config, output: run_episode(config, output, render=False),
             source_snapshot=lambda: repository_source_snapshot(REPOSITORY, config_path),
             provenance={**_git_provenance(), "config_path": str(config_path)},
+            study_name=args.study,
+            compress_jsonl=args.compress_jsonl,
         )
     except (FileExistsError, FileNotFoundError, ValueError, RuntimeError) as exc:
         print(f"benchmark error: {exc}", file=sys.stderr)

@@ -1,12 +1,17 @@
+import gzip
 import json
 from pathlib import Path
 import tempfile
 import unittest
 
 from rby1_tray.experiments import (
+    STUDIES,
     aggregate,
     apply_case,
+    apply_variant,
     build_run_specs,
+    compress_run_jsonl,
+    paired_controller_profile_stats,
     paired_cooperation_counts,
     parse_names,
     parse_seeds,
@@ -63,6 +68,55 @@ class MobileExperimentTests(unittest.TestCase):
         self.assertNotIn("tray_rgba", self.config)
         self.assertNotIn("delivery_delay_s", self.config["sensors"]["head"])
 
+    def test_yaw_cases_and_controller_profiles_are_independent(self):
+        negative = apply_case(self.config, "tray-yaw-minus-0.035")
+        heldout = apply_case(self.config, "tray-yaw-0.025-heldout")
+        self.assertEqual(negative["tray_initial_yaw_rad"], -.035)
+        self.assertEqual(heldout["tray_initial_yaw_rad"], .025)
+        baseline = apply_variant(negative, "baseline-depth-cad")
+        candidate = apply_variant(negative, "candidate-depth-cad")
+        no_coop = apply_variant(negative, "candidate-no-coop-depth-cad")
+        self.assertNotIn("transport_planning", baseline)
+        self.assertEqual(
+            candidate["transport_planning"],
+            {"profile": "geometry_clearance", "clearance_m": .03},
+        )
+        self.assertTrue(candidate["cooperation"]["enabled"])
+        self.assertFalse(no_coop["cooperation"]["enabled"])
+        self.assertEqual(candidate["tray_initial_yaw_rad"], -.035)
+        improved_base = {**negative, "transport_planning": {"profile": "other"}}
+        self.assertNotIn(
+            "transport_planning", apply_variant(improved_base, "baseline-depth-cad")
+        )
+        for name in ("coop-depth-cad", "no-coop-depth-cad", "coop-blue-rgbd", "no-coop-blue-rgbd"):
+            self.assertNotIn("transport_planning", apply_variant(improved_base, name))
+
+    def test_named_studies_freeze_expected_matrix_sizes(self):
+        expected = {"improvement": 24, "safety": 4, "cooperation": 16}
+        for name, count in expected.items():
+            study = STUDIES[name]
+            specs = build_run_specs(
+                self.config, study.cases, study.seeds, study.variants
+            )
+            self.assertEqual(len(specs), count)
+        self.assertIn("tray-yaw-0.025-heldout", STUDIES["improvement"].cases)
+        self.assertNotIn("calibration-bias-minus-0.005", STUDIES["safety"].cases)
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "mislabeled"
+            with self.assertRaisesRegex(ValueError, "does not match frozen definition"):
+                run_benchmark(
+                    self.config,
+                    output,
+                    ["nominal"],
+                    [0],
+                    ["candidate-depth-cad"],
+                    lambda _config, _output: {},
+                    source_snapshot=lambda: {"source.py": "fixed"},
+                    provenance={"commit": "test"},
+                    study_name="improvement",
+                )
+            self.assertFalse(output.exists())
+
     def test_stale_case_preregisters_and_reports_expected_perception_rejection(self):
         spec = build_run_specs(
             self.config, ["rgbd-stale-0.15"], [0], ["coop-depth-cad"]
@@ -101,6 +155,44 @@ class MobileExperimentTests(unittest.TestCase):
         self.assertTrue(row["expected_rejection_observed"])
         self.assertEqual(row["mission_failure"]["reason"], "perception_failed")
         self.assertEqual(summary["expected_rejections"]["sample_size"], 1)
+        self.assertEqual(summary["expected_rejections"]["observed"], 1)
+
+    def test_positive_calibration_bias_requires_wrist_depth_safety_rejection(self):
+        spec = build_run_specs(
+            self.config, ["calibration-bias-0.005"], [0], ["candidate-depth-cad"]
+        )[0]
+        self.assertEqual(
+            spec["expected_outcome"], "calibration_bias_safety_rejection"
+        )
+
+        def rejected_run(_config, output):
+            output.mkdir()
+            (output / "manifest.json").write_text('{"artifact_sha256": {}}\n')
+            return {
+                "success": False,
+                "failure_reason": "wrist_verification_failed",
+                "simulation_time_s": 44.7,
+                "mission": {
+                    "phase": "grasp_hold",
+                    "failure": {
+                        "reason": "wrist_verification_failed",
+                        "detail": "depth does not support the expected CAD rim patch",
+                    },
+                },
+            }
+
+        with tempfile.TemporaryDirectory() as directory:
+            summary = run_benchmark(
+                self.config,
+                Path(directory) / "benchmark",
+                ["calibration-bias-0.005"],
+                [0],
+                ["candidate-depth-cad"],
+                rejected_run,
+                source_snapshot=lambda: {"source.py": "fixed"},
+                provenance={"commit": "test"},
+            )
+        self.assertTrue(summary["runs"][0]["expected_rejection_observed"])
         self.assertEqual(summary["expected_rejections"]["observed"], 1)
 
     def test_run_matrix_disables_monitoring_and_preserves_paired_identity(self):
@@ -143,6 +235,67 @@ class MobileExperimentTests(unittest.TestCase):
         self.assertEqual(counts["complete_pairs"], 1)
         self.assertEqual(counts["cooperation_only_success"], 1)
         self.assertEqual(counts["missing_variant_pairs"], 1)
+
+    def test_cooperation_pairs_do_not_cross_controller_profiles(self):
+        base = {
+            "case": "nominal",
+            "seed": 0,
+            "estimator": "depth_cad",
+            "execution_status": "completed",
+            "success": True,
+        }
+        counts = paired_cooperation_counts(
+            [
+                {**base, "controller_profile": "legacy", "cooperation_enabled": True},
+                {
+                    **base,
+                    "controller_profile": "geometry_clearance",
+                    "cooperation_enabled": False,
+                },
+            ]
+        )
+        self.assertEqual(counts["candidate_pairs"], 2)
+        self.assertEqual(counts["complete_pairs"], 0)
+
+    def test_controller_profile_pairing_reports_outcomes_and_null_safe_deltas(self):
+        base = {
+            "case": "tray-yaw-0.035",
+            "seed": 0,
+            "estimator": "depth_cad",
+            "cooperation_enabled": True,
+            "execution_status": "completed",
+            "max_joint_torque_nm": 10.0,
+            "max_tray_tilt_rad": None,
+            "max_payload_to_tray_displacement_m": None,
+        }
+        stats = paired_controller_profile_stats(
+            [
+                {
+                    **base,
+                    "controller_profile": "legacy",
+                    "success": False,
+                    "simulation_time_s": 104.0,
+                },
+                {
+                    **base,
+                    "controller_profile": "geometry_clearance",
+                    "success": True,
+                    "simulation_time_s": 151.0,
+                    "max_joint_torque_nm": 12.5,
+                },
+            ]
+        )
+        self.assertEqual(stats["complete_pairs"], 1)
+        self.assertEqual(stats["candidate_only_success"], 1)
+        self.assertEqual(stats["paired_success_delta"], 1)
+        self.assertIsNone(stats["task_time_delta_s"])
+        self.assertEqual(stats["max_joint_torque_delta_nm"]["mean"], 2.5)
+        self.assertIsNone(stats["max_tray_tilt_delta_rad"])
+        successful = paired_controller_profile_stats([
+            {**base, "controller_profile": "legacy", "success": True, "simulation_time_s": 150.0},
+            {**base, "controller_profile": "geometry_clearance", "success": True, "simulation_time_s": 151.0},
+        ])
+        self.assertEqual(successful["task_time_delta_s"]["mean"], 1.0)
 
     def test_runner_errors_are_preserved_but_not_counted_as_physics_failures(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -209,8 +362,34 @@ class MobileExperimentTests(unittest.TestCase):
             self.assertEqual(len(manifest["run_manifests"]), 4)
             self.assertTrue(all(row["run_manifest_sha256"] for row in summary["runs"]))
             self.assertTrue(all(row["cooperation_summary"] for row in summary["runs"]))
+            self.assertTrue(
+                all(
+                    row["stability_metrics"]["missing_reason"]
+                    == "trace.jsonl or trace.jsonl.gz not found"
+                    for row in summary["runs"]
+                )
+            )
             preregistered = json.loads((output / "preregistered.json").read_text())
             self.assertEqual(preregistered["expected_runs"], 4)
+
+    def test_compression_preserves_jsonl_content_and_uses_gzip_suffix(self):
+        with tempfile.TemporaryDirectory() as directory:
+            run = Path(directory)
+            controller = run / "controller-data"
+            controller.mkdir()
+            trace = run / "trace.jsonl"
+            commands = controller / "commands.jsonl"
+            trace.write_text('{"time_s": 0}\n')
+            commands.write_text('{"command": 1}\n')
+            compressed = compress_run_jsonl(run)
+            self.assertEqual(
+                compressed,
+                ["trace.jsonl.gz", "controller-data/commands.jsonl.gz"],
+            )
+            self.assertFalse(trace.exists())
+            self.assertFalse(commands.exists())
+            with gzip.open(run / "trace.jsonl.gz", "rt") as handle:
+                self.assertEqual(handle.read(), '{"time_s": 0}\n')
 
 
 if __name__ == "__main__":

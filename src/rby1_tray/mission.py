@@ -27,6 +27,12 @@ from .perception import PerceptionError, TrayCAD, TrayEstimate, estimate_tray_po
 from .planning import Robot, smoothstep
 from .scene import audit_model, build_scene, load_config
 from .session import Session
+from .transport_clearance import (
+    carried_tray_wall_clearance_m,
+    container_near_wall_outer_x_m,
+    geometry_clearance_safe_x_m,
+    rotated_tray_x_support_m,
+)
 
 
 # Synthetic IK warm start selected by a deterministic multi-start sweep for
@@ -835,17 +841,11 @@ class MobileSession(Session):
             else self._planned_tray_center.copy()
         )
         path_centers = [start_center]
+        transport_metrics = None
         if phase == "raise_high":
             # The target deck begins before the low carried tray's front edge.
             # Retract in free space, raise above it, then extend at clearance.
-            deck_near_x = (
-                float(self.config["target"]["center_xy_m"][0])
-                - float(self.config["target"]["inner_half_xy_m"][0])
-            )
-            safe_x = min(
-                float(start_center[0]),
-                deck_near_x - float(self.config["tray_half_extents_m"][0]) - 0.03,
-            )
+            safe_x, transport_metrics = self._raise_high_safe_x(float(start_center[0]))
             path_centers.extend((
                 np.array([safe_x, start_center[1], start_center[2]]),
                 np.array([safe_x, target_center[1], target_center[2]]),
@@ -863,6 +863,24 @@ class MobileSession(Session):
             sampled_centers.extend(
                 leg_start + (index / samples) * (leg_target - leg_start)
                 for index in range(1, samples + 1)
+            )
+        if phase == "raise_high" and transport_metrics is not None:
+            clearances = []
+            for index, point in enumerate([start_center, *sampled_centers]):
+                observed = carried_tray_wall_clearance_m(
+                    self.model, point, self._detected_tray.yaw_rad
+                )
+                if observed is None:
+                    continue
+                clearances.append(observed)
+                if observed + 1e-9 < transport_metrics["clearance_requested_m"]:
+                    raise ValueError(
+                        "raise_high carried-tray clearance gate failed at Cartesian "
+                        f"sample {index}: {observed:.6f}m is below "
+                        f"{transport_metrics['clearance_requested_m']:.6f}m"
+                    )
+            transport_metrics["minimum_preflight_clearance_m"] = (
+                min(clearances) if clearances else None
             )
         if phase == "pickup_approach":
             # Keep the torso crouched while the hands clear the base and loose
@@ -1012,6 +1030,27 @@ class MobileSession(Session):
                         rotations,
                     )
                     interpolation_metrics.append(check)
+                    if phase == "raise_high" and transport_metrics is not None:
+                        carried_clearance = carried_tray_wall_clearance_m(
+                            self.model, center, self._detected_tray.yaw_rad
+                        )
+                        if (
+                            carried_clearance is not None
+                            and carried_clearance + 1e-9
+                            < transport_metrics["clearance_requested_m"]
+                        ):
+                            raise ValueError(
+                                "raise_high interpolated carried-tray clearance gate "
+                                f"failed at segment {segment_index}, alpha={alpha:.2f}: "
+                                f"{carried_clearance:.6f}m"
+                            )
+                        if carried_clearance is not None:
+                            current = transport_metrics["minimum_preflight_clearance_m"]
+                            transport_metrics["minimum_preflight_clearance_m"] = (
+                                carried_clearance
+                                if current is None
+                                else min(current, carried_clearance)
+                            )
                     if (
                         check["position_error_m"] > self.robot.POSITION_TOLERANCE_M
                         or check["orientation_error_rad"]
@@ -1064,6 +1103,7 @@ class MobileSession(Session):
                 "pickup_preapproach_offset_m": (
                     [0.05, 0.0, 0.11] if phase == "pickup_approach" else None
                 ),
+                "transport_clearance": transport_metrics,
             }
         )
         self.ik_errors.append(metrics)
@@ -1081,6 +1121,54 @@ class MobileSession(Session):
         )
         self.plan.append(motion)
         return motion
+
+    def _raise_high_safe_x(self, start_center_x_m: float) -> tuple[float, dict | None]:
+        """Resolve the legacy or geometry-aware retract waypoint."""
+
+        transport = self.config.get("transport_planning")
+        if "transport_planning" not in self.config:
+            profile = "legacy"
+        elif not isinstance(transport, dict) or "profile" not in transport:
+            raise ValueError("transport_planning requires an explicit profile")
+        else:
+            profile = transport["profile"]
+        if profile == "legacy":
+            deck_near_x = (
+                float(self.config["target"]["center_xy_m"][0])
+                - float(self.config["target"]["inner_half_xy_m"][0])
+            )
+            safe_x = min(
+                start_center_x_m,
+                deck_near_x - float(self.config["tray_half_extents_m"][0]) - 0.03,
+            )
+            return safe_x, None
+        if profile != "geometry_clearance":
+            raise ValueError(f"unknown transport_planning.profile: {profile}")
+        if "clearance_m" not in transport:
+            raise ValueError("geometry_clearance requires explicit clearance_m")
+        clearance_m = float(transport["clearance_m"])
+        detected = self._detected_tray
+        if detected is None:
+            raise RuntimeError("geometry clearance requires a perceived tray pose")
+        safe_x = geometry_clearance_safe_x_m(
+            self.model,
+            detected.yaw_rad,
+            start_center_x_m,
+            clearance_m,
+        )
+        return safe_x, {
+            "profile": profile,
+            "clearance_requested_m": clearance_m,
+            "near_wall_outer_x_m": container_near_wall_outer_x_m(self.model),
+            "tray_positive_x_support_m": rotated_tray_x_support_m(
+                self.model, detected.yaw_rad
+            ),
+            "safe_center_x_m": safe_x,
+            "minimum_preflight_clearance_m": None,
+            "preflight_center_source": (
+                "commanded_tray_center_linear_interpolation_not_fk"
+            ),
+        }
 
     def _joint_home_motion(self, phase: str) -> ArmMotion:
         """Validate an unloaded posture change using the executed cubic path."""
