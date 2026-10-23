@@ -43,7 +43,6 @@
     .error { position: absolute; z-index: 3; inset: auto 14px 14px; margin: 0; border: 1px solid rgba(255,116,108,.55); background: rgba(60,18,20,.94); color: #ffd4d1; padding: 11px 13px; font-size: .8rem; }
     .hidden { display: none; }
     .timeline { position: absolute; z-index: 2; inset: auto 14px 14px; display: grid; grid-template-columns: repeat(5, 1fr); width: calc(100% - 28px); gap: 3px; }
-    .viewport-panel:has([data-view="load"][aria-pressed="true"]) .timeline { bottom: 54px; }
     .timeline-step { min-width: 0; border-top: 2px solid rgba(255,255,255,.18); padding-top: 7px; color: rgba(233,240,244,.55); font-size: .68rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .timeline-step.done { border-color: var(--green); color: #bdeed4; }
     .timeline-step.active { border-color: var(--cyan); color: white; }
@@ -63,6 +62,9 @@
     .sensor-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
     .sensor-heading h2 { margin: 0; font-size: .82rem; }
     .sensor-heading p { margin: 5px 0 0; color: var(--muted); font-size: .68rem; line-height: 1.45; }
+    .diagnostics-grid { display: grid; grid-template-columns: minmax(0, 2.15fr) minmax(250px, .85fr); gap: 10px; align-items: start; }
+    .diagnostics-grid:has(.load-panel[hidden]) { grid-template-columns: 1fr; }
+    .sensor-column { min-width: 0; }
     .sensor-grid { position: relative; display: grid; gap: 10px; }
     .sensor-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border: 1px solid #27343d; background: #0e1419; padding: 9px; transition: background .18s, border-color .18s; }
     .sensor-row.expanded { border-color: var(--cyan); background: #101c22; }
@@ -80,6 +82,14 @@
     .depth-legend { position: absolute; inset: 8px 8px auto auto; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,.18); background: rgba(5,7,9,.82); padding: 4px 6px; color: #c7d3d9; font: .58rem/1 ui-monospace, monospace; }
     .depth-ramp { width: 72px; height: 8px; background: linear-gradient(90deg,#fff,#737373,#080808); }
     .invalid-swatch { display: inline-block; width: 8px; height: 8px; background: rgb(230,55,135); }
+    .load-panel { min-width: 0; border: 1px solid #27343d; background: #0e1419; padding: 9px; }
+    .load-panel header { display: block; padding: 0 0 9px; }
+    .load-panel h3 { margin: 0; color: #dce8ed; font-size: .76rem; }
+    .load-panel p { margin: 4px 0 0; color: #71818b; font-size: .65rem; line-height: 1.45; }
+    .load-media { position: relative; aspect-ratio: 4 / 3; border: 1px solid #2c3942; background: #030506; overflow: hidden; }
+    .load-media video { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .load-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 18px; background: #050709; color: var(--muted); text-align: center; font-size: .7rem; line-height: 1.5; }
+    .load-clock { display: block; padding: 8px 2px 0; color: #9caab3; font: .62rem/1.4 ui-monospace, monospace; }
     aside { display: grid; gap: 14px; }
     .section { padding: 15px; }
     .section-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
@@ -103,7 +113,8 @@
     pre { max-height: 320px; margin: 0 14px 14px; overflow: auto; border: 1px solid #26313a; background: #090d11; color: #adbbc4; padding: 12px; font: 11px/1.55 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
     .help { margin: 10px 0 0; color: var(--muted); font-size: .7rem; line-height: 1.5; }
     @media (max-width: 1050px) { header { align-items: flex-start; flex-direction: column; } .condition { justify-content: flex-start; } .layout { grid-template-columns: 1fr; } aside { grid-template-columns: 1fr 1fr; } aside .result-panel { grid-column: 1 / -1; } }
-    @media (max-width: 680px) { .shell { padding: 10px; } .stage { height: auto; min-height: 0; aspect-ratio: 1 / 1; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(4, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-row { grid-template-columns: 1fr; } .sensor-row-header { grid-column: auto; } .sensor-media img, .sensor-row.expanded .sensor-media img { height: auto; aspect-ratio: 16 / 9; } aside { grid-template-columns: 1fr; } aside .result-panel { grid-column: auto; } }
+    @media (max-width: 820px) { .diagnostics-grid { grid-template-columns: 1fr; } .load-panel { max-width: 540px; } }
+    @media (max-width: 680px) { .shell { padding: 10px; } .stage { height: auto; min-height: 0; aspect-ratio: 1 / 1; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(3, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-row { grid-template-columns: 1fr; } .sensor-row-header { grid-column: auto; } .sensor-media img, .sensor-row.expanded .sensor-media img { height: auto; aspect-ratio: 16 / 9; } .load-panel { max-width: none; } aside { grid-template-columns: 1fr; } aside .result-panel { grid-column: auto; } }
     @media (max-width: 680px) { .sensor-row.expanded .sensor-media { overflow-x: auto; } .sensor-row.expanded .sensor-media img { width: 640px; height: auto; max-width: none; aspect-ratio: auto; } }
     @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
   </style>
@@ -145,11 +156,13 @@
             <label for="speed">재생 배율<select id="speed"><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
           </div>
           <div class="view-tabs" aria-label="표시 모드">
-            <button type="button" data-view="overview" aria-pressed="true">전체</button><button type="button" data-view="pickup" aria-pressed="false">파지</button><button type="button" data-view="placement" aria-pressed="false">안착</button><button type="button" data-view="load" aria-pressed="false" hidden>관절 부하</button>
+            <button type="button" data-view="overview" aria-pressed="true">전체</button><button type="button" data-view="pickup" aria-pressed="false">파지</button><button type="button" data-view="placement" aria-pressed="false">안착</button>
           </div>
           <output id="cameraReadout" class="camera-readout">전체 시점 · 방위 105° · 고도 −20°</output>
         </div>
         <section class="sensor-strip" aria-labelledby="sensorTitle">
+          <div class="diagnostics-grid">
+          <div class="sensor-column">
           <div class="sensor-header">
             <div class="sensor-heading"><h2 id="sensorTitle">RGB·깊이 모니터</h2><p id="sensorBatchMeta">재생 시각 이전의 카메라별 최신 관측을 불러옵니다. 패널을 누르면 해당 카메라가 확대됩니다.</p></div>
           </div>
@@ -169,6 +182,16 @@
               <figure class="sensor-media" data-sensor-kind="rgb"><img alt="오른쪽 손목 카메라 RGB 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
               <figure class="sensor-media" data-sensor-kind="depth"><img alt="오른쪽 손목 카메라 metric depth 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><div class="depth-legend"><span data-depth-near>—</span><i class="depth-ramp"></i><span data-depth-far>—</span><i class="invalid-swatch"></i><span>invalid</span></div><figcaption><span>깊이</span><span>고정 범위 · m</span></figcaption></figure>
             </section>
+          </div>
+          </div>
+          <section id="loadPanel" class="load-panel" aria-labelledby="loadTitle" hidden>
+            <header><h3 id="loadTitle">관절 부하</h3><p>관절 토크를 모델 힘 제한과 비교한 색상입니다. 구조 응력·파손 해석이 아닙니다.</p></header>
+            <div class="load-media">
+              <video id="loadVideo" aria-label="RB-Y1 관절 부하 기록" width="960" height="720" muted playsinline preload="auto"></video>
+              <p id="loadStatus" class="load-status" role="status">부하 기록을 불러오는 중입니다.</p>
+            </div>
+            <output id="loadClock" class="load-clock">주 영상과 같은 기록 시각 · —</output>
+          </section>
           </div>
         </section>
       </section>
@@ -209,6 +232,7 @@
       targetHeight: $('targetHeight'), checkTarget: $('checkTarget'), checkSupport: $('checkSupport'), checkPayload: $('checkPayload'),
       checkWithdraw: $('checkWithdraw'), backendBadge: $('backendBadge'), baseBadge: $('baseBadge'), modelBadge: $('modelBadge'),
       sensorGrid: $('sensorGrid'), sensorBatchMeta: $('sensorBatchMeta'), sensorRows: [...document.querySelectorAll('[data-sensor-camera]')],
+      loadPanel: $('loadPanel'), loadVideo: $('loadVideo'), loadStatus: $('loadStatus'), loadClock: $('loadClock'),
       viewButtons: [...document.querySelectorAll('[data-view]')], timeline: [...document.querySelectorAll('.timeline-step')]
     };
     let playing = false, actionPromise = null, playGeneration = 0, framePromise = null, frameDirty = false;
@@ -216,6 +240,7 @@
     let sensorGeneration = 0, sensorEventKey = '', sensorObjectUrls = [];
     let playbackInfo = null, playbackStates = [], videoGeneration = 0, animationFrame = null;
     let videoLoading = false;
+    let loadReady = false, loadFailed = false;
     let lastStateFrame = -1, lastStatePaint = 0;
     const elevation = -20;
     const phaseLabels = {
@@ -348,6 +373,36 @@
         lastStateFrame=index; updateState(playbackStates[index].state);
         ui.backendBadge.textContent='MuJoCo · 기록 재생';
       }
+      syncLoadVideo(force);
+    }
+    function updateLoadClock() {
+      if (ui.loadPanel.hidden) return;
+      const recorded=Number(ui.video.currentTime), simulation=Number(currentState?.time_s);
+      ui.loadClock.textContent=`주 영상 ${Number.isFinite(recorded)?formatNumber(recorded,3)+' s':'—'} · 시뮬레이션 ${Number.isFinite(simulation)?formatNumber(simulation,3)+' s':'—'}`;
+    }
+    function syncLoadVideo(force=false) {
+      updateLoadClock();
+      if (!loadReady || loadFailed) return;
+      ui.loadVideo.playbackRate=ui.video.playbackRate;
+      const duration=Number(ui.loadVideo.duration), target=Math.min(Number.isFinite(duration)?duration:Number.POSITIVE_INFINITY,Math.max(0,ui.video.currentTime||0));
+      if (force || Math.abs(ui.loadVideo.currentTime-target)>0.1) ui.loadVideo.currentTime=target;
+    }
+    async function playLoadVideo() {
+      if (!loadReady || loadFailed || document.hidden || ui.video.paused) return;
+      syncLoadVideo(true);
+      if (ui.video.currentTime >= ui.loadVideo.duration - 1 / playbackInfo.fps) { ui.loadVideo.pause(); return; }
+      try { await ui.loadVideo.play(); }
+      catch (error) {
+        if (error.name==='AbortError') return;
+        loadFailed=true;ui.loadStatus.textContent=`관절 부하 영상을 재생하지 못했습니다. ${error.message}`;ui.loadStatus.hidden=false;
+      }
+    }
+    function initializeLoadVideo(url) {
+      if (!url) return;
+      ui.loadPanel.hidden=false;
+      ui.loadVideo.addEventListener('loadeddata',()=>{loadReady=true;loadFailed=false;ui.loadStatus.hidden=true;syncLoadVideo(true);if(!ui.video.paused)playLoadVideo();},{once:true});
+      ui.loadVideo.addEventListener('error',()=>{loadFailed=true;loadReady=false;ui.loadStatus.textContent='관절 부하 영상을 불러오지 못했습니다. 주 영상 재생은 계속 사용할 수 있습니다.';ui.loadStatus.hidden=false;},{once:true});
+      ui.loadVideo.src=url;ui.loadVideo.load();
     }
     function animateRecorded(now) {
       animationFrame=null;
@@ -357,13 +412,14 @@
       animationFrame=requestAnimationFrame(animateRecorded);
     }
     function recordedCameraLabel() {
-      const labels={overview:'전체',pickup:'파지',placement:'안착',load:'관절 부하'};
+      const labels={overview:'전체',pickup:'파지',placement:'안착'};
       ui.camera.value=`${labels[selectedView]} 시점 · 검증 실행 ${playbackInfo.fps} FPS · ${ui.speed.value}×`;
       ui.camera.textContent=ui.camera.value;
     }
     async function loadRecordedView(view, resume=false) {
       const generation=++videoGeneration, previousTime=ui.video.currentTime || 0;
       videoLoading=true;
+      ui.loadVideo.pause();
       stopPlayback(); ui.play.disabled=true; setControlsBusy(true);
       try {
         const loaded=new Promise((resolve,reject)=>{
@@ -387,6 +443,7 @@
         }
         if(generation!==videoGeneration)return;
         ui.video.hidden=false; ui.frame.hidden=true; lastStateFrame=-1; syncRecordedState(true); recordedCameraLabel();
+        syncLoadVideo(true);
         if (resume && !document.hidden && !isTerminal(currentState)) await ui.video.play();
         showError();
       } catch (error) { if (generation===videoGeneration) showError(error.message); }
@@ -394,7 +451,7 @@
     }
     function seekRecorded(seconds) {
       ui.video.currentTime=Math.min(ui.video.duration,Math.max(0,seconds));
-      lastStateFrame=-1; syncRecordedState(true);
+      lastStateFrame=-1; syncRecordedState(true);syncLoadVideo(true);
     }
     function setControlsBusy(value) {
       const busy=value||videoLoading;
@@ -410,7 +467,7 @@
     const advance = (steps=50) => runAction(() => request('/api/step', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({steps}) }));
     function stopPlayback(preserveStatus=false) {
       playing=false; playGeneration+=1;
-      if (playbackInfo) {ui.video.pause();if(animationFrame!==null)cancelAnimationFrame(animationFrame);animationFrame=null;syncRecordedState();}
+      if (playbackInfo) {ui.video.pause();ui.loadVideo.pause();if(animationFrame!==null)cancelAnimationFrame(animationFrame);animationFrame=null;syncRecordedState();}
       if (!preserveStatus && currentState && !isTerminal(currentState)) ui.runStatus.textContent='일시정지';
       updatePlayLabel(); if (playbackInfo) setControlsBusy(false);
     }
@@ -435,22 +492,26 @@
       playing=true;ui.runStatus.textContent='재생 중';updatePlayLabel();setControlsBusy(false);
       if (animationFrame===null) animationFrame=requestAnimationFrame(animateRecorded);
     });
+    ui.video.addEventListener('playing',()=>{playLoadVideo();});
     ui.video.addEventListener('pause',()=>{
+      ui.loadVideo.pause();syncLoadVideo(true);
       playing=false;if(animationFrame!==null)cancelAnimationFrame(animationFrame);animationFrame=null;
       syncRecordedState(true);if(!isTerminal(currentState))ui.runStatus.textContent='일시정지';updatePlayLabel();setControlsBusy(false);
     });
     ui.video.addEventListener('ended',()=>{syncRecordedState(true);stopPlayback(true);});
-    ui.video.addEventListener('seeked',()=>syncRecordedState(true));
+    ui.video.addEventListener('seeking',()=>{ui.loadVideo.pause();syncLoadVideo(true);});
+    ui.video.addEventListener('seeked',()=>{syncRecordedState(true);syncLoadVideo(true);if(!ui.video.paused)playLoadVideo();});
+    ui.video.addEventListener('timeupdate',()=>syncLoadVideo(false));
     ui.play.addEventListener('click', () => { if (playing) stopPlayback(); else startPlayback(); });
     ui.single.addEventListener('click', () => {if(playbackInfo)seekRecorded(ui.video.currentTime+1/playbackInfo.fps);else advance(50).catch(()=>{});});
     ui.reset.addEventListener('click', async () => {
       stopPlayback(); if(playbackInfo){sensorEventKey='';seekRecorded(0);return;}
       if (actionPromise) return; try { await runAction(() => request('/api/reset',{method:'POST'})); } catch (_) {}
     });
-    ui.speed.addEventListener('change',()=>{if(playbackInfo){ui.video.playbackRate=Number(ui.speed.value);recordedCameraLabel();}});
+    ui.speed.addEventListener('change',()=>{if(playbackInfo){ui.video.playbackRate=Number(ui.speed.value);syncLoadVideo(true);recordedCameraLabel();}});
     ui.viewButtons.forEach((button) => button.addEventListener('click', () => {
       selectedView=button.dataset.view;
-      if(playbackInfo)ui.playbackHelp.textContent=selectedView==='load'?'링크 색은 관절 토크를 모델 힘 제한으로 나눈 비율입니다. 구조 응력·파손 결과가 아닙니다.':'검증된 물리 실행을 60 FPS로 재생합니다. 표시 1배속은 시뮬레이션 8배속이며 상태·센서는 같은 기록 시각을 따릅니다.';
+      if(playbackInfo)ui.playbackHelp.textContent='검증된 물리 실행을 60 FPS로 재생합니다. 표시 1배속은 시뮬레이션 8배속이며 상태·센서는 같은 기록 시각을 따릅니다.';
       ui.viewButtons.forEach((item)=>item.setAttribute('aria-pressed',String(item===button)));
       if(playbackInfo)loadRecordedView(selectedView,playing);else refreshFrame().catch((error)=>showError(error.message));
     }));
@@ -466,6 +527,7 @@
           if(!Array.isArray(states)||states.length!==info.frame_count||!states.length)throw new Error('재생 상태와 영상 프레임 수가 맞지 않습니다.');
           playbackInfo=info;playbackStates=states;ui.single.textContent='한 프레임';
           ui.viewButtons.forEach(button=>{button.hidden=!info.videos[button.dataset.view];});
+          initializeLoadVideo(info.videos.load);
           ui.playbackHelp.textContent='검증된 물리 실행을 60 FPS 영상으로 재생합니다. 기본 1배속은 시뮬레이션 8배속에 해당하며, 상태·센서도 같은 기록 시각을 따릅니다.';
           await loadRecordedView(selectedView);
         } else {
