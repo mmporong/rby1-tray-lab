@@ -59,5 +59,6 @@
   "limits": [
     "Observed discrete playback states and responsive layouts; continuous zero-drift video synchronization was not measured in this pass",
     "Structural analysis is a fixed snapshot, intentionally independent of playback clock"
-  ]
+  ],
+  "interface_source_commit": "12b21a20b2d21f618f99acbd078f57c0746aea49"
 }

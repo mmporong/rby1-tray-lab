@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "physics_source_commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
-  "interface_source_commit": "f58fe589772c689105da7d8b52c70010c7d0d243",
+  "interface_source_commit": "12b21a20b2d21f618f99acbd078f57c0746aea49",
   "scope": "Derived presentation evidence, separate from original captured-run manifest",
   "artifact_sha256": {
     "README.md": "74856f5f32cf6da718b1b2b9ef57e7e074135443c38ed4e2c25a1e4a957a11a1",
@@ -21,15 +21,29 @@
     "evidence/playback-native/manifest.json": "d36eaa46dd90e97ecb67692b2df7a0e7ee81e22c3cf7c9552e723bfab91f9d9c",
     "evidence/playback-native/browser-qa.json": "0dea59699b54b7dcbcb3d1733d754dcd5945ea10ad3ba811f80269ca1edc3131",
     "evidence/robustness/compact-manifest.json": "4b52f3136a9ad1c1ef23f2dc535389e96f97c381f43539c015d17cb1bf8d2a3d",
-    "evidence/cad-availability.json": "99919661016552eb7766eef0f041fff08916d7e0e3df38065e5c5b8180ab164a",
-    "docs/structural-cad.md": "0a5eea095b450eb8883a087a2560abbfabcf9fc9957f4b5e44b461115ab8ecbf"
+    "evidence/cad-availability.json": "254fa38d094809dcc944cac3e67c79b24555cd70d0f70f2119aac648ff116ead",
+    "docs/structural-cad.md": "e17a5a1975b7dbddb1da5018c91f379fa8eddb1a5f446ece2a4a17f92ea18303",
+    "docs/structural-analysis.md": "2e3db842cf3154a3bee9e9857bd41a403b343dbbae79a18995aa2be66a80f0fb",
+    "evidence/structural-flange/summary.json": "172e7dc5cb5332bab97b43ea11a20443e2f6b60b286910ccd25ad512305b3a86",
+    "evidence/structural-flange/validation.json": "c7242f7cd569493db22a490d0aa7c55066b4cc4c1813492897be4bc0a225a8ae",
+    "evidence/structural-flange/browser-qa.json": "42e43ce8142837c10f751f949102cb066a2dddbe8366258d71dd62098a938096",
+    "configs/structural-flange.json": "1b7333967983c7ff1d6cf5153e477aeb48fdc743ec2a1133e88d1bef26e329dd",
+    "requirements-cae.txt": "cd7831b73ffea2e84a6df9ba9bc1154ca0564b7771a0ee54fe4bd6401bfa2dc2"
   },
   "source_script_sha256": {
     "tools/build_load_view.py": "e8aae2b24cd7395e959408c5c7475da7b5eca7a27e198173962c249994868e18",
-    "tools/build_load_heatmap.py": "8b8156d8d8add26753b2ad3cf99ed069bd1c1ff137e51693236f804504f2cd98"
+    "tools/build_load_heatmap.py": "8b8156d8d8add26753b2ad3cf99ed069bd1c1ff137e51693236f804504f2cd98",
+    "tools/prepare_structural_cad.py": "d61b2342c489fce2c2d9b0bca7fac9449c8d7600bb2b6b5134ba18ae91e62d59",
+    "tools/build_structural_case.py": "f7cf2bc02c46672ded6002fe719ab61ce48b2d834dcb8149b7518053350a862d",
+    "tools/render_structural_case.py": "611cc96be3359b75d49edf94a4b3491cc0056f959bdc94c0f5bbae14809164cb",
+    "src/rby1_tray/structural.py": "0b203075ac0b35d618878a094a71c773d7776efaef3482079f0473d50ac9ff40",
+    "src/rby1_tray/structural_loads.py": "8551652f59c14a1c038e72369203ded5850235569ea274b6c58ac2bf68f7d1c1",
+    "src/rby1_tray/structural_evidence.py": "d5bdc9025844e9b6df3b67e1d1eda66153d77f4aa96b125fc7286622a1bbf983",
+    "src/rby1_tray/structural_view.py": "1717e1a5bcc66779abebaed6f88ab3107730863746cabc6dc2d342e11bcdb06c",
+    "src/rby1_tray/web/index.html": "8fbc2cf60fdd0eb013847023cf4d615ba9973f31f5a2892cec9aa8404e008fda"
   },
   "validation_summary": {
-    "unit_tests": 28,
+    "unit_tests": 175,
     "unit_tests_pass": true,
     "physics_duration_s": 151.231999999994,
     "control_packets": 75616,
@@ -40,23 +54,29 @@
     "condition_trials": 18,
     "task_completions": 12,
     "expected_stale_rejections": 1,
-    "unit_tests_scope": "targeted playback/viewer contracts after UI docking; prior full 151-test suite is a baseline check"
+    "unit_tests_scope": "full 175-test suite plus independent 175-test rerun; structural 24 and viewer/playback 28 targeted checks",
+    "structural_tetrahedra": 55946,
+    "structural_snapshot_s": 71.70400000001429,
+    "structural_convergence_tolerance": 0.05
   },
   "limits": [
     "joint load is not structural stress, contact pressure, fatigue or hardware safety rating",
     "monitor cameras are 1 Hz, not a live hardware/control sensor stream",
-    "fixed small trial grid does not establish general success rate or cooperation superiority"
+    "fixed small trial grid does not establish general success rate or cooperation superiority",
+    "structural FEM is one assumed-material/constraint/coaxial-transfer snapshot, not dynamic stress or hardware safety",
+    "official Fast Grip differs from simulation fingers; raw CAD, derived volume meshes and CAD PNG renders remain local"
   ],
   "interface_validation": {
-    "source_commit": "f58fe589772c689105da7d8b52c70010c7d0d243",
+    "source_commit": "12b21a20b2d21f618f99acbd078f57c0746aea49",
     "javascript_syntax": "PASS",
-    "eslint": "PASS",
+    "static_python": "PASS: 13 changed/new Python files, 0 errors/warnings",
     "independent_code_review": "APPROVE",
-    "browser_qa": "PASS",
-    "physics_not_rerun": "UI-only change; original physical recording remains at c7967a9"
+    "browser_qa": "PASS: structural surface/section, mode switch during play, terminal/home success, RGB-D, desktop/mobile",
+    "physics_not_rerun": "read-only recorded load transfer and optional diagnostic mode; original complete episode remains at c7967a9"
   },
   "prior_full_suite": {
     "test_count": 151,
     "interface_source_commit": "c483f0e5138a7630394627c65fd6c086c9ebcf3f"
-  }
+  },
+  "structural_source_commit": "12b21a20b2d21f618f99acbd078f57c0746aea49"
 }

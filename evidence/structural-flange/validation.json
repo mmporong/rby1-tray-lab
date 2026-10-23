@@ -61,7 +61,7 @@
   },
   "artifact_sha256": {
     "summary.json": "172e7dc5cb5332bab97b43ea11a20443e2f6b60b286910ccd25ad512305b3a86",
-    "browser-qa.json": "41b339681a659513dea12a547916bc58e30427f1da1b687cd30622212a9c7dfb"
+    "browser-qa.json": "42e43ce8142837c10f751f949102cb066a2dddbe8366258d71dd62098a938096"
   },
   "local_report_sha256": "52c28077662f5edc99faf85e3402d6776273f82768253bd49e4813dc793c5c7a",
   "local_cad_selection_sha256": "4d9383c1f06604084beec605d20c43809300e3d9bdef651d2e6f037e0d5d557b",
@@ -70,5 +70,6 @@
     "BREP",
     "NPZ solved mesh",
     "CAD render PNG"
-  ]
+  ],
+  "implementation_source_commit": "12b21a20b2d21f618f99acbd078f57c0746aea49"
 }
