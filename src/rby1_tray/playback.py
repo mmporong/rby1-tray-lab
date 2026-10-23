@@ -208,6 +208,7 @@ def _safe_artifact_name(name: str) -> str | None:
         "overview.mp4",
         "pickup.mp4",
         "placement.mp4",
+        "load.mp4",
         "states.json.gz",
         "sensors.json",
         "config.json",
@@ -451,7 +452,7 @@ class PlaybackAssets:
             "source_commit": self.manifest.get("source_commit"),
             "source_dirty": bool(self.manifest.get("source_dirty", False)),
             "result": self.manifest["result"],
-            "videos": {view: f"/playback/{view}.mp4" for view in VIEWS},
+            "videos": {view: f"/playback/{view}.mp4" for view in (*VIEWS, *(("load",) if "load.mp4" in self._assets else ()))},
             "states_url": "/playback/states.json.gz",
             "sensor_frame_count": len(self._sensor_entries),
         }

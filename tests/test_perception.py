@@ -1,3 +1,4 @@
+import json
 import unittest
 from dataclasses import replace
 from pathlib import Path
@@ -39,22 +40,49 @@ class PerceptionTests(unittest.TestCase):
         return rgb, depth
 
     def recorded_pregrasp(self):
-        observations = (
-            Path(__file__).resolve().parents[1]
-            / "evidence/mobile-native/controller-data/observations"
+        repository = Path(__file__).resolve().parents[1]
+        controller_data = repository / "evidence/mobile-native/controller-data"
+        frames_index = json.loads((controller_data / "frames.json").read_text())
+        config = json.loads(
+            (repository / "evidence/mobile-native/config.json").read_text()
         )
-        with np.load(observations / "0000_head_rgbd.npz") as frame:
+        cad = TrayCAD(
+            half_extents_m=tuple(config["tray_half_extents_m"]),
+            grasp_height_m=float(config["grasp"]["tcp_height_m"]),
+        )
+        wrist_entries = {
+            side: min(
+                (
+                    entry for entry in frames_index
+                    if entry["camera_name"] == f"{side}_wrist_rgbd"
+                ),
+                key=lambda entry: float(entry["timestamp_sim_s"]),
+            )
+            for side in ("left", "right")
+        }
+        first_wrist_time = min(
+            float(entry["timestamp_sim_s"]) for entry in wrist_entries.values()
+        )
+        head_entry = max(
+            (
+                entry for entry in frames_index
+                if entry["camera_name"] == "head_rgbd"
+                and float(entry["timestamp_sim_s"]) < first_wrist_time
+            ),
+            key=lambda entry: float(entry["timestamp_sim_s"]),
+        )
+        with np.load(controller_data / head_entry["path"]) as frame:
             estimate = estimate_tray_pose(
                 frame["rgb"], frame["depth_m"], frame["K"],
-                frame["T_world_optical"],
+                frame["T_world_optical"], cad=cad,
             )
         frames = {}
-        for index, side in ((1, "left"), (2, "right")):
-            with np.load(observations / f"{index:04d}_{side}_wrist_rgbd.npz") as frame:
+        for side, entry in wrist_entries.items():
+            with np.load(controller_data / entry["path"]) as frame:
                 frames[side] = {key: frame[key].copy() for key in (
                     "depth_m", "K", "T_world_optical",
                 )}
-        return estimate, frames
+        return estimate, frames, cad
 
     def test_backprojection_round_trip(self):
         points = np.array([[0.1, -0.2, 1.2], [-0.3, 0.15, 2.0]])
@@ -218,19 +246,53 @@ class PerceptionTests(unittest.TestCase):
             estimate_tray_pose(rgb, depth, self.K, self.T)
 
     def test_recorded_head_depth_merges_floor_and_rim_into_one_hypothesis(self):
-        observations = (
-            Path(__file__).resolve().parents[1]
-            / "evidence/mobile-native/controller-data/observations"
+        repository = Path(__file__).resolve().parents[1]
+        evidence = repository / "evidence/mobile-native"
+        controller_data = evidence / "controller-data"
+        config = json.loads((evidence / "config.json").read_text())
+        frames_index = json.loads((controller_data / "frames.json").read_text())
+        first_wrist_time = min(
+            float(entry["timestamp_sim_s"])
+            for entry in frames_index
+            if entry["camera_name"] in {"left_wrist_rgbd", "right_wrist_rgbd"}
         )
-        with np.load(observations / "0000_head_rgbd.npz") as frame:
-            result = estimate_tray_pose_from_depth(
-                frame["depth_m"], frame["K"], frame["T_world_optical"]
+        head_entry = max(
+            (
+                entry for entry in frames_index
+                if entry["camera_name"] == "head_rgbd"
+                and float(entry["timestamp_sim_s"]) < first_wrist_time
+            ),
+            key=lambda entry: float(entry["timestamp_sim_s"]),
+        )
+        cad = TrayCAD(
+            half_extents_m=tuple(config["tray_half_extents_m"]),
+            grasp_height_m=float(config["grasp"]["tcp_height_m"]),
+        )
+        with np.load(controller_data / head_entry["path"]) as frame:
+            depth_result = estimate_tray_pose_from_depth(
+                frame["depth_m"], frame["K"], frame["T_world_optical"], cad=cad,
             )
-        self.assertEqual(result.quality["hypothesis_count"], 1)
-        self.assertEqual(result.quality["selection_prior"], "none_ambiguity_reject")
-        self.assertIsNone(result.quality["score_margin"])
+            colour_result = estimate_tray_pose(
+                frame["rgb"], frame["depth_m"], frame["K"],
+                frame["T_world_optical"], cad=cad,
+            )
+        self.assertEqual(depth_result.quality["hypothesis_count"], 1)
+        self.assertEqual(
+            depth_result.quality["selection_prior"], "none_ambiguity_reject"
+        )
+        self.assertIsNone(depth_result.quality["score_margin"])
+        known_station = np.asarray(config["tray_initial_pos_m"], dtype=float)
+        depth_center = np.asarray(depth_result.center_world_m)
+        colour_center = np.asarray(colour_result.center_world_m)
+        self.assertLess(np.linalg.norm(depth_center - known_station), .015)
+        self.assertLess(np.linalg.norm(depth_center - colour_center), .015)
+        yaw_difference = abs(
+            (depth_result.yaw_rad - colour_result.yaw_rad + np.pi / 2)
+            % np.pi - np.pi / 2
+        )
+        self.assertLess(yaw_difference, .08)
         np.testing.assert_allclose(
-            result.center_world_m, [.65031, .00006, .01225], atol=.001
+            depth_result.dimensions_m, cad.outer_dimensions_m, rtol=.15
         )
 
     def test_reobservation_innovation_gate_accepts_consistent_pose(self):
@@ -264,12 +326,13 @@ class PerceptionTests(unittest.TestCase):
         self.assertAlmostEqual(result["yaw_innovation_rad"], 0.0, delta=1e-12)
 
     def test_recorded_pregrasp_depth_confirms_both_native_rims(self):
-        estimate, frames = self.recorded_pregrasp()
+        estimate, frames, cad = self.recorded_pregrasp()
         for grasp in estimate.grasps:
             frame = frames[grasp.side]
             result = confirm_grasp_rim_from_depth(
                 frame["depth_m"], frame["K"], frame["T_world_optical"],
                 grasp.position_world_m, estimate.center_world_m, estimate.yaw_rad,
+                cad=cad,
             )
             self.assertTrue(result["passed"], grasp.side)
             self.assertGreater(result["rim_geometry_support_fraction"], .95)
@@ -277,13 +340,14 @@ class PerceptionTests(unittest.TestCase):
             self.assertIn("single depth view", result["ambiguity"])
 
     def test_wrist_rim_confirmation_rejects_empty_and_finger_only_depth(self):
-        estimate, frames = self.recorded_pregrasp()
+        estimate, frames, cad = self.recorded_pregrasp()
         grasp = estimate.grasps[0]
         frame = frames["left"]
         empty = np.full_like(frame["depth_m"], np.nan)
         result = confirm_grasp_rim_from_depth(
             empty, frame["K"], frame["T_world_optical"],
             grasp.position_world_m, estimate.center_world_m, estimate.yaw_rad,
+            cad=cad,
         )
         self.assertFalse(result["passed"])
         self.assertIn("insufficient valid depth", result["rejection_reason"])
@@ -298,17 +362,19 @@ class PerceptionTests(unittest.TestCase):
         result = confirm_grasp_rim_from_depth(
             finger_only, frame["K"], frame["T_world_optical"],
             grasp.position_world_m, estimate.center_world_m, estimate.yaw_rad,
+            cad=cad,
         )
         self.assertFalse(result["passed"])
         self.assertEqual(result["rim_geometry_support_pixels"], 0)
 
     def test_wrist_rim_confirmation_rejects_offset_expected_grasp(self):
-        estimate, frames = self.recorded_pregrasp()
+        estimate, frames, cad = self.recorded_pregrasp()
         frame = frames["left"]
         offset = np.asarray(estimate.grasps[0].position_world_m) + [0, -.08, 0]
         result = confirm_grasp_rim_from_depth(
             frame["depth_m"], frame["K"], frame["T_world_optical"],
             offset, estimate.center_world_m, estimate.yaw_rad,
+            cad=cad,
         )
         self.assertFalse(result["passed"])
         self.assertFalse(result["expected_grasp_on_known_rim"])

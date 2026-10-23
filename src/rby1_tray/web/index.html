@@ -43,6 +43,7 @@
     .error { position: absolute; z-index: 3; inset: auto 14px 14px; margin: 0; border: 1px solid rgba(255,116,108,.55); background: rgba(60,18,20,.94); color: #ffd4d1; padding: 11px 13px; font-size: .8rem; }
     .hidden { display: none; }
     .timeline { position: absolute; z-index: 2; inset: auto 14px 14px; display: grid; grid-template-columns: repeat(5, 1fr); width: calc(100% - 28px); gap: 3px; }
+    .viewport-panel:has([data-view="load"][aria-pressed="true"]) .timeline { bottom: 54px; }
     .timeline-step { min-width: 0; border-top: 2px solid rgba(255,255,255,.18); padding-top: 7px; color: rgba(233,240,244,.55); font-size: .68rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .timeline-step.done { border-color: var(--green); color: #bdeed4; }
     .timeline-step.active { border-color: var(--cyan); color: white; }
@@ -68,7 +69,7 @@
     .sensor-row-header { grid-column: 1 / -1; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
     .sensor-row-header h3 { margin: 0; color: #dce8ed; font-size: .76rem; }
     .sensor-row-header p { margin: 3px 0 0; color: #71818b; font: .62rem/1.45 ui-monospace, monospace; }
-    .sensor-row-header button { min-height: 30px; padding: 4px 8px; font-size: .62rem; }
+    .sensor-row-header button { min-height: 44px; min-width: 44px; padding: 7px 9px; font-size: .62rem; }
     .sensor-media { position: relative; min-width: 0; margin: 0; border: 1px solid #2c3942; background: #050709; cursor: zoom-in; }
     .sensor-row.expanded .sensor-media { cursor: zoom-out; }
     .sensor-media img { display: block; width: 100%; height: 160px; object-fit: contain; background: #030506; transition: height .18s; }
@@ -102,7 +103,8 @@
     pre { max-height: 320px; margin: 0 14px 14px; overflow: auto; border: 1px solid #26313a; background: #090d11; color: #adbbc4; padding: 12px; font: 11px/1.55 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
     .help { margin: 10px 0 0; color: var(--muted); font-size: .7rem; line-height: 1.5; }
     @media (max-width: 1050px) { header { align-items: flex-start; flex-direction: column; } .condition { justify-content: flex-start; } .layout { grid-template-columns: 1fr; } aside { grid-template-columns: 1fr 1fr; } aside .result-panel { grid-column: 1 / -1; } }
-    @media (max-width: 680px) { .shell { padding: 10px; } .stage { height: auto; min-height: 0; aspect-ratio: 1 / 1; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(3, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-row { grid-template-columns: 1fr; } .sensor-row-header { grid-column: auto; } .sensor-media img, .sensor-row.expanded .sensor-media img { height: auto; aspect-ratio: 16 / 9; } aside { grid-template-columns: 1fr; } aside .result-panel { grid-column: auto; } }
+    @media (max-width: 680px) { .shell { padding: 10px; } .stage { height: auto; min-height: 0; aspect-ratio: 1 / 1; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(4, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-row { grid-template-columns: 1fr; } .sensor-row-header { grid-column: auto; } .sensor-media img, .sensor-row.expanded .sensor-media img { height: auto; aspect-ratio: 16 / 9; } aside { grid-template-columns: 1fr; } aside .result-panel { grid-column: auto; } }
+    @media (max-width: 680px) { .sensor-row.expanded .sensor-media { overflow-x: auto; } .sensor-row.expanded .sensor-media img { width: 640px; height: auto; max-width: none; aspect-ratio: auto; } }
     @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
   </style>
 </head>
@@ -142,8 +144,8 @@
             <button id="reset" type="button">처음으로</button>
             <label for="speed">재생 배율<select id="speed"><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
           </div>
-          <div class="view-tabs" aria-label="카메라 시점">
-            <button type="button" data-view="overview" aria-pressed="true">전체</button><button type="button" data-view="pickup" aria-pressed="false">파지</button><button type="button" data-view="placement" aria-pressed="false">안착</button>
+          <div class="view-tabs" aria-label="표시 모드">
+            <button type="button" data-view="overview" aria-pressed="true">전체</button><button type="button" data-view="pickup" aria-pressed="false">파지</button><button type="button" data-view="placement" aria-pressed="false">안착</button><button type="button" data-view="load" aria-pressed="false" hidden>관절 부하</button>
           </div>
           <output id="cameraReadout" class="camera-readout">전체 시점 · 방위 105° · 고도 −20°</output>
         </div>
@@ -267,7 +269,7 @@
       if (failed) ui.runStatus.textContent = `실패 · ${state.result.failure_reason}`; else if (succeeded) ui.runStatus.textContent = '작업 성공';
       else if (state.finished) ui.runStatus.textContent = '실행 종료'; else ui.runStatus.textContent = playing ? '재생 중' : '일시정지';
       const perceptionTime = state.mission?.perception?.timestamp_sim_s ?? 'none';
-      const sensorTick = Number.isFinite(state.time_s) ? Math.floor(state.time_s * 2) : 0;
+      const sensorTick = Number.isFinite(state.time_s) ? Math.ceil(state.time_s * 2) : 0;
       const nextSensorEventKey = `${state.phase || ''}|${perceptionTime}|${sensorTick}`;
       if (nextSensorEventKey !== sensorEventKey) { sensorEventKey=nextSensorEventKey; refreshSensor(); }
       if (isTerminal(state) && playing && !playbackInfo) stopPlayback(true); updatePlayLabel();
@@ -341,7 +343,7 @@
     }
     function syncRecordedState(force=false) {
       if (!playbackInfo || !playbackStates.length) return;
-      const index = Math.min(playbackStates.length-1, Math.max(0, Math.floor(ui.video.currentTime*playbackInfo.fps+1e-5)));
+      const index = Math.min(playbackStates.length-1, Math.max(0, Math.floor(ui.video.currentTime*playbackInfo.fps+1e-3)));
       if (force || index!==lastStateFrame) {
         lastStateFrame=index; updateState(playbackStates[index].state);
         ui.backendBadge.textContent='MuJoCo · 기록 재생';
@@ -355,7 +357,7 @@
       animationFrame=requestAnimationFrame(animateRecorded);
     }
     function recordedCameraLabel() {
-      const labels={overview:'전체',pickup:'파지',placement:'안착'};
+      const labels={overview:'전체',pickup:'파지',placement:'안착',load:'관절 부하'};
       ui.camera.value=`${labels[selectedView]} 시점 · 검증 실행 ${playbackInfo.fps} FPS · ${ui.speed.value}×`;
       ui.camera.textContent=ui.camera.value;
     }
@@ -447,7 +449,9 @@
     });
     ui.speed.addEventListener('change',()=>{if(playbackInfo){ui.video.playbackRate=Number(ui.speed.value);recordedCameraLabel();}});
     ui.viewButtons.forEach((button) => button.addEventListener('click', () => {
-      selectedView=button.dataset.view;ui.viewButtons.forEach((item)=>item.setAttribute('aria-pressed',String(item===button)));
+      selectedView=button.dataset.view;
+      if(playbackInfo)ui.playbackHelp.textContent=selectedView==='load'?'링크 색은 관절 토크를 모델 힘 제한으로 나눈 비율입니다. 구조 응력·파손 결과가 아닙니다.':'검증된 물리 실행을 60 FPS로 재생합니다. 표시 1배속은 시뮬레이션 8배속이며 상태·센서는 같은 기록 시각을 따릅니다.';
+      ui.viewButtons.forEach((item)=>item.setAttribute('aria-pressed',String(item===button)));
       if(playbackInfo)loadRecordedView(selectedView,playing);else refreshFrame().catch((error)=>showError(error.message));
     }));
     ui.sensorRows.forEach((row)=>{ const toggle=()=>{ const expand=!row.classList.contains('expanded'); ui.sensorRows.forEach((other)=>{other.classList.toggle('expanded',expand&&other===row); const button=other.querySelector('[data-sensor-expand]'); button.setAttribute('aria-pressed',String(expand&&other===row)); button.textContent=expand&&other===row?'축소':'확대';}); }; row.querySelector('[data-sensor-expand]').addEventListener('click',toggle); row.querySelectorAll('.sensor-media').forEach((figure)=>figure.addEventListener('click',toggle)); });
@@ -461,6 +465,7 @@
           const states=await request(info.states_url);
           if(!Array.isArray(states)||states.length!==info.frame_count||!states.length)throw new Error('재생 상태와 영상 프레임 수가 맞지 않습니다.');
           playbackInfo=info;playbackStates=states;ui.single.textContent='한 프레임';
+          ui.viewButtons.forEach(button=>{button.hidden=!info.videos[button.dataset.view];});
           ui.playbackHelp.textContent='검증된 물리 실행을 60 FPS 영상으로 재생합니다. 기본 1배속은 시뮬레이션 8배속에 해당하며, 상태·센서도 같은 기록 시각을 따릅니다.';
           await loadRecordedView(selectedView);
         } else {
