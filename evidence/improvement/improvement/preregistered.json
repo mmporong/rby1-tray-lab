@@ -1,0 +1,440 @@
+{
+  "schema_version": 2,
+  "study": "improvement",
+  "study_purpose": "paired legacy-versus-geometry-clearance transport evaluation",
+  "base_config_sha256": "3f939c0e9f61d544529e37474cab5f5706da8ed74441f5d04f8824e29d2312dd",
+  "cases": [
+    {
+      "name": "nominal",
+      "factor": "none",
+      "values": {},
+      "expected_outcome": "task_success_evaluated"
+    },
+    {
+      "name": "depth-noise-0.003-dropout-0.03",
+      "factor": "depth_sensor_degradation",
+      "values": {
+        "depth_std_m": 0.003,
+        "dropout_probability": 0.03
+      },
+      "expected_outcome": "task_success_evaluated"
+    },
+    {
+      "name": "payload-mass-scale-1.2",
+      "factor": "payload_mass_scale",
+      "values": {
+        "scale": 1.2
+      },
+      "expected_outcome": "task_success_evaluated"
+    },
+    {
+      "name": "tray-yaw-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "values": {
+        "yaw_rad": 0.035
+      },
+      "expected_outcome": "task_success_evaluated"
+    },
+    {
+      "name": "tray-yaw-minus-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "values": {
+        "yaw_rad": -0.035
+      },
+      "expected_outcome": "task_success_evaluated"
+    },
+    {
+      "name": "tray-yaw-0.025-heldout",
+      "factor": "tray_initial_yaw_rad",
+      "values": {
+        "yaw_rad": 0.025
+      },
+      "expected_outcome": "task_success_evaluated"
+    }
+  ],
+  "seeds": [
+    0,
+    1
+  ],
+  "variants": [
+    {
+      "name": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy"
+    },
+    {
+      "name": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance"
+    }
+  ],
+  "expected_runs": 24,
+  "source_sha256": {
+    "src/rby1_tray/__init__.py": "a91e0b62ede8dbc5203342f341b170cec7cb3eeee103e0e9e880657fae065a9f",
+    "src/rby1_tray/assets.py": "f6e4d3c51e91905b066c1c2f8ad24d401f7e3cfab65d21eb60a324ec0147d2c1",
+    "src/rby1_tray/camera.py": "527fd8315d8a7e0fb6f707b56a0d960a35b4e0932a9c3990f55e54fb49e58626",
+    "src/rby1_tray/cli.py": "59cff8ee78465fba481bec3fb20ed25604ec168e564ccca3bc2310d5e140df6e",
+    "src/rby1_tray/cooperation.py": "48d2e488e422588edb1701a0d796315a6d5f8613734ecb92855ad246024bcb40",
+    "src/rby1_tray/evaluation.py": "ed9572841c847fd9ac14f8f91d3384e3e27331e1e9a8ff5f6696fbc4c455c587",
+    "src/rby1_tray/experiments.py": "d9fdc1cf1bfffcff95c2453c1d1b652f2f512772776924c75219df779654a2b4",
+    "src/rby1_tray/improvement_metrics.py": "48cf4c3dfe64a624ad01b02c83152c4b6cef7bac43adc10aca64bb4ccb159cc6",
+    "src/rby1_tray/joint_overlay.py": "e3784da85ce3b36c35dd3315cf117e1cc6dd2576857750f842ee3c4ae929f56c",
+    "src/rby1_tray/load_path.py": "3227383735fd0dd72a1a754eadd83d3ce6f157f226923cab7e2e298be9c63c8d",
+    "src/rby1_tray/mission.py": "b7b6116591db5b708bd1f1877aaf691b23591f88b5d925c4ffd942cecf53b20d",
+    "src/rby1_tray/mobility.py": "ff8fd487d03c06cb69af1c9d43c0c04df34d0cc1cf3236fb1ccd99f05cfde538",
+    "src/rby1_tray/perception.py": "1a96f5e0cb11623e9e4f06666856bfa05eabe2ba720fbeef67a3a051db836785",
+    "src/rby1_tray/planning.py": "44d3df376f97f7d5ddb56814f21fc6eeb348bfa9cddf99280a1fc34fa38e29bd",
+    "src/rby1_tray/playback.py": "9ff997e5c825cfb9a2b2f14eb7ae4ed80c28a6f6305acc235a3824b6153bfac1",
+    "src/rby1_tray/scene.py": "a919fef42bc28c93f90daf628447f0bd4bb4203257cae8aee09080c7a03e56cc",
+    "src/rby1_tray/section_stress.py": "122db397000253321687d022812fa1bbca339d5aa29217e2354c4ed0b82b9df2",
+    "src/rby1_tray/session.py": "c83735bf1686ab8265dd591bcfbd96cba6a84847d3eae71298a6a96671189cee",
+    "src/rby1_tray/structural.py": "0b203075ac0b35d618878a094a71c773d7776efaef3482079f0473d50ac9ff40",
+    "src/rby1_tray/structural_basis.py": "ece117b77ea6fe926cd0846d6e85382996ba1bda01fdd3a768ba39124d634800",
+    "src/rby1_tray/structural_evidence.py": "d5bdc9025844e9b6df3b67e1d1eda66153d77f4aa96b125fc7286622a1bbf983",
+    "src/rby1_tray/structural_loads.py": "8551652f59c14a1c038e72369203ded5850235569ea274b6c58ac2bf68f7d1c1",
+    "src/rby1_tray/structural_scene.py": "9d923a966ea6faa8d8692b9d65f789ac2ad57affda7f49571a3d85c04bb0dba8",
+    "src/rby1_tray/structural_view.py": "1717e1a5bcc66779abebaed6f88ab3107730863746cabc6dc2d342e11bcdb06c",
+    "src/rby1_tray/transport_clearance.py": "566468897603707683fa565c7b8cbd1e871c635ff29419100f7f326a51f2d433",
+    "src/rby1_tray/viewer.py": "8577b0b8732ed7c66a9c23e3b34c85b0457aa524c217ad73e077e70b4d0b6a17",
+    "tools/audit_transport_contacts.py": "f3840b980f0eb6c1743e02f771da9a6f7706673668d8dad90ba8ec4d35d055ab",
+    "tools/benchmark_mobile.py": "a7d46ced5d37c26ed2d76c1ca6a4f69d54e465d98fe54d0a876970a3750d48a9",
+    "tools/build_load_diagnostics.py": "1a028599b415ca601839b01e6b31236af728c68988d7118f5bb984bb6853a762",
+    "tools/build_load_heatmap.py": "8b8156d8d8add26753b2ad3cf99ed069bd1c1ff137e51693236f804504f2cd98",
+    "tools/build_load_view.py": "e8aae2b24cd7395e959408c5c7475da7b5eca7a27e198173962c249994868e18",
+    "tools/build_playback.py": "0d6225fdeb96fb91f1ed96ccf5290755ddb2d542ea4f82d82496e812951056c2",
+    "tools/build_structural_basis.py": "3d387dd97ce8acc5ebf2e7fbed00204c4587be92a29164fd86bea9467f4d1ead",
+    "tools/build_structural_case.py": "f7cf2bc02c46672ded6002fe719ab61ce48b2d834dcb8149b7518053350a862d",
+    "tools/build_whole_structural.py": "fc1ca396a5ea106032cb8189e734644660822b937088c99fa63fc5fe562c9e62",
+    "tools/prepare_structural_cad.py": "d61b2342c489fce2c2d9b0bca7fac9449c8d7600bb2b6b5134ba18ae91e62d59",
+    "tools/render_structural_case.py": "611cc96be3359b75d49edf94a4b3491cc0056f959bdc94c0f5bbae14809164cb",
+    "tools/render_study_video.py": "c197f64b715099c359221348e22f4d65d4ed86ec61fb01dbbc842d437493a88a",
+    "tools/verify_controller_data.py": "e9984b7d04412e89163d4bd530d38c028c5482adb1b4d114f46fe85681416633",
+    "tools/verify_evidence.py": "d2b9607e0194c62c98eebda4730bf982e3578e9707d6936325b5790848e8a72b",
+    "src/rby1_tray/web/index.html": "3d14ff6e5c658967470f6b088f08f72dff3929e50e361918e920c28dfa6fc7e2",
+    "src/rby1_tray/web/structural-diagnostics.js": "c2de4bb91caf6d64052a773429975e927d26034223f3dc558ad7e5c75f23d2c1",
+    "src/rby1_tray/web/structural-scene.js": "d37c2b6c22684f80cda74338d2085812225f606c2ee30f99e86f54ba80c76b65",
+    "configs/mobile-native.json": "d4b56a57a975b69a9249134e7841e421f60f016c0889649dac98963523221689"
+  },
+  "provenance": {
+    "repository": "/tmp/rby1-upgrade-fixed",
+    "commit": "7c2ba29d355487d6b00e23c359e6f826c5959abc",
+    "source_dirty_at_start": false,
+    "config_path": "/tmp/rby1-upgrade-fixed/configs/mobile-native.json"
+  },
+  "run_matrix": [
+    {
+      "run_id": "nominal__baseline-depth-cad__seed-0",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "98df3605207dfd10cb143c1f0a19d2925f71f8c7fcbf8f9b12209bb377a7fc12"
+    },
+    {
+      "run_id": "nominal__candidate-depth-cad__seed-0",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "e3238ad13cd5319cd0b7ca092ff3986a4062b258c22b07a9ca3fdfb291cbba20"
+    },
+    {
+      "run_id": "nominal__baseline-depth-cad__seed-1",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "d6c63a3ac9121777cd73b8d13d7618915d712f003c7c29878bb27f28a2b35d1e"
+    },
+    {
+      "run_id": "nominal__candidate-depth-cad__seed-1",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "5b295bbdec8e7cdde674d6ea5f5a736beed8021ae51575aa87f8d17159ee5b2b"
+    },
+    {
+      "run_id": "depth-noise-0.003-dropout-0.03__baseline-depth-cad__seed-0",
+      "case": "depth-noise-0.003-dropout-0.03",
+      "factor": "depth_sensor_degradation",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "ff89d0f83a65795397fbe0ff1f772d4c5da90a9f3761cce642ce61be3bafe792"
+    },
+    {
+      "run_id": "depth-noise-0.003-dropout-0.03__candidate-depth-cad__seed-0",
+      "case": "depth-noise-0.003-dropout-0.03",
+      "factor": "depth_sensor_degradation",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "7369d3a75524fe6b2c20b84b6a20d86e9f6daa098757c1078fc766be8a32039b"
+    },
+    {
+      "run_id": "depth-noise-0.003-dropout-0.03__baseline-depth-cad__seed-1",
+      "case": "depth-noise-0.003-dropout-0.03",
+      "factor": "depth_sensor_degradation",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "7347e63767a1188b60e3d2298d39dc970586924b5250c19109ff158e4fffa83e"
+    },
+    {
+      "run_id": "depth-noise-0.003-dropout-0.03__candidate-depth-cad__seed-1",
+      "case": "depth-noise-0.003-dropout-0.03",
+      "factor": "depth_sensor_degradation",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "b1f191470555bed1c7f756a061e26fd52dac758831c40fed0f1ab66a20e7305d"
+    },
+    {
+      "run_id": "payload-mass-scale-1.2__baseline-depth-cad__seed-0",
+      "case": "payload-mass-scale-1.2",
+      "factor": "payload_mass_scale",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "06e1aac2bd570830f3222cee45c703868ef7c8f01c8740e8edf8ea39d1ddec6b"
+    },
+    {
+      "run_id": "payload-mass-scale-1.2__candidate-depth-cad__seed-0",
+      "case": "payload-mass-scale-1.2",
+      "factor": "payload_mass_scale",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "d4c17fec95b8ab6dbb2559f848db5580a9c049d11a36b75301688654e8557a3e"
+    },
+    {
+      "run_id": "payload-mass-scale-1.2__baseline-depth-cad__seed-1",
+      "case": "payload-mass-scale-1.2",
+      "factor": "payload_mass_scale",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "33b7e862c1b4963dcc7e34ef0eaaa1138b96fe8cd623cfe8c5cd039bf5d229f6"
+    },
+    {
+      "run_id": "payload-mass-scale-1.2__candidate-depth-cad__seed-1",
+      "case": "payload-mass-scale-1.2",
+      "factor": "payload_mass_scale",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "0f84d22124f1b57c0c0cc02c4842c96cff841f80e647b5eb4f1a8fde7fa865d2"
+    },
+    {
+      "run_id": "tray-yaw-0.035__baseline-depth-cad__seed-0",
+      "case": "tray-yaw-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "58757e6296216a99ed3d6eb38166370133e67e69a6a7757b5649f053ee9f12c6"
+    },
+    {
+      "run_id": "tray-yaw-0.035__candidate-depth-cad__seed-0",
+      "case": "tray-yaw-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "29ef913975838dd50fb15f60cbe1c897f950af7a1b055fdf4b87de21fc08fec4"
+    },
+    {
+      "run_id": "tray-yaw-0.035__baseline-depth-cad__seed-1",
+      "case": "tray-yaw-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "23deaa7414fc8a925c8d51dd80ef3bd4b4786f8f5a41d5be88ca8d2e255d8a42"
+    },
+    {
+      "run_id": "tray-yaw-0.035__candidate-depth-cad__seed-1",
+      "case": "tray-yaw-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "0d0265eac673c7f6f3209a0f210d73fb8df6a1b6a4f502dc44d607cc481eb32e"
+    },
+    {
+      "run_id": "tray-yaw-minus-0.035__baseline-depth-cad__seed-0",
+      "case": "tray-yaw-minus-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "50d22063fd694a7c4979a45fca32e06976506e8cb15028d82be5fc8601182c62"
+    },
+    {
+      "run_id": "tray-yaw-minus-0.035__candidate-depth-cad__seed-0",
+      "case": "tray-yaw-minus-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "9e5c4e0d3715c37f5e70a738b8aa85428bd937e44d6315800443516a82ebe45b"
+    },
+    {
+      "run_id": "tray-yaw-minus-0.035__baseline-depth-cad__seed-1",
+      "case": "tray-yaw-minus-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "d3743b89b996feb59700231d47937b6905026fb5a8f2e90c7bf23caf1e653853"
+    },
+    {
+      "run_id": "tray-yaw-minus-0.035__candidate-depth-cad__seed-1",
+      "case": "tray-yaw-minus-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "86d65cda480a0464c137da2d55104d48b36e2f25c644ce5fdf3ae8dc9bfe3c9d"
+    },
+    {
+      "run_id": "tray-yaw-0.025-heldout__baseline-depth-cad__seed-0",
+      "case": "tray-yaw-0.025-heldout",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "d36ec97ab7af7471b0c3edb9743b0c9c3d3404dddca95acf3d136065503c97c1"
+    },
+    {
+      "run_id": "tray-yaw-0.025-heldout__candidate-depth-cad__seed-0",
+      "case": "tray-yaw-0.025-heldout",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "b7eab662ecc7566ee4f2152af2291474793be76dfdaad5435fd33bd84e030b60"
+    },
+    {
+      "run_id": "tray-yaw-0.025-heldout__baseline-depth-cad__seed-1",
+      "case": "tray-yaw-0.025-heldout",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "baseline-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "legacy",
+      "target_height_m": 1.2,
+      "config_sha256": "5007287baa7940a8133ee030136cbc4044349ba87bb6e12881662612cd52264d"
+    },
+    {
+      "run_id": "tray-yaw-0.025-heldout__candidate-depth-cad__seed-1",
+      "case": "tray-yaw-0.025-heldout",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "9d6b3a98c27368f4081154f32b3b7a5aa6d5f79d75f6d284b3e3b8329eff5ab8"
+    }
+  ]
+}

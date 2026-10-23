@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "physics_source_commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
-  "interface_source_commit": "e4cd087a3e72090c67b9e71b2b3c3e3352d45033",
+  "interface_source_commit": "1548b0ebc3ecdf84004d7296e3e786f9e08eb142",
   "scope": "Derived presentation evidence, separate from original captured-run manifest",
   "artifact_sha256": {
     "README.md": "74856f5f32cf6da718b1b2b9ef57e7e074135443c38ed4e2c25a1e4a957a11a1",
@@ -34,9 +34,12 @@
     "evidence/structural-whole/browser-qa.json": "27da9c09a5468476a5d5c917f18a503bb687ff95cd723a9504c7aa813f34ffbc",
     "evidence/structural-whole/load-diagnostics.json": "5f51dde69ab8a2d3aeda237e4fb03222902e4f1e87dacbfa47b752ac7ece19ad",
     "src/rby1_tray/web/structural-diagnostics.js": "c2de4bb91caf6d64052a773429975e927d26034223f3dc558ad7e5c75f23d2c1",
-    "README.md": "b8c70c039bb0579156a2dd4a08a8a5d66416c046250e02cdd15d7a9331191e1a",
+    "README.md": "76069c88a535e58063547b4fe1b8a8c7179b973287395a923f4dd3eea88d2260",
     "evidence/structural-whole/joint-overlay.json": "44879c6fc990913142447fc56dfbdb158046c8f1f2dadae026d5570775ea1d67",
-    "docs/run-on-another-pc.md": "60ef506e1caa88a526f00c0db642a7f98c12f0d50908dc8f174103049c4d3350"
+    "docs/run-on-another-pc.md": "0ffa1f8c47c75f4c114c6e1f592b3d5aab0c54cda351f87cbefbf917a221f466",
+    "docs/improvement-study.md": "a6f421af2f4e69288eb7fdf6d8facbdc15f81421fc36ed78db0f89ee2607b85f",
+    "evidence/improvement/manifest.json": "f634ad18f068ec45c7fb24199d0bd08b96627cf851eaac7326a9c11f8ef14e64",
+    "evidence/improvement/validation.json": "20642d20008f1b31412a8895c228c0c2bf51d4ff524bd77523c1c22cfd3ddd84"
   },
   "source_script_sha256": {
     "tools/build_load_view.py": "e8aae2b24cd7395e959408c5c7475da7b5eca7a27e198173962c249994868e18",
@@ -48,14 +51,14 @@
     "src/rby1_tray/structural_loads.py": "8551652f59c14a1c038e72369203ded5850235569ea274b6c58ac2bf68f7d1c1",
     "src/rby1_tray/structural_evidence.py": "d5bdc9025844e9b6df3b67e1d1eda66153d77f4aa96b125fc7286622a1bbf983",
     "src/rby1_tray/structural_view.py": "1717e1a5bcc66779abebaed6f88ab3107730863746cabc6dc2d342e11bcdb06c",
-    "src/rby1_tray/web/index.html": "3d14ff6e5c658967470f6b088f08f72dff3929e50e361918e920c28dfa6fc7e2",
+    "src/rby1_tray/web/index.html": "c32d65cbb7cff67ed9a7220c11a210e6d7dbe0ec556dd7ab40e0bb5d0ee6ad6f",
     "tools/build_whole_structural.py": "fc1ca396a5ea106032cb8189e734644660822b937088c99fa63fc5fe562c9e62",
     "tools/build_structural_basis.py": "3d387dd97ce8acc5ebf2e7fbed00204c4587be92a29164fd86bea9467f4d1ead",
     "src/rby1_tray/section_stress.py": "122db397000253321687d022812fa1bbca339d5aa29217e2354c4ed0b82b9df2",
     "src/rby1_tray/structural_basis.py": "ece117b77ea6fe926cd0846d6e85382996ba1bda01fdd3a768ba39124d634800",
     "src/rby1_tray/structural_scene.py": "9d923a966ea6faa8d8692b9d65f789ac2ad57affda7f49571a3d85c04bb0dba8",
     "src/rby1_tray/web/structural-scene.js": "d37c2b6c22684f80cda74338d2085812225f606c2ee30f99e86f54ba80c76b65",
-    "src/rby1_tray/viewer.py": "8577b0b8732ed7c66a9c23e3b34c85b0457aa524c217ad73e077e70b4d0b6a17",
+    "src/rby1_tray/viewer.py": "56ee9b8b61402d035c44656b067a14a05c70fba75df2437ff07dd6a59013534d",
     "src/rby1_tray/cli.py": "59cff8ee78465fba481bec3fb20ed25604ec168e564ccca3bc2310d5e140df6e",
     "tests/test_section_stress.py": "9be052f2b4eb5f87774c0cd2dd5f7948b0bc9482b3907ebb23fde1016e02d9f1",
     "tests/test_structural_scene.py": "42a602d4ae5425556320d9b36d1d6d33b8b14fc995dff1791116391b6d872a49",
@@ -67,10 +70,16 @@
     "tests/test_load_path.py": "8ac08bb1904c2dba107c7fa40062bd6352894f6b27f3f4ab69853b45b5e067ba",
     "tests/test_structural_diagnostics.py": "2cf155dd4499a1bd0b4f1e99f32256715f318375de5fd734f99d65f2146a7914",
     "src/rby1_tray/joint_overlay.py": "e3784da85ce3b36c35dd3315cf117e1cc6dd2576857750f842ee3c4ae929f56c",
-    "tests/test_joint_overlay.py": "61aa46c653da745bbc22ebdc3b7f715c86f098d8cc060733cab08bc0985ee8bd"
+    "tests/test_joint_overlay.py": "61aa46c653da745bbc22ebdc3b7f715c86f098d8cc060733cab08bc0985ee8bd",
+    "src/rby1_tray/improvement_evidence.py": "e1bcba746f687c33cb092d60fee6132fd24d3845a4cbd09f932cbcd88512e564",
+    "tools/build_improvement_evidence.py": "9b6cbd8fcf57115dbbe92db4ae8a982a2aab0cc8b3dfdf32b4fd11609e49cc8c",
+    "tools/verify_improvement_evidence.py": "c507ea1abe7b18add2028d9d19fd4a22eaffbef981ca50a4478a5d3ddb7606aa",
+    "tools/render_study_video.py": "ee678ec1e0d41bfda7a7087bf1b707a3d7eb2a7a55bc00dae782d22b1661c7a4",
+    "tests/test_improvement_evidence.py": "7cd2be0126d47a64a448085d05829e96a9a60cf40972b4ddc2894eeb15a304c2",
+    "tests/test_viewer.py": "da97f650150ff1df445be8b5d3e32ab83724da6ad5f8573e804bf692658ffe1c"
   },
   "validation_summary": {
-    "unit_tests": 217,
+    "unit_tests": 256,
     "unit_tests_pass": true,
     "physics_duration_s": 151.231999999994,
     "control_packets": 75616,
@@ -81,7 +90,7 @@
     "condition_trials": 18,
     "task_completions": 12,
     "expected_stale_rejections": 1,
-    "unit_tests_scope": "fresh 217-test suite for white theme; final SVG halo additionally checked by browser and independent 26-test review",
+    "unit_tests_scope": "fresh complete 256-test suite after source changes; final measured bundle and documentation verified separately",
     "structural_tetrahedra": 55946,
     "structural_snapshot_s": 71.70400000001429,
     "structural_convergence_tolerance": 0.05,
@@ -94,7 +103,10 @@
     "load_diagnostics_parts": 38,
     "load_diagnostics_frames": 1136,
     "maximum_load_diagnostics_reconstruction_absolute_difference": 6.103515625e-05,
-    "merged_joint_load_count": 20
+    "merged_joint_load_count": 20,
+    "improvement_path_trials": 24,
+    "improvement_safety_trials": 4,
+    "improvement_cooperation_trials": 16
   },
   "limits": [
     "joint load is not structural stress, contact pressure, fatigue or hardware safety rating",
@@ -107,6 +119,20 @@
     "joint overlay uses validated scalar +1 hinge actuator torque and active symmetric model limits; leader labels and the full 20-joint table preserve unclamped numeric percentages"
   ],
   "interface_validation": {
+    "source_commit": "1548b0ebc3ecdf84004d7296e3e786f9e08eb142",
+    "javascript_syntax": "PASS",
+    "static_python": "Pyright changed Python source/tests: 0 errors, 3 existing FakePlayback method-name warnings",
+    "independent_code_review": "APPROVE",
+    "browser_qa": "PASS: existing original/load one-frame synchronization, six RGB/depth images, independent study-video play/seek, keyboard provenance disclosure, 1862/1024/390px no document horizontal overflow, local mobile table scrolling, console0; viewport restored",
+    "report": "evidence/improvement/validation.json",
+    "physics_not_rerun": "original captured episode and1136-frame structural bundle preserved; new44-run study has separate physics source/provenance and partial assessment"
+  },
+  "prior_full_suite": {
+    "test_count": 151,
+    "interface_source_commit": "c483f0e5138a7630394627c65fd6c086c9ebcf3f"
+  },
+  "structural_source_commit": "e4cd087a3e72090c67b9e71b2b3c3e3352d45033",
+  "prior_interface_validation": {
     "source_commit": "e4cd087a3e72090c67b9e71b2b3c3e3352d45033",
     "javascript_syntax": "PASS",
     "static_python": "Python source unchanged in UI refinement; prior pyright 0 errors/warnings retained. Current HTML/JS syntax and independent ESLint PASS.",
@@ -114,9 +140,5 @@
     "browser_qa": "PASS: fixed light scheme with white panels, controls, tables, captions and callouts; sampled text contrast 5.20-13.46:1; 390/1024/1862px, 200% text, OS dark emulation, keyboard, FEM, camera enlargement, playback/frame sync and console0",
     "physics_not_rerun": "original captured episode kept at c7967a9; derived 1136-frame replay matched defined physical fields exactly, dynamics evaluated on scratch data"
   },
-  "prior_full_suite": {
-    "test_count": 151,
-    "interface_source_commit": "c483f0e5138a7630394627c65fd6c086c9ebcf3f"
-  },
-  "structural_source_commit": "e4cd087a3e72090c67b9e71b2b3c3e3352d45033"
+  "improvement_physics_source_commit": "7c2ba29d355487d6b00e23c359e6f826c5959abc"
 }

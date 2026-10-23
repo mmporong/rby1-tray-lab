@@ -1,0 +1,7786 @@
+{
+  "schema_version": 1,
+  "scope": "recorded_raise_high_frames_only",
+  "sampling_limit": "recorded trace samples only; no continuous 500 Hz contact claim",
+  "sample_period_s": 0.02,
+  "frame_count": 1618,
+  "contact_frame_count": 251,
+  "first_contact_time_s": 87.11999999997836,
+  "minimum_contact_distance_m": -0.000592076386289244,
+  "contacts": [
+    {
+      "time_s": 87.11999999997836,
+      "collision_pair_count": 7,
+      "minimum_contact_distance_m": -0.00032318124132826664,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003161559084775245
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -9.68303776619645e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -3.592174136641887e-06
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00032318124132826664
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003091305756266086
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002633200472285769
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00025734692215058613
+        }
+      ]
+    },
+    {
+      "time_s": 87.13999999997831,
+      "collision_pair_count": 7,
+      "minimum_contact_distance_m": -0.00033886112146257435,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00033427106293379373
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00019112731775695446
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -5.500704451373948e-06
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033886112146257435
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003296810044051721
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002820678110112707
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00027016317600951325
+        }
+      ]
+    },
+    {
+      "time_s": 87.15999999997827,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0002918005388809458,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000289292357909673
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00021078211539586587
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002918005388809458
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00028678417693824785
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002369974830999104
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000219899014946182
+        }
+      ]
+    },
+    {
+      "time_s": 87.17999999997822,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00024657459866595606,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00024581182582071885
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002218106186243215
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00024657459866595606
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00024504905297568873
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00019342557798367215
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001719772224286458
+        }
+      ]
+    },
+    {
+      "time_s": 87.19999999997817,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0002451313490855658,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002451313490855658
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00021737693595892243
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002182516008352586
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00021649909913469645
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00016404692215133874
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001384178842995758
+        }
+      ]
+    },
+    {
+      "time_s": 87.21999999997813,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00023296033824153544,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00023296033824153544
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000159507903815863
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001617908618735334
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00015720887448846516
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00010183394703325618
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -7.226897189665985e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.23999999997808,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00023025127991310244,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00023025127991310244
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00012046476095958648
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001238342728078808
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000117068597347207
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.736169118042499e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.453085512408995e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.25999999997804,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.00023486042370839526,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00023486042370839526
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00010172233554126789
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00010576157937744814
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -9.765056858978459e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.197198992558403e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.27999999997799,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.00024006310421134864,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00024006310421134864
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -9.656297308648212e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00010086518897262012
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -9.222554930388628e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -1.860715991145572e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.29999999997794,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.0002650672057914374,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002650672057914374
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00011723654299206703
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00012162453417086387
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00011280378296401671
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.195666357972465e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.3199999999779,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0002911131605608964,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002911131605608964
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00014669773855948304
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001509540113842909
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00014238842579391816
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.460642089234172e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -1.4527931984409979e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.33999999997785,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00028098199741996696,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00028098199741996696
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00014755183700147803
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00015145420578500013
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00014360449051267565
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -4.628843310072956e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.253942519099807e-06
+        }
+      ]
+    },
+    {
+      "time_s": 87.3599999999778,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.0002688211869708538,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002688211869708538
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00014835544457246952
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00015184791553091119
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00014482666710518806
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.697028927457594e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.37999999997776,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00028955531383651075,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00028955531383651075
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0001856895167204921
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00018868718793397865
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001826582505792243
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.669165773624763e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.432591736664288e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.39999999997771,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00028964341340413755,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00028964341340413755
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00020724545877640697
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00020961528704834052
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00020485220113216626
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -7.931345143327502e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.645310668172003e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.41999999997766,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0002866133595307104,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002866133595307104
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00022538543911495505
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00022714275888603342
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00022361411170242237
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -8.955922420643525e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -4.627028015290782e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.43999999997762,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0002846980967186521,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002846980967186521
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002459921827008796
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00024710313012884323
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002448751417675005
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00010265848668840033
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.894073562908337e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.45999999997757,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0002756025744979741,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002756025744979741
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00026110968185701593
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002615258811117962
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000260692578366001
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001097501432670467
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.559403180171753e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.47999999997752,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00027220126511451077,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000271994214161468
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00026478609572571754
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00027220126511451077
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00027178716320825253
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00011382811024685218
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.924806736832056e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.49999999997748,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00028258686720895496,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000281739467758184
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002522356179735011
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00028258686720895496
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002808920683075963
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00011690230116126353
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -7.191200963573421e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.51999999997743,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00029165945210944455,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002901306170628946
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002369012584015025
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00029165945210944455
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00028860178201633123
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00011850553182868945
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -7.313457621983039e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.53999999997738,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0002964044771596257,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00029428746356562936
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00022052130944804236
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002964044771596257
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00029217044997134476
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00011563357972986472
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.983431627472766e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.55999999997734,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0003022790062025744,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00029960529711276797
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00020643042005696256
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003022790062025744
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002969315880227243
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00011446216475557153
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.817408737851041e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.57999999997729,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00030808382612847895,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00030483014288617215
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00019143838445383855
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00030808382612847895
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00030157645964370977
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00011317512706014547
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.641384979160058e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.59999999997724,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0003131774856049839,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00030944258685549107
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0001792660005610917
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003131774856049839
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00030570768810587274
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001123095290278844
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.506127165609415e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.6199999999772,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00031980782006597343,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00031554347970806065
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00016694618613082496
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00031980782006597343
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00031127913935011307
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00011236000013293014
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.464142404655653e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.63999999997715,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00032500181201448565,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003202017810561078
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00015292837130689914
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00032500181201448565
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00031540175009798203
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001106738876300465
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.248351999266327e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.6599999999771,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0003253164011622759,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00032009439538519126
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0001379453535518741
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003253164011622759
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003148723896083545
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00010366997092222836
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.491257708484972e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.67999999997706,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0003334453737574562,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003277212886318804
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00012817201195150626
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003334453737574562
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003219972035064053
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00010571430527018459
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.6499282612677335e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.69999999997701,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00033888279992397047,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003326660707081297
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00011598175064592678
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033888279992397047
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003264493414919578
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00010501333175477818
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.533208953667265e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.71999999997696,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.000342050094936583,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00033543261229209044
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00010478741021153496
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000342050094936583
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003288151296477052
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00010272675137207871
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.254716287809415e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.73999999997692,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0003465927143091137,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00033950522966106147
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -9.260900036332608e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003465927143091137
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003324177450130757
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00010136899244520163
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.071149431415072e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.75999999997687,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0003483703566052945,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003408195061645443
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -7.765382475177291e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003483703566052945
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003332686557235487
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -9.639028671514324e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -4.5264111653610124e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.77999999997682,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0003524934278575423,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00034455844314275797
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -6.806261679234025e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003524934278575423
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003366234584279527
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -9.536933458434137e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -4.3764537782170375e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.79999999997678,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00035733030095873905,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00034895575508952294
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -5.737086435940895e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035733030095873905
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003405812092200784
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -9.50545100664631e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -4.2968463322647046e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.81999999997673,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00036059171194111425,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003518435388878475
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -4.739900650473021e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036059171194111425
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034309536583463447
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -9.429658137632122e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -4.170523117687312e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.83999999997668,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.0003637969811838236,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003546657771216875
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -3.6967249524072235e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003637969811838236
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034553457305950316
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -9.230348540058901e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.92615246086152e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.85999999997664,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00036805408828557957,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00035844991952977534
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -2.456271884320083e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036805408828557957
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003488457507740155
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -9.113214442532396e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.768377557217544e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.87999999997659,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00037093725642075106,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003609322141613743
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -1.3097361652395758e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00037093725642075106
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035092717190175125
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -8.894581537325514e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.506003479168765e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.89999999997654,
+      "collision_pair_count": 6,
+      "minimum_contact_distance_m": -0.00037479465864379116,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00036437739688451086
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -2.2464165352929914e-06
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00037479465864379116
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035396013512504533
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -8.728757557369897e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.3029499394423274e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.9199999999765,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.0003774629529296141,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003665811494572184
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003774629529296141
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035569934598495505
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -8.413037633885396e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.9478458004604906e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.93999999997645,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.0003799163307373744,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00036863713550933927
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003799163307373744
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035735794028123405
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -8.151612771953671e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.650460899458589e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.9599999999764,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.00038205649242456985,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00037038873748953746
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00038205649242456985
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035872098255452747
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -7.886054306140123e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.3471618881764808e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.97999999997636,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.00038417840416211013,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000372007101954151
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00038417840416211013
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035983579974616906
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -7.571183593214748e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.0051235459436455e-05
+        }
+      ]
+    },
+    {
+      "time_s": 87.99999999997631,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.00038574986498208895,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00037314700064990813
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00038574986498208895
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036054413631784804
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -7.241426203105763e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -1.647976234665515e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.01999999997626,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.0003875744827398181,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003745420948891576
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003875744827398181
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003615097070383946
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.948475515857169e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -1.3255108931893385e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.03999999997622,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.0003895428024401665,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00037598560775148527
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003895428024401665
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000362428413063031
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.552266975038764e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -9.045861413484467e-06
+        }
+      ]
+    },
+    {
+      "time_s": 88.05999999997617,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.0003913111485774479,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00037731614814515596
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003913111485774479
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036332114771325797
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.218074648072676e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.465699518059969e-06
+        }
+      ]
+    },
+    {
+      "time_s": 88.07999999997612,
+      "collision_pair_count": 5,
+      "minimum_contact_distance_m": -0.00039405576873078967,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003796066804007373
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00039405576873078967
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003651575920707884
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.03263908219554e-05
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.4172140117103216e-06
+        }
+      ]
+    },
+    {
+      "time_s": 88.09999999997608,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.0003961424994016663,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00038117865438519737
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003961424994016663
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003662148093684764
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.702969143539146e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.11999999997603,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00039658486391504737,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003812005417189398
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00039658486391504737
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003658162195226542
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -5.2740899425901196e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.13999999997598,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00039631541059634734,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003805089928926696
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00039631541059634734
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003647025751889084
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -4.765435507080938e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.15999999997594,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.0003989629077373249,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003826478112499677
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003989629077373249
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003663327147626364
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -4.518726984198233e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.17999999997589,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00039948278605577125,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003827427808098819
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00039948278605577125
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036600277556364313
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.964970249081983e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.19999999997584,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.0003993384329784563,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003821683963208382
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003993384329784563
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003649983596632671
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.399722137514849e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.2199999999758,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00040147319182682836,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00038379950923229526
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00040147319182682836
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000366125826637825
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -3.0615790273981425e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.23999999997575,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.0004038292403398563,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003857280270444399
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004038292403398563
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036762681374901947
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.8674905631993036e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.2599999999757,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.0004050325159970662,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00038648951176362297
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004050325159970662
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003679465075305334
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.5396552116046528e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.27999999997566,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.0004065314084257877,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003875100243095902
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004065314084257877
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000368488640193328
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.2398761409425186e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.29999999997561,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00040644660863046154,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003870334519428167
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00040644660863046154
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036762029525532614
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -1.794589466104807e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.31999999997556,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00040817765083122975,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003883265901970358
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00040817765083122975
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003684755295626353
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -1.554439350087469e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.33999999997552,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.0004109726684372198,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003906539469448022
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004109726684372198
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000370335225452483
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -1.4370605311927618e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.35999999997547,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00041183279352587326,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003911530001251956
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00041183279352587326
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00037047320672444324
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -1.1463526472430823e-05
+        }
+      ]
+    },
+    {
+      "time_s": 88.37999999997542,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00041281317849777086,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039169642401214356
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00041281317849777086
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003705796695261822
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -8.244118381912455e-06
+        }
+      ]
+    },
+    {
+      "time_s": 88.39999999997538,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.0004146341252870155,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039307263863780183
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004146341252870155
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000371511151988349
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.387834683696719e-06
+        }
+      ]
+    },
+    {
+      "time_s": 88.41999999997533,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00041424758403257726,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039234962623055337
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00041424758403257726
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003704516684285787
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.4983720589284177e-06
+        }
+      ]
+    },
+    {
+      "time_s": 88.43999999997529,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.000415545471610117,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003932125165288933
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000415545471610117
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000370879561447566
+        }
+      ]
+    },
+    {
+      "time_s": 88.45999999997524,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00041728585582873854,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003945257221457871
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00041728585582873854
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00037176558846297304
+        }
+      ]
+    },
+    {
+      "time_s": 88.47999999997519,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00041634119181051135,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003932536202524627
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00041634119181051135
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00037016604869430554
+        }
+      ]
+    },
+    {
+      "time_s": 88.49999999997515,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004164440949862598,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039293241245509164
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004164440949862598
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003694207299235549
+        }
+      ]
+    },
+    {
+      "time_s": 88.5199999999751,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004161148237718948,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003922153371477966
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004161148237718948
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003683158505236712
+        }
+      ]
+    },
+    {
+      "time_s": 88.53999999997505,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004164043036265653,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039215340570601567
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004164043036265653
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036790250778548134
+        }
+      ]
+    },
+    {
+      "time_s": 88.559999999975,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004177820277660335,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039309375425407674
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004177820277660335
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003684054807420169
+        }
+      ]
+    },
+    {
+      "time_s": 88.57999999997496,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042089355367052017,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003957754405465107
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042089355367052017
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003706573274223462
+        }
+      ]
+    },
+    {
+      "time_s": 88.59999999997491,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.000419286386837151,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039381047175069864
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000419286386837151
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003683345566641662
+        }
+      ]
+    },
+    {
+      "time_s": 88.61999999997487,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004200213261010033,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003941180214490573
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004200213261010033
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003682147167970094
+        }
+      ]
+    },
+    {
+      "time_s": 88.63999999997482,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004205537288213151,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039431933326801585
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004205537288213151
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003680849377146073
+        }
+      ]
+    },
+    {
+      "time_s": 88.65999999997477,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004201658749099561,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039358552169057844
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004201658749099561
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003670051684710412
+        }
+      ]
+    },
+    {
+      "time_s": 88.67999999997473,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042075490647908295,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003937583669225231
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042075490647908295
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003667618273659801
+        }
+      ]
+    },
+    {
+      "time_s": 88.69999999997468,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042012828571130317,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039283022114249634
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042012828571130317
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036553215657363314
+        }
+      ]
+    },
+    {
+      "time_s": 88.71999999997463,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004201200067324227,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039246993383505757
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004201200067324227
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036481986093793006
+        }
+      ]
+    },
+    {
+      "time_s": 88.73999999997459,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004213001089670844,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039325467518363854
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004213001089670844
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036520924140024237
+        }
+      ]
+    },
+    {
+      "time_s": 88.75999999997454,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004213296801699083,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003929958878999894
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004213296801699083
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003646620956299808
+        }
+      ]
+    },
+    {
+      "time_s": 88.77999999997449,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042115748721375086,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039246170737663327
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042115748721375086
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003637659275393472
+        }
+      ]
+    },
+    {
+      "time_s": 88.79999999997445,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042214510651274986,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003930677382367247
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042214510651274986
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036399036996102293
+        }
+      ]
+    },
+    {
+      "time_s": 88.8199999999744,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042237799736277823,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039302001041939
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042237799736277823
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036366202347588595
+        }
+      ]
+    },
+    {
+      "time_s": 88.83999999997435,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042231517792744793,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039258223562533905
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042231517792744793
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003628492933232968
+        }
+      ]
+    },
+    {
+      "time_s": 88.8599999999743,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004250818249311181,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003949743004383079
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004250818249311181
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036486677594546656
+        }
+      ]
+    },
+    {
+      "time_s": 88.87999999997426,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004248079255195168,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003944224831581693
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004248079255195168
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036403704079702315
+        }
+      ]
+    },
+    {
+      "time_s": 88.89999999997421,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042437466489943714,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003936098159197122
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042437466489943714
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036284496694012077
+        }
+      ]
+    },
+    {
+      "time_s": 88.91999999997417,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042507377110173806,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003939585225682483
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042507377110173806
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036284327403456333
+        }
+      ]
+    },
+    {
+      "time_s": 88.93999999997412,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042498266946057044,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003935985931954438
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042498266946057044
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036221451693013154
+        }
+      ]
+    },
+    {
+      "time_s": 88.95999999997407,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042504637822266407,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039328282973830753
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042504637822266407
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036151928125394074
+        }
+      ]
+    },
+    {
+      "time_s": 88.97999999997403,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042609605489706204,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039398736262979213
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042609605489706204
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003618786703625849
+        }
+      ]
+    },
+    {
+      "time_s": 88.99999999997398,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042646815344084645,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003940716821409996
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042646815344084645
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003616752108409599
+        }
+      ]
+    },
+    {
+      "time_s": 89.01999999997393,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042633380843318074,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003935514102465848
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042633380843318074
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00036076901206012383
+        }
+      ]
+    },
+    {
+      "time_s": 89.03999999997389,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004237397205398589,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039063104992954765
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004237397205398589
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003575223793193617
+        }
+      ]
+    },
+    {
+      "time_s": 89.05999999997384,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042289030254403446,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003895460568788023
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042289030254403446
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003562018112137988
+        }
+      ]
+    },
+    {
+      "time_s": 89.0799999999738,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004249706468797499,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003912556607152934
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004249706468797499
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000357540674550689
+        }
+      ]
+    },
+    {
+      "time_s": 89.09999999997375,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004253990435295871,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039134615689053636
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004253990435295871
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035729327025133814
+        }
+      ]
+    },
+    {
+      "time_s": 89.1199999999737,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004260043394883725,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039170933599647073
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004260043394883725
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003574143325047068
+        }
+      ]
+    },
+    {
+      "time_s": 89.13999999997365,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004271243041846114,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039246226476464076
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004271243041846114
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035780022534483223
+        }
+      ]
+    },
+    {
+      "time_s": 89.1599999999736,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042869882929342287,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039367585766701744
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042869882929342287
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035865288604063566
+        }
+      ]
+    },
+    {
+      "time_s": 89.17999999997356,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042688735418646594,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003916375135761342
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042688735418646594
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035638767296562897
+        }
+      ]
+    },
+    {
+      "time_s": 89.19999999997351,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004272795669351272,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039169754217106313
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004272795669351272
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035611551740710214
+        }
+      ]
+    },
+    {
+      "time_s": 89.21999999997347,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004295195605733777,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003936368205928774
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004295195605733777
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035775408061252827
+        }
+      ]
+    },
+    {
+      "time_s": 89.23999999997342,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004294367604864564,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003933172160633703
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004294367604864564
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035719767164011865
+        }
+      ]
+    },
+    {
+      "time_s": 89.25999999997337,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004292893836937696,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003928279402947534
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004292893836937696
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003563664968956094
+        }
+      ]
+    },
+    {
+      "time_s": 89.27999999997333,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.000429941342688292,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039319617534315396
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000429941342688292
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035645100799815957
+        }
+      ]
+    },
+    {
+      "time_s": 89.29999999997328,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004303244392478591,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039331211338649165
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004303244392478591
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003562997875251353
+        }
+      ]
+    },
+    {
+      "time_s": 89.31999999997323,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004307691661182809,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039339187797619515
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004307691661182809
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000356014589834284
+        }
+      ]
+    },
+    {
+      "time_s": 89.33999999997319,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042962325192862685,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039198568999233234
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042962325192862685
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003543481280556925
+        }
+      ]
+    },
+    {
+      "time_s": 89.35999999997314,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043033761880479466,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000392438808595599
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043033761880479466
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003545399983862357
+        }
+      ]
+    },
+    {
+      "time_s": 89.3799999999731,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004313985708149742,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039315499021748873
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004313985708149742
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003549114096198601
+        }
+      ]
+    },
+    {
+      "time_s": 89.39999999997305,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004319686688745266,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039347351086491296
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004319686688745266
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003549783528552187
+        }
+      ]
+    },
+    {
+      "time_s": 89.419999999973,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043192211784372366,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039316406813763886
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043192211784372366
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035440601843138677
+        }
+      ]
+    },
+    {
+      "time_s": 89.43999999997295,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004328692013463185,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003937733975878217
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004328692013463185
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003546775938295438
+        }
+      ]
+    },
+    {
+      "time_s": 89.45999999997291,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004326456908307909,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003933305858704567
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004326456908307909
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003540154809102647
+        }
+      ]
+    },
+    {
+      "time_s": 89.47999999997286,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043177973946287204,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003922105168204261
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043177973946287204
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035264129417783005
+        }
+      ]
+    },
+    {
+      "time_s": 89.49999999997281,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004337538156393019,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039385485886027653
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004337538156393019
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003539559020808985
+        }
+      ]
+    },
+    {
+      "time_s": 89.51999999997277,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.000433274729116835,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039316456510450593
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000433274729116835
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035305440109188263
+        }
+      ]
+    },
+    {
+      "time_s": 89.53999999997272,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043071376624349844,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003903783921382207
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043071376624349844
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035004301803267244
+        }
+      ]
+    },
+    {
+      "time_s": 89.55999999997267,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043182431716526376,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003911711688989781
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043182431716526376
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000350518020632697
+        }
+      ]
+    },
+    {
+      "time_s": 89.57999999997263,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004335520913323529,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039265619089519913
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004335520913323529
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000351760290458156
+        }
+      ]
+    },
+    {
+      "time_s": 89.59999999997258,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043311833051201974,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039198097170038015
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043311833051201974
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035084361288850204
+        }
+      ]
+    },
+    {
+      "time_s": 89.61999999997253,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043458459226388633,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003931335793774584
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043458459226388633
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035168256649100875
+        }
+      ]
+    },
+    {
+      "time_s": 89.63999999997249,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043484163291859627,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003931579829071053
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043484163291859627
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035147433289585753
+        }
+      ]
+    },
+    {
+      "time_s": 89.65999999997244,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043504379214426975,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039309889475171514
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043504379214426975
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00035115399735914546
+        }
+      ]
+    },
+    {
+      "time_s": 89.6799999999724,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004344207618113106,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039220494830318067
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004344207618113106
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003499891347951572
+        }
+      ]
+    },
+    {
+      "time_s": 89.69999999997235,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004342157512746844,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003917868319502505
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004342157512746844
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034935791262602874
+        }
+      ]
+    },
+    {
+      "time_s": 89.7199999999723,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004339377585961672,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039125619166482283
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004339377585961672
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003485746247333518
+        }
+      ]
+    },
+    {
+      "time_s": 89.73999999997226,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043409767166814443,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039111548377904605
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043409767166814443
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003481332958902376
+        }
+      ]
+    },
+    {
+      "time_s": 89.75999999997221,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043212431784951666,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003889897566706284
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043212431784951666
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034585519549188565
+        }
+      ]
+    },
+    {
+      "time_s": 89.77999999997216,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004327940024431391,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000389426243442666
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004327940024431391
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034605848444215983
+        }
+      ]
+    },
+    {
+      "time_s": 89.79999999997212,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004340714683030945,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003904354785398724
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004340714683030945
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003467994887765259
+        }
+      ]
+    },
+    {
+      "time_s": 89.81999999997207,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043441760288850576,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003906244157018704
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043441760288850576
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034683122851503656
+        }
+      ]
+    },
+    {
+      "time_s": 89.83999999997202,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004331808371994413,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003891527977073989
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004331808371994413
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034512475821522925
+        }
+      ]
+    },
+    {
+      "time_s": 89.85999999997198,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043368088235991466,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003894136339276454
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043368088235991466
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003451463854950891
+        }
+      ]
+    },
+    {
+      "time_s": 89.87999999997193,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.000434677314238684,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003902442241961495
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000434677314238684
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034581113415346515
+        }
+      ]
+    },
+    {
+      "time_s": 89.89999999997188,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043621384944541035,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039149992555384007
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043621384944541035
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003467860016625073
+        }
+      ]
+    },
+    {
+      "time_s": 89.91999999997184,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004346290451488562,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003897256695547561
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004346290451488562
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034482229396085495
+        }
+      ]
+    },
+    {
+      "time_s": 89.93999999997179,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043509365806263423,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003900435540553047
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043509365806263423
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034499345004769175
+        }
+      ]
+    },
+    {
+      "time_s": 89.95999999997174,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043693239124011464,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039159765515878723
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043693239124011464
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003462629190773913
+        }
+      ]
+    },
+    {
+      "time_s": 89.9799999999717,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004355044754175298,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003899778575265348
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004355044754175298
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003444512396357021
+        }
+      ]
+    },
+    {
+      "time_s": 89.99999999997165,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043602408233303674,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003903427015968445
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043602408233303674
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034466132086073746
+        }
+      ]
+    },
+    {
+      "time_s": 90.0199999999716,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.000437879177040884,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003919090584675588
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000437879177040884
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034593893989415893
+        }
+      ]
+    },
+    {
+      "time_s": 90.03999999997156,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004362918586994578,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000390151369378038
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004362918586994578
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003440108800569623
+        }
+      ]
+    },
+    {
+      "time_s": 90.05999999997151,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004343265610371646,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003880587437097798
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004343265610371646
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034179092638249645
+        }
+      ]
+    },
+    {
+      "time_s": 90.07999999997146,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004351325212764462,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003886075758910268
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004351325212764462
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000342082630505472
+        }
+      ]
+    },
+    {
+      "time_s": 90.09999999997142,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004353301407121265,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003886410293649594
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004353301407121265
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034195191801756003
+        }
+      ]
+    },
+    {
+      "time_s": 90.11999999997137,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043812453769440286,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039119198895550835
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043812453769440286
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034425944021683
+        }
+      ]
+    },
+    {
+      "time_s": 90.13999999997132,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044159541839813203,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039437789986755217
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00044159541839813203
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034716038133696017
+        }
+      ]
+    },
+    {
+      "time_s": 90.15999999997128,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004408794103810943,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003934642331697387
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004408794103810943
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034604905595822223
+        }
+      ]
+    },
+    {
+      "time_s": 90.17999999997123,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004390636570663692,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039148826114841003
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004390636570663692
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003439128652305242
+        }
+      ]
+    },
+    {
+      "time_s": 90.19999999997118,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043982105086881585,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003919816379075528
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043982105086881585
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034414222494663746
+        }
+      ]
+    },
+    {
+      "time_s": 90.21999999997114,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043972467546175403,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039172687429039107
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043972467546175403
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034372907311909615
+        }
+      ]
+    },
+    {
+      "time_s": 90.23999999997109,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043977182773498585,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003915848268314798
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043977182773498585
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034339782592813947
+        }
+      ]
+    },
+    {
+      "time_s": 90.25999999997104,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004399938604645439,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039153488227545655
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004399938604645439
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003430759040863651
+        }
+      ]
+    },
+    {
+      "time_s": 90.279999999971,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043951761271863305,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039088258452946644
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043951761271863305
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003422475563402495
+        }
+      ]
+    },
+    {
+      "time_s": 90.29999999997095,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004396743551521722,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003908304394525405
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004396743551521722
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034198652375299287
+        }
+      ]
+    },
+    {
+      "time_s": 90.3199999999709,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004400501414070405,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039094821817718087
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004400501414070405
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034184629494741554
+        }
+      ]
+    },
+    {
+      "time_s": 90.33999999997086,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004401343413927951,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039088386371535663
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004401343413927951
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00034163338603791066
+        }
+      ]
+    },
+    {
+      "time_s": 90.35999999997081,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043860890259489737,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00038917756370277916
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043860890259489737
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003397462248103329
+        }
+      ]
+    },
+    {
+      "time_s": 90.37999999997076,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004388565992232461,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00038917230928438247
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004388565992232461
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003394880193452867
+        }
+      ]
+    },
+    {
+      "time_s": 90.39999999997072,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043979410744031497,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00038997775190622566
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043979410744031497
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003401613963723059
+        }
+      ]
+    },
+    {
+      "time_s": 90.41999999997067,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044005513316293946,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003900509511981271
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00044005513316293946
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003400467692334691
+        }
+      ]
+    },
+    {
+      "time_s": 90.43999999997062,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044196422642985776,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003916873885139557
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00044196422642985776
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003414105505981039
+        }
+      ]
+    },
+    {
+      "time_s": 90.45999999997058,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044038099010598075,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003899921763650534
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00044038099010598075
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033960336262410946
+        }
+      ]
+    },
+    {
+      "time_s": 90.47999999997053,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004396488440273648,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003890659622501539
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004396488440273648
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033848308047284995
+        }
+      ]
+    },
+    {
+      "time_s": 90.49999999997048,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044130437426220234,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000390481335825876
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00044130437426220234
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003396582973898277
+        }
+      ]
+    },
+    {
+      "time_s": 90.51999999997044,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044125169943449495,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039030227828842207
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00044125169943449495
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003393528571422318
+        }
+      ]
+    },
+    {
+      "time_s": 90.53999999997039,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00043972854364926353,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003885855299948452
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00043972854364926353
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033744251634014525
+        }
+      ]
+    },
+    {
+      "time_s": 90.55999999997034,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004426408701769764,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003912740264689835
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004426408701769764
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033990718276091873
+        }
+      ]
+    },
+    {
+      "time_s": 90.5799999999703,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004416290502919112,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003901515754938358
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004416290502919112
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033867410069570326
+        }
+      ]
+    },
+    {
+      "time_s": 90.59999999997025,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044177448080515895,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003900599469760389
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00044177448080515895
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033834541314702537
+        }
+      ]
+    },
+    {
+      "time_s": 90.6199999999702,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004411949189206508,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00038926948850582117
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004411949189206508
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033734405809103887
+        }
+      ]
+    },
+    {
+      "time_s": 90.63999999997016,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004397937676674025,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00038781009817092797
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004397937676674025
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003358264286746157
+        }
+      ]
+    },
+    {
+      "time_s": 90.65999999997011,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044182731580158605,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003896189150525435
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00044182731580158605
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000337410514303394
+        }
+      ]
+    },
+    {
+      "time_s": 90.67999999997006,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004433240676085925,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00039095098803733266
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004433240676085925
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033857790846627986
+        }
+      ]
+    },
+    {
+      "time_s": 90.69999999997002,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.000442421205641535,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00038989193449552313
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000442421205641535
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033736266334970515
+        }
+      ]
+    },
+    {
+      "time_s": 90.71999999996997,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004421697508578499,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00038937277687545597
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004421697508578499
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003365758028932096
+        }
+      ]
+    },
+    {
+      "time_s": 90.73999999996992,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004422080027440395,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003892205661061186
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004422080027440395
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033623312946834985
+        }
+      ]
+    },
+    {
+      "time_s": 90.75999999996988,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044131550601508266,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003882072072706351
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00044131550601508266
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033509890852640725
+        }
+      ]
+    },
+    {
+      "time_s": 90.77999999996983,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004430208959632935,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00038963597947013525
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004430208959632935
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003362510629766182
+        }
+      ]
+    },
+    {
+      "time_s": 90.79999999996978,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044326690445916256,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003897561237939314
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00044326690445916256
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033624534312852
+        }
+      ]
+    },
+    {
+      "time_s": 90.81999999996974,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044113862708931433,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003874604792852532
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00044113862708931433
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003337823314812124
+        }
+      ]
+    },
+    {
+      "time_s": 90.83999999996969,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004113745190533077,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00035737717858859804
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004113745190533077
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000303379838124135
+        }
+      ]
+    },
+    {
+      "time_s": 90.85999999996965,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042144380218080846,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003672940139182642
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042144380218080846
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003131442256556844
+        }
+      ]
+    },
+    {
+      "time_s": 90.8799999999696,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00042110581953004085,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003667897959602583
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00042110581953004085
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00031247377239070393
+        }
+      ]
+    },
+    {
+      "time_s": 90.89999999996955,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00041789554823889997,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00036334754144264666
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00041789554823889997
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00030879953464640696
+        }
+      ]
+    },
+    {
+      "time_s": 90.9199999999695,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004283601941928091,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003736640561625419
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004283601941928091
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00031896791813190397
+        }
+      ]
+    },
+    {
+      "time_s": 90.93999999996946,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00041839495185066984,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00036357110581424146
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00041839495185066984
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003087472597778705
+        }
+      ]
+    },
+    {
+      "time_s": 90.95999999996941,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00040928268936137274,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003541967855937091
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00040928268936137274
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00029911088182616976
+        }
+      ]
+    },
+    {
+      "time_s": 90.97999999996937,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004131661345339723,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003579131747080724
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0004131661345339723
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003026602148822209
+        }
+      ]
+    },
+    {
+      "time_s": 90.99999999996932,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0003991697856952918,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003437454239451416
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003991697856952918
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00028832106219505745
+        }
+      ]
+    },
+    {
+      "time_s": 91.01999999996927,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00038813647509424105,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003324403860273914
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00038813647509424105
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002767442969608533
+        }
+      ]
+    },
+    {
+      "time_s": 91.03999999996923,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0003888197075683975,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003329803417382632
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003888197075683975
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000277140975907976
+        }
+      ]
+    },
+    {
+      "time_s": 91.05999999996918,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0003700048510554824,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00031403523008948576
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003700048510554824
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00025806560912331573
+        }
+      ]
+    },
+    {
+      "time_s": 91.07999999996913,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0003602407907573096,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000304020001575132
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003602407907573096
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002477992123930669
+        }
+      ]
+    },
+    {
+      "time_s": 91.09999999996909,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0003585158399869156,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003021501594143085
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0003585158399869156
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00024578447884154934
+        }
+      ]
+    },
+    {
+      "time_s": 91.11999999996904,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.000340281075838369,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002837123763048184
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.000340281075838369
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00022714367677118593
+        }
+      ]
+    },
+    {
+      "time_s": 91.13999999996899,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00033427780517070605,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00027749315670818427
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00033427780517070605
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00022070850824552104
+        }
+      ]
+    },
+    {
+      "time_s": 91.15999999996895,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00032847772368992947,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002715861267734205
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00032847772368992947
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00021469452985661217
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.5920004441086905e-06
+        }
+      ]
+    },
+    {
+      "time_s": 91.1799999999689,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00029650191390220057,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00023933772486336077
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00029650191390220057
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00018217353582421612
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.0727610508173173e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.19999999996885,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00027454676512602707,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002171974132676935
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00027454676512602707
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001598480614091241
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -4.2671870623431033e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.2199999999688,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.0002478797824342345,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00019047510557994567
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0002478797824342345
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00013307042872594003
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.196584369006756e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.23999999996876,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00021996291483828787,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0001622967414859202
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00021996291483828787
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00010463056813331788
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -8.986419838550681e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.25999999996871,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00022129738407876274,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00016344721638664243
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00022129738407876274
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00012392765915475752
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -2.521552109937923e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.27999999996867,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.00020933191981163592,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0001513806482189844
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00020933191981163592
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00013998894964880704
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -6.945460570288092e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.29999999996862,
+      "collision_pair_count": 4,
+      "minimum_contact_distance_m": -0.0001808366889733808,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00012263408250124162
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001808366889733808
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.0001432440652324934
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -0.00010497201060219788
+        }
+      ]
+    },
+    {
+      "time_s": 91.31999999996857,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.00013248707669000394,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00013248707669000394
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_yrim_1"
+          ],
+          "distance_m": -8.05988921088966e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.33999999996853,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0003011052522071974,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003011052522071974
+        }
+      ]
+    },
+    {
+      "time_s": 91.35999999996848,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0004887027366889293,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0004887027366889293
+        }
+      ]
+    },
+    {
+      "time_s": 91.37999999996843,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.000561588823243522,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000561588823243522
+        }
+      ]
+    },
+    {
+      "time_s": 91.39999999996839,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005593154517242681,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005593154517242681
+        }
+      ]
+    },
+    {
+      "time_s": 91.41999999996834,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005438901665281961,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005438901665281961
+        }
+      ]
+    },
+    {
+      "time_s": 91.4399999999683,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005533088057817405,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005533088057817405
+        }
+      ]
+    },
+    {
+      "time_s": 91.45999999996825,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005530373357102556,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005530373357102556
+        }
+      ]
+    },
+    {
+      "time_s": 91.4799999999682,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005511175947744345,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005511175947744345
+        }
+      ]
+    },
+    {
+      "time_s": 91.49999999996815,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005654954890031102,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005654954890031102
+        }
+      ]
+    },
+    {
+      "time_s": 91.5199999999681,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005643687094544975,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005643687094544975
+        }
+      ]
+    },
+    {
+      "time_s": 91.53999999996806,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005589959595885733,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005589959595885733
+        }
+      ]
+    },
+    {
+      "time_s": 91.55999999996801,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005726483488028003,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005726483488028003
+        }
+      ]
+    },
+    {
+      "time_s": 91.57999999996797,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005729118714433712,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005729118714433712
+        }
+      ]
+    },
+    {
+      "time_s": 91.59999999996792,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.000569474154073414,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000569474154073414
+        }
+      ]
+    },
+    {
+      "time_s": 91.61999999996787,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.00058223844961658,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00058223844961658
+        }
+      ]
+    },
+    {
+      "time_s": 91.63999999996783,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005803947662868878,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005803947662868878
+        }
+      ]
+    },
+    {
+      "time_s": 91.65999999996778,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005798404077742977,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005798404077742977
+        }
+      ]
+    },
+    {
+      "time_s": 91.67999999996773,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.000592076386289244,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000592076386289244
+        }
+      ]
+    },
+    {
+      "time_s": 91.69999999996769,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.0005887239229980856,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005887239229980856
+        }
+      ]
+    },
+    {
+      "time_s": 91.71999999996764,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.0005899374600021851,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005899374600021851
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -2.317695029787227e-06
+        }
+      ]
+    },
+    {
+      "time_s": 91.7399999999676,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.0005647137293824036,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005647137293824036
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -7.833246757417745e-06
+        }
+      ]
+    },
+    {
+      "time_s": 91.75999999996755,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.0005262955062610027,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005262955062610027
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -4.380091108500596e-06
+        }
+      ]
+    },
+    {
+      "time_s": 91.7799999999675,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.0005093131258505303,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005093131258505303
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -2.1740323734001424e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.79999999996745,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.0005147303987105295,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0005147303987105295
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -5.808737446914003e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.81999999996741,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.000503423188974635,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000503423188974635
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -8.020272037572929e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.83999999996736,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.0004981494204397891,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0004981494204397891
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00010707265936124207
+        }
+      ]
+    },
+    {
+      "time_s": 91.85999999996731,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.000503392037758366,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000503392037758366
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00014060541656372462
+        }
+      ]
+    },
+    {
+      "time_s": 91.87999999996727,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.0004891721809588959,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0004891721809588959
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00015815608345652452
+        }
+      ]
+    },
+    {
+      "time_s": 91.89999999996722,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.0004858538157782653,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0004858538157782653
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0001855256475260189
+        }
+      ]
+    },
+    {
+      "time_s": 91.91999999996717,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.0004894206433316058,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0004894206433316058
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002164164518272499
+        }
+      ]
+    },
+    {
+      "time_s": 91.93999999996713,
+      "collision_pair_count": 2,
+      "minimum_contact_distance_m": -0.0004737527375449124,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0004737527375449124
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00023148520385048299
+        }
+      ]
+    },
+    {
+      "time_s": 91.95999999996708,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0004595011641139228,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0004595011641139228
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002450562301080404
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -2.9704539266527746e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.97999999996703,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00044127995563040086,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00044127995563040086
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00025150871140002434
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -6.099188919556118e-05
+        }
+      ]
+    },
+    {
+      "time_s": 91.99999999996699,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00040791494974671796,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00040791494974671796
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002471451406842499
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -8.585281410323257e-05
+        }
+      ]
+    },
+    {
+      "time_s": 92.01999999996694,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0003904003689954442,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003904003689954442
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00025555870342382014
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00012027021299862281
+        }
+      ]
+    },
+    {
+      "time_s": 92.0399999999669,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0003797854264316705,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003797854264316705
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00026808478375924867
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.000155847976269864
+        }
+      ]
+    },
+    {
+      "time_s": 92.05999999996685,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.00035104007484191614,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00035104007484191614
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002676283053778103
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0001837772051245606
+        }
+      ]
+    },
+    {
+      "time_s": 92.0799999999668,
+      "collision_pair_count": 3,
+      "minimum_contact_distance_m": -0.0003357081002334096,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0003357081002334096
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.0002768841695529079
+        },
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00021767415644460307
+        }
+      ]
+    },
+    {
+      "time_s": 92.09999999996676,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -0.00011262749021965189,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -0.00011262749021965189
+        }
+      ]
+    },
+    {
+      "time_s": 92.11999999996671,
+      "collision_pair_count": 1,
+      "minimum_contact_distance_m": -8.522641173871331e-06,
+      "pairs": [
+        {
+          "pair": [
+            "container_xwall_-1",
+            "tray_xrim_1"
+          ],
+          "distance_m": -8.522641173871331e-06
+        }
+      ]
+    }
+  ],
+  "minimum_preflight_clearance_m": null,
+  "source_trace_sha256": "72aba3a97057f38b5eb46d531316298ba63bdecdf2c647d7d2be6076f2cba513",
+  "run_manifest_sha256": "b6c636c92e8af9f27ab40223471bf7917ee4625178f55f658793a7935245695a",
+  "source_commit": "7c2ba29d355487d6b00e23c359e6f826c5959abc"
+}

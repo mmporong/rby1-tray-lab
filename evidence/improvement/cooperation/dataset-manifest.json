@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "source_sha256": {
+    "src/rby1_tray/__init__.py": "a91e0b62ede8dbc5203342f341b170cec7cb3eeee103e0e9e880657fae065a9f",
+    "src/rby1_tray/assets.py": "f6e4d3c51e91905b066c1c2f8ad24d401f7e3cfab65d21eb60a324ec0147d2c1",
+    "src/rby1_tray/camera.py": "527fd8315d8a7e0fb6f707b56a0d960a35b4e0932a9c3990f55e54fb49e58626",
+    "src/rby1_tray/cli.py": "59cff8ee78465fba481bec3fb20ed25604ec168e564ccca3bc2310d5e140df6e",
+    "src/rby1_tray/cooperation.py": "48d2e488e422588edb1701a0d796315a6d5f8613734ecb92855ad246024bcb40",
+    "src/rby1_tray/evaluation.py": "ed9572841c847fd9ac14f8f91d3384e3e27331e1e9a8ff5f6696fbc4c455c587",
+    "src/rby1_tray/experiments.py": "d9fdc1cf1bfffcff95c2453c1d1b652f2f512772776924c75219df779654a2b4",
+    "src/rby1_tray/improvement_metrics.py": "48cf4c3dfe64a624ad01b02c83152c4b6cef7bac43adc10aca64bb4ccb159cc6",
+    "src/rby1_tray/joint_overlay.py": "e3784da85ce3b36c35dd3315cf117e1cc6dd2576857750f842ee3c4ae929f56c",
+    "src/rby1_tray/load_path.py": "3227383735fd0dd72a1a754eadd83d3ce6f157f226923cab7e2e298be9c63c8d",
+    "src/rby1_tray/mission.py": "b7b6116591db5b708bd1f1877aaf691b23591f88b5d925c4ffd942cecf53b20d",
+    "src/rby1_tray/mobility.py": "ff8fd487d03c06cb69af1c9d43c0c04df34d0cc1cf3236fb1ccd99f05cfde538",
+    "src/rby1_tray/perception.py": "1a96f5e0cb11623e9e4f06666856bfa05eabe2ba720fbeef67a3a051db836785",
+    "src/rby1_tray/planning.py": "44d3df376f97f7d5ddb56814f21fc6eeb348bfa9cddf99280a1fc34fa38e29bd",
+    "src/rby1_tray/playback.py": "9ff997e5c825cfb9a2b2f14eb7ae4ed80c28a6f6305acc235a3824b6153bfac1",
+    "src/rby1_tray/scene.py": "a919fef42bc28c93f90daf628447f0bd4bb4203257cae8aee09080c7a03e56cc",
+    "src/rby1_tray/section_stress.py": "122db397000253321687d022812fa1bbca339d5aa29217e2354c4ed0b82b9df2",
+    "src/rby1_tray/session.py": "c83735bf1686ab8265dd591bcfbd96cba6a84847d3eae71298a6a96671189cee",
+    "src/rby1_tray/structural.py": "0b203075ac0b35d618878a094a71c773d7776efaef3482079f0473d50ac9ff40",
+    "src/rby1_tray/structural_basis.py": "ece117b77ea6fe926cd0846d6e85382996ba1bda01fdd3a768ba39124d634800",
+    "src/rby1_tray/structural_evidence.py": "d5bdc9025844e9b6df3b67e1d1eda66153d77f4aa96b125fc7286622a1bbf983",
+    "src/rby1_tray/structural_loads.py": "8551652f59c14a1c038e72369203ded5850235569ea274b6c58ac2bf68f7d1c1",
+    "src/rby1_tray/structural_scene.py": "9d923a966ea6faa8d8692b9d65f789ac2ad57affda7f49571a3d85c04bb0dba8",
+    "src/rby1_tray/structural_view.py": "1717e1a5bcc66779abebaed6f88ab3107730863746cabc6dc2d342e11bcdb06c",
+    "src/rby1_tray/transport_clearance.py": "566468897603707683fa565c7b8cbd1e871c635ff29419100f7f326a51f2d433",
+    "src/rby1_tray/viewer.py": "8577b0b8732ed7c66a9c23e3b34c85b0457aa524c217ad73e077e70b4d0b6a17",
+    "tools/audit_transport_contacts.py": "f3840b980f0eb6c1743e02f771da9a6f7706673668d8dad90ba8ec4d35d055ab",
+    "tools/benchmark_mobile.py": "a7d46ced5d37c26ed2d76c1ca6a4f69d54e465d98fe54d0a876970a3750d48a9",
+    "tools/build_load_diagnostics.py": "1a028599b415ca601839b01e6b31236af728c68988d7118f5bb984bb6853a762",
+    "tools/build_load_heatmap.py": "8b8156d8d8add26753b2ad3cf99ed069bd1c1ff137e51693236f804504f2cd98",
+    "tools/build_load_view.py": "e8aae2b24cd7395e959408c5c7475da7b5eca7a27e198173962c249994868e18",
+    "tools/build_playback.py": "0d6225fdeb96fb91f1ed96ccf5290755ddb2d542ea4f82d82496e812951056c2",
+    "tools/build_structural_basis.py": "3d387dd97ce8acc5ebf2e7fbed00204c4587be92a29164fd86bea9467f4d1ead",
+    "tools/build_structural_case.py": "f7cf2bc02c46672ded6002fe719ab61ce48b2d834dcb8149b7518053350a862d",
+    "tools/build_whole_structural.py": "fc1ca396a5ea106032cb8189e734644660822b937088c99fa63fc5fe562c9e62",
+    "tools/prepare_structural_cad.py": "d61b2342c489fce2c2d9b0bca7fac9449c8d7600bb2b6b5134ba18ae91e62d59",
+    "tools/render_structural_case.py": "611cc96be3359b75d49edf94a4b3491cc0056f959bdc94c0f5bbae14809164cb",
+    "tools/render_study_video.py": "c197f64b715099c359221348e22f4d65d4ed86ec61fb01dbbc842d437493a88a",
+    "tools/verify_controller_data.py": "e9984b7d04412e89163d4bd530d38c028c5482adb1b4d114f46fe85681416633",
+    "tools/verify_evidence.py": "d2b9607e0194c62c98eebda4730bf982e3578e9707d6936325b5790848e8a72b",
+    "src/rby1_tray/web/index.html": "3d14ff6e5c658967470f6b088f08f72dff3929e50e361918e920c28dfa6fc7e2",
+    "src/rby1_tray/web/structural-diagnostics.js": "c2de4bb91caf6d64052a773429975e927d26034223f3dc558ad7e5c75f23d2c1",
+    "src/rby1_tray/web/structural-scene.js": "d37c2b6c22684f80cda74338d2085812225f606c2ee30f99e86f54ba80c76b65",
+    "configs/mobile-native.json": "d4b56a57a975b69a9249134e7841e421f60f016c0889649dac98963523221689"
+  },
+  "run_manifests": {
+    "nominal__candidate-depth-cad__seed-0": {
+      "path": "nominal__candidate-depth-cad__seed-0/manifest.json",
+      "sha256": "4759047c47f7e5ba66a0816f2a8694c6c3d60bd0267555e0584a53d70be3e4a6"
+    },
+    "nominal__candidate-no-coop-depth-cad__seed-0": {
+      "path": "nominal__candidate-no-coop-depth-cad__seed-0/manifest.json",
+      "sha256": "c6a24d410c67ae1df6142ba3a106bc7ae41e3a89188fb3f9e8539bce172875c0"
+    },
+    "nominal__candidate-depth-cad__seed-1": {
+      "path": "nominal__candidate-depth-cad__seed-1/manifest.json",
+      "sha256": "280557bbc748bc3fb6e0e911deb622eaecc50595480c415684254c2732e12489"
+    },
+    "nominal__candidate-no-coop-depth-cad__seed-1": {
+      "path": "nominal__candidate-no-coop-depth-cad__seed-1/manifest.json",
+      "sha256": "0df1e04ed59cf728d4ffab282d38c9f4a1e6741fe2e1852283397290292ba880"
+    },
+    "payload-mass-scale-1.2__candidate-depth-cad__seed-0": {
+      "path": "payload-mass-scale-1.2__candidate-depth-cad__seed-0/manifest.json",
+      "sha256": "486b3230fb881f642df60cb1d175ceca93059d909ae302d7ed02e87dd5b8b2fd"
+    },
+    "payload-mass-scale-1.2__candidate-no-coop-depth-cad__seed-0": {
+      "path": "payload-mass-scale-1.2__candidate-no-coop-depth-cad__seed-0/manifest.json",
+      "sha256": "58809fa2ab0c7b136958571809cc84b825e3dc08c524c670b7cc898ad6197a82"
+    },
+    "payload-mass-scale-1.2__candidate-depth-cad__seed-1": {
+      "path": "payload-mass-scale-1.2__candidate-depth-cad__seed-1/manifest.json",
+      "sha256": "becb3d1ebb4010051d66b04d88ce78984c34feac8fde9b47f7acc7a077718d0d"
+    },
+    "payload-mass-scale-1.2__candidate-no-coop-depth-cad__seed-1": {
+      "path": "payload-mass-scale-1.2__candidate-no-coop-depth-cad__seed-1/manifest.json",
+      "sha256": "b29332cbdb6efc32961cfc83249bede50ddaea84d586df6237c55969d38085b9"
+    },
+    "tray-yaw-0.035__candidate-depth-cad__seed-0": {
+      "path": "tray-yaw-0.035__candidate-depth-cad__seed-0/manifest.json",
+      "sha256": "cdf4e1269502b6861e8319018fb03d0fa6d9ec9bf4e410eafe4258c911041ec7"
+    },
+    "tray-yaw-0.035__candidate-no-coop-depth-cad__seed-0": {
+      "path": "tray-yaw-0.035__candidate-no-coop-depth-cad__seed-0/manifest.json",
+      "sha256": "a68bde83396b85ee2c020e702ca83b5405a9738056fafd03edac20c02af8c0ee"
+    },
+    "tray-yaw-0.035__candidate-depth-cad__seed-1": {
+      "path": "tray-yaw-0.035__candidate-depth-cad__seed-1/manifest.json",
+      "sha256": "120ea699fb58fdaa4e1b302711a44ba8bbc94faa599eba5da377dab3bdd0325c"
+    },
+    "tray-yaw-0.035__candidate-no-coop-depth-cad__seed-1": {
+      "path": "tray-yaw-0.035__candidate-no-coop-depth-cad__seed-1/manifest.json",
+      "sha256": "d6f195c144161f7c3ad4084554ce31444d1833358bb267cd1b2f1f3dc3a4780c"
+    },
+    "tray-yaw-minus-0.035__candidate-depth-cad__seed-0": {
+      "path": "tray-yaw-minus-0.035__candidate-depth-cad__seed-0/manifest.json",
+      "sha256": "d7084633353742ce9d8cd664521621d14dc1ad731cce35b47e52c4f861591665"
+    },
+    "tray-yaw-minus-0.035__candidate-no-coop-depth-cad__seed-0": {
+      "path": "tray-yaw-minus-0.035__candidate-no-coop-depth-cad__seed-0/manifest.json",
+      "sha256": "6c3b398b631d2c8c51f51f86e967b83af3b4e6b01a22956efa51bb2adfa336a7"
+    },
+    "tray-yaw-minus-0.035__candidate-depth-cad__seed-1": {
+      "path": "tray-yaw-minus-0.035__candidate-depth-cad__seed-1/manifest.json",
+      "sha256": "cc53545988f1be9c19aad58136ff4a9cbd1e65a55a0835af2a53a92a1f8b7418"
+    },
+    "tray-yaw-minus-0.035__candidate-no-coop-depth-cad__seed-1": {
+      "path": "tray-yaw-minus-0.035__candidate-no-coop-depth-cad__seed-1/manifest.json",
+      "sha256": "4d28bf0a15cbd42db9f0112fee00e7627e2e4914f6c9a29e92fd5672a7896751"
+    }
+  },
+  "artifact_sha256": {
+    "preregistered.json": "306e597d94804c49815f22365d9eb4a469f22a6b4d8c1ffdc06a0d952c3a7544",
+    "summary.json": "1475010b9de8a23b6e5af81de4720852004b315939330bf2b5d0a20f8c177fe5"
+  }
+}

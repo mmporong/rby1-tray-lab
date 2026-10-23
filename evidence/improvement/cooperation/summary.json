@@ -1,0 +1,1750 @@
+{
+  "schema_version": 2,
+  "complete": true,
+  "expected_runs": 16,
+  "recorded_runs": 16,
+  "completed_runs": 16,
+  "stability_metrics_complete": true,
+  "stability_metrics_available_runs": 16,
+  "runs": [
+    {
+      "run_id": "nominal__candidate-depth-cad__seed-0",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "e3238ad13cd5319cd0b7ca092ff3986a4062b258c22b07a9ca3fdfb291cbba20",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 151.439999999995,
+      "max_joint_torque_nm": 239.20660146487216,
+      "highest_tray_center_z_m": 1.3065178399327437,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.0006256688868148396,
+      "max_bimanual_relative_orientation_error_rad": 0.0008680894255855508,
+      "cooperation_minimum_speed_scale": 0.9007120872010566,
+      "cooperation_slowdown_samples": 2181,
+      "cooperation_summary": {
+        "samples": 2991,
+        "slowdown_samples": 2181,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0006256688868148396,
+        "max_relative_orientation_error_rad": 0.0008680894255855508,
+        "max_load_imbalance_change": 0.3263753175376488,
+        "minimum_speed_scale": 0.9007120872010566
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3557,
+        "valid_tray_pose_samples": 3557,
+        "payload_displacement_samples": 3557,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 115.81999999991147,
+        "max_abs_tray_roll_rad": 0.001537580647618398,
+        "max_abs_tray_pitch_rad": 0.04583001561439029,
+        "max_tray_tilt_rad": 0.04583015647962925,
+        "max_payload_to_tray_displacement_m": 0.14284729356637124
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.001537580647618398,
+      "max_abs_tray_pitch_rad": 0.04583001561439029,
+      "max_tray_tilt_rad": 0.04583015647962925,
+      "max_payload_to_tray_displacement_m": 0.14284729356637124,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.001537580647618398,
+        "max_abs_tray_pitch_rad": 0.04583001561439029,
+        "max_tray_tilt_rad": 0.04583015647962925,
+        "max_payload_to_tray_displacement_m": 0.14284729356637124,
+        "max_bimanual_relative_position_error_m": 0.0006256688868148396,
+        "max_bimanual_relative_orientation_error_rad": 0.0008680894255855508,
+        "cooperation_minimum_speed_scale": 0.9007120872010566,
+        "cooperation_slowdown_samples": 2181,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3557,
+        "payload_displacement_samples": 3557,
+        "missing_reason": null
+      },
+      "run_manifest": "nominal__candidate-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "4759047c47f7e5ba66a0816f2a8694c6c3d60bd0267555e0584a53d70be3e4a6"
+    },
+    {
+      "run_id": "nominal__candidate-no-coop-depth-cad__seed-0",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "ff69c61be98f1555c7a758b8ca6775b6dd576b06035799b276b5ee8b11558b82",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.35399999998026,
+      "max_joint_torque_nm": 239.20660146487216,
+      "highest_tray_center_z_m": 1.3068341208970977,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.0006250068322884012,
+      "max_bimanual_relative_orientation_error_rad": 0.0008658088221734306,
+      "cooperation_minimum_speed_scale": 1.0,
+      "cooperation_slowdown_samples": 0,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0006250068322884012,
+        "max_relative_orientation_error_rad": 0.0008658088221734306,
+        "max_load_imbalance_change": 0.3274707206311502,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3402,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 112.7199999999187,
+        "max_abs_tray_roll_rad": 0.001537580647618398,
+        "max_abs_tray_pitch_rad": 0.04680346476873301,
+        "max_tray_tilt_rad": 0.04680357663567096,
+        "max_payload_to_tray_displacement_m": 0.14209058233364008
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.001537580647618398,
+      "max_abs_tray_pitch_rad": 0.04680346476873301,
+      "max_tray_tilt_rad": 0.04680357663567096,
+      "max_payload_to_tray_displacement_m": 0.14209058233364008,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.001537580647618398,
+        "max_abs_tray_pitch_rad": 0.04680346476873301,
+        "max_tray_tilt_rad": 0.04680357663567096,
+        "max_payload_to_tray_displacement_m": 0.14209058233364008,
+        "max_bimanual_relative_position_error_m": 0.0006250068322884012,
+        "max_bimanual_relative_orientation_error_rad": 0.0008658088221734306,
+        "cooperation_minimum_speed_scale": 1.0,
+        "cooperation_slowdown_samples": 0,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "missing_reason": null
+      },
+      "run_manifest": "nominal__candidate-no-coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "c6a24d410c67ae1df6142ba3a106bc7ae41e3a89188fb3f9e8539bce172875c0"
+    },
+    {
+      "run_id": "nominal__candidate-depth-cad__seed-1",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "5b295bbdec8e7cdde674d6ea5f5a736beed8021ae51575aa87f8d17159ee5b2b",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 151.22599999999397,
+      "max_joint_torque_nm": 238.89766863961222,
+      "highest_tray_center_z_m": 1.3065010255786773,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.0006347239882663621,
+      "max_bimanual_relative_orientation_error_rad": 0.0008642383852843459,
+      "cooperation_minimum_speed_scale": 0.9004983806951667,
+      "cooperation_slowdown_samples": 2323,
+      "cooperation_summary": {
+        "samples": 2980,
+        "slowdown_samples": 2323,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0006347239882663621,
+        "max_relative_orientation_error_rad": 0.0008642383852843459,
+        "max_load_imbalance_change": 0.3265397071575641,
+        "minimum_speed_scale": 0.9004983806951667
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3546,
+        "valid_tray_pose_samples": 3546,
+        "payload_displacement_samples": 3546,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 115.59999999991199,
+        "max_abs_tray_roll_rad": 0.0015638300212137306,
+        "max_abs_tray_pitch_rad": 0.04563220043671507,
+        "max_tray_tilt_rad": 0.045632224894796174,
+        "max_payload_to_tray_displacement_m": 0.1730209550066039
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.0015638300212137306,
+      "max_abs_tray_pitch_rad": 0.04563220043671507,
+      "max_tray_tilt_rad": 0.045632224894796174,
+      "max_payload_to_tray_displacement_m": 0.1730209550066039,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.0015638300212137306,
+        "max_abs_tray_pitch_rad": 0.04563220043671507,
+        "max_tray_tilt_rad": 0.045632224894796174,
+        "max_payload_to_tray_displacement_m": 0.1730209550066039,
+        "max_bimanual_relative_position_error_m": 0.0006347239882663621,
+        "max_bimanual_relative_orientation_error_rad": 0.0008642383852843459,
+        "cooperation_minimum_speed_scale": 0.9004983806951667,
+        "cooperation_slowdown_samples": 2323,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3546,
+        "payload_displacement_samples": 3546,
+        "missing_reason": null
+      },
+      "run_manifest": "nominal__candidate-depth-cad__seed-1/manifest.json",
+      "run_manifest_sha256": "280557bbc748bc3fb6e0e911deb622eaecc50595480c415684254c2732e12489"
+    },
+    {
+      "run_id": "nominal__candidate-no-coop-depth-cad__seed-1",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "284aadc92b4b14a4d96f6c8a8c7e7edfc3abe1f0d33f087608e36e7a1837bcb8",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.36999999998034,
+      "max_joint_torque_nm": 238.89766863961222,
+      "highest_tray_center_z_m": 1.306778084044069,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.0006395351233733873,
+      "max_bimanual_relative_orientation_error_rad": 0.0008642383852843459,
+      "cooperation_minimum_speed_scale": 1.0,
+      "cooperation_slowdown_samples": 0,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0006395351233733873,
+        "max_relative_orientation_error_rad": 0.0008642383852843459,
+        "max_load_imbalance_change": 0.3418568167182097,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3402,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 112.7199999999187,
+        "max_abs_tray_roll_rad": 0.0015638300212137306,
+        "max_abs_tray_pitch_rad": 0.047585241939994576,
+        "max_tray_tilt_rad": 0.04758524701856317,
+        "max_payload_to_tray_displacement_m": 0.16898307362408574
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.0015638300212137306,
+      "max_abs_tray_pitch_rad": 0.047585241939994576,
+      "max_tray_tilt_rad": 0.04758524701856317,
+      "max_payload_to_tray_displacement_m": 0.16898307362408574,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.0015638300212137306,
+        "max_abs_tray_pitch_rad": 0.047585241939994576,
+        "max_tray_tilt_rad": 0.04758524701856317,
+        "max_payload_to_tray_displacement_m": 0.16898307362408574,
+        "max_bimanual_relative_position_error_m": 0.0006395351233733873,
+        "max_bimanual_relative_orientation_error_rad": 0.0008642383852843459,
+        "cooperation_minimum_speed_scale": 1.0,
+        "cooperation_slowdown_samples": 0,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "missing_reason": null
+      },
+      "run_manifest": "nominal__candidate-no-coop-depth-cad__seed-1/manifest.json",
+      "run_manifest_sha256": "0df1e04ed59cf728d4ffab282d38c9f4a1e6741fe2e1852283397290292ba880"
+    },
+    {
+      "run_id": "payload-mass-scale-1.2__candidate-depth-cad__seed-0",
+      "case": "payload-mass-scale-1.2",
+      "factor": "payload_mass_scale",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "d4c17fec95b8ab6dbb2559f848db5580a9c049d11a36b75301688654e8557a3e",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 149.15399999998408,
+      "max_joint_torque_nm": 239.37061573324354,
+      "highest_tray_center_z_m": 1.3066498696832545,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.0005938187278799984,
+      "max_bimanual_relative_orientation_error_rad": 0.0008239648365242879,
+      "cooperation_minimum_speed_scale": 0.957878242156885,
+      "cooperation_slowdown_samples": 1784,
+      "cooperation_summary": {
+        "samples": 2877,
+        "slowdown_samples": 1784,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0005938187278799984,
+        "max_relative_orientation_error_rad": 0.0008239648365242879,
+        "max_load_imbalance_change": 0.2824013521870115,
+        "minimum_speed_scale": 0.957878242156885
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3442,
+        "valid_tray_pose_samples": 3442,
+        "payload_displacement_samples": 3442,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 113.51999999991683,
+        "max_abs_tray_roll_rad": 0.0015557595616805975,
+        "max_abs_tray_pitch_rad": 0.05654334189118094,
+        "max_tray_tilt_rad": 0.05654381681896818,
+        "max_payload_to_tray_displacement_m": 0.1100475480400081
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.0015557595616805975,
+      "max_abs_tray_pitch_rad": 0.05654334189118094,
+      "max_tray_tilt_rad": 0.05654381681896818,
+      "max_payload_to_tray_displacement_m": 0.1100475480400081,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.0015557595616805975,
+        "max_abs_tray_pitch_rad": 0.05654334189118094,
+        "max_tray_tilt_rad": 0.05654381681896818,
+        "max_payload_to_tray_displacement_m": 0.1100475480400081,
+        "max_bimanual_relative_position_error_m": 0.0005938187278799984,
+        "max_bimanual_relative_orientation_error_rad": 0.0008239648365242879,
+        "cooperation_minimum_speed_scale": 0.957878242156885,
+        "cooperation_slowdown_samples": 1784,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3442,
+        "payload_displacement_samples": 3442,
+        "missing_reason": null
+      },
+      "run_manifest": "payload-mass-scale-1.2__candidate-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "486b3230fb881f642df60cb1d175ceca93059d909ae302d7ed02e87dd5b8b2fd"
+    },
+    {
+      "run_id": "payload-mass-scale-1.2__candidate-no-coop-depth-cad__seed-0",
+      "case": "payload-mass-scale-1.2",
+      "factor": "payload_mass_scale",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "e31ce9dc4952d3363eee7e8f535277b289904011527b6bdc1880811ab55e076d",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.35399999998026,
+      "max_joint_torque_nm": 239.37061573324354,
+      "highest_tray_center_z_m": 1.3067142848200284,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.0006265414357012908,
+      "max_bimanual_relative_orientation_error_rad": 0.0008672930678240138,
+      "cooperation_minimum_speed_scale": 1.0,
+      "cooperation_slowdown_samples": 0,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0006265414357012908,
+        "max_relative_orientation_error_rad": 0.0008672930678240138,
+        "max_load_imbalance_change": 0.28532674724960055,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3402,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 112.7199999999187,
+        "max_abs_tray_roll_rad": 0.0015557595616805975,
+        "max_abs_tray_pitch_rad": 0.05827679123074836,
+        "max_tray_tilt_rad": 0.058277947506987594,
+        "max_payload_to_tray_displacement_m": 0.10827765108329185
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.0015557595616805975,
+      "max_abs_tray_pitch_rad": 0.05827679123074836,
+      "max_tray_tilt_rad": 0.058277947506987594,
+      "max_payload_to_tray_displacement_m": 0.10827765108329185,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.0015557595616805975,
+        "max_abs_tray_pitch_rad": 0.05827679123074836,
+        "max_tray_tilt_rad": 0.058277947506987594,
+        "max_payload_to_tray_displacement_m": 0.10827765108329185,
+        "max_bimanual_relative_position_error_m": 0.0006265414357012908,
+        "max_bimanual_relative_orientation_error_rad": 0.0008672930678240138,
+        "cooperation_minimum_speed_scale": 1.0,
+        "cooperation_slowdown_samples": 0,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "missing_reason": null
+      },
+      "run_manifest": "payload-mass-scale-1.2__candidate-no-coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "58809fa2ab0c7b136958571809cc84b825e3dc08c524c670b7cc898ad6197a82"
+    },
+    {
+      "run_id": "payload-mass-scale-1.2__candidate-depth-cad__seed-1",
+      "case": "payload-mass-scale-1.2",
+      "factor": "payload_mass_scale",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "0f84d22124f1b57c0c0cc02c4842c96cff841f80e647b5eb4f1a8fde7fa865d2",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 149.8699999999875,
+      "max_joint_torque_nm": 239.46472538548824,
+      "highest_tray_center_z_m": 1.3063856219984535,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.0006451130732043601,
+      "max_bimanual_relative_orientation_error_rad": 0.0008830359045112503,
+      "cooperation_minimum_speed_scale": 0.9268352208198968,
+      "cooperation_slowdown_samples": 2473,
+      "cooperation_summary": {
+        "samples": 2912,
+        "slowdown_samples": 2473,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0006451130732043601,
+        "max_relative_orientation_error_rad": 0.0008830359045112503,
+        "max_load_imbalance_change": 0.3062805993693102,
+        "minimum_speed_scale": 0.9268352208198968
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3478,
+        "valid_tray_pose_samples": 3478,
+        "payload_displacement_samples": 3478,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 114.23999999991516,
+        "max_abs_tray_roll_rad": 0.0015154207886725916,
+        "max_abs_tray_pitch_rad": 0.06174943370920356,
+        "max_tray_tilt_rad": 0.06175047896168135,
+        "max_payload_to_tray_displacement_m": 0.13911615516146963
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.0015154207886725916,
+      "max_abs_tray_pitch_rad": 0.06174943370920356,
+      "max_tray_tilt_rad": 0.06175047896168135,
+      "max_payload_to_tray_displacement_m": 0.13911615516146963,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.0015154207886725916,
+        "max_abs_tray_pitch_rad": 0.06174943370920356,
+        "max_tray_tilt_rad": 0.06175047896168135,
+        "max_payload_to_tray_displacement_m": 0.13911615516146963,
+        "max_bimanual_relative_position_error_m": 0.0006451130732043601,
+        "max_bimanual_relative_orientation_error_rad": 0.0008830359045112503,
+        "cooperation_minimum_speed_scale": 0.9268352208198968,
+        "cooperation_slowdown_samples": 2473,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3478,
+        "payload_displacement_samples": 3478,
+        "missing_reason": null
+      },
+      "run_manifest": "payload-mass-scale-1.2__candidate-depth-cad__seed-1/manifest.json",
+      "run_manifest_sha256": "becb3d1ebb4010051d66b04d88ce78984c34feac8fde9b47f7acc7a077718d0d"
+    },
+    {
+      "run_id": "payload-mass-scale-1.2__candidate-no-coop-depth-cad__seed-1",
+      "case": "payload-mass-scale-1.2",
+      "factor": "payload_mass_scale",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "73f6dceaa7a64ef087d6b5707a5e1182e4867cf303b90530c66454279fd99deb",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.3619999999803,
+      "max_joint_torque_nm": 239.46472538548824,
+      "highest_tray_center_z_m": 1.3066398377813107,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.0006455338917316075,
+      "max_bimanual_relative_orientation_error_rad": 0.0008836499453984347,
+      "cooperation_minimum_speed_scale": 1.0,
+      "cooperation_slowdown_samples": 0,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0006455338917316075,
+        "max_relative_orientation_error_rad": 0.0008836499453984347,
+        "max_load_imbalance_change": 0.2880351385117527,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3402,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 112.7199999999187,
+        "max_abs_tray_roll_rad": 0.0016645898710710204,
+        "max_abs_tray_pitch_rad": 0.058127207832565336,
+        "max_tray_tilt_rad": 0.05812720795878455,
+        "max_payload_to_tray_displacement_m": 0.14122317678245153
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.0016645898710710204,
+      "max_abs_tray_pitch_rad": 0.058127207832565336,
+      "max_tray_tilt_rad": 0.05812720795878455,
+      "max_payload_to_tray_displacement_m": 0.14122317678245153,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.0016645898710710204,
+        "max_abs_tray_pitch_rad": 0.058127207832565336,
+        "max_tray_tilt_rad": 0.05812720795878455,
+        "max_payload_to_tray_displacement_m": 0.14122317678245153,
+        "max_bimanual_relative_position_error_m": 0.0006455338917316075,
+        "max_bimanual_relative_orientation_error_rad": 0.0008836499453984347,
+        "cooperation_minimum_speed_scale": 1.0,
+        "cooperation_slowdown_samples": 0,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "missing_reason": null
+      },
+      "run_manifest": "payload-mass-scale-1.2__candidate-no-coop-depth-cad__seed-1/manifest.json",
+      "run_manifest_sha256": "b29332cbdb6efc32961cfc83249bede50ddaea84d586df6237c55969d38085b9"
+    },
+    {
+      "run_id": "tray-yaw-0.035__candidate-depth-cad__seed-0",
+      "case": "tray-yaw-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "29ef913975838dd50fb15f60cbe1c897f950af7a1b055fdf4b87de21fc08fec4",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.35599999998027,
+      "max_joint_torque_nm": 238.7901667627134,
+      "highest_tray_center_z_m": 1.3066742159534863,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.000648406512421367,
+      "max_bimanual_relative_orientation_error_rad": 0.0009147826771430903,
+      "cooperation_minimum_speed_scale": 0.9922049460991127,
+      "cooperation_slowdown_samples": 4,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 4,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.000648406512421367,
+        "max_relative_orientation_error_rad": 0.0009147826771430903,
+        "max_load_imbalance_change": 0.2559961953083748,
+        "minimum_speed_scale": 0.9922049460991127
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3402,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 112.7199999999187,
+        "max_abs_tray_roll_rad": 0.002135027833192369,
+        "max_abs_tray_pitch_rad": 0.0552443289898853,
+        "max_tray_tilt_rad": 0.05525393350733196,
+        "max_payload_to_tray_displacement_m": 0.1169360439300801
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.002135027833192369,
+      "max_abs_tray_pitch_rad": 0.0552443289898853,
+      "max_tray_tilt_rad": 0.05525393350733196,
+      "max_payload_to_tray_displacement_m": 0.1169360439300801,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.002135027833192369,
+        "max_abs_tray_pitch_rad": 0.0552443289898853,
+        "max_tray_tilt_rad": 0.05525393350733196,
+        "max_payload_to_tray_displacement_m": 0.1169360439300801,
+        "max_bimanual_relative_position_error_m": 0.000648406512421367,
+        "max_bimanual_relative_orientation_error_rad": 0.0009147826771430903,
+        "cooperation_minimum_speed_scale": 0.9922049460991127,
+        "cooperation_slowdown_samples": 4,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "missing_reason": null
+      },
+      "run_manifest": "tray-yaw-0.035__candidate-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "cdf4e1269502b6861e8319018fb03d0fa6d9ec9bf4e410eafe4258c911041ec7"
+    },
+    {
+      "run_id": "tray-yaw-0.035__candidate-no-coop-depth-cad__seed-0",
+      "case": "tray-yaw-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "7f9207f9d3f1c0073a007d480f60c160778ccd062cec544920f781ce9575d245",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.35399999998026,
+      "max_joint_torque_nm": 238.7901667627134,
+      "highest_tray_center_z_m": 1.306680574788664,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.000648406512421367,
+      "max_bimanual_relative_orientation_error_rad": 0.0009147826771430903,
+      "cooperation_minimum_speed_scale": 1.0,
+      "cooperation_slowdown_samples": 0,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.000648406512421367,
+        "max_relative_orientation_error_rad": 0.0009147826771430903,
+        "max_load_imbalance_change": 0.25596490488980295,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3402,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 112.7199999999187,
+        "max_abs_tray_roll_rad": 0.002135027833192369,
+        "max_abs_tray_pitch_rad": 0.05519918843871157,
+        "max_tray_tilt_rad": 0.05520860308721616,
+        "max_payload_to_tray_displacement_m": 0.1169360439300801
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.002135027833192369,
+      "max_abs_tray_pitch_rad": 0.05519918843871157,
+      "max_tray_tilt_rad": 0.05520860308721616,
+      "max_payload_to_tray_displacement_m": 0.1169360439300801,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.002135027833192369,
+        "max_abs_tray_pitch_rad": 0.05519918843871157,
+        "max_tray_tilt_rad": 0.05520860308721616,
+        "max_payload_to_tray_displacement_m": 0.1169360439300801,
+        "max_bimanual_relative_position_error_m": 0.000648406512421367,
+        "max_bimanual_relative_orientation_error_rad": 0.0009147826771430903,
+        "cooperation_minimum_speed_scale": 1.0,
+        "cooperation_slowdown_samples": 0,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "missing_reason": null
+      },
+      "run_manifest": "tray-yaw-0.035__candidate-no-coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "a68bde83396b85ee2c020e702ca83b5405a9738056fafd03edac20c02af8c0ee"
+    },
+    {
+      "run_id": "tray-yaw-0.035__candidate-depth-cad__seed-1",
+      "case": "tray-yaw-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "0d0265eac673c7f6f3209a0f210d73fb8df6a1b6a4f502dc44d607cc481eb32e",
+      "execution_status": "completed",
+      "success": false,
+      "failure_reason": "phase_timeout",
+      "simulation_time_s": 150.93199999999257,
+      "max_joint_torque_nm": 239.07721301770925,
+      "highest_tray_center_z_m": 1.305469170106526,
+      "failure_phase": "drive_high",
+      "max_bimanual_relative_position_error_m": 0.0009597130603368198,
+      "max_bimanual_relative_orientation_error_rad": 0.0014363850430639917,
+      "cooperation_minimum_speed_scale": 0.35,
+      "cooperation_slowdown_samples": 4182,
+      "cooperation_summary": {
+        "samples": 5054,
+        "slowdown_samples": 4182,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0009597130603368198,
+        "max_relative_orientation_error_rad": 0.0014363850430639917,
+        "max_load_imbalance_change": 0.7521323081856668,
+        "minimum_speed_scale": 0.35
+      },
+      "mission_failure": {
+        "reason": "phase_timeout",
+        "detail": "drive_high exceeded 20.0 s",
+        "time_s": 150.93199999999257
+      },
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 5314,
+        "valid_tray_pose_samples": 5314,
+        "payload_displacement_samples": 5314,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 150.93199999999257,
+        "max_abs_tray_roll_rad": 0.002398288281552452,
+        "max_abs_tray_pitch_rad": 0.11831936457859861,
+        "max_tray_tilt_rad": 0.11834324742968072,
+        "max_payload_to_tray_displacement_m": 0.14162840510872002
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.002398288281552452,
+      "max_abs_tray_pitch_rad": 0.11831936457859861,
+      "max_tray_tilt_rad": 0.11834324742968072,
+      "max_payload_to_tray_displacement_m": 0.14162840510872002,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.002398288281552452,
+        "max_abs_tray_pitch_rad": 0.11831936457859861,
+        "max_tray_tilt_rad": 0.11834324742968072,
+        "max_payload_to_tray_displacement_m": 0.14162840510872002,
+        "max_bimanual_relative_position_error_m": 0.0009597130603368198,
+        "max_bimanual_relative_orientation_error_rad": 0.0014363850430639917,
+        "cooperation_minimum_speed_scale": 0.35,
+        "cooperation_slowdown_samples": 4182,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 5314,
+        "payload_displacement_samples": 5314,
+        "missing_reason": null
+      },
+      "run_manifest": "tray-yaw-0.035__candidate-depth-cad__seed-1/manifest.json",
+      "run_manifest_sha256": "120ea699fb58fdaa4e1b302711a44ba8bbc94faa599eba5da377dab3bdd0325c"
+    },
+    {
+      "run_id": "tray-yaw-0.035__candidate-no-coop-depth-cad__seed-1",
+      "case": "tray-yaw-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "29b4455b8dc27e3d62164d0c230b7b9864c070bf4db6a00bac35ea92ebbbf95a",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.35599999998027,
+      "max_joint_torque_nm": 239.07721301770925,
+      "highest_tray_center_z_m": 1.3075083292136207,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.0009240500277417613,
+      "max_bimanual_relative_orientation_error_rad": 0.001378884263005456,
+      "cooperation_minimum_speed_scale": 1.0,
+      "cooperation_slowdown_samples": 0,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0009240500277417613,
+        "max_relative_orientation_error_rad": 0.001378884263005456,
+        "max_load_imbalance_change": 0.7124294679573031,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3402,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 112.7199999999187,
+        "max_abs_tray_roll_rad": 0.0019357896774343257,
+        "max_abs_tray_pitch_rad": 0.12413313401213827,
+        "max_tray_tilt_rad": 0.12414250705274603,
+        "max_payload_to_tray_displacement_m": 0.14162840510872002
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.0019357896774343257,
+      "max_abs_tray_pitch_rad": 0.12413313401213827,
+      "max_tray_tilt_rad": 0.12414250705274603,
+      "max_payload_to_tray_displacement_m": 0.14162840510872002,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.0019357896774343257,
+        "max_abs_tray_pitch_rad": 0.12413313401213827,
+        "max_tray_tilt_rad": 0.12414250705274603,
+        "max_payload_to_tray_displacement_m": 0.14162840510872002,
+        "max_bimanual_relative_position_error_m": 0.0009240500277417613,
+        "max_bimanual_relative_orientation_error_rad": 0.001378884263005456,
+        "cooperation_minimum_speed_scale": 1.0,
+        "cooperation_slowdown_samples": 0,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "missing_reason": null
+      },
+      "run_manifest": "tray-yaw-0.035__candidate-no-coop-depth-cad__seed-1/manifest.json",
+      "run_manifest_sha256": "d6f195c144161f7c3ad4084554ce31444d1833358bb267cd1b2f1f3dc3a4780c"
+    },
+    {
+      "run_id": "tray-yaw-minus-0.035__candidate-depth-cad__seed-0",
+      "case": "tray-yaw-minus-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "9e5c4e0d3715c37f5e70a738b8aa85428bd937e44d6315800443516a82ebe45b",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.3639999999803,
+      "max_joint_torque_nm": 239.17097861640514,
+      "highest_tray_center_z_m": 1.3067632567747423,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.001217475510101738,
+      "max_bimanual_relative_orientation_error_rad": 0.0017173092042809136,
+      "cooperation_minimum_speed_scale": 1.0,
+      "cooperation_slowdown_samples": 0,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.001217475510101738,
+        "max_relative_orientation_error_rad": 0.0017173092042809136,
+        "max_load_imbalance_change": 0.12613578796958894,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3402,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 112.7199999999187,
+        "max_abs_tray_roll_rad": 0.0015405842710864929,
+        "max_abs_tray_pitch_rad": 0.057816640227271635,
+        "max_tray_tilt_rad": 0.057818185694091424,
+        "max_payload_to_tray_displacement_m": 0.12162742008434849
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.0015405842710864929,
+      "max_abs_tray_pitch_rad": 0.057816640227271635,
+      "max_tray_tilt_rad": 0.057818185694091424,
+      "max_payload_to_tray_displacement_m": 0.12162742008434849,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.0015405842710864929,
+        "max_abs_tray_pitch_rad": 0.057816640227271635,
+        "max_tray_tilt_rad": 0.057818185694091424,
+        "max_payload_to_tray_displacement_m": 0.12162742008434849,
+        "max_bimanual_relative_position_error_m": 0.001217475510101738,
+        "max_bimanual_relative_orientation_error_rad": 0.0017173092042809136,
+        "cooperation_minimum_speed_scale": 1.0,
+        "cooperation_slowdown_samples": 0,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "missing_reason": null
+      },
+      "run_manifest": "tray-yaw-minus-0.035__candidate-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "d7084633353742ce9d8cd664521621d14dc1ad731cce35b47e52c4f861591665"
+    },
+    {
+      "run_id": "tray-yaw-minus-0.035__candidate-no-coop-depth-cad__seed-0",
+      "case": "tray-yaw-minus-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "candidate-no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "8c4e57e9d2fb315f0d0da2eae0db69e197208d41af8bf059e88afc037771448b",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.3639999999803,
+      "max_joint_torque_nm": 239.17097861640514,
+      "highest_tray_center_z_m": 1.3067632567747423,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.001217475510101738,
+      "max_bimanual_relative_orientation_error_rad": 0.0017173092042809136,
+      "cooperation_minimum_speed_scale": 1.0,
+      "cooperation_slowdown_samples": 0,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.001217475510101738,
+        "max_relative_orientation_error_rad": 0.0017173092042809136,
+        "max_load_imbalance_change": 0.12613578796958894,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3402,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 112.7199999999187,
+        "max_abs_tray_roll_rad": 0.0015405842710864929,
+        "max_abs_tray_pitch_rad": 0.057816640227271635,
+        "max_tray_tilt_rad": 0.057818185694091424,
+        "max_payload_to_tray_displacement_m": 0.12162742008434849
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.0015405842710864929,
+      "max_abs_tray_pitch_rad": 0.057816640227271635,
+      "max_tray_tilt_rad": 0.057818185694091424,
+      "max_payload_to_tray_displacement_m": 0.12162742008434849,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.0015405842710864929,
+        "max_abs_tray_pitch_rad": 0.057816640227271635,
+        "max_tray_tilt_rad": 0.057818185694091424,
+        "max_payload_to_tray_displacement_m": 0.12162742008434849,
+        "max_bimanual_relative_position_error_m": 0.001217475510101738,
+        "max_bimanual_relative_orientation_error_rad": 0.0017173092042809136,
+        "cooperation_minimum_speed_scale": 1.0,
+        "cooperation_slowdown_samples": 0,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "missing_reason": null
+      },
+      "run_manifest": "tray-yaw-minus-0.035__candidate-no-coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "6c3b398b631d2c8c51f51f86e967b83af3b4e6b01a22956efa51bb2adfa336a7"
+    },
+    {
+      "run_id": "tray-yaw-minus-0.035__candidate-depth-cad__seed-1",
+      "case": "tray-yaw-minus-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "86d65cda480a0464c137da2d55104d48b36e2f25c644ce5fdf3ae8dc9bfe3c9d",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.36599999998032,
+      "max_joint_torque_nm": 239.12301494745225,
+      "highest_tray_center_z_m": 1.3069850066892603,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.0010058176758619313,
+      "max_bimanual_relative_orientation_error_rad": 0.0014852973076401393,
+      "cooperation_minimum_speed_scale": 1.0,
+      "cooperation_slowdown_samples": 0,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0010058176758619313,
+        "max_relative_orientation_error_rad": 0.0014852973076401393,
+        "max_load_imbalance_change": 0.2275685781718878,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3402,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 112.7199999999187,
+        "max_abs_tray_roll_rad": 0.0014215852493747836,
+        "max_abs_tray_pitch_rad": 0.045334003154958044,
+        "max_tray_tilt_rad": 0.04533595738183483,
+        "max_payload_to_tray_displacement_m": 0.22039280267060057
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.0014215852493747836,
+      "max_abs_tray_pitch_rad": 0.045334003154958044,
+      "max_tray_tilt_rad": 0.04533595738183483,
+      "max_payload_to_tray_displacement_m": 0.22039280267060057,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.0014215852493747836,
+        "max_abs_tray_pitch_rad": 0.045334003154958044,
+        "max_tray_tilt_rad": 0.04533595738183483,
+        "max_payload_to_tray_displacement_m": 0.22039280267060057,
+        "max_bimanual_relative_position_error_m": 0.0010058176758619313,
+        "max_bimanual_relative_orientation_error_rad": 0.0014852973076401393,
+        "cooperation_minimum_speed_scale": 1.0,
+        "cooperation_slowdown_samples": 0,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "missing_reason": null
+      },
+      "run_manifest": "tray-yaw-minus-0.035__candidate-depth-cad__seed-1/manifest.json",
+      "run_manifest_sha256": "cc53545988f1be9c19aad58136ff4a9cbd1e65a55a0835af2a53a92a1f8b7418"
+    },
+    {
+      "run_id": "tray-yaw-minus-0.035__candidate-no-coop-depth-cad__seed-1",
+      "case": "tray-yaw-minus-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "candidate-no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "controller_profile": "geometry_clearance",
+      "target_height_m": 1.2,
+      "config_sha256": "08ad9455d12164e41b90603c92c6e4b1b989efb1d9c9dbb7cd4bfa31741c60cf",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.36599999998032,
+      "max_joint_torque_nm": 239.12301494745225,
+      "highest_tray_center_z_m": 1.3069850066892603,
+      "failure_phase": "complete",
+      "max_bimanual_relative_position_error_m": 0.0010058176758619313,
+      "max_bimanual_relative_orientation_error_rad": 0.0014852973076401393,
+      "cooperation_minimum_speed_scale": 1.0,
+      "cooperation_slowdown_samples": 0,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0010058176758619313,
+        "max_relative_orientation_error_rad": 0.0014852973076401393,
+        "max_load_imbalance_change": 0.2275685781718878,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "trace_metrics": {
+        "scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "transport_samples": 3402,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "transport_start_time_s": 44.700000000008664,
+        "transport_end_time_s": 112.7199999999187,
+        "max_abs_tray_roll_rad": 0.0014215852493747836,
+        "max_abs_tray_pitch_rad": 0.045334003154958044,
+        "max_tray_tilt_rad": 0.04533595738183483,
+        "max_payload_to_tray_displacement_m": 0.22039280267060057
+      },
+      "trace_metrics_missing_reason": null,
+      "max_abs_tray_roll_rad": 0.0014215852493747836,
+      "max_abs_tray_pitch_rad": 0.045334003154958044,
+      "max_tray_tilt_rad": 0.04533595738183483,
+      "max_payload_to_tray_displacement_m": 0.22039280267060057,
+      "stability_metrics": {
+        "max_abs_tray_roll_rad": 0.0014215852493747836,
+        "max_abs_tray_pitch_rad": 0.045334003154958044,
+        "max_tray_tilt_rad": 0.04533595738183483,
+        "max_payload_to_tray_displacement_m": 0.22039280267060057,
+        "max_bimanual_relative_position_error_m": 0.0010058176758619313,
+        "max_bimanual_relative_orientation_error_rad": 0.0014852973076401393,
+        "cooperation_minimum_speed_scale": 1.0,
+        "cooperation_slowdown_samples": 0,
+        "transport_scope": "lift_through_seat",
+        "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+        "payload_baseline_phase": "grasp_hold",
+        "payload_baseline_time_s": 43.56000000000727,
+        "valid_tray_pose_samples": 3402,
+        "payload_displacement_samples": 3402,
+        "missing_reason": null
+      },
+      "run_manifest": "tray-yaw-minus-0.035__candidate-no-coop-depth-cad__seed-1/manifest.json",
+      "run_manifest_sha256": "4d28bf0a15cbd42db9f0112fee00e7627e2e4914f6c9a29e92fd5672a7896751"
+    }
+  ],
+  "overall": {
+    "recorded_count": 16,
+    "sample_size": 16,
+    "execution_errors": 0,
+    "successes": 15,
+    "failures": 1,
+    "success_rate": 0.9375,
+    "wilson_95_ci": {
+      "low": 0.7167126242970107,
+      "high": 0.9888806552353576
+    },
+    "successful_run_metrics": {
+      "sample_size": 15,
+      "task_time_s": {
+        "mean": 148.91039999998293,
+        "min": 148.35399999998026,
+        "max": 151.439999999995
+      },
+      "max_joint_torque_nm": {
+        "mean": 239.14165040781887,
+        "min": 238.7901667627134,
+        "max": 239.46472538548824
+      },
+      "highest_tray_center_z_m": {
+        "mean": 1.3067586887746274,
+        "min": 1.3063856219984535,
+        "max": 1.3075083292136207
+      }
+    },
+    "completed_run_metrics": {
+      "sample_size": 16,
+      "max_abs_tray_roll_rad": {
+        "mean": 0.0016889264866914457,
+        "min": 0.0014215852493747836,
+        "max": 0.002398288281552452
+      },
+      "max_abs_tray_pitch_rad": {
+        "mean": 0.061234062512957765,
+        "min": 0.045334003154958044,
+        "max": 0.12413313401213827
+      },
+      "max_tray_tilt_rad": {
+        "mean": 0.06123795209399429,
+        "min": 0.04533595738183483,
+        "max": 0.12414250705274603
+      },
+      "max_payload_to_tray_displacement_m": {
+        "mean": 0.14542348619908876,
+        "min": 0.10827765108329185,
+        "max": 0.22039280267060057
+      },
+      "max_bimanual_relative_position_error_m": {
+        "mean": 0.0007914440277568063,
+        "min": 0.0005938187278799984,
+        "max": 0.001217475510101738
+      },
+      "max_bimanual_relative_orientation_error_rad": {
+        "mean": 0.0011231479035489621,
+        "min": 0.0008239648365242879,
+        "max": 0.0017173092042809136
+      },
+      "cooperation_minimum_speed_scale": {
+        "mean": 0.9392580548107574,
+        "min": 0.35,
+        "max": 1.0
+      },
+      "cooperation_slowdown_samples": {
+        "mean": 809.1875,
+        "min": 0.0,
+        "max": 4182.0
+      }
+    }
+  },
+  "by_case": {
+    "nominal": {
+      "recorded_count": 4,
+      "sample_size": 4,
+      "execution_errors": 0,
+      "successes": 4,
+      "failures": 0,
+      "success_rate": 1.0,
+      "wilson_95_ci": {
+        "low": 0.5101091635454027,
+        "high": 1.0
+      },
+      "successful_run_metrics": {
+        "sample_size": 4,
+        "task_time_s": {
+          "mean": 149.8474999999874,
+          "min": 148.35399999998026,
+          "max": 151.439999999995
+        },
+        "max_joint_torque_nm": {
+          "mean": 239.0521350522422,
+          "min": 238.89766863961222,
+          "max": 239.20660146487216
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.306657767613147,
+          "min": 1.3065010255786773,
+          "max": 1.3068341208970977
+        }
+      },
+      "completed_run_metrics": {
+        "sample_size": 4,
+        "max_abs_tray_roll_rad": {
+          "mean": 0.0015507053344160642,
+          "min": 0.001537580647618398,
+          "max": 0.0015638300212137306
+        },
+        "max_abs_tray_pitch_rad": {
+          "mean": 0.04646273068995824,
+          "min": 0.04563220043671507,
+          "max": 0.047585241939994576
+        },
+        "max_tray_tilt_rad": {
+          "mean": 0.046462801257164885,
+          "min": 0.045632224894796174,
+          "max": 0.04758524701856317
+        },
+        "max_payload_to_tray_displacement_m": {
+          "mean": 0.15673547613267524,
+          "min": 0.14209058233364008,
+          "max": 0.1730209550066039
+        },
+        "max_bimanual_relative_position_error_m": {
+          "mean": 0.0006312337076857476,
+          "min": 0.0006250068322884012,
+          "max": 0.0006395351233733873
+        },
+        "max_bimanual_relative_orientation_error_rad": {
+          "mean": 0.0008655937545819183,
+          "min": 0.0008642383852843459,
+          "max": 0.0008680894255855508
+        },
+        "cooperation_minimum_speed_scale": {
+          "mean": 0.9503026169740558,
+          "min": 0.9004983806951667,
+          "max": 1.0
+        },
+        "cooperation_slowdown_samples": {
+          "mean": 1126.0,
+          "min": 0.0,
+          "max": 2323.0
+        }
+      }
+    },
+    "payload-mass-scale-1.2": {
+      "recorded_count": 4,
+      "sample_size": 4,
+      "execution_errors": 0,
+      "successes": 4,
+      "failures": 0,
+      "success_rate": 1.0,
+      "wilson_95_ci": {
+        "low": 0.5101091635454027,
+        "high": 1.0
+      },
+      "successful_run_metrics": {
+        "sample_size": 4,
+        "task_time_s": {
+          "mean": 148.93499999998303,
+          "min": 148.35399999998026,
+          "max": 149.8699999999875
+        },
+        "max_joint_torque_nm": {
+          "mean": 239.4176705593659,
+          "min": 239.37061573324354,
+          "max": 239.46472538548824
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.3065974035707617,
+          "min": 1.3063856219984535,
+          "max": 1.3067142848200284
+        }
+      },
+      "completed_run_metrics": {
+        "sample_size": 4,
+        "max_abs_tray_roll_rad": {
+          "mean": 0.0015728824457762018,
+          "min": 0.0015154207886725916,
+          "max": 0.0016645898710710204
+        },
+        "max_abs_tray_pitch_rad": {
+          "mean": 0.05867419366592455,
+          "min": 0.05654334189118094,
+          "max": 0.06174943370920356
+        },
+        "max_tray_tilt_rad": {
+          "mean": 0.058674862811605416,
+          "min": 0.05654381681896818,
+          "max": 0.06175047896168135
+        },
+        "max_payload_to_tray_displacement_m": {
+          "mean": 0.12466613276680527,
+          "min": 0.10827765108329185,
+          "max": 0.14122317678245153
+        },
+        "max_bimanual_relative_position_error_m": {
+          "mean": 0.0006277517821293142,
+          "min": 0.0005938187278799984,
+          "max": 0.0006455338917316075
+        },
+        "max_bimanual_relative_orientation_error_rad": {
+          "mean": 0.0008644859385644966,
+          "min": 0.0008239648365242879,
+          "max": 0.0008836499453984347
+        },
+        "cooperation_minimum_speed_scale": {
+          "mean": 0.9711783657441955,
+          "min": 0.9268352208198968,
+          "max": 1.0
+        },
+        "cooperation_slowdown_samples": {
+          "mean": 1064.25,
+          "min": 0.0,
+          "max": 2473.0
+        }
+      }
+    },
+    "tray-yaw-0.035": {
+      "recorded_count": 4,
+      "sample_size": 4,
+      "execution_errors": 0,
+      "successes": 3,
+      "failures": 1,
+      "success_rate": 0.75,
+      "wilson_95_ci": {
+        "low": 0.30064184258240184,
+        "high": 0.9544127391902995
+      },
+      "successful_run_metrics": {
+        "sample_size": 3,
+        "task_time_s": {
+          "mean": 148.3553333333136,
+          "min": 148.35399999998026,
+          "max": 148.35599999998027
+        },
+        "max_joint_torque_nm": {
+          "mean": 238.88584884771203,
+          "min": 238.7901667627134,
+          "max": 239.07721301770925
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.3069543733185904,
+          "min": 1.3066742159534863,
+          "max": 1.3075083292136207
+        }
+      },
+      "completed_run_metrics": {
+        "sample_size": 4,
+        "max_abs_tray_roll_rad": {
+          "mean": 0.002151033406342879,
+          "min": 0.0019357896774343257,
+          "max": 0.002398288281552452
+        },
+        "max_abs_tray_pitch_rad": {
+          "mean": 0.08822400400483343,
+          "min": 0.05519918843871157,
+          "max": 0.12413313401213827
+        },
+        "max_tray_tilt_rad": {
+          "mean": 0.08823707276924372,
+          "min": 0.05520860308721616,
+          "max": 0.12414250705274603
+        },
+        "max_payload_to_tray_displacement_m": {
+          "mean": 0.12928222451940005,
+          "min": 0.1169360439300801,
+          "max": 0.14162840510872002
+        },
+        "max_bimanual_relative_position_error_m": {
+          "mean": 0.0007951440282303288,
+          "min": 0.000648406512421367,
+          "max": 0.0009597130603368198
+        },
+        "max_bimanual_relative_orientation_error_rad": {
+          "mean": 0.001161208665088907,
+          "min": 0.0009147826771430903,
+          "max": 0.0014363850430639917
+        },
+        "cooperation_minimum_speed_scale": {
+          "mean": 0.8355512365247781,
+          "min": 0.35,
+          "max": 1.0
+        },
+        "cooperation_slowdown_samples": {
+          "mean": 1046.5,
+          "min": 0.0,
+          "max": 4182.0
+        }
+      }
+    },
+    "tray-yaw-minus-0.035": {
+      "recorded_count": 4,
+      "sample_size": 4,
+      "execution_errors": 0,
+      "successes": 4,
+      "failures": 0,
+      "success_rate": 1.0,
+      "wilson_95_ci": {
+        "low": 0.5101091635454027,
+        "high": 1.0
+      },
+      "successful_run_metrics": {
+        "sample_size": 4,
+        "task_time_s": {
+          "mean": 148.3649999999803,
+          "min": 148.3639999999803,
+          "max": 148.36599999998032
+        },
+        "max_joint_torque_nm": {
+          "mean": 239.1469967819287,
+          "min": 239.12301494745225,
+          "max": 239.17097861640514
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.3068741317320014,
+          "min": 1.3067632567747423,
+          "max": 1.3069850066892603
+        }
+      },
+      "completed_run_metrics": {
+        "sample_size": 4,
+        "max_abs_tray_roll_rad": {
+          "mean": 0.0014810847602306381,
+          "min": 0.0014215852493747836,
+          "max": 0.0015405842710864929
+        },
+        "max_abs_tray_pitch_rad": {
+          "mean": 0.05157532169111484,
+          "min": 0.045334003154958044,
+          "max": 0.057816640227271635
+        },
+        "max_tray_tilt_rad": {
+          "mean": 0.05157707153796313,
+          "min": 0.04533595738183483,
+          "max": 0.057818185694091424
+        },
+        "max_payload_to_tray_displacement_m": {
+          "mean": 0.17101011137747452,
+          "min": 0.12162742008434849,
+          "max": 0.22039280267060057
+        },
+        "max_bimanual_relative_position_error_m": {
+          "mean": 0.0011116465929818346,
+          "min": 0.0010058176758619313,
+          "max": 0.001217475510101738
+        },
+        "max_bimanual_relative_orientation_error_rad": {
+          "mean": 0.0016013032559605263,
+          "min": 0.0014852973076401393,
+          "max": 0.0017173092042809136
+        },
+        "cooperation_minimum_speed_scale": {
+          "mean": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "cooperation_slowdown_samples": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      }
+    }
+  },
+  "by_variant": {
+    "candidate-depth-cad": {
+      "recorded_count": 8,
+      "sample_size": 8,
+      "execution_errors": 0,
+      "successes": 7,
+      "failures": 1,
+      "success_rate": 0.875,
+      "wilson_95_ci": {
+        "low": 0.5291118177871464,
+        "high": 0.9775825085499433
+      },
+      "successful_run_metrics": {
+        "sample_size": 7,
+        "task_time_s": {
+          "mean": 149.53942857141448,
+          "min": 148.35599999998027,
+          "max": 151.439999999995
+        },
+        "max_joint_torque_nm": {
+          "mean": 239.14625307854098,
+          "min": 238.7901667627134,
+          "max": 239.46472538548824
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.306639548087231,
+          "min": 1.3063856219984535,
+          "max": 1.3069850066892603
+        }
+      },
+      "completed_run_metrics": {
+        "sample_size": 8,
+        "max_abs_tray_roll_rad": {
+          "mean": 0.001708509581798927,
+          "min": 0.0014215852493747836,
+          "max": 0.002398288281552452
+        },
+        "max_abs_tray_pitch_rad": {
+          "mean": 0.06080866607527543,
+          "min": 0.045334003154958044,
+          "max": 0.11831936457859861
+        },
+        "max_tray_tilt_rad": {
+          "mean": 0.06081350014600174,
+          "min": 0.04533595738183483,
+          "max": 0.11834324742968072
+        },
+        "max_payload_to_tray_displacement_m": {
+          "mean": 0.14570207794602524,
+          "min": 0.1100475480400081,
+          "max": 0.22039280267060057
+        },
+        "max_bimanual_relative_position_error_m": {
+          "mean": 0.000791342179360927,
+          "min": 0.0005938187278799984,
+          "max": 0.001217475510101738
+        },
+        "max_bimanual_relative_orientation_error_rad": {
+          "mean": 0.0011241378480041963,
+          "min": 0.0008239648365242879,
+          "max": 0.0017173092042809136
+        },
+        "cooperation_minimum_speed_scale": {
+          "mean": 0.8785161096215147,
+          "min": 0.35,
+          "max": 1.0
+        },
+        "cooperation_slowdown_samples": {
+          "mean": 1618.375,
+          "min": 0.0,
+          "max": 4182.0
+        }
+      }
+    },
+    "candidate-no-coop-depth-cad": {
+      "recorded_count": 8,
+      "sample_size": 8,
+      "execution_errors": 0,
+      "successes": 8,
+      "failures": 0,
+      "success_rate": 1.0,
+      "wilson_95_ci": {
+        "low": 0.6755924351161198,
+        "high": 1.0
+      },
+      "successful_run_metrics": {
+        "sample_size": 8,
+        "task_time_s": {
+          "mean": 148.3599999999803,
+          "min": 148.35399999998026,
+          "max": 148.36999999998034
+        },
+        "max_joint_torque_nm": {
+          "mean": 239.13762307093702,
+          "min": 238.7901667627134,
+          "max": 239.46472538548824
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.3068629368760991,
+          "min": 1.3066398377813107,
+          "max": 1.3075083292136207
+        }
+      },
+      "completed_run_metrics": {
+        "sample_size": 8,
+        "max_abs_tray_roll_rad": {
+          "mean": 0.0016693433915839647,
+          "min": 0.0014215852493747836,
+          "max": 0.002135027833192369
+        },
+        "max_abs_tray_pitch_rad": {
+          "mean": 0.0616594589506401,
+          "min": 0.045334003154958044,
+          "max": 0.12413313401213827
+        },
+        "max_tray_tilt_rad": {
+          "mean": 0.06166240404198684,
+          "min": 0.04533595738183483,
+          "max": 0.12414250705274603
+        },
+        "max_payload_to_tray_displacement_m": {
+          "mean": 0.14514489445215228,
+          "min": 0.10827765108329185,
+          "max": 0.22039280267060057
+        },
+        "max_bimanual_relative_position_error_m": {
+          "mean": 0.0007915458761526855,
+          "min": 0.0006250068322884012,
+          "max": 0.001217475510101738
+        },
+        "max_bimanual_relative_orientation_error_rad": {
+          "mean": 0.001122157959093728,
+          "min": 0.0008642383852843459,
+          "max": 0.0017173092042809136
+        },
+        "cooperation_minimum_speed_scale": {
+          "mean": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "cooperation_slowdown_samples": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      }
+    }
+  },
+  "paired_cooperation": {
+    "candidate_pairs": 8,
+    "complete_pairs": 8,
+    "missing_variant_pairs": 0,
+    "both_success": 7,
+    "cooperation_only_success": 0,
+    "no_cooperation_only_success": 1,
+    "both_failed": 0
+  },
+  "paired_controller_profiles": {
+    "candidate_pairs": 16,
+    "complete_pairs": 0,
+    "missing_profile_pairs": 16,
+    "both_success": 0,
+    "candidate_only_success": 0,
+    "baseline_only_success": 0,
+    "both_failed": 0,
+    "paired_success_delta": 0,
+    "task_time_delta_s": null,
+    "max_joint_torque_delta_nm": null,
+    "max_tray_tilt_delta_rad": null,
+    "max_payload_displacement_delta_m": null,
+    "pairs": []
+  },
+  "expected_rejections": {
+    "sample_size": 0,
+    "observed": 0,
+    "policy": "safety_rejection_is_reported_separately_from_task_success"
+  },
+  "target_height_grid": {
+    "tested_heights_m": [],
+    "successful_heights_m": [],
+    "maximum_successful_tested_height_m": null,
+    "scope": "preregistered_tested_grid_only_not_global_reach"
+  },
+  "historical_dataset_policy": "mobile_native_runs_only; historical_fixture_or_handle_data_not_combined"
+}

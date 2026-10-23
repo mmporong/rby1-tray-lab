@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "scope": "recorded_raise_high_frames_only",
+  "sampling_limit": "recorded trace samples only; no continuous 500 Hz contact claim",
+  "sample_period_s": 0.02,
+  "frame_count": 1595,
+  "contact_frame_count": 0,
+  "first_contact_time_s": null,
+  "minimum_contact_distance_m": null,
+  "contacts": [],
+  "minimum_preflight_clearance_m": null,
+  "source_trace_sha256": "543d109cbf6ceb359b7ecd327954938a08ba9779bbd3f32ceaba5666b238b568",
+  "run_manifest_sha256": "e2b3aa5a62f99e60693923607190d90dadc8d1dfb4fd2027898281e66c3d9438",
+  "source_commit": "7c2ba29d355487d6b00e23c359e6f826c5959abc"
+}

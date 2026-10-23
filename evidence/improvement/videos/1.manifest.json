@@ -1,0 +1,127 @@
+{
+  "artifact_sha256": {
+    "video.mp4": "e389de202270c9fd6736e22891f8516d4c8529591cf8bb2fea5677ab4bb5f40c"
+  },
+  "case": "tray-yaw-0.035",
+  "config_file_sha256": "c141e8f07a30a96909342c72ecb69ebd725849d91b2c30fe4e2269babecab4eb",
+  "config_sha256": "0d0265eac673c7f6f3209a0f210d73fb8df6a1b6a4f502dc44d607cc481eb32e",
+  "profile": "candidate-depth-cad",
+  "provenance_statement": "fresh deterministic MobileSession rerun of the source config; not trace interpolation",
+  "rendering": {
+    "base_speed": 8,
+    "duration_sim_s": 150.93199999999257,
+    "duration_video_s": 18.883333333333333,
+    "fps": 60,
+    "frame_count": 1133,
+    "height": 720,
+    "sampling": "nearest physics state to i/fps*base_speed; terminal frame appended by the deterministic rerun",
+    "view": "overview",
+    "width": 960
+  },
+  "replay_source_commit": "7c2ba29d355487d6b00e23c359e6f826c5959abc",
+  "replay_source_dirty": false,
+  "result_file_sha256": "76a579c49d9d97d91fa29e55b71226b61b3437596e66b8c1f06cc850949ea1dc",
+  "result_match_tolerance": 1e-09,
+  "rgbd_observations": {
+    "camera_coverage": [
+      "head_rgbd",
+      "left_wrist_rgbd",
+      "right_wrist_rgbd"
+    ],
+    "controller_frame_count": 7,
+    "monitor_frame_count": 0
+  },
+  "schema_version": 1,
+  "seed": 1,
+  "source_commit": "7c2ba29d355487d6b00e23c359e6f826c5959abc",
+  "source_run": "/tmp/rby1-upgrade-study-7c2ba29-v2/cooperation/tray-yaw-0.035__candidate-depth-cad__seed-1",
+  "source_run_manifest_sha256": "120ea699fb58fdaa4e1b302711a44ba8bbc94faa599eba5da377dab3bdd0325c",
+  "source_sha256": {
+    "__init__.py": "a91e0b62ede8dbc5203342f341b170cec7cb3eeee103e0e9e880657fae065a9f",
+    "assets.py": "f6e4d3c51e91905b066c1c2f8ad24d401f7e3cfab65d21eb60a324ec0147d2c1",
+    "camera.py": "527fd8315d8a7e0fb6f707b56a0d960a35b4e0932a9c3990f55e54fb49e58626",
+    "cli.py": "59cff8ee78465fba481bec3fb20ed25604ec168e564ccca3bc2310d5e140df6e",
+    "cooperation.py": "48d2e488e422588edb1701a0d796315a6d5f8613734ecb92855ad246024bcb40",
+    "evaluation.py": "ed9572841c847fd9ac14f8f91d3384e3e27331e1e9a8ff5f6696fbc4c455c587",
+    "experiments.py": "d9fdc1cf1bfffcff95c2453c1d1b652f2f512772776924c75219df779654a2b4",
+    "improvement_metrics.py": "48cf4c3dfe64a624ad01b02c83152c4b6cef7bac43adc10aca64bb4ccb159cc6",
+    "joint_overlay.py": "e3784da85ce3b36c35dd3315cf117e1cc6dd2576857750f842ee3c4ae929f56c",
+    "load_path.py": "3227383735fd0dd72a1a754eadd83d3ce6f157f226923cab7e2e298be9c63c8d",
+    "mission.py": "b7b6116591db5b708bd1f1877aaf691b23591f88b5d925c4ffd942cecf53b20d",
+    "mobility.py": "ff8fd487d03c06cb69af1c9d43c0c04df34d0cc1cf3236fb1ccd99f05cfde538",
+    "perception.py": "1a96f5e0cb11623e9e4f06666856bfa05eabe2ba720fbeef67a3a051db836785",
+    "planning.py": "44d3df376f97f7d5ddb56814f21fc6eeb348bfa9cddf99280a1fc34fa38e29bd",
+    "playback.py": "9ff997e5c825cfb9a2b2f14eb7ae4ed80c28a6f6305acc235a3824b6153bfac1",
+    "scene.py": "a919fef42bc28c93f90daf628447f0bd4bb4203257cae8aee09080c7a03e56cc",
+    "section_stress.py": "122db397000253321687d022812fa1bbca339d5aa29217e2354c4ed0b82b9df2",
+    "session.py": "c83735bf1686ab8265dd591bcfbd96cba6a84847d3eae71298a6a96671189cee",
+    "structural.py": "0b203075ac0b35d618878a094a71c773d7776efaef3482079f0473d50ac9ff40",
+    "structural_basis.py": "ece117b77ea6fe926cd0846d6e85382996ba1bda01fdd3a768ba39124d634800",
+    "structural_evidence.py": "d5bdc9025844e9b6df3b67e1d1eda66153d77f4aa96b125fc7286622a1bbf983",
+    "structural_loads.py": "8551652f59c14a1c038e72369203ded5850235569ea274b6c58ac2bf68f7d1c1",
+    "structural_scene.py": "9d923a966ea6faa8d8692b9d65f789ac2ad57affda7f49571a3d85c04bb0dba8",
+    "structural_view.py": "1717e1a5bcc66779abebaed6f88ab3107730863746cabc6dc2d342e11bcdb06c",
+    "transport_clearance.py": "566468897603707683fa565c7b8cbd1e871c635ff29419100f7f326a51f2d433",
+    "viewer.py": "8577b0b8732ed7c66a9c23e3b34c85b0457aa524c217ad73e077e70b4d0b6a17",
+    "web/index.html": "3d14ff6e5c658967470f6b088f08f72dff3929e50e361918e920c28dfa6fc7e2",
+    "web/structural-diagnostics.js": "c2de4bb91caf6d64052a773429975e927d26034223f3dc558ad7e5c75f23d2c1",
+    "web/structural-scene.js": "d37c2b6c22684f80cda74338d2085812225f606c2ee30f99e86f54ba80c76b65"
+  },
+  "validated_result": {
+    "checks": {
+      "forbidden_contact": false,
+      "full_pad_contact": true,
+      "fully_released": false,
+      "opposed_contacts": true,
+      "pad_force_sufficient": true,
+      "payloads_contained": true,
+      "payloads_settled": true,
+      "payloads_supported": true,
+      "return_home_base_position": false,
+      "return_home_base_stopped": true,
+      "return_home_base_yaw": true,
+      "return_home_candidate": false,
+      "return_home_gripper_position": false,
+      "return_home_head_position": true,
+      "return_home_head_stopped": true,
+      "return_home_joint_position": false,
+      "return_home_joint_stopped": true,
+      "robot_tray_contact": true,
+      "secure_grasp": true,
+      "tray_in_target_xy": true,
+      "tray_lifted": true,
+      "tray_on_support": false,
+      "tray_slow": true,
+      "tray_upright": false
+    },
+    "failure_event": {
+      "reason": "phase_timeout",
+      "time_s": 150.93199999999257
+    },
+    "failure_reason": "phase_timeout",
+    "failure_time_s": 150.93199999999257,
+    "last_time_s": 150.93199999999257,
+    "metrics": {
+      "max_finger_actuator_force_n": 22.90305956008992,
+      "max_joint_torque_nm": 239.07721301770925,
+      "max_tracking_error_rad": 0.0024037835774368688
+    },
+    "milestone_times_s": {
+      "grasped": 42.94600000000652,
+      "lifted": 47.188000000011705
+    },
+    "milestones": {
+      "grasped": true,
+      "lifted": true,
+      "released": false,
+      "returned_home": false,
+      "seated": false,
+      "withdrawn": false
+    },
+    "simulation_time_s": 150.93199999999257,
+    "success": false,
+    "terminal": true,
+    "updates": 75467
+  },
+  "wall_time_s": 139.22551997797564
+}

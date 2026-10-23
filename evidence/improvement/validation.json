@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "interface_source_commit": "1548b0ebc3ecdf84004d7296e3e786f9e08eb142",
+  "physics_source_commit": "7c2ba29d355487d6b00e23c359e6f826c5959abc",
+  "unit_tests": {
+    "count": 256,
+    "status": "PASS",
+    "log": "unit-tests.log",
+    "scope": "complete repository unittest suite after source changes; subsequent changes are docs and measured artifacts"
+  },
+  "static_analysis": {
+    "python": "Pyright: 0 errors, 3 existing FakePlayback method-name warnings in tests/test_viewer.py",
+    "javascript": "node syntax and ESLint no-undef/no-unreachable/no-constant-condition PASS",
+    "scope": "changed Python source/tests and index.html inline JavaScript"
+  },
+  "raw_validation": {
+    "runs": 44,
+    "status": "PASS",
+    "report": "raw-verification.json",
+    "scope": "source/artifact hashes, controller schema/time/frame/limit checks, offline RGB-D perception; early sensor rejection runs allow missing later observations"
+  },
+  "browser_qa": {
+    "browser": "Chrome via CUA",
+    "source_url": "http://127.0.0.1:18786/",
+    "status": "PASS",
+    "viewport_widths_px": [
+      1862,
+      1024,
+      390
+    ],
+    "overflow": "no document horizontal overflow at all three widths; mobile tables use a local horizontal scroll region",
+    "layout": "three study columns on desktop, one column at 1024/390px; video columns stack at 390px; white panels retained",
+    "data": "baseline6/12, candidate11/12, rejection4/4, cooperation7both-success/8pairs and partial label match API/bundle",
+    "video": "both failure videos load 960px wide, decode and play; native keyboard seek works; original and load videos remain paused at0 while study videos are operated",
+    "video_durations_s": [
+      13.033333,
+      18.883333
+    ],
+    "keyboard": "Enter toggles provenance disclosure and reveals source/config SHA; Space toggles video playback, ArrowRight seeks",
+    "existing_playback": "one-frame command set original and load video to0.016666s; after playback/pause both settled at11.209685s; all six RGB/depth images loaded at320px",
+    "existing_replay_frames": 1136,
+    "console_errors": 0,
+    "viewport_override_reset": true,
+    "screenshots": [
+      "browser-desktop.jpg",
+      "browser-mobile.jpg"
+    ],
+    "scope_limit": "targeted desktop/mobile smoke; no claim of exhaustive accessibility or all-browser certification"
+  },
+  "evidence_assessment": "partial: core_task_success false; no_paired_regression/sampled_transport_clearance/safety_rejections true",
+  "limits": [
+    "no hardware or sim-to-real validation",
+    "compact verification does not reread excluded raw RGB-D/command/trace bytes",
+    "20ms recorded contacts do not establish continuous500Hz clearance"
+  ]
+}

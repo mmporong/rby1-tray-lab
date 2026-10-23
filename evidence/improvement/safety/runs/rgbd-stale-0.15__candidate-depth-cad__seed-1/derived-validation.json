@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "source_run_manifest_sha256": "18e3996b72fee4ce33c2b5b9a71ccc1f0a60322cf74f3f513a0efb73e365f316",
+  "source_result_sha256": "4b56e84a35e72f7127442c24d528b7d00b0ade5ce030dd2edd269667ffe3f153",
+  "source_trace_sha256": "6bd10d90c9255de2ddf6df56d427dcda71bf32951feb32398e66a01778ee1d73",
+  "trace_derived_fields": {
+    "trace_metrics": null,
+    "trace_metrics_missing_reason": "no transport-phase samples in trace",
+    "max_abs_tray_roll_rad": null,
+    "max_abs_tray_pitch_rad": null,
+    "max_tray_tilt_rad": null,
+    "max_payload_to_tray_displacement_m": null,
+    "stability_metrics": {
+      "max_abs_tray_roll_rad": null,
+      "max_abs_tray_pitch_rad": null,
+      "max_tray_tilt_rad": null,
+      "max_payload_to_tray_displacement_m": null,
+      "max_bimanual_relative_position_error_m": 0.0,
+      "max_bimanual_relative_orientation_error_rad": 0.0,
+      "cooperation_minimum_speed_scale": 1.0,
+      "cooperation_slowdown_samples": 0,
+      "transport_scope": null,
+      "payload_displacement_reference": null,
+      "payload_baseline_phase": null,
+      "payload_baseline_time_s": null,
+      "valid_tray_pose_samples": 0,
+      "payload_displacement_samples": 0,
+      "missing_reason": "no transport-phase samples in trace"
+    }
+  }
+}

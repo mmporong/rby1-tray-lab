@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "source_run_manifest_sha256": "20eb9d5f62b361daa47ca97ca4ea7b8eebeafa85e2822e4ea634dcfd95694fc3",
+  "source_result_sha256": "71b5323bfff0fdb52bb2d056157ef19602a841cac5d26201e8b19dac819a1b4b",
+  "source_trace_sha256": "49b03dc27fc1a0fef099e6871eee8a6ac32d594e728f54ab1126ecaa18bae2a3",
+  "trace_derived_fields": {
+    "trace_metrics": {
+      "scope": "lift_through_seat",
+      "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+      "payload_baseline_phase": "grasp_hold",
+      "payload_baseline_time_s": 43.56000000000727,
+      "transport_samples": 2969,
+      "valid_tray_pose_samples": 2969,
+      "payload_displacement_samples": 2969,
+      "transport_start_time_s": 44.700000000008664,
+      "transport_end_time_s": 104.03399999993894,
+      "max_abs_tray_roll_rad": 0.024425980580159747,
+      "max_abs_tray_pitch_rad": 0.728781427394673,
+      "max_tray_tilt_rad": 0.7288076550392799,
+      "max_payload_to_tray_displacement_m": 0.13179153740305274
+    },
+    "trace_metrics_missing_reason": null,
+    "max_abs_tray_roll_rad": 0.024425980580159747,
+    "max_abs_tray_pitch_rad": 0.728781427394673,
+    "max_tray_tilt_rad": 0.7288076550392799,
+    "max_payload_to_tray_displacement_m": 0.13179153740305274,
+    "stability_metrics": {
+      "max_abs_tray_roll_rad": 0.024425980580159747,
+      "max_abs_tray_pitch_rad": 0.728781427394673,
+      "max_tray_tilt_rad": 0.7288076550392799,
+      "max_payload_to_tray_displacement_m": 0.13179153740305274,
+      "max_bimanual_relative_position_error_m": 0.002118079287899646,
+      "max_bimanual_relative_orientation_error_rad": 0.003919352277283072,
+      "cooperation_minimum_speed_scale": 0.35,
+      "cooperation_slowdown_samples": 830,
+      "transport_scope": "lift_through_seat",
+      "payload_displacement_reference": "first valid grasp_hold sample in tray frame",
+      "payload_baseline_phase": "grasp_hold",
+      "payload_baseline_time_s": 43.56000000000727,
+      "valid_tray_pose_samples": 2969,
+      "payload_displacement_samples": 2969,
+      "missing_reason": null
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "base_config": "base-config.json",
+  "studies": {
+    "improvement": {
+      "summary": "improvement/summary.json"
+    },
+    "safety": {
+      "summary": "safety/summary.json"
+    },
+    "cooperation": {
+      "summary": "cooperation/summary.json"
+    }
+  },
+  "videos": [
+    {
+      "path": "videos/0.mp4",
+      "manifest": "videos/0.manifest.json",
+      "label": "기존 경로 · 적재물 손실 (seed 0)",
+      "study": "improvement",
+      "run_id": "tray-yaw-0.035__baseline-depth-cad__seed-0",
+      "case": "tray-yaw-0.035",
+      "seed": 0,
+      "profile": "baseline-depth-cad",
+      "config_sha256": "58757e6296216a99ed3d6eb38166370133e67e69a6a7757b5649f053ee9f12c6",
+      "source_commit": "7c2ba29d355487d6b00e23c359e6f826c5959abc",
+      "source_run_manifest_sha256": "20eb9d5f62b361daa47ca97ca4ea7b8eebeafa85e2822e4ea634dcfd95694fc3",
+      "success": false,
+      "failure_reason": "payload_lost",
+      "video_sha256": "ab40d1d81372ee3aecfe20adb8e228a3805153f68d2cd85974aa1dd06a26e21a",
+      "playback_speed": 8
+    },
+    {
+      "path": "videos/1.mp4",
+      "manifest": "videos/1.manifest.json",
+      "label": "개선 후 남은 실패 · 협조 감속 시간 초과 (seed 1)",
+      "study": "cooperation",
+      "run_id": "tray-yaw-0.035__candidate-depth-cad__seed-1",
+      "case": "tray-yaw-0.035",
+      "seed": 1,
+      "profile": "candidate-depth-cad",
+      "config_sha256": "0d0265eac673c7f6f3209a0f210d73fb8df6a1b6a4f502dc44d607cc481eb32e",
+      "source_commit": "7c2ba29d355487d6b00e23c359e6f826c5959abc",
+      "source_run_manifest_sha256": "120ea699fb58fdaa4e1b302711a44ba8bbc94faa599eba5da377dab3bdd0325c",
+      "success": false,
+      "failure_reason": "phase_timeout",
+      "video_sha256": "e389de202270c9fd6736e22891f8516d4c8529591cf8bb2fea5677ab4bb5f40c",
+      "playback_speed": 8
+    }
+  ],
+  "source_commit": "7c2ba29d355487d6b00e23c359e6f826c5959abc",
+  "assessment": {
+    "status": "partial",
+    "label": "개선 조건 일부 미통과",
+    "summary": "동일 소스·동일 seed의 조건별 비교입니다. 실물 성능이나 일반 환경 성공률을 뜻하지 않습니다.",
+    "gates": {
+      "core_task_success": false,
+      "no_paired_regression": true,
+      "sampled_transport_clearance": true,
+      "safety_rejections": true
+    }
+  }
+}
