@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "source_sha256": {
+    "src/rby1_tray/__init__.py": "a91e0b62ede8dbc5203342f341b170cec7cb3eeee103e0e9e880657fae065a9f",
+    "src/rby1_tray/assets.py": "f6e4d3c51e91905b066c1c2f8ad24d401f7e3cfab65d21eb60a324ec0147d2c1",
+    "src/rby1_tray/camera.py": "527fd8315d8a7e0fb6f707b56a0d960a35b4e0932a9c3990f55e54fb49e58626",
+    "src/rby1_tray/cli.py": "db944e2781113a46f129dc6df72f7ef8474457e75d2075ce435c5e5f11266203",
+    "src/rby1_tray/cooperation.py": "48d2e488e422588edb1701a0d796315a6d5f8613734ecb92855ad246024bcb40",
+    "src/rby1_tray/evaluation.py": "ed9572841c847fd9ac14f8f91d3384e3e27331e1e9a8ff5f6696fbc4c455c587",
+    "src/rby1_tray/experiments.py": "4367a19702b29aedfe33365f12965abd62f21d6b6e1cb0cccdac64c52d6ac6fe",
+    "src/rby1_tray/mission.py": "d10be1b8231e9478b058132e1fb96032546447c5b72dd2212f85d98154baf903",
+    "src/rby1_tray/mobility.py": "ff8fd487d03c06cb69af1c9d43c0c04df34d0cc1cf3236fb1ccd99f05cfde538",
+    "src/rby1_tray/perception.py": "1a96f5e0cb11623e9e4f06666856bfa05eabe2ba720fbeef67a3a051db836785",
+    "src/rby1_tray/planning.py": "44d3df376f97f7d5ddb56814f21fc6eeb348bfa9cddf99280a1fc34fa38e29bd",
+    "src/rby1_tray/playback.py": "71550da1058031e321ecc75cf9b470678434055522f24fb95cf2cc974a81f225",
+    "src/rby1_tray/scene.py": "a919fef42bc28c93f90daf628447f0bd4bb4203257cae8aee09080c7a03e56cc",
+    "src/rby1_tray/session.py": "c83735bf1686ab8265dd591bcfbd96cba6a84847d3eae71298a6a96671189cee",
+    "src/rby1_tray/viewer.py": "749c3908f3e40338b6273ca374d9255e0266a68038ce19ddcc1f6eb615257c46",
+    "tools/benchmark_mobile.py": "12e7db40eebec8311ced248b99174f289e14d25ebef637d23d262d8efed1bbc1",
+    "configs/mobile-native.json": "d4b56a57a975b69a9249134e7841e421f60f016c0889649dac98963523221689"
+  },
+  "run_manifests": {
+    "target-height-1.10__coop-depth-cad__seed-0": {
+      "path": "target-height-1.10__coop-depth-cad__seed-0/manifest.json",
+      "sha256": "49edc589476765757679d555bd5cf27c33db415236af308e7894e3668e1f42d7"
+    },
+    "target-height-1.25__coop-depth-cad__seed-0": {
+      "path": "target-height-1.25__coop-depth-cad__seed-0/manifest.json",
+      "sha256": "ed22aa4c8ab642d0888b391438089783638b309b1cc6864300b0c88c6ad62cae"
+    },
+    "payload-mass-scale-1.2__coop-depth-cad__seed-0": {
+      "path": "payload-mass-scale-1.2__coop-depth-cad__seed-0/manifest.json",
+      "sha256": "ce72083fbba5851c07327a4d37eee110aace03379a4fade62db870b43b8a812e"
+    },
+    "rgbd-delay-0.05__coop-depth-cad__seed-0": {
+      "path": "rgbd-delay-0.05__coop-depth-cad__seed-0/manifest.json",
+      "sha256": "739f11926930a1e5f4465394109eb397b688a121f4414b0c3ae3e87f107d7341"
+    },
+    "rgbd-stale-0.15__coop-depth-cad__seed-0": {
+      "path": "rgbd-stale-0.15__coop-depth-cad__seed-0/manifest.json",
+      "sha256": "20a7b8341fd42204569ec6b84de1c6686725cfa9c3b4c9a68e2089b4ee9cb1cf"
+    },
+    "calibration-bias-0.005__coop-depth-cad__seed-0": {
+      "path": "calibration-bias-0.005__coop-depth-cad__seed-0/manifest.json",
+      "sha256": "69d648d16a93c74080ecdd73add2b9c496f276d29acefd434e1c1ad11f269cfb"
+    },
+    "low-friction-0.7__coop-depth-cad__seed-0": {
+      "path": "low-friction-0.7__coop-depth-cad__seed-0/manifest.json",
+      "sha256": "6642058ce992b940767b6750940f55ae732bbb7d40ba6f447606717acbbab2c4"
+    },
+    "tray-yaw-0.035__coop-depth-cad__seed-0": {
+      "path": "tray-yaw-0.035__coop-depth-cad__seed-0/manifest.json",
+      "sha256": "01261727ce35a4eb3058c9bd8e4792db859b35c0d5b4661b856be3bdc991a109"
+    }
+  },
+  "artifact_sha256": {
+    "preregistered.json": "289de44975c6374f877ff52153ecd820724377621a972e9bd7b1b2b31975e74f",
+    "summary.json": "fe11814e3ac747f4ac3bc41e228403f6f63849fab1854cd014b37ac00dd3bf31"
+  }
+}

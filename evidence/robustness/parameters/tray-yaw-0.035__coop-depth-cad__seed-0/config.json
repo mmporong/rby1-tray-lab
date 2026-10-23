@@ -1,0 +1,358 @@
+{
+  "schema_version": 1,
+  "model": "RBY1-M 1.2",
+  "base_mode": "mobile",
+  "mission_cycle": {
+    "home_source": "fixed_upstream_model_qpos0",
+    "initial_hold_s": 1.0,
+    "prepare_duration_s": 8.0,
+    "return_duration_s": 10.0,
+    "return_drive_timeout_s": 30.0,
+    "home_tolerances": {
+      "joint_tolerance_rad": 0.01,
+      "joint_speed_tolerance_rad_s": 0.02,
+      "head_tolerance_rad": 0.01,
+      "head_speed_tolerance_rad_s": 0.02,
+      "gripper_tolerance_m": 0.002,
+      "base_position_tolerance_m": 0.02,
+      "base_yaw_tolerance_rad": 0.02,
+      "base_speed_tolerance_m_s": 0.012,
+      "base_yaw_speed_tolerance_rad_s": 0.025,
+      "settle_hold_s": 0.5
+    },
+    "parameter_provenance": "synthetic motion durations and verification tolerances; model qpos0 is the home target, not measured hardware calibration",
+    "navigation_pose_source": "https://github.com/RainbowRobotics/rby1-sdk/blob/ac7e83056e0775c4680a50d8c7cb3d9c3c66164d/examples/python/37_mobile_test.py; example pose, checked for this scene, not certified travel posture"
+  },
+  "controller": "ik_position_baseline",
+  "seed": 0,
+  "physics_dt_s": 0.002,
+  "control_dt_s": 0.002,
+  "motion_duration_scale": 2.0,
+  "transport_clearance_m": 0.1,
+  "withdraw_offset_m": [
+    0.0,
+    0.0,
+    0.1
+  ],
+  "record_dt_s": 0.02,
+  "tray_initial_pos_m": [
+    0.65,
+    0.0,
+    0.012
+  ],
+  "tray_half_extents_m": [
+    0.18,
+    0.27,
+    0.012
+  ],
+  "tray_mass_kg": 0.28,
+  "payload_mass_scale": 1.0,
+  "target": {
+    "center_xy_m": [
+      1.2,
+      0
+    ],
+    "inner_half_xy_m": [
+      0.25,
+      0.36
+    ],
+    "support_z_m": 1.2,
+    "stand": {
+      "overhang_m": 0,
+      "leg_half_width_m": 0.025,
+      "deck_thickness_m": 0.015
+    }
+  },
+  "thresholds": {
+    "grasp_hold_s": 0.15,
+    "settle_hold_s": 0.5,
+    "withdraw_clearance_m": 0.08,
+    "linear_speed_m_s": 0.03,
+    "angular_speed_rad_s": 0.1,
+    "lift_clearance_m": 0.03,
+    "payload_margin_m": 0.005,
+    "containment_tolerance_m": 0.006,
+    "min_pad_force_n": 0.1,
+    "payload_speed_m_s": 0.05,
+    "max_seat_tilt_rad": 0.05
+  },
+  "modeling_assumptions": {
+    "parameters": "synthetic design values; replace with measured calibration",
+    "observation": "RGB-D tray perception; encoder wheel odometry; GT reserved for evaluation",
+    "base": "free-base four-wheel M model, longitudinal driving only",
+    "gripper": "upstream gripper visual CAD/joints/actuators; collision explicitly uses CAD convex mesh instead of upstream auto-fitted spheres; no added pad or tray handle",
+    "camera": "ideal registered RGB/metric depth pinhole emulator; synthetic mount transforms",
+    "finger_coupling": "original joint equality structure; 4ms solref synthetic mechanical synchronisation tuning, not identified hardware stiffness"
+  },
+  "gripper_model": "upstream_native",
+  "grasp": {
+    "side_offset_y_m": 0.27,
+    "tcp_height_m": 0.05,
+    "yaw_rad": 1.5707963267948966,
+    "closed_gripper_m": -0.015,
+    "open_gripper_m": -0.045,
+    "initial_preload_m": 0.012,
+    "loaded_preload_m": 0.015
+  },
+  "base": {
+    "initial_pose_xy_yaw": [
+      -0.4,
+      0,
+      0
+    ],
+    "pickup_pose_xy_yaw": [
+      0,
+      0,
+      0
+    ],
+    "low_carry_pose_xy_yaw": [
+      0.1,
+      0,
+      0
+    ],
+    "placement_pose_xy_yaw": [
+      0.55,
+      0,
+      0
+    ]
+  },
+  "drive": {
+    "max_linear_speed_m_s": 0.06,
+    "max_wheel_accel_rad_s2": 0.5,
+    "wheel_velocity_gain": 100.0
+  },
+  "carry": {
+    "relative_center_x_m": 0.65,
+    "low_tray_center_z_m": 0.32
+  },
+  "sensors": {
+    "head": {
+      "model": "ZED X Mini wide",
+      "camera_name": "head_rgbd",
+      "rgb": true,
+      "depth": true,
+      "range_m": [
+        0.1,
+        8.0
+      ],
+      "resolution_px": [
+        640,
+        400
+      ],
+      "fovy_deg": 60,
+      "calibration_source": "synthetic_mount_design",
+      "mount_body": "link_head_2",
+      "case_dimensions_m": [
+        0.0936,
+        0.0318,
+        0.0367
+      ],
+      "case_mass_kg": 0.151,
+      "T_mount_optical": [
+        [
+          0.0,
+          -0.7071067811865476,
+          0.7071067811865476,
+          0.08
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.7071067811865476,
+          -0.7071067811865476,
+          0.04
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "extrinsics_source": "synthetic_mount_design",
+      "intrinsics_source": "synthetic_pinhole_from_fovy",
+      "distortion_model": "none_rectified",
+      "depth_units": "m",
+      "rgb_depth_aligned": true,
+      "frame_convention": "optical: X right, Y down, Z forward",
+      "case_inertia_source": "uniform_box_design_approximation",
+      "capture_schedule": "stationary_phase_boundary_events_not_continuous_video",
+      "case_mass_source": "vendor_nominal_subject_to_version_check",
+      "fov_source": "synthetic_square_pixel_pinhole; vertical_fovy_only"
+    },
+    "left_wrist": {
+      "model": "RealSense D405",
+      "camera_name": "left_wrist_rgbd",
+      "rgb": true,
+      "depth": true,
+      "range_m": [
+        0.07,
+        0.5
+      ],
+      "resolution_px": [
+        640,
+        360
+      ],
+      "fovy_deg": 58,
+      "calibration_source": "synthetic_mount_design",
+      "mount_body": "link_left_arm_6",
+      "case_dimensions_m": [
+        0.042,
+        0.042,
+        0.023
+      ],
+      "case_mass_kg": 0.06,
+      "T_mount_optical": [
+        [
+          0.8213699656732958,
+          0.0,
+          -0.5703958094953442,
+          0.075
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.5703958094953442,
+          -0.0,
+          -0.8213699656732958,
+          -0.12
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "extrinsics_source": "synthetic_mount_design",
+      "intrinsics_source": "synthetic_pinhole_from_fovy",
+      "distortion_model": "none_rectified",
+      "depth_units": "m",
+      "rgb_depth_aligned": true,
+      "frame_convention": "optical: X right, Y down, Z forward",
+      "case_inertia_source": "uniform_box_design_approximation",
+      "capture_schedule": "stationary_phase_boundary_events_not_continuous_video",
+      "case_mass_source": "synthetic_design_assumption_not_measured",
+      "fov_source": "synthetic_square_pixel_pinhole; vertical_fovy_only"
+    },
+    "right_wrist": {
+      "model": "RealSense D405",
+      "camera_name": "right_wrist_rgbd",
+      "rgb": true,
+      "depth": true,
+      "range_m": [
+        0.07,
+        0.5
+      ],
+      "resolution_px": [
+        640,
+        360
+      ],
+      "fovy_deg": 58,
+      "calibration_source": "synthetic_mount_design",
+      "mount_body": "link_right_arm_6",
+      "case_dimensions_m": [
+        0.042,
+        0.042,
+        0.023
+      ],
+      "case_mass_kg": 0.06,
+      "T_mount_optical": [
+        [
+          0.8213699656732958,
+          0.0,
+          -0.5703958094953442,
+          0.075
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.5703958094953442,
+          -0.0,
+          -0.8213699656732958,
+          -0.12
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "extrinsics_source": "synthetic_mount_design",
+      "intrinsics_source": "synthetic_pinhole_from_fovy",
+      "distortion_model": "none_rectified",
+      "depth_units": "m",
+      "rgb_depth_aligned": true,
+      "frame_convention": "optical: X right, Y down, Z forward",
+      "case_inertia_source": "uniform_box_design_approximation",
+      "capture_schedule": "stationary_phase_boundary_events_not_continuous_video",
+      "case_mass_source": "synthetic_design_assumption_not_measured",
+      "fov_source": "synthetic_square_pixel_pinhole; vertical_fovy_only"
+    }
+  },
+  "sensor_noise": {
+    "rgb_std": 1.0,
+    "depth_std_m": 0.001,
+    "dropout_probability": 0.005,
+    "source": "synthetic_assumption_not_device_identification"
+  },
+  "sources": {
+    "robot_and_ft": "https://www.rainbow-robotics.com/en/products/rb-y1",
+    "vision_options": "https://www.linkedin.com/posts/rainbow-robotics_rainbowrobotics-rby1-visionsolutions-activity-7376893384017301504-JD_g",
+    "d405": "https://www.intel.com/content/www/us/en/products/sku/229218/intel-realsense-depth-camera-d405/specifications.html",
+    "zed_depth_range": "https://support.stereolabs.com/articles/9175329825-for-the-depth-sensing-what-is-the-range-for-the-zed-cameras-in-terms-of-measuring-distances-and-the-accuracy-of-the-detection",
+    "sdk_state": "https://rainbowrobotics.github.io/rby1-dev/sdk/cpp/state/robot-state.html"
+  },
+  "station_registration_source": "synthetic_design_map; surveyed station poses required for hardware",
+  "gripper_collision": "cad_mesh",
+  "gripper_coupling_timeconst_s": 0.004,
+  "upper_body_servo": {
+    "kp_nm_per_rad": 2000.0,
+    "kv_nms_per_rad": 200.0,
+    "source": "synthetic_compliant_position_loop_tuning_not_hardware_identification",
+    "upstream_kp_nm_per_rad": 4000.0,
+    "upstream_kv_nms_per_rad": 400.0,
+    "force_limits": "unchanged_upstream"
+  },
+  "monitoring": {
+    "enabled": false,
+    "period_s": 1.0,
+    "width_px": 320,
+    "role": "monitor_only; controller uses stationary full-resolution observations"
+  },
+  "perception": {
+    "estimator": "depth_cad",
+    "max_update_position_m": 0.025,
+    "max_update_yaw_rad": 0.08,
+    "source": "synthetic CAD/geometry gates; not measured sensor covariance"
+  },
+  "cooperation": {
+    "enabled": true,
+    "sample_period_s": 0.02,
+    "filter_time_constant_s": 0.15,
+    "position_warning_m": 0.004,
+    "position_stop_m": 0.02,
+    "orientation_warning_rad": 0.025,
+    "orientation_stop_rad": 0.12,
+    "imbalance_warning": 0.25,
+    "imbalance_stop": 0.75,
+    "minimum_speed_scale": 0.35,
+    "stop_hold_s": 0.3,
+    "source": "synthetic supervision thresholds; encoder relative pose and model gravity compensated flange FT; not force/admittance control"
+  },
+  "tray_initial_yaw_rad": 0.035
+}

@@ -3,30 +3,42 @@
     "camera_name": "head_rgbd",
     "index": 0,
     "path": "observations/0000_head_rgbd.npz",
-    "timestamp_sim_s": 18.448000000000654
+    "timestamp_sim_s": 18.444000000000656
   },
   {
-    "camera_name": "left_wrist_rgbd",
+    "camera_name": "head_rgbd",
     "index": 1,
-    "path": "observations/0001_left_wrist_rgbd.npz",
-    "timestamp_sim_s": 32.753999999994065
+    "path": "observations/0001_head_rgbd.npz",
+    "timestamp_sim_s": 26.59599999999614
   },
   {
-    "camera_name": "right_wrist_rgbd",
+    "camera_name": "head_rgbd",
     "index": 2,
-    "path": "observations/0002_right_wrist_rgbd.npz",
-    "timestamp_sim_s": 32.753999999994065
+    "path": "observations/0002_head_rgbd.npz",
+    "timestamp_sim_s": 36.74599999999894
   },
   {
     "camera_name": "left_wrist_rgbd",
     "index": 3,
     "path": "observations/0003_left_wrist_rgbd.npz",
-    "timestamp_sim_s": 36.55399999999871
+    "timestamp_sim_s": 40.896000000004015
   },
   {
     "camera_name": "right_wrist_rgbd",
     "index": 4,
     "path": "observations/0004_right_wrist_rgbd.npz",
-    "timestamp_sim_s": 36.55399999999871
+    "timestamp_sim_s": 40.896000000004015
+  },
+  {
+    "camera_name": "left_wrist_rgbd",
+    "index": 5,
+    "path": "observations/0005_left_wrist_rgbd.npz",
+    "timestamp_sim_s": 44.69600000000866
+  },
+  {
+    "camera_name": "right_wrist_rgbd",
+    "index": 6,
+    "path": "observations/0006_right_wrist_rgbd.npz",
+    "timestamp_sim_s": 44.69600000000866
   }
 ]

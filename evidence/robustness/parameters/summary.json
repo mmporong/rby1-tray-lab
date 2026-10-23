@@ -1,0 +1,551 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "expected_runs": 8,
+  "recorded_runs": 8,
+  "completed_runs": 8,
+  "runs": [
+    {
+      "run_id": "target-height-1.10__coop-depth-cad__seed-0",
+      "case": "target-height-1.10",
+      "factor": "target_support_z_m",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.1,
+      "config_sha256": "ef3babe530fd66afb0cf53b34cfc7145f218ed5aa158332c7e28087b0aa7becf",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 151.13799999999355,
+      "max_joint_torque_nm": 239.20660146487216,
+      "highest_tray_center_z_m": 1.2057894436837555,
+      "cooperation_summary": {
+        "samples": 2976,
+        "slowdown_samples": 2336,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0006103309959223028,
+        "max_relative_orientation_error_rad": 0.0008396914867156407,
+        "max_load_imbalance_change": 0.3354456363402361,
+        "minimum_speed_scale": 0.888920672757693
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "run_manifest": "target-height-1.10__coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "49edc589476765757679d555bd5cf27c33db415236af308e7894e3668e1f42d7"
+    },
+    {
+      "run_id": "target-height-1.25__coop-depth-cad__seed-0",
+      "case": "target-height-1.25",
+      "factor": "target_support_z_m",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.25,
+      "config_sha256": "ade75820fb811b97e15b9ed5b2bcf9a38abc1c6d95ce10833e6c65b45ebfe341",
+      "execution_status": "completed",
+      "success": false,
+      "failure_reason": "ik_planning_failed",
+      "simulation_time_s": 66.15800000002722,
+      "max_joint_torque_nm": 239.20660146487216,
+      "highest_tray_center_z_m": 0.3166395538243239,
+      "cooperation_summary": {
+        "samples": 815,
+        "slowdown_samples": 175,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0006093729878476427,
+        "max_relative_orientation_error_rad": 0.0008396914867156407,
+        "max_load_imbalance_change": 0.30540057926720643,
+        "minimum_speed_scale": 0.9279792469526317
+      },
+      "mission_failure": {
+        "reason": "ik_planning_failed",
+        "detail": "No feasible IK candidate: position=0.0007 m, orientation=0.0265 rad, gravity_ratio=0.521, collision=none",
+        "time_s": 66.15800000002722
+      },
+      "expected_rejection_observed": null,
+      "run_manifest": "target-height-1.25__coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "ed22aa4c8ab642d0888b391438089783638b309b1cc6864300b0c88c6ad62cae"
+    },
+    {
+      "run_id": "payload-mass-scale-1.2__coop-depth-cad__seed-0",
+      "case": "payload-mass-scale-1.2",
+      "factor": "payload_mass_scale",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "06e1aac2bd570830f3222cee45c703868ef7c8f01c8740e8edf8ea39d1ddec6b",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 149.22399999998441,
+      "max_joint_torque_nm": 239.37061573324354,
+      "highest_tray_center_z_m": 1.3057378278494491,
+      "cooperation_summary": {
+        "samples": 2880,
+        "slowdown_samples": 2137,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0005938187278799984,
+        "max_relative_orientation_error_rad": 0.0008239648365242879,
+        "max_load_imbalance_change": 0.28430139280256167,
+        "minimum_speed_scale": 0.9554081893566698
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "run_manifest": "payload-mass-scale-1.2__coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "ce72083fbba5851c07327a4d37eee110aace03379a4fade62db870b43b8a812e"
+    },
+    {
+      "run_id": "rgbd-delay-0.05__coop-depth-cad__seed-0",
+      "case": "rgbd-delay-0.05",
+      "factor": "head_rgbd_delivery_delay_s",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "4b87b7c90271dd8cf21c1552d1da863dae87f64b36e70479a4763790048021bf",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 151.1259999999935,
+      "max_joint_torque_nm": 239.26275103897933,
+      "highest_tray_center_z_m": 1.3058451024627806,
+      "cooperation_summary": {
+        "samples": 2968,
+        "slowdown_samples": 2308,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0005965077160959529,
+        "max_relative_orientation_error_rad": 0.0008324399496249201,
+        "max_load_imbalance_change": 0.3228362281350168,
+        "minimum_speed_scale": 0.9053129034244782
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "run_manifest": "rgbd-delay-0.05__coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "739f11926930a1e5f4465394109eb397b688a121f4414b0c3ae3e87f107d7341"
+    },
+    {
+      "run_id": "rgbd-stale-0.15__coop-depth-cad__seed-0",
+      "case": "rgbd-stale-0.15",
+      "factor": "head_rgbd_delivery_delay_s",
+      "expected_outcome": "stale_rgbd_rejection",
+      "seed": 0,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "47b7cf79f0582d009613d748a491d0a086195c209db8e5606f7d3992e14b7b7c",
+      "execution_status": "completed",
+      "success": false,
+      "failure_reason": "perception_failed",
+      "simulation_time_s": 18.5460000000006,
+      "max_joint_torque_nm": 97.19827091287925,
+      "highest_tray_center_z_m": 0.011849942517414523,
+      "cooperation_summary": {
+        "samples": 0,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0,
+        "max_relative_orientation_error_rad": 0.0,
+        "max_load_imbalance_change": 0.0,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": {
+        "reason": "perception_failed",
+        "detail": "stale RGB-D frame: age=0.102000s, allowed=[-0.002000, 0.100000]s",
+        "time_s": 18.5460000000006
+      },
+      "expected_rejection_observed": true,
+      "run_manifest": "rgbd-stale-0.15__coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "20a7b8341fd42204569ec6b84de1c6686725cfa9c3b4c9a68e2089b4ee9cb1cf"
+    },
+    {
+      "run_id": "calibration-bias-0.005__coop-depth-cad__seed-0",
+      "case": "calibration-bias-0.005",
+      "factor": "head_calibration_translation_bias_m",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "03185e393ee114a16d0ca6ea2bba5661201b0313a36b3ecc6b0d9eff8d4d7a78",
+      "execution_status": "completed",
+      "success": false,
+      "failure_reason": "wrist_verification_failed",
+      "simulation_time_s": 44.69600000000866,
+      "max_joint_torque_nm": 236.07340063266383,
+      "highest_tray_center_z_m": 0.011909475067135843,
+      "cooperation_summary": {
+        "samples": 0,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0,
+        "max_relative_orientation_error_rad": 0.0,
+        "max_load_imbalance_change": 0.0,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": {
+        "reason": "wrist_verification_failed",
+        "detail": "{'passed': False, 'wrist_ft_and_gripper_proprioception_passed': False, 'wrist_rgbd_passed': True, 'pregrasp_wrist_verification': {'passed': True, 'timestamp_sim_s': 40.896000000004015, 'gripper_state': 'open_before_closure', 'wrist_observations': {'left': {'camera_name': 'left_wrist_rgbd', 'timestamp_sim_s': 40.896000000004015, 'expected_grasp_pixel_uv': [319.51094390071756, 177.04197267444786], 'expected_grasp_in_frame': True, 'roi_valid_depth_fraction': 1.0, 'median_depth_m': 0.11675477027893066, 'expected_depth_m': 0.13153305620608965, 'depth_residual_m': 0.01477828592715899, 'blue_rim_pixel_fraction': 0.9820907955018742, 'sensor_range_m': [0.07, 0.5], 'depth_in_sensor_range': True, 'calibration_input': 'encoder_odometry_plus_joint_encoder_fk', 'depth_cad_rim': {'passed': True, 'expected_grasp_in_frame': True, 'expected_grasp_on_known_rim': True, 'expected_grasp_pixel_uv': [319.51094390071756, 177.04197267444786], 'roi_valid_depth_fraction': 0.9954185755935027, 'rim_geometry_support_fraction': 0.9104602510460251, 'rim_geometry_support_pixels': 2176, 'rim_plane_rms_m': 0.008489365575270118, 'rim_height_median_residual_m': 0.011403047345326274, 'rim_tangent_span_m': 0.01607721208560239, 'rim_height_span_m': 0.012810474847017153, 'source': 'wrist_depth_expected_native_rim_geometry', 'ambiguity': 'a single depth view cannot distinguish a perfectly coplanar occluder that reproduces the expected CAD rim patch', 'rejection_reason': ''}}, 'right': {'camera_name': 'right_wrist_rgbd', 'timestamp_sim_s': 40.896000000004015, 'expected_grasp_pixel_uv': [319.4938664732748, 177.02274016650912], 'expected_grasp_in_frame': True, 'roi_valid_depth_fraction': 1.0, 'median_depth_m': 0.1168188601732254, 'expected_depth_m': 0.13153540332320174, 'depth_residual_m': 0.014716543149976336, 'blue_rim_pixel_fraction': 0.9958350687213661, 'sensor_range_m': [0.07, 0.5], 'depth_in_sensor_range': True, 'calibration_input': 'encoder_odometry_plus_joint_encoder_fk', 'depth_cad_rim': {'passed': True, 'expected_grasp_in_frame': True, 'expected_grasp_on_known_rim': True, 'expected_grasp_pixel_uv': [319.4938664732748, 177.02274016650912], 'roi_valid_depth_fraction': 0.9987505206164098, 'rim_geometry_support_fraction': 0.8982485404503753, 'rim_geometry_support_pixels': 2154, 'rim_plane_rms_m': 0.008393120552644582, 'rim_height_median_residual_m': 0.011482673435503105, 'rim_tangent_span_m': 0.016066158104386462, 'rim_height_span_m': 0.01228600284385413, 'source': 'wrist_depth_expected_native_rim_geometry', 'ambiguity': 'a single depth view cannot distinguish a perfectly coplanar occluder that reproduces the expected CAD rim patch', 'rejection_reason': ''}}}, 'source': 'wrist_depth_CAD_rim_plus_expected_depth', 'depth_residual_gate_provenance': 'synthetic CAD and camera-noise assumption; replace with measured D405 registration calibration'}, 'proprioception': {'right': {'wrench': {'force_n': [-0.35324477745597843, -0.04083431003362068, 5.309253496390255], 'torque_nm': [0.006374138115022938, 0.01799177773190213, -0.11065477381122313]}, 'tare': {'force_n': [-0.0007691577457439747, 0.0014328973674856277, 5.234775616798793], 'torque_nm': [9.711285995315037e-05, -0.01152463479674542, 3.1725749612101794e-06]}, 'force_delta_n': [-0.35247561971023444, -0.04226720740110631, 0.07447787959146179], 'torque_delta_nm': [0.006277025255069788, 0.029516412528647548, -0.11065794638618434], 'force_delta_norm_n': 0.36272928453606035, 'torque_delta_norm_nm': 0.1146987391082471, 'finger_position_m': [-0.009459610455066278, -0.009802667736857992], 'gripper_actuator_force_n': 9.687931025446275}, 'left': {'wrench': {'force_n': [-0.7344060496787568, 0.5023441576378392, 5.526408943868797], 'torque_nm': [0.04924404572163125, 0.04841942111600007, -0.19452892212153716]}, 'tare': {'force_n': [0.00022044047436117593, 0.0012579649496198917, 5.234778902911567], 'torque_nm': [8.837089975290746e-05, -0.011574095566005665, 2.7824938092746313e-06]}, 'force_delta_n': [-0.734626490153118, 0.5010861926882193, 0.2916300409572301], 'torque_delta_nm': [0.04915567482187834, 0.05999351668200573, -0.19453170461534644], 'force_delta_norm_n': 0.9358480289695438, 'torque_delta_norm_nm': 0.2094232234295441, 'finger_position_m': [-0.014529219167029579, -0.01503071743335775], 'gripper_actuator_force_n': 17.292434870544813}}, 'wrist_observations': {'left': {'camera_name': 'left_wrist_rgbd', 'timestamp_sim_s': 44.69600000000866, 'expected_grasp_pixel_uv': [318.4994827359589, 177.5674741604195], 'expected_grasp_in_frame': True, 'roi_valid_depth_fraction': 1.0, 'median_depth_m': 0.09621517360210419, 'expected_depth_m': 0.13196379034811712, 'depth_residual_m': 0.03574861674601293, 'blue_rim_pixel_fraction': 0.11286963765097877, 'sensor_range_m': [0.07, 0.5], 'depth_in_sensor_range': True, 'calibration_input': 'encoder_odometry_plus_joint_encoder_fk', 'depth_cad_rim': {'passed': False, 'expected_grasp_in_frame': True, 'expected_grasp_on_known_rim': True, 'expected_grasp_pixel_uv': [318.4994827359589, 177.5674741604195], 'roi_valid_depth_fraction': 0.9950020824656394, 'rim_geometry_support_fraction': 0.0, 'rim_geometry_support_pixels': 0, 'rim_plane_rms_m': None, 'rim_height_median_residual_m': None, 'rim_tangent_span_m': 0.0, 'rim_height_span_m': 0.0, 'source': 'wrist_depth_expected_native_rim_geometry', 'ambiguity': 'a single depth view cannot distinguish a perfectly coplanar occluder that reproduces the expected CAD rim patch', 'rejection_reason': 'depth does not support the expected CAD rim patch'}}, 'right': {'camera_name': 'right_wrist_rgbd', 'timestamp_sim_s': 44.69600000000866, 'expected_grasp_pixel_uv': [318.43677422665536, 177.67983917910192], 'expected_grasp_in_frame': True, 'roi_valid_depth_fraction': 1.0, 'median_depth_m': 0.09604562819004059, 'expected_depth_m': 0.13168021870311486, 'depth_residual_m': 0.03563459051307427, 'blue_rim_pixel_fraction': 0.08454810495626822, 'sensor_range_m': [0.07, 0.5], 'depth_in_sensor_range': True, 'calibration_input': 'encoder_odometry_plus_joint_encoder_fk', 'depth_cad_rim': {'passed': False, 'expected_grasp_in_frame': True, 'expected_grasp_on_known_rim': True, 'expected_grasp_pixel_uv': [318.43677422665536, 177.67983917910192], 'roi_valid_depth_fraction': 0.994585589337776, 'rim_geometry_support_fraction': 0.02051926298157454, 'rim_geometry_support_pixels': 49, 'rim_plane_rms_m': 0.006343602987688174, 'rim_height_median_residual_m': 0.007801353428120411, 'rim_tangent_span_m': 0.017028062360950145, 'rim_height_span_m': 0.002363857353823863, 'source': 'wrist_depth_expected_native_rim_geometry', 'ambiguity': 'a single depth view cannot distinguish a perfectly coplanar occluder that reproduces the expected CAD rim patch', 'rejection_reason': 'depth does not support the expected CAD rim patch'}}}, 'source': 'wrist_rgbd_plus_six_axis_ft_plus_gripper_proprioception', 'contact_geometry_ids_used_by_controller': False, 'hardware_replacement': 'measured wrist RGB-D/FT drivers and gripper current', 'sim_gripper_effort_provenance': 'MuJoCo actuator force; hardware adapter must supply calibrated current/effort'}",
+        "time_s": 44.69600000000866
+      },
+      "expected_rejection_observed": null,
+      "run_manifest": "calibration-bias-0.005__coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "69d648d16a93c74080ecdd73add2b9c496f276d29acefd434e1c1ad11f269cfb"
+    },
+    {
+      "run_id": "low-friction-0.7__coop-depth-cad__seed-0",
+      "case": "low-friction-0.7",
+      "factor": "tray_friction_scale",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "23cd47acd1b66e2169d87f87120c56697583b3db303a5edc22cb7add89393b6d",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 150.24199999998928,
+      "max_joint_torque_nm": 239.15643560323315,
+      "highest_tray_center_z_m": 1.3061486316977728,
+      "cooperation_summary": {
+        "samples": 2931,
+        "slowdown_samples": 1869,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0005644075003107101,
+        "max_relative_orientation_error_rad": 0.0008129896084183476,
+        "max_load_imbalance_change": 0.30567416340104,
+        "minimum_speed_scale": 0.927623587578648
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "run_manifest": "low-friction-0.7__coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "6642058ce992b940767b6750940f55ae732bbb7d40ba6f447606717acbbab2c4"
+    },
+    {
+      "run_id": "tray-yaw-0.035__coop-depth-cad__seed-0",
+      "case": "tray-yaw-0.035",
+      "factor": "tray_initial_yaw_rad",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "58757e6296216a99ed3d6eb38166370133e67e69a6a7757b5649f053ee9f12c6",
+      "execution_status": "completed",
+      "success": false,
+      "failure_reason": "payload_lost",
+      "simulation_time_s": 104.03399999993894,
+      "max_joint_torque_nm": 238.7901667627134,
+      "highest_tray_center_z_m": 1.3470157360449868,
+      "cooperation_summary": {
+        "samples": 2709,
+        "slowdown_samples": 830,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.002118079287899646,
+        "max_relative_orientation_error_rad": 0.003919352277283072,
+        "max_load_imbalance_change": 0.9468045949320428,
+        "minimum_speed_scale": 0.35
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "run_manifest": "tray-yaw-0.035__coop-depth-cad__seed-0/manifest.json",
+      "run_manifest_sha256": "01261727ce35a4eb3058c9bd8e4792db859b35c0d5b4661b856be3bdc991a109"
+    }
+  ],
+  "overall": {
+    "recorded_count": 8,
+    "sample_size": 8,
+    "execution_errors": 0,
+    "successes": 4,
+    "failures": 4,
+    "success_rate": 0.5,
+    "wilson_95_ci": {
+      "low": 0.21521606221387757,
+      "high": 0.7847839377861224
+    },
+    "successful_run_metrics": {
+      "sample_size": 4,
+      "task_time_s": {
+        "mean": 150.43249999999017,
+        "min": 149.22399999998441,
+        "max": 151.13799999999355
+      },
+      "max_joint_torque_nm": {
+        "mean": 239.24910096008205,
+        "min": 239.15643560323315,
+        "max": 239.37061573324354
+      },
+      "highest_tray_center_z_m": {
+        "mean": 1.2808802514234396,
+        "min": 1.2057894436837555,
+        "max": 1.3061486316977728
+      }
+    }
+  },
+  "by_case": {
+    "target-height-1.10": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 1,
+      "failures": 0,
+      "success_rate": 1.0,
+      "wilson_95_ci": {
+        "low": 0.20654931437723745,
+        "high": 1.0
+      },
+      "successful_run_metrics": {
+        "sample_size": 1,
+        "task_time_s": {
+          "mean": 151.13799999999355,
+          "min": 151.13799999999355,
+          "max": 151.13799999999355
+        },
+        "max_joint_torque_nm": {
+          "mean": 239.20660146487216,
+          "min": 239.20660146487216,
+          "max": 239.20660146487216
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.2057894436837555,
+          "min": 1.2057894436837555,
+          "max": 1.2057894436837555
+        }
+      }
+    },
+    "target-height-1.25": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 0,
+      "failures": 1,
+      "success_rate": 0.0,
+      "wilson_95_ci": {
+        "low": 0.0,
+        "high": 0.7934506856227626
+      },
+      "successful_run_metrics": {
+        "sample_size": 0,
+        "task_time_s": null,
+        "max_joint_torque_nm": null,
+        "highest_tray_center_z_m": null
+      }
+    },
+    "payload-mass-scale-1.2": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 1,
+      "failures": 0,
+      "success_rate": 1.0,
+      "wilson_95_ci": {
+        "low": 0.20654931437723745,
+        "high": 1.0
+      },
+      "successful_run_metrics": {
+        "sample_size": 1,
+        "task_time_s": {
+          "mean": 149.22399999998441,
+          "min": 149.22399999998441,
+          "max": 149.22399999998441
+        },
+        "max_joint_torque_nm": {
+          "mean": 239.37061573324354,
+          "min": 239.37061573324354,
+          "max": 239.37061573324354
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.3057378278494491,
+          "min": 1.3057378278494491,
+          "max": 1.3057378278494491
+        }
+      }
+    },
+    "rgbd-delay-0.05": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 1,
+      "failures": 0,
+      "success_rate": 1.0,
+      "wilson_95_ci": {
+        "low": 0.20654931437723745,
+        "high": 1.0
+      },
+      "successful_run_metrics": {
+        "sample_size": 1,
+        "task_time_s": {
+          "mean": 151.1259999999935,
+          "min": 151.1259999999935,
+          "max": 151.1259999999935
+        },
+        "max_joint_torque_nm": {
+          "mean": 239.26275103897933,
+          "min": 239.26275103897933,
+          "max": 239.26275103897933
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.3058451024627806,
+          "min": 1.3058451024627806,
+          "max": 1.3058451024627806
+        }
+      }
+    },
+    "rgbd-stale-0.15": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 0,
+      "failures": 1,
+      "success_rate": 0.0,
+      "wilson_95_ci": {
+        "low": 0.0,
+        "high": 0.7934506856227626
+      },
+      "successful_run_metrics": {
+        "sample_size": 0,
+        "task_time_s": null,
+        "max_joint_torque_nm": null,
+        "highest_tray_center_z_m": null
+      }
+    },
+    "calibration-bias-0.005": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 0,
+      "failures": 1,
+      "success_rate": 0.0,
+      "wilson_95_ci": {
+        "low": 0.0,
+        "high": 0.7934506856227626
+      },
+      "successful_run_metrics": {
+        "sample_size": 0,
+        "task_time_s": null,
+        "max_joint_torque_nm": null,
+        "highest_tray_center_z_m": null
+      }
+    },
+    "low-friction-0.7": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 1,
+      "failures": 0,
+      "success_rate": 1.0,
+      "wilson_95_ci": {
+        "low": 0.20654931437723745,
+        "high": 1.0
+      },
+      "successful_run_metrics": {
+        "sample_size": 1,
+        "task_time_s": {
+          "mean": 150.24199999998928,
+          "min": 150.24199999998928,
+          "max": 150.24199999998928
+        },
+        "max_joint_torque_nm": {
+          "mean": 239.15643560323315,
+          "min": 239.15643560323315,
+          "max": 239.15643560323315
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.3061486316977728,
+          "min": 1.3061486316977728,
+          "max": 1.3061486316977728
+        }
+      }
+    },
+    "tray-yaw-0.035": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 0,
+      "failures": 1,
+      "success_rate": 0.0,
+      "wilson_95_ci": {
+        "low": 0.0,
+        "high": 0.7934506856227626
+      },
+      "successful_run_metrics": {
+        "sample_size": 0,
+        "task_time_s": null,
+        "max_joint_torque_nm": null,
+        "highest_tray_center_z_m": null
+      }
+    }
+  },
+  "by_variant": {
+    "coop-depth-cad": {
+      "recorded_count": 8,
+      "sample_size": 8,
+      "execution_errors": 0,
+      "successes": 4,
+      "failures": 4,
+      "success_rate": 0.5,
+      "wilson_95_ci": {
+        "low": 0.21521606221387757,
+        "high": 0.7847839377861224
+      },
+      "successful_run_metrics": {
+        "sample_size": 4,
+        "task_time_s": {
+          "mean": 150.43249999999017,
+          "min": 149.22399999998441,
+          "max": 151.13799999999355
+        },
+        "max_joint_torque_nm": {
+          "mean": 239.24910096008205,
+          "min": 239.15643560323315,
+          "max": 239.37061573324354
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.2808802514234396,
+          "min": 1.2057894436837555,
+          "max": 1.3061486316977728
+        }
+      }
+    }
+  },
+  "paired_cooperation": {
+    "candidate_pairs": 8,
+    "complete_pairs": 0,
+    "missing_variant_pairs": 8,
+    "both_success": 0,
+    "cooperation_only_success": 0,
+    "no_cooperation_only_success": 0,
+    "both_failed": 0
+  },
+  "expected_rejections": {
+    "sample_size": 1,
+    "observed": 1,
+    "policy": "safety_rejection_is_reported_separately_from_task_success"
+  },
+  "target_height_grid": {
+    "tested_heights_m": [
+      1.1,
+      1.25
+    ],
+    "successful_heights_m": [
+      1.1
+    ],
+    "maximum_successful_tested_height_m": 1.1,
+    "scope": "preregistered_tested_grid_only_not_global_reach"
+  },
+  "historical_dataset_policy": "mobile_native_runs_only; historical_fixture_or_handle_data_not_combined"
+}

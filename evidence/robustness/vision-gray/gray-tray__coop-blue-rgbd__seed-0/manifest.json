@@ -1,0 +1,46 @@
+{
+  "python": "3.12.13",
+  "versions": {
+    "mujoco": "3.11.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "Pillow": "12.3.0"
+  },
+  "commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
+  "render_backend": "egl",
+  "egl_vendor": "/usr/share/glvnd/egl_vendor.d/50_mesa.json",
+  "source_sha256": {
+    "__init__.py": "a91e0b62ede8dbc5203342f341b170cec7cb3eeee103e0e9e880657fae065a9f",
+    "assets.py": "f6e4d3c51e91905b066c1c2f8ad24d401f7e3cfab65d21eb60a324ec0147d2c1",
+    "camera.py": "527fd8315d8a7e0fb6f707b56a0d960a35b4e0932a9c3990f55e54fb49e58626",
+    "cli.py": "db944e2781113a46f129dc6df72f7ef8474457e75d2075ce435c5e5f11266203",
+    "cooperation.py": "48d2e488e422588edb1701a0d796315a6d5f8613734ecb92855ad246024bcb40",
+    "evaluation.py": "ed9572841c847fd9ac14f8f91d3384e3e27331e1e9a8ff5f6696fbc4c455c587",
+    "experiments.py": "4367a19702b29aedfe33365f12965abd62f21d6b6e1cb0cccdac64c52d6ac6fe",
+    "mission.py": "d10be1b8231e9478b058132e1fb96032546447c5b72dd2212f85d98154baf903",
+    "mobility.py": "ff8fd487d03c06cb69af1c9d43c0c04df34d0cc1cf3236fb1ccd99f05cfde538",
+    "perception.py": "1a96f5e0cb11623e9e4f06666856bfa05eabe2ba720fbeef67a3a051db836785",
+    "planning.py": "44d3df376f97f7d5ddb56814f21fc6eeb348bfa9cddf99280a1fc34fa38e29bd",
+    "playback.py": "71550da1058031e321ecc75cf9b470678434055522f24fb95cf2cc974a81f225",
+    "scene.py": "a919fef42bc28c93f90daf628447f0bd4bb4203257cae8aee09080c7a03e56cc",
+    "session.py": "c83735bf1686ab8265dd591bcfbd96cba6a84847d3eae71298a6a96671189cee",
+    "viewer.py": "749c3908f3e40338b6273ca374d9255e0266a68038ce19ddcc1f6eb615257c46",
+    "web/index.html": "9d0838dd1243479845ea35829f0371d22e833840fdbd571b8b59ce6e2327ec94"
+  },
+  "artifact_sha256": {
+    "config.json": "124d90cbfc283eb7bc5ffd774d658ae5cac96a28885742f83b0146eb83cd5889",
+    "controller-data/commands.jsonl": "e92de0c76e529414aa453c2b9fa7b5cfe2abce2b77903acc41b5ffb538c128e8",
+    "controller-data/cooperation.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "controller-data/frames.json": "141684bcd00a5412cbe2db656821b151f32166347c2df5410bb39019acebbbd4",
+    "controller-data/monitor-frames.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "controller-data/observations/0000_head_rgbd.npz": "27cb886c3a87ff3bfe6348fdd21cd5f3179bb549c782fb11415b3d0a7a567476",
+    "controller-data/perception.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "controller-data/schema.json": "3024b59378cc6e321e190755ff8721c8fb00af2e52a810c9202e6bbd670dc589",
+    "ik.json": "3c890d9c6cb96e8ac66a7432db887b670b648ace2ea06f39d1888d67f2ab0fc3",
+    "model-audit.json": "83fb215bcb1803d645fd46800edd255279bf1b55e7a97b376784e61b858000a1",
+    "result.json": "7a50845185fef4f30d3561999c58f1374d055bcc563a58d796d59ff0f706cc44",
+    "scene.xml": "ebf3bf3090bc3942174dce85afdf9a0c3bd5a88645a74f8f99797767bb14ebac",
+    "trace.jsonl": "48da25ec2de645bb8a192462253f36fd4be4966d6c8388751c6cc3ba0afc8cb9",
+    "upstream.json": "0ca6c252d9c6f64f1b2a4b3d87c86a2d0b5b9d0671996e666f404f9b04e9181b"
+  }
+}

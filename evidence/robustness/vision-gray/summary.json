@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "expected_runs": 1,
+  "recorded_runs": 1,
+  "completed_runs": 1,
+  "runs": [
+    {
+      "run_id": "gray-tray__coop-blue-rgbd__seed-0",
+      "case": "gray-tray",
+      "factor": "tray_rgba",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "coop-blue-rgbd",
+      "cooperation_enabled": true,
+      "estimator": "blue_rgbd",
+      "target_height_m": 1.2,
+      "config_sha256": "66ba8c7993dbf23b0d2a6b02d02c976af5c135d174dfac9ee1e9f12d3f4fbe9e",
+      "execution_status": "completed",
+      "success": false,
+      "failure_reason": "perception_failed",
+      "simulation_time_s": 18.444000000000656,
+      "max_joint_torque_nm": 97.19827091287925,
+      "highest_tray_center_z_m": 0.011849942432145556,
+      "cooperation_summary": {
+        "samples": 0,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0,
+        "max_relative_orientation_error_rad": 0.0,
+        "max_load_imbalance_change": 0.0,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": {
+        "reason": "perception_failed",
+        "detail": "no complete tray candidate passed geometry gates: dimensions [0.20998737005778964, 0.04799178589335584] m failed CAD gate; dimensions [0.19078948659771586, 0.047519184061651454] m failed CAD gate",
+        "time_s": 18.444000000000656
+      },
+      "expected_rejection_observed": null,
+      "run_manifest": "gray-tray__coop-blue-rgbd__seed-0/manifest.json",
+      "run_manifest_sha256": "08d8485fc694bc8cdc68714e6e12533324ef90294ab88f2c7ea70d5473a52b19"
+    }
+  ],
+  "overall": {
+    "recorded_count": 1,
+    "sample_size": 1,
+    "execution_errors": 0,
+    "successes": 0,
+    "failures": 1,
+    "success_rate": 0.0,
+    "wilson_95_ci": {
+      "low": 0.0,
+      "high": 0.7934506856227626
+    },
+    "successful_run_metrics": {
+      "sample_size": 0,
+      "task_time_s": null,
+      "max_joint_torque_nm": null,
+      "highest_tray_center_z_m": null
+    }
+  },
+  "by_case": {
+    "gray-tray": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 0,
+      "failures": 1,
+      "success_rate": 0.0,
+      "wilson_95_ci": {
+        "low": 0.0,
+        "high": 0.7934506856227626
+      },
+      "successful_run_metrics": {
+        "sample_size": 0,
+        "task_time_s": null,
+        "max_joint_torque_nm": null,
+        "highest_tray_center_z_m": null
+      }
+    }
+  },
+  "by_variant": {
+    "coop-blue-rgbd": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 0,
+      "failures": 1,
+      "success_rate": 0.0,
+      "wilson_95_ci": {
+        "low": 0.0,
+        "high": 0.7934506856227626
+      },
+      "successful_run_metrics": {
+        "sample_size": 0,
+        "task_time_s": null,
+        "max_joint_torque_nm": null,
+        "highest_tray_center_z_m": null
+      }
+    }
+  },
+  "paired_cooperation": {
+    "candidate_pairs": 1,
+    "complete_pairs": 0,
+    "missing_variant_pairs": 1,
+    "both_success": 0,
+    "cooperation_only_success": 0,
+    "no_cooperation_only_success": 0,
+    "both_failed": 0
+  },
+  "expected_rejections": {
+    "sample_size": 0,
+    "observed": 0,
+    "policy": "safety_rejection_is_reported_separately_from_task_success"
+  },
+  "target_height_grid": {
+    "tested_heights_m": [],
+    "successful_heights_m": [],
+    "maximum_successful_tested_height_m": null,
+    "scope": "preregistered_tested_grid_only_not_global_reach"
+  },
+  "historical_dataset_policy": "mobile_native_runs_only; historical_fixture_or_handle_data_not_combined"
+}

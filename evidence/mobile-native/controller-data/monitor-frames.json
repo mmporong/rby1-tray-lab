@@ -1,0 +1,2738 @@
+[
+  {
+    "path": "monitor-observations/00000_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 0.002,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00001_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 0.002,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00002_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 0.002,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00003_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 1.0020000000000007,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00004_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 1.0020000000000007,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00005_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 1.0020000000000007,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00006_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 2.002000000000001,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00007_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 2.002000000000001,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00008_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 2.002000000000001,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00009_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 3.001999999999891,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00010_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 3.001999999999891,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00011_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 3.001999999999891,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00012_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 4.001999999999781,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00013_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 4.001999999999781,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00014_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 4.001999999999781,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00015_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 5.001999999999671,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00016_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 5.001999999999671,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00017_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 5.001999999999671,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00018_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 6.001999999999561,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00019_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 6.001999999999561,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00020_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 6.001999999999561,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00021_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 7.001999999999451,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00022_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 7.001999999999451,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00023_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 7.001999999999451,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00024_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 8.001999999999342,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00025_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 8.001999999999342,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00026_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 8.001999999999342,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00027_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 9.001999999999676,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00028_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 9.001999999999676,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00029_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 9.001999999999676,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00030_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 10.00200000000001,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00031_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 10.00200000000001,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00032_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 10.00200000000001,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00033_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 11.002000000000344,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00034_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 11.002000000000344,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00035_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 11.002000000000344,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00036_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 12.002000000000677,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00037_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 12.002000000000677,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00038_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 12.002000000000677,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00039_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 13.002000000001011,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00040_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 13.002000000001011,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00041_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 13.002000000001011,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00042_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 14.002000000001345,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00043_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 14.002000000001345,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00044_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 14.002000000001345,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00045_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 15.00200000000168,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00046_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 15.00200000000168,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00047_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 15.00200000000168,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00048_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 16.00200000000201,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00049_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 16.00200000000201,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00050_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 16.00200000000201,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00051_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 17.002000000001456,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00052_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 17.002000000001456,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00053_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 17.002000000001456,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00054_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 18.0020000000009,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00055_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 18.0020000000009,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00056_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 18.0020000000009,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00057_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 19.002000000000347,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00058_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 19.002000000000347,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00059_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 19.002000000000347,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00060_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 20.001999999999793,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00061_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 20.001999999999793,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00062_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 20.001999999999793,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00063_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 21.00199999999924,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00064_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 21.00199999999924,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00065_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 21.00199999999924,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00066_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 22.001999999998684,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00067_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 22.001999999998684,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00068_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 22.001999999998684,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00069_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 23.00199999999813,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00070_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 23.00199999999813,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00071_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 23.00199999999813,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00072_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 24.001999999997576,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00073_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 24.001999999997576,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00074_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 24.001999999997576,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00075_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 25.00199999999702,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00076_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 25.00199999999702,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00077_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 25.00199999999702,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00078_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 26.001999999996467,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00079_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 26.001999999996467,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00080_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 26.001999999996467,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00081_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 27.001999999995913,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00082_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 27.001999999995913,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00083_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 27.001999999995913,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00084_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 28.00199999999536,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00085_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 28.00199999999536,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00086_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 28.00199999999536,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00087_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 29.001999999994805,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00088_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 29.001999999994805,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00089_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 29.001999999994805,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00090_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 30.00199999999425,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00091_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 30.00199999999425,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00092_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 30.00199999999425,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00093_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 31.001999999993696,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00094_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 31.001999999993696,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00095_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 31.001999999993696,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00096_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 32.001999999993146,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00097_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 32.001999999993146,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00098_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 32.001999999993146,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00099_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 33.00199999999437,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00100_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 33.00199999999437,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00101_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 33.00199999999437,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00102_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 34.00199999999559,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00103_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 34.00199999999559,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00104_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 34.00199999999559,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00105_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 35.00199999999681,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00106_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 35.00199999999681,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00107_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 35.00199999999681,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00108_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 36.001999999998034,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00109_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 36.001999999998034,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00110_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 36.001999999998034,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00111_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 37.001999999999256,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00112_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 37.001999999999256,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00113_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 37.001999999999256,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00114_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 38.00200000000048,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00115_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 38.00200000000048,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00116_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 38.00200000000048,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00117_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 39.0020000000017,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00118_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 39.0020000000017,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00119_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 39.0020000000017,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00120_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 40.00200000000292,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00121_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 40.00200000000292,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00122_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 40.00200000000292,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00123_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 41.002000000004145,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00124_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 41.002000000004145,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00125_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 41.002000000004145,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00126_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 42.00200000000537,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00127_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 42.00200000000537,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00128_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 42.00200000000537,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00129_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 43.00200000000659,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00130_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 43.00200000000659,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00131_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 43.00200000000659,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00132_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 44.00200000000781,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00133_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 44.00200000000781,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00134_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 44.00200000000781,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00135_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 45.00200000000903,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00136_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 45.00200000000903,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00137_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 45.00200000000903,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00138_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 46.002000000010256,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00139_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 46.002000000010256,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00140_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 46.002000000010256,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00141_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 47.00200000001148,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00142_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 47.00200000001148,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00143_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 47.00200000001148,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00144_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 48.0020000000127,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00145_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 48.0020000000127,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00146_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 48.0020000000127,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00147_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 49.00200000001392,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00148_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 49.00200000001392,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00149_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 49.00200000001392,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00150_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 50.002000000015144,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00151_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 50.002000000015144,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00152_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 50.002000000015144,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00153_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 51.002000000016366,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00154_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 51.002000000016366,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00155_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 51.002000000016366,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00156_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 52.00200000001759,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00157_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 52.00200000001759,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00158_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 52.00200000001759,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00159_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 53.00200000001881,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00160_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 53.00200000001881,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00161_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 53.00200000001881,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00162_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 54.00200000002003,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00163_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 54.00200000002003,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00164_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 54.00200000002003,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00165_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 55.002000000021255,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00166_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 55.002000000021255,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00167_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 55.002000000021255,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00168_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 56.00200000002248,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00169_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 56.00200000002248,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00170_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 56.00200000002248,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00171_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 57.0020000000237,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00172_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 57.0020000000237,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00173_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 57.0020000000237,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00174_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 58.00200000002492,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00175_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 58.00200000002492,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00176_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 58.00200000002492,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00177_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 59.00200000002614,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00178_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 59.00200000002614,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00179_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 59.00200000002614,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00180_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 60.002000000027365,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00181_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 60.002000000027365,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00182_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 60.002000000027365,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00183_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 61.00200000002859,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00184_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 61.00200000002859,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00185_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 61.00200000002859,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00186_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 62.00200000002981,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00187_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 62.00200000002981,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00188_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 62.00200000002981,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00189_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 63.00200000003103,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00190_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 63.00200000003103,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00191_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 63.00200000003103,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00192_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 64.00200000003224,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00193_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 64.00200000003224,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00194_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 64.00200000003224,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00195_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 65.00200000002991,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00196_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 65.00200000002991,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00197_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 65.00200000002991,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00198_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 66.00200000002758,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00199_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 66.00200000002758,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00200_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 66.00200000002758,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00201_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 67.00200000002525,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00202_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 67.00200000002525,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00203_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 67.00200000002525,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00204_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 68.00200000002292,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00205_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 68.00200000002292,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00206_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 68.00200000002292,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00207_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 69.00200000002059,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00208_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 69.00200000002059,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00209_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 69.00200000002059,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00210_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 70.00200000001826,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00211_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 70.00200000001826,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00212_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 70.00200000001826,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00213_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 71.00200000001593,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00214_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 71.00200000001593,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00215_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 71.00200000001593,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00216_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 72.0020000000136,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00217_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 72.0020000000136,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00218_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 72.0020000000136,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00219_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 73.00200000001126,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00220_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 73.00200000001126,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00221_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 73.00200000001126,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00222_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 74.00200000000893,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00223_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 74.00200000000893,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00224_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 74.00200000000893,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00225_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 75.0020000000066,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00226_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 75.0020000000066,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00227_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 75.0020000000066,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00228_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 76.00200000000427,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00229_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 76.00200000000427,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00230_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 76.00200000000427,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00231_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 77.00200000000194,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00232_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 77.00200000000194,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00233_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 77.00200000000194,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00234_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 78.00199999999961,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00235_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 78.00199999999961,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00236_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 78.00199999999961,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00237_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 79.00199999999728,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00238_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 79.00199999999728,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00239_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 79.00199999999728,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00240_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 80.00199999999495,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00241_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 80.00199999999495,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00242_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 80.00199999999495,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00243_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 81.00199999999262,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00244_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 81.00199999999262,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00245_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 81.00199999999262,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00246_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 82.00199999999029,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00247_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 82.00199999999029,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00248_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 82.00199999999029,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00249_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 83.00199999998796,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00250_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 83.00199999998796,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00251_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 83.00199999998796,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00252_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 84.00199999998563,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00253_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 84.00199999998563,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00254_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 84.00199999998563,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00255_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 85.0019999999833,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00256_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 85.0019999999833,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00257_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 85.0019999999833,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00258_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 86.00199999998097,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00259_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 86.00199999998097,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00260_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 86.00199999998097,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00261_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 87.00199999997864,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00262_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 87.00199999997864,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00263_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 87.00199999997864,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00264_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 88.0019999999763,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00265_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 88.0019999999763,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00266_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 88.0019999999763,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00267_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 89.00199999997398,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00268_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 89.00199999997398,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00269_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 89.00199999997398,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00270_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 90.00199999997164,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00271_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 90.00199999997164,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00272_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 90.00199999997164,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00273_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 91.00199999996931,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00274_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 91.00199999996931,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00275_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 91.00199999996931,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00276_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 92.00199999996698,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00277_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 92.00199999996698,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00278_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 92.00199999996698,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00279_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 93.00199999996465,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00280_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 93.00199999996465,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00281_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 93.00199999996465,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00282_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 94.00199999996232,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00283_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 94.00199999996232,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00284_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 94.00199999996232,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00285_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 95.00199999995999,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00286_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 95.00199999995999,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00287_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 95.00199999995999,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00288_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 96.00199999995766,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00289_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 96.00199999995766,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00290_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 96.00199999995766,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00291_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 97.00199999995533,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00292_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 97.00199999995533,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00293_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 97.00199999995533,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00294_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 98.001999999953,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00295_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 98.001999999953,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00296_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 98.001999999953,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00297_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 99.00199999995067,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00298_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 99.00199999995067,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00299_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 99.00199999995067,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00300_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 100.00199999994834,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00301_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 100.00199999994834,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00302_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 100.00199999994834,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00303_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 101.00199999994601,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00304_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 101.00199999994601,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00305_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 101.00199999994601,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00306_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 102.00199999994368,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00307_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 102.00199999994368,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00308_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 102.00199999994368,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00309_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 103.00199999994135,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00310_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 103.00199999994135,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00311_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 103.00199999994135,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00312_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 104.00199999993902,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00313_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 104.00199999993902,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00314_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 104.00199999993902,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00315_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 105.00199999993669,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00316_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 105.00199999993669,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00317_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 105.00199999993669,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00318_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 106.00199999993436,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00319_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 106.00199999993436,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00320_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 106.00199999993436,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00321_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 107.00199999993202,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00322_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 107.00199999993202,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00323_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 107.00199999993202,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00324_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 108.0019999999297,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00325_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 108.0019999999297,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00326_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 108.0019999999297,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00327_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 109.00199999992736,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00328_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 109.00199999992736,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00329_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 109.00199999992736,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00330_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 110.00199999992503,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00331_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 110.00199999992503,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00332_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 110.00199999992503,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00333_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 111.0019999999227,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00334_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 111.0019999999227,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00335_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 111.0019999999227,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00336_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 112.00199999992037,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00337_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 112.00199999992037,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00338_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 112.00199999992037,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00339_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 113.00199999991804,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00340_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 113.00199999991804,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00341_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 113.00199999991804,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00342_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 114.00199999991571,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00343_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 114.00199999991571,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00344_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 114.00199999991571,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00345_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 115.00199999991338,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00346_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 115.00199999991338,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00347_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 115.00199999991338,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00348_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 116.00199999991105,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00349_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 116.00199999991105,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00350_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 116.00199999991105,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00351_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 117.00199999990872,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00352_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 117.00199999990872,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00353_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 117.00199999990872,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00354_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 118.00199999990639,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00355_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 118.00199999990639,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00356_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 118.00199999990639,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00357_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 119.00199999990406,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00358_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 119.00199999990406,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00359_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 119.00199999990406,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00360_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 120.00199999990173,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00361_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 120.00199999990173,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00362_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 120.00199999990173,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00363_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 121.0019999998994,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00364_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 121.0019999998994,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00365_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 121.0019999998994,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00366_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 122.00199999989707,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00367_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 122.00199999989707,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00368_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 122.00199999989707,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00369_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 123.00199999989474,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00370_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 123.00199999989474,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00371_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 123.00199999989474,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00372_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 124.0019999998924,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00373_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 124.0019999998924,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00374_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 124.0019999998924,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00375_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 125.00199999989007,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00376_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 125.00199999989007,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00377_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 125.00199999989007,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00378_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 126.00199999988774,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00379_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 126.00199999988774,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00380_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 126.00199999988774,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00381_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 127.00199999988541,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00382_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 127.00199999988541,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00383_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 127.00199999988541,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00384_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 128.00199999988308,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00385_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 128.00199999988308,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00386_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 128.00199999988308,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00387_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 129.00199999988786,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00388_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 129.00199999988786,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00389_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 129.00199999988786,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00390_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 130.00199999989263,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00391_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 130.00199999989263,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00392_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 130.00199999989263,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00393_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 131.0019999998974,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00394_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 131.0019999998974,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00395_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 131.0019999998974,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00396_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 132.00199999990218,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00397_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 132.00199999990218,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00398_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 132.00199999990218,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00399_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 133.00199999990696,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00400_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 133.00199999990696,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00401_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 133.00199999990696,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00402_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 134.00199999991173,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00403_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 134.00199999991173,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00404_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 134.00199999991173,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00405_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 135.0019999999165,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00406_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 135.0019999999165,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00407_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 135.0019999999165,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00408_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 136.00199999992128,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00409_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 136.00199999992128,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00410_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 136.00199999992128,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00411_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 137.00199999992606,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00412_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 137.00199999992606,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00413_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 137.00199999992606,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00414_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 138.00199999993083,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00415_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 138.00199999993083,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00416_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 138.00199999993083,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00417_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 139.0019999999356,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00418_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 139.0019999999356,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00419_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 139.0019999999356,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00420_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 140.00199999994038,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00421_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 140.00199999994038,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00422_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 140.00199999994038,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00423_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 141.00199999994516,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00424_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 141.00199999994516,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00425_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 141.00199999994516,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00426_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 142.00199999994993,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00427_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 142.00199999994993,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00428_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 142.00199999994993,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00429_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 143.0019999999547,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00430_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 143.0019999999547,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00431_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 143.0019999999547,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00432_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 144.00199999995948,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00433_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 144.00199999995948,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00434_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 144.00199999995948,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00435_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 145.00199999996426,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00436_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 145.00199999996426,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00437_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 145.00199999996426,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00438_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 146.00199999996903,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00439_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 146.00199999996903,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00440_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 146.00199999996903,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00441_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 147.0019999999738,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00442_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 147.0019999999738,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00443_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 147.0019999999738,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00444_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 148.00199999997858,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00445_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 148.00199999997858,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00446_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 148.00199999997858,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00447_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 149.00199999998335,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00448_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 149.00199999998335,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00449_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 149.00199999998335,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00450_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 150.00199999998813,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00451_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 150.00199999998813,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00452_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 150.00199999998813,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00453_head_rgbd.npz",
+    "camera_name": "head_rgbd",
+    "timestamp_sim_s": 151.0019999999929,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00454_left_wrist_rgbd.npz",
+    "camera_name": "left_wrist_rgbd",
+    "timestamp_sim_s": 151.0019999999929,
+    "role": "monitor_only"
+  },
+  {
+    "path": "monitor-observations/00455_right_wrist_rgbd.npz",
+    "camera_name": "right_wrist_rgbd",
+    "timestamp_sim_s": 151.0019999999929,
+    "role": "monitor_only"
+  }
+]

@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "base_config_sha256": "3f939c0e9f61d544529e37474cab5f5706da8ed74441f5d04f8824e29d2312dd",
+  "cases": [
+    {
+      "name": "nominal",
+      "factor": "none",
+      "values": {},
+      "expected_outcome": "task_success_evaluated"
+    },
+    {
+      "name": "gray-tray",
+      "factor": "tray_rgba",
+      "values": {
+        "rgba": [
+          0.55,
+          0.55,
+          0.55,
+          1.0
+        ]
+      },
+      "expected_outcome": "task_success_evaluated"
+    },
+    {
+      "name": "depth-noise-0.003-dropout-0.03",
+      "factor": "depth_sensor_degradation",
+      "values": {
+        "depth_std_m": 0.003,
+        "dropout_probability": 0.03
+      },
+      "expected_outcome": "task_success_evaluated"
+    }
+  ],
+  "seeds": [
+    0
+  ],
+  "variants": [
+    {
+      "name": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad"
+    },
+    {
+      "name": "no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad"
+    }
+  ],
+  "expected_runs": 6,
+  "source_sha256": {
+    "src/rby1_tray/__init__.py": "a91e0b62ede8dbc5203342f341b170cec7cb3eeee103e0e9e880657fae065a9f",
+    "src/rby1_tray/assets.py": "f6e4d3c51e91905b066c1c2f8ad24d401f7e3cfab65d21eb60a324ec0147d2c1",
+    "src/rby1_tray/camera.py": "527fd8315d8a7e0fb6f707b56a0d960a35b4e0932a9c3990f55e54fb49e58626",
+    "src/rby1_tray/cli.py": "db944e2781113a46f129dc6df72f7ef8474457e75d2075ce435c5e5f11266203",
+    "src/rby1_tray/cooperation.py": "48d2e488e422588edb1701a0d796315a6d5f8613734ecb92855ad246024bcb40",
+    "src/rby1_tray/evaluation.py": "ed9572841c847fd9ac14f8f91d3384e3e27331e1e9a8ff5f6696fbc4c455c587",
+    "src/rby1_tray/experiments.py": "4367a19702b29aedfe33365f12965abd62f21d6b6e1cb0cccdac64c52d6ac6fe",
+    "src/rby1_tray/mission.py": "d10be1b8231e9478b058132e1fb96032546447c5b72dd2212f85d98154baf903",
+    "src/rby1_tray/mobility.py": "ff8fd487d03c06cb69af1c9d43c0c04df34d0cc1cf3236fb1ccd99f05cfde538",
+    "src/rby1_tray/perception.py": "1a96f5e0cb11623e9e4f06666856bfa05eabe2ba720fbeef67a3a051db836785",
+    "src/rby1_tray/planning.py": "44d3df376f97f7d5ddb56814f21fc6eeb348bfa9cddf99280a1fc34fa38e29bd",
+    "src/rby1_tray/playback.py": "71550da1058031e321ecc75cf9b470678434055522f24fb95cf2cc974a81f225",
+    "src/rby1_tray/scene.py": "a919fef42bc28c93f90daf628447f0bd4bb4203257cae8aee09080c7a03e56cc",
+    "src/rby1_tray/session.py": "c83735bf1686ab8265dd591bcfbd96cba6a84847d3eae71298a6a96671189cee",
+    "src/rby1_tray/viewer.py": "749c3908f3e40338b6273ca374d9255e0266a68038ce19ddcc1f6eb615257c46",
+    "tools/benchmark_mobile.py": "12e7db40eebec8311ced248b99174f289e14d25ebef637d23d262d8efed1bbc1",
+    "configs/mobile-native.json": "d4b56a57a975b69a9249134e7841e421f60f016c0889649dac98963523221689"
+  },
+  "provenance": {
+    "repository": "/home/lim/rby1-tray-lab",
+    "commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
+    "source_dirty_at_start": true,
+    "config_path": "/home/lim/rby1-tray-lab/configs/mobile-native.json"
+  },
+  "run_matrix": [
+    {
+      "run_id": "nominal__coop-depth-cad__seed-0",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "98df3605207dfd10cb143c1f0a19d2925f71f8c7fcbf8f9b12209bb377a7fc12"
+    },
+    {
+      "run_id": "nominal__no-coop-depth-cad__seed-0",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "712052277de0addb453976a877ca59d7249c3187df080d4cba2e0460a5a6b397"
+    },
+    {
+      "run_id": "gray-tray__coop-depth-cad__seed-0",
+      "case": "gray-tray",
+      "factor": "tray_rgba",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "afa88fd14a69ecbf5af3684b748e2fb99c5130b50d6c480dbc6347a638199b97"
+    },
+    {
+      "run_id": "gray-tray__no-coop-depth-cad__seed-0",
+      "case": "gray-tray",
+      "factor": "tray_rgba",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "e757160907ba21e711077903a5eb383f5baf75ccba5fad17fecaad2a1f03b93a"
+    },
+    {
+      "run_id": "depth-noise-0.003-dropout-0.03__coop-depth-cad__seed-0",
+      "case": "depth-noise-0.003-dropout-0.03",
+      "factor": "depth_sensor_degradation",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "ff89d0f83a65795397fbe0ff1f772d4c5da90a9f3761cce642ce61be3bafe792"
+    },
+    {
+      "run_id": "depth-noise-0.003-dropout-0.03__no-coop-depth-cad__seed-0",
+      "case": "depth-noise-0.003-dropout-0.03",
+      "factor": "depth_sensor_degradation",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 0,
+      "variant": "no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "5559e5a205c2b7ed6657ed1a20b650a9140b9f4bfa974600a52d7c44462f915c"
+    }
+  ]
+}

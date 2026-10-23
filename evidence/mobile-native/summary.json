@@ -1,12 +1,30 @@
 {
-  "source_commit": "4963881fe6dc27aa9f7ef741721ec0fdef038cd2",
-  "source": "trace.jsonl and result.json from this run; summarized after execution",
-  "held_trace_samples": 3420,
-  "held_trace_all_secure": true,
-  "held_trace_min_pad_force_n": 2.651946343528031,
-  "trace_forbidden_contact_samples": 0,
-  "trace_sample_interval_s": 0.02,
-  "continuous_strict_evaluation_interval_s": 0.002,
-  "failure_videos_role": "two illustrative exploratory failures; not a success-rate benchmark",
-  "held_trace_definition": "grasped milestone is true and seated milestone is false; recorded trace samples only"
+  "source_commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
+  "scope": "current native-gripper mobile depth/CAD physical rollout; evaluation GT used only for metrics",
+  "success": true,
+  "simulation_time_s": 151.231999999994,
+  "held_trace_samples": 3559,
+  "held_all_secure": true,
+  "held_min_pad_force_n": 2.5343232095397936,
+  "forbidden_contact_samples": 0,
+  "joint_limit_violation_samples": 0,
+  "controller_frame_count": 7,
+  "monitor_frame_count": 456,
+  "controller_packets": 75616,
+  "cooperation": {
+    "samples": 2980,
+    "slowdown_samples": 2340,
+    "stop_events": 0,
+    "max_relative_position_error_m": 0.0006110815081112551,
+    "max_relative_orientation_error_rad": 0.0008396914867156407,
+    "max_load_imbalance_change": 0.3363181715935554,
+    "minimum_speed_scale": 0.8877863769283779
+  },
+  "max_tray_tilt_rad": 0.04316711801944557,
+  "metrics": {
+    "max_tracking_error_rad": 0.004848093741202316,
+    "max_joint_torque_nm": 239.20660146487216,
+    "max_finger_actuator_force_n": 21.828432311398597
+  },
+  "highest_tray_center_z_m": 1.305830659428235
 }

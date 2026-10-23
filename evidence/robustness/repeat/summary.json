@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "expected_runs": 2,
+  "recorded_runs": 2,
+  "completed_runs": 2,
+  "runs": [
+    {
+      "run_id": "nominal__coop-depth-cad__seed-1",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "coop-depth-cad",
+      "cooperation_enabled": true,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "d6c63a3ac9121777cd73b8d13d7618915d712f003c7c29878bb27f28a2b35d1e",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 150.7279999999916,
+      "max_joint_torque_nm": 238.89766863961222,
+      "highest_tray_center_z_m": 1.3057896081008131,
+      "cooperation_summary": {
+        "samples": 2955,
+        "slowdown_samples": 2297,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0006347239882663621,
+        "max_relative_orientation_error_rad": 0.0008642383852843459,
+        "max_load_imbalance_change": 0.31507399557500393,
+        "minimum_speed_scale": 0.9154038057524949
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "run_manifest": "nominal__coop-depth-cad__seed-1/manifest.json",
+      "run_manifest_sha256": "84ef992030da2b95b7cbfb8b12c244181b3e4f477b1e57655e0717f9ee8fb632"
+    },
+    {
+      "run_id": "nominal__no-coop-depth-cad__seed-1",
+      "case": "nominal",
+      "factor": "none",
+      "expected_outcome": "task_success_evaluated",
+      "seed": 1,
+      "variant": "no-coop-depth-cad",
+      "cooperation_enabled": false,
+      "estimator": "depth_cad",
+      "target_height_m": 1.2,
+      "config_sha256": "9d5f0db1c6b5ee7a12296669a4931a19f97dea40565fe90b0dec4618c8d792d3",
+      "execution_status": "completed",
+      "success": true,
+      "failure_reason": null,
+      "simulation_time_s": 148.35599999998027,
+      "max_joint_torque_nm": 238.89766863961222,
+      "highest_tray_center_z_m": 1.3059672176860855,
+      "cooperation_summary": {
+        "samples": 2837,
+        "slowdown_samples": 0,
+        "stop_events": 0,
+        "max_relative_position_error_m": 0.0006347239882663621,
+        "max_relative_orientation_error_rad": 0.0008642383852843459,
+        "max_load_imbalance_change": 0.31611073477247514,
+        "minimum_speed_scale": 1.0
+      },
+      "mission_failure": null,
+      "expected_rejection_observed": null,
+      "run_manifest": "nominal__no-coop-depth-cad__seed-1/manifest.json",
+      "run_manifest_sha256": "fc603b2126186fdc9ff2e9b73e6f2d765072ba2c2024d55672aebd5edff95f31"
+    }
+  ],
+  "overall": {
+    "recorded_count": 2,
+    "sample_size": 2,
+    "execution_errors": 0,
+    "successes": 2,
+    "failures": 0,
+    "success_rate": 1.0,
+    "wilson_95_ci": {
+      "low": 0.34238022750665303,
+      "high": 1.0
+    },
+    "successful_run_metrics": {
+      "sample_size": 2,
+      "task_time_s": {
+        "mean": 149.54199999998593,
+        "min": 148.35599999998027,
+        "max": 150.7279999999916
+      },
+      "max_joint_torque_nm": {
+        "mean": 238.89766863961222,
+        "min": 238.89766863961222,
+        "max": 238.89766863961222
+      },
+      "highest_tray_center_z_m": {
+        "mean": 1.3058784128934493,
+        "min": 1.3057896081008131,
+        "max": 1.3059672176860855
+      }
+    }
+  },
+  "by_case": {
+    "nominal": {
+      "recorded_count": 2,
+      "sample_size": 2,
+      "execution_errors": 0,
+      "successes": 2,
+      "failures": 0,
+      "success_rate": 1.0,
+      "wilson_95_ci": {
+        "low": 0.34238022750665303,
+        "high": 1.0
+      },
+      "successful_run_metrics": {
+        "sample_size": 2,
+        "task_time_s": {
+          "mean": 149.54199999998593,
+          "min": 148.35599999998027,
+          "max": 150.7279999999916
+        },
+        "max_joint_torque_nm": {
+          "mean": 238.89766863961222,
+          "min": 238.89766863961222,
+          "max": 238.89766863961222
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.3058784128934493,
+          "min": 1.3057896081008131,
+          "max": 1.3059672176860855
+        }
+      }
+    }
+  },
+  "by_variant": {
+    "coop-depth-cad": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 1,
+      "failures": 0,
+      "success_rate": 1.0,
+      "wilson_95_ci": {
+        "low": 0.20654931437723745,
+        "high": 1.0
+      },
+      "successful_run_metrics": {
+        "sample_size": 1,
+        "task_time_s": {
+          "mean": 150.7279999999916,
+          "min": 150.7279999999916,
+          "max": 150.7279999999916
+        },
+        "max_joint_torque_nm": {
+          "mean": 238.89766863961222,
+          "min": 238.89766863961222,
+          "max": 238.89766863961222
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.3057896081008131,
+          "min": 1.3057896081008131,
+          "max": 1.3057896081008131
+        }
+      }
+    },
+    "no-coop-depth-cad": {
+      "recorded_count": 1,
+      "sample_size": 1,
+      "execution_errors": 0,
+      "successes": 1,
+      "failures": 0,
+      "success_rate": 1.0,
+      "wilson_95_ci": {
+        "low": 0.20654931437723745,
+        "high": 1.0
+      },
+      "successful_run_metrics": {
+        "sample_size": 1,
+        "task_time_s": {
+          "mean": 148.35599999998027,
+          "min": 148.35599999998027,
+          "max": 148.35599999998027
+        },
+        "max_joint_torque_nm": {
+          "mean": 238.89766863961222,
+          "min": 238.89766863961222,
+          "max": 238.89766863961222
+        },
+        "highest_tray_center_z_m": {
+          "mean": 1.3059672176860855,
+          "min": 1.3059672176860855,
+          "max": 1.3059672176860855
+        }
+      }
+    }
+  },
+  "paired_cooperation": {
+    "candidate_pairs": 1,
+    "complete_pairs": 1,
+    "missing_variant_pairs": 0,
+    "both_success": 1,
+    "cooperation_only_success": 0,
+    "no_cooperation_only_success": 0,
+    "both_failed": 0
+  },
+  "expected_rejections": {
+    "sample_size": 0,
+    "observed": 0,
+    "policy": "safety_rejection_is_reported_separately_from_task_success"
+  },
+  "target_height_grid": {
+    "tested_heights_m": [],
+    "successful_heights_m": [],
+    "maximum_successful_tested_height_m": null,
+    "scope": "preregistered_tested_grid_only_not_global_reach"
+  },
+  "historical_dataset_policy": "mobile_native_runs_only; historical_fixture_or_handle_data_not_combined"
+}

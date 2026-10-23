@@ -20,7 +20,8 @@
       "base_yaw_speed_tolerance_rad_s": 0.025,
       "settle_hold_s": 0.5
     },
-    "parameter_provenance": "synthetic motion durations and verification tolerances; model qpos0 is the home target, not measured hardware calibration"
+    "parameter_provenance": "synthetic motion durations and verification tolerances; model qpos0 is the home target, not measured hardware calibration",
+    "navigation_pose_source": "https://github.com/RainbowRobotics/rby1-sdk/blob/ac7e83056e0775c4680a50d8c7cb3d9c3c66164d/examples/python/37_mobile_test.py; example pose, checked for this scene, not certified travel posture"
   },
   "controller": "ik_position_baseline",
   "seed": 0,
@@ -326,5 +327,31 @@
     "upstream_kp_nm_per_rad": 4000.0,
     "upstream_kv_nms_per_rad": 400.0,
     "force_limits": "unchanged_upstream"
+  },
+  "monitoring": {
+    "enabled": true,
+    "period_s": 1.0,
+    "width_px": 320,
+    "role": "monitor_only; controller uses stationary full-resolution observations"
+  },
+  "perception": {
+    "estimator": "depth_cad",
+    "max_update_position_m": 0.025,
+    "max_update_yaw_rad": 0.08,
+    "source": "synthetic CAD/geometry gates; not measured sensor covariance"
+  },
+  "cooperation": {
+    "enabled": true,
+    "sample_period_s": 0.02,
+    "filter_time_constant_s": 0.15,
+    "position_warning_m": 0.004,
+    "position_stop_m": 0.02,
+    "orientation_warning_rad": 0.025,
+    "orientation_stop_rad": 0.12,
+    "imbalance_warning": 0.25,
+    "imbalance_stop": 0.75,
+    "minimum_speed_scale": 0.35,
+    "stop_hold_s": 0.3,
+    "source": "synthetic supervision thresholds; encoder relative pose and model gravity compensated flange FT; not force/admittance control"
   }
 }

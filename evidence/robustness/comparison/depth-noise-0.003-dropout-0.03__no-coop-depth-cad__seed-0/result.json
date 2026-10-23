@@ -1,0 +1,739 @@
+{
+  "success": true,
+  "terminal": true,
+  "failure_reason": null,
+  "failure_time_s": null,
+  "failure_event": null,
+  "milestones": {
+    "grasped": true,
+    "lifted": true,
+    "seated": true,
+    "released": true,
+    "withdrawn": true,
+    "returned_home": true
+  },
+  "milestone_times_s": {
+    "grasped": 42.94400000000652,
+    "lifted": 47.16600000001168,
+    "seated": 111.22799999992218,
+    "released": 115.24599999991281,
+    "withdrawn": 119.73999999990234,
+    "returned_home": 148.34799999998023
+  },
+  "checks": {
+    "full_pad_contact": false,
+    "opposed_contacts": false,
+    "pad_force_sufficient": false,
+    "secure_grasp": false,
+    "fully_released": true,
+    "robot_tray_contact": false,
+    "payloads_contained": true,
+    "payloads_supported": true,
+    "payloads_settled": true,
+    "tray_lifted": true,
+    "tray_in_target_xy": true,
+    "tray_on_support": true,
+    "tray_slow": true,
+    "tray_upright": true,
+    "forbidden_contact": false,
+    "return_home_joint_position": true,
+    "return_home_joint_stopped": true,
+    "return_home_head_position": true,
+    "return_home_head_stopped": true,
+    "return_home_gripper_position": true,
+    "return_home_base_position": true,
+    "return_home_base_yaw": true,
+    "return_home_base_stopped": true,
+    "return_home_candidate": true,
+    "task_preserved_after_withdrawal": true
+  },
+  "metrics": {
+    "max_tracking_error_rad": 0.004663258264482374,
+    "max_joint_torque_nm": 239.298168695625,
+    "max_finger_actuator_force_n": 22.169779825290878
+  },
+  "updates": 74175,
+  "last_time_s": 148.34799999998023,
+  "evaluation": {
+    "success": true,
+    "terminal": true,
+    "failure_reason": null,
+    "failure_time_s": null,
+    "failure_event": null,
+    "milestones": {
+      "grasped": true,
+      "lifted": true,
+      "seated": true,
+      "released": true,
+      "withdrawn": true,
+      "returned_home": true
+    },
+    "milestone_times_s": {
+      "grasped": 42.94400000000652,
+      "lifted": 47.16600000001168,
+      "seated": 111.22799999992218,
+      "released": 115.24599999991281,
+      "withdrawn": 119.73999999990234,
+      "returned_home": 148.34799999998023
+    },
+    "checks": {
+      "full_pad_contact": false,
+      "opposed_contacts": false,
+      "pad_force_sufficient": false,
+      "secure_grasp": false,
+      "fully_released": true,
+      "robot_tray_contact": false,
+      "payloads_contained": true,
+      "payloads_supported": true,
+      "payloads_settled": true,
+      "tray_lifted": true,
+      "tray_in_target_xy": true,
+      "tray_on_support": true,
+      "tray_slow": true,
+      "tray_upright": true,
+      "forbidden_contact": false,
+      "return_home_joint_position": true,
+      "return_home_joint_stopped": true,
+      "return_home_head_position": true,
+      "return_home_head_stopped": true,
+      "return_home_gripper_position": true,
+      "return_home_base_position": true,
+      "return_home_base_yaw": true,
+      "return_home_base_stopped": true,
+      "return_home_candidate": true,
+      "task_preserved_after_withdrawal": true
+    },
+    "metrics": {
+      "min_pad_force_n": 0.0,
+      "left_grasp_force_n": 0.0,
+      "right_grasp_force_n": 0.0,
+      "max_payload_speed_m_s": 0.00319484246344156,
+      "return_home_max_joint_error_rad": 0.0006652481612167179,
+      "return_home_max_joint_speed_rad_s": 0.0035635295604352674,
+      "return_home_max_head_error_rad": 0.0001489994399401001,
+      "return_home_max_head_speed_rad_s": 1.5376439338694447e-06,
+      "return_home_max_gripper_error_m": 0.0005682359990582637,
+      "return_home_base_position_error_m": 0.01084502838778109,
+      "return_home_base_yaw_error_rad": 9.64795992144908e-05,
+      "return_home_base_linear_speed_m_s": 9.287359443306262e-05,
+      "return_home_base_yaw_speed_rad_s": 6.893900021725489e-06
+    },
+    "updates": 74175,
+    "last_time_s": 148.34799999998023
+  },
+  "run_completed": true,
+  "wall_time_s": 121.74907721905038,
+  "simulation_time_s": 148.34799999998023,
+  "highest_tray_center_z_m": 1.3057822085771285,
+  "task": "floor_to_container_and_return_home",
+  "modeling_scope": "mobile native-gripper simulation; RGB-D perception and encoder odometry; synthetic calibration",
+  "mission": {
+    "phase": "complete",
+    "phase_elapsed_s": 8.944000000042706,
+    "failure": null,
+    "perception": {
+      "timestamp_sim_s": 114.38599999991482,
+      "seat_verification": {
+        "passed": true,
+        "inferred_tray_center_z_m": 1.2173058148812894,
+        "expected_tray_center_z_m": 1.212,
+        "height_error_m": 0.00530581488128945,
+        "preseat_hand_load_n": 4.779747191130473,
+        "settled_hand_load_n": 0.0,
+        "expected_task_weight_n": 4.542030000000001,
+        "minimum_preseat_hand_load_n": 1.1355075000000003,
+        "minimum_preseat_load_fraction": 0.25,
+        "load_values_finite": true,
+        "world_vertical_hand_load": {
+          "hands": {
+            "right": {
+              "force_delta_local_n": [
+                0.5348088488493766,
+                5.1400695675656145,
+                -8.703214589038968
+              ],
+              "force_delta_world_n": [
+                -5.036692904903573,
+                0.6576235628467296,
+                -8.755086274752824
+              ],
+              "signed_world_vertical_component_n": -8.755086274752824,
+              "upward_support_component_n": 0.0,
+              "downward_component_n": 8.755086274752824
+            },
+            "left": {
+              "force_delta_local_n": [
+                -0.9757682841876466,
+                5.979700780831817,
+                -9.311199796449662
+              ],
+              "force_delta_world_n": [
+                -5.8990339276964825,
+                -0.857719137748125,
+                -9.374065469300811
+              ],
+              "signed_world_vertical_component_n": -9.374065469300811,
+              "upward_support_component_n": 0.0,
+              "downward_component_n": 9.374065469300811
+            }
+          },
+          "signed_world_vertical_total_n": -18.129151744053637,
+          "total_upward_support_component_n": 0.0,
+          "total_downward_component_n": 18.129151744053637,
+          "gravity_axis_world": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "source": "wheel_odometry_plus_joint_encoder_fk_plus_tared_wrist_ft",
+          "force_sign_provenance": "MuJoCo flange sensor convention; hardware driver must declare and validate its flange-force sign before replay"
+        },
+        "load_transfer_ratio_max": 0.8,
+        "source": "wheel_odometry_plus_joint_encoder_fk_plus_wrist_ft",
+        "load_gate_provenance": "synthetic 25% expected task-weight observability threshold; replace with hardware FT noise and payload identification validation",
+        "simulator_contact_or_object_pose_used": false
+      }
+    },
+    "command": {
+      "time_s": 148.34599999998022,
+      "phase": "return_home",
+      "upper_body_position_reference_rad": [
+        1.989579089920211e-08,
+        5.3578516866086566e-05,
+        2.1652862117553305e-06,
+        -6.912600261386986e-06,
+        1.5365771375326722e-07,
+        -3.9905295955571794e-07,
+        -0.000672997071653105,
+        -0.00028114921385379466,
+        0.0005713832388070095,
+        -0.0001966773446406137,
+        -0.0006623677440235719,
+        0.0005487742779851184,
+        0.00040206415025053407,
+        -0.000658027217169031,
+        0.0002479036434411209,
+        -0.0005720535998465866,
+        -0.0001249520700555292,
+        0.0006595009107201326,
+        0.0005668192182096907,
+        0.00048691914489264735
+      ],
+      "upper_body_velocity_reference_rad_s": [
+        -1.0670537530318538e-07,
+        -0.0002873530275498192,
+        -1.1612892346663684e-05,
+        3.7073751375311195e-05,
+        -8.240991321902875e-07,
+        2.1402062391471768e-06,
+        0.0036094270126034575,
+        0.0015078632728125394,
+        -0.0030644503275965526,
+        0.0010548225994048055,
+        0.003552419658652266,
+        -0.002943193642605357,
+        -0.002156355897877884,
+        0.003529140486219554,
+        -0.0013295601791569404,
+        0.003068045617006163,
+        0.000670144635000149,
+        -0.003537044219438729,
+        -0.0030399725104945886,
+        -0.002611451354776734
+      ],
+      "head_position_reference_rad": [
+        0.0,
+        0.0
+      ],
+      "gripper_position_reference_m": -0.00044952001493658855,
+      "wheel_velocity_reference_rad_s": {
+        "front_right_wheel_act": 0.0,
+        "front_left_wheel_act": 0.0,
+        "rear_right_wheel_act": 0.0,
+        "rear_left_wheel_act": 0.0
+      },
+      "observation": {
+        "timestamp_sim_s": 148.34599999998022,
+        "upper_body_joint_position_rad": [
+          -1.7189080292800854e-06,
+          -1.3550935596186654e-05,
+          -2.937478024076523e-05,
+          -4.892817944473102e-06,
+          1.8740013945671844e-07,
+          -1.4325899868864394e-06,
+          -0.0006656370321297909,
+          -0.00027909295934810626,
+          0.0005796671967715856,
+          -0.00019162317327517058,
+          -0.0006723752203375885,
+          0.0005585427327267798,
+          0.00040806522834454297,
+          -0.0006519182409113862,
+          0.0002462701112346883,
+          -0.0005805901233527834,
+          -0.00011939757876430786,
+          0.0006692402625767469,
+          0.0005767073016490051,
+          0.0004941572292570037
+        ],
+        "upper_body_joint_velocity_rad_s": [
+          4.078741161478692e-06,
+          -0.00012574374272890935,
+          -0.00011991247772739016,
+          -0.00014170094795077972,
+          -9.667566791319227e-06,
+          3.065106927975777e-06,
+          0.003577338212263033,
+          0.001505765577416626,
+          -0.0030993622499345063,
+          0.0010287057636970724,
+          0.0035942742241645794,
+          -0.0029857188031528546,
+          -0.00218147001293252,
+          0.003498927754244153,
+          -0.0013311209709846697,
+          0.0031039714290122832,
+          0.0006404727479102792,
+          -0.0035777487165689274,
+          -0.003083238012448135,
+          -0.0026417473795701373
+        ],
+        "head_joint_position_rad": [
+          6.210398023917687e-10,
+          0.00014900251522796784
+        ],
+        "head_joint_velocity_rad_s": [
+          1.8901631770797085e-07,
+          -1.5241724672682006e-06
+        ],
+        "wheel_encoder_angle_rad": [
+          0.13537473870850208,
+          0.1357177470236546,
+          0.14255028189718855,
+          0.14308340591958818
+        ],
+        "wheel_encoder_velocity_rad_s": [
+          0.0006170391047670525,
+          0.0005745416684804683,
+          0.0006229688326550674,
+          0.0005018439839802873
+        ],
+        "wheel_odometry_pose_xy_yaw": [
+          -0.3894221124001138,
+          3.727913319203252e-05,
+          -6.77696201911715e-05
+        ],
+        "estimated_linear_speed_m_s": 4.401147820676243e-05,
+        "estimated_yaw_rate_rad_s": 1.2689075167475388e-05,
+        "imu_yaw_rad": null,
+        "gripper_position_m": {
+          "l": [
+            -0.0005693916851552606,
+            -0.0005710136755931209
+          ],
+          "r": [
+            -0.000569391299242,
+            -0.0005709816173213474
+          ]
+        },
+        "wrist_wrench_local": {
+          "left": {
+            "force_n": [
+              -0.018809557098030814,
+              0.007327211895275887,
+              5.231653886092608
+            ],
+            "torque_nm": [
+              0.0004029193048427843,
+              -0.010343465840603376,
+              0.0006132026729840127
+            ]
+          },
+          "right": {
+            "force_n": [
+              -0.015658663982864397,
+              -0.0071175658622402846,
+              5.2308754334191985
+            ],
+            "torque_nm": [
+              -0.0003276171781957767,
+              -0.010487430791935676,
+              0.00011880222509099648
+            ]
+          }
+        },
+        "frame_conventions": {
+          "odometry": "world-aligned wheel-encoder odometry x/y/yaw",
+          "wrist_wrench": "named wrist FT site local frame"
+        },
+        "ground_truth_body_pose_or_contact_included": false
+      },
+      "controller_inputs": {
+        "tray_pose": "rgbd_estimate",
+        "base_pose": "wheel_encoder_odometry",
+        "simulator_object_pose_used": false
+      },
+      "cooperative_transport": {
+        "active": false,
+        "speed_scale": 1.0,
+        "enabled": false
+      }
+    },
+    "drive": {
+      "time_s": 148.34799999998023,
+      "ground_truth_pose_xy_yaw": [
+        -0.3891549722596205,
+        -3.7472891421202955e-06,
+        9.64795992144908e-05
+      ],
+      "wheel_odometry_pose_xy_yaw": [
+        -0.3894221124001138,
+        3.727913319203252e-05,
+        -6.77696201911715e-05
+      ],
+      "wheel_encoder_angle_rad": {
+        "wheel_fr": 0.13537473870850208,
+        "wheel_fl": 0.1357177470236546,
+        "wheel_rr": 0.14255028189718855,
+        "wheel_rl": 0.14308340591958818
+      },
+      "imu_yaw_rad": null,
+      "estimated_linear_speed_m_s": 4.401147820676243e-05,
+      "estimated_yaw_rate_rad_s": 1.2689075167475388e-05,
+      "evaluation_only_odometry_error_xy_m": 0.00027027212581459594,
+      "evaluation_only_odometry_yaw_error_rad": 0.00016424921940583204,
+      "base_linear_velocity_m_s": [
+        9.274909200070026e-05,
+        -1.6362998436516462e-09,
+        4.807335362252174e-06
+      ],
+      "base_angular_velocity_rad_s": [
+        7.582558423186339e-07,
+        6.986023235997166e-05,
+        6.893900021725489e-06
+      ],
+      "wheel_velocity_rad_s": {
+        "wheel_fr": 0.000604865946135963,
+        "wheel_fl": 0.0005623159974451099,
+        "wheel_rr": 0.0006108899275194306,
+        "wheel_rl": 0.0004896202262032116
+      },
+      "wheel_actuator_torque_nm": {
+        "front_right_wheel_act": -0.060486594613596296,
+        "front_left_wheel_act": -0.05623159974451099,
+        "rear_right_wheel_act": -0.06108899275194306,
+        "rear_left_wheel_act": -0.04896202262032116
+      },
+      "max_abs_wheel_actuator_torque_nm": 0.06108899275194306,
+      "wheel_command_rad_s": {
+        "front_right_wheel_act": 0.0,
+        "front_left_wheel_act": 0.0,
+        "rear_right_wheel_act": 0.0,
+        "rear_left_wheel_act": 0.0
+      },
+      "base_roll_rad": 2.7602543454580028e-05,
+      "base_pitch_rad": -7.226646241008946e-05,
+      "base_tilt_rad": 7.735852890555023e-05,
+      "within_tilt_limit": true,
+      "estimated_is_stopped": true,
+      "evaluation_only_is_physically_stopped": true,
+      "simulation_parameters": {
+        "wheel_radius_m": 0.076,
+        "half_track_m": 0.245,
+        "max_linear_speed_m_s": 0.06,
+        "max_yaw_rate_rad_s": 0.35,
+        "max_wheel_speed_rad_s": 3.14,
+        "max_wheel_accel_rad_s2": 0.5,
+        "position_kp_s_inv": 0.8,
+        "yaw_kp_s_inv": 1.2,
+        "position_tolerance_m": 0.012,
+        "yaw_tolerance_rad": 0.02,
+        "stop_speed_m_s": 0.012,
+        "stop_yaw_rate_rad_s": 0.025,
+        "lateral_target_tolerance_m": 0.05,
+        "tilt_limit_rad": 0.1,
+        "wheel_velocity_gain_nms_per_rad": 100.0,
+        "encoder_wrap_period_rad": 6.283185307179586,
+        "initial_pose_xy_yaw": [
+          -0.4,
+          0.0,
+          0.0
+        ]
+      },
+      "model_scope": "rigid-mesh wheels; validated longitudinal/stop; no lateral-motion claim"
+    },
+    "home_reference": {
+      "joint_tolerance_rad": 0.01,
+      "joint_speed_tolerance_rad_s": 0.02,
+      "head_tolerance_rad": 0.01,
+      "head_speed_tolerance_rad_s": 0.02,
+      "gripper_tolerance_m": 0.002,
+      "base_position_tolerance_m": 0.02,
+      "base_yaw_tolerance_rad": 0.02,
+      "base_speed_tolerance_m_s": 0.012,
+      "base_yaw_speed_tolerance_rad_s": 0.025,
+      "settle_hold_s": 0.5,
+      "joint_names": [
+        "torso_0",
+        "torso_1",
+        "torso_2",
+        "torso_3",
+        "torso_4",
+        "torso_5",
+        "right_arm_0",
+        "right_arm_1",
+        "right_arm_2",
+        "right_arm_3",
+        "right_arm_4",
+        "right_arm_5",
+        "right_arm_6",
+        "left_arm_0",
+        "left_arm_1",
+        "left_arm_2",
+        "left_arm_3",
+        "left_arm_4",
+        "left_arm_5",
+        "left_arm_6"
+      ],
+      "joint_position_rad": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "head_position_rad": [
+        0.0,
+        0.0
+      ],
+      "gripper_position_m": 0.0,
+      "base_pose_xy_yaw": [
+        -0.4,
+        0.0,
+        0.0
+      ]
+    },
+    "cooperation": {
+      "active": false,
+      "speed_scale": 1.0,
+      "enabled": false
+    },
+    "cooperation_summary": {
+      "samples": 2837,
+      "slowdown_samples": 0,
+      "stop_events": 0,
+      "max_relative_position_error_m": 0.0008891182666514341,
+      "max_relative_orientation_error_rad": 0.0012822895263093815,
+      "max_load_imbalance_change": 0.15481561865721613,
+      "minimum_speed_scale": 1.0
+    },
+    "monitoring": {
+      "frame_count": 0,
+      "sample_period_s": 1.0,
+      "source": "recorded_named_RGBD_cameras_not_external_view"
+    },
+    "wrist_proprioception": {
+      "right": {
+        "wrench": {
+          "force_n": [
+            -0.016284632855765337,
+            -0.007034666090927619,
+            5.23090888710475
+          ],
+          "torque_nm": [
+            -0.00032341716120731643,
+            -0.010457800761280011,
+            0.00011767504685241973
+          ]
+        },
+        "tare": {
+          "force_n": [
+            -0.0007851150881682373,
+            0.0014591405618121838,
+            5.234775343910986
+          ],
+          "torque_nm": [
+            9.842138276630227e-05,
+            -0.011523845203680314,
+            3.2321398357099967e-06
+          ]
+        },
+        "force_delta_n": [
+          -0.0154995177675971,
+          -0.008493806652739803,
+          -0.003866456806235874
+        ],
+        "torque_delta_nm": [
+          -0.0004218385439736187,
+          0.0010660444424003025,
+          0.00011444290701670973
+        ],
+        "force_delta_norm_n": 0.01809224393812644,
+        "torque_delta_norm_nm": 0.0011521699915033328,
+        "finger_position_m": [
+          -0.0005666223352055829,
+          -0.0005682041240189846
+        ],
+        "gripper_actuator_force_n": 0.00951563821846857
+      },
+      "left": {
+        "wrench": {
+          "force_n": [
+            -0.019415563375233223,
+            0.007289096569533105,
+            5.231680364866658
+          ],
+          "torque_nm": [
+            0.00040100771505179717,
+            -0.010314717776498993,
+            0.0006081902886991445
+          ]
+        },
+        "tare": {
+          "force_n": [
+            0.00044418330308509626,
+            0.0012502991151272203,
+            5.234781076124244
+          ],
+          "torque_nm": [
+            8.798096352345458e-05,
+            -0.011585287189842369,
+            2.776047223471975e-06
+          ]
+        },
+        "force_delta_n": [
+          -0.01985974667831832,
+          0.006038797454405885,
+          -0.003100711257586042
+        ],
+        "torque_delta_nm": [
+          0.0003130267515283426,
+          0.001270569413343376,
+          0.0006054142414756725
+        ],
+        "force_delta_norm_n": 0.020987878004344207,
+        "torque_delta_norm_nm": 0.0014418248108136029,
+        "finger_position_m": [
+          -0.0005666227158630875,
+          -0.0005682359990582637
+        ],
+        "gripper_actuator_force_n": 0.009515893859361801
+      }
+    },
+    "data_contract": {
+      "head_observation": "registered RGB uint8 + metric axial depth + K + T_world_optical",
+      "base_observation": "four wheel encoder angles; optional IMU yaw",
+      "wrist_observation": "replaceable RGB-D/force verification hook",
+      "upper_body_command": "20 joint position/velocity references in SI units",
+      "base_command": "four wheel velocity references in rad/s",
+      "ground_truth_policy": "evaluation only; excluded from controller inputs"
+    },
+    "detected_tray": {
+      "center_world_m": [
+        0.6508164010670006,
+        -0.0001420677746372631,
+        0.012274677144055068
+      ],
+      "yaw_rad": -0.021816615649929094,
+      "dimensions_m": [
+        0.3491013053893993,
+        0.5252908597353458
+      ],
+      "covariance_xyzyaw": [
+        [
+          5.944818113974773e-05,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          5.944818113974773e-05,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          2.5e-07,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          2.4250212272843224e-05
+        ]
+      ],
+      "plane_normal_world": [
+        -0.0005291586527756075,
+        -6.246950947215134e-06,
+        0.9999998599760381
+      ],
+      "pixel_count": 24830,
+      "quality": {
+        "valid": true,
+        "source": "depth_cad_observation",
+        "mask": "world_height_connected_component",
+        "mask_parameters": "height_bin=0.0040m,height_band=0.0060m",
+        "plane_fit": "deterministic horizontal RANSAC plus PCA refinement",
+        "plane_inlier_ratio": 0.8956504228755537,
+        "footprint_fit": "CAD dimension sweep at 0.25 degree resolution",
+        "footprint_hull_coverage": 0.9926161454629442,
+        "image_component_fill_ratio": 0.8267572337095861,
+        "candidate_count": 47,
+        "hypothesis_count": 1,
+        "score_margin": null,
+        "selection_prior": "none_ambiguity_reject",
+        "hypothesis_merge_distance_m": 0.093,
+        "geometry_fit_score": 0.009535813451011224,
+        "plane_rms_m": 0.0020390084732893566,
+        "max_dimension_relative_error": 0.06155563067365774,
+        "pixel_scale_m": 0.0025075132064874828,
+        "score_0_to_1": 0.7438393525889069,
+        "uncertainty_semantics": "heuristic_uncertainty_proxy_not_calibrated_covariance",
+        "uncertainty_sources": "pixel_scale,CAD_dimension_residual,plane_fit_residual,footprint_hull_coverage,yaw_sweep_resolution",
+        "uncertainty_excludes": "camera_intrinsic_bias,camera_extrinsic_bias,depth_scale_bias,RGB_depth_registration_bias,clock_synchronization_error,model_to_hardware_systematic_error"
+      },
+      "grasps": [
+        {
+          "side": "left",
+          "position_world_m": [
+            0.6567064200263321,
+            0.2697936795369382,
+            0.062274677144055074
+          ],
+          "yaw_world_rad": 1.5489797111449675,
+          "contact_surface": "native_tray_rim"
+        },
+        {
+          "side": "right",
+          "position_world_m": [
+            0.6449263821076691,
+            -0.27007781508621276,
+            0.062274677144055074
+          ],
+          "yaw_world_rad": 1.5489797111449675,
+          "contact_surface": "native_tray_rim"
+        }
+      ],
+      "frame_convention": "world pose; camera optical frame is +X right, +Y down, +Z forward",
+      "yaw_ambiguity": "rectangle appearance is invariant under yaw+pi; yaw is canonicalized so the estimated short axis points toward world +X (then +Y at tie)"
+    }
+  }
+}

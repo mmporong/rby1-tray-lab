@@ -28,6 +28,20 @@
   },
   "control_dt_s": 0.002,
   "controller": "ik_position_baseline",
+  "cooperation": {
+    "enabled": true,
+    "filter_time_constant_s": 0.15,
+    "imbalance_stop": 0.75,
+    "imbalance_warning": 0.25,
+    "minimum_speed_scale": 0.35,
+    "orientation_stop_rad": 0.12,
+    "orientation_warning_rad": 0.025,
+    "position_stop_m": 0.02,
+    "position_warning_m": 0.004,
+    "sample_period_s": 0.02,
+    "source": "synthetic supervision thresholds; encoder relative pose and model gravity compensated flange FT; not force/admittance control",
+    "stop_hold_s": 0.3
+  },
   "drive": {
     "max_linear_speed_m_s": 0.06,
     "max_wheel_accel_rad_s2": 0.5,
@@ -60,6 +74,7 @@
       "settle_hold_s": 0.5
     },
     "initial_hold_s": 1.0,
+    "navigation_pose_source": "https://github.com/RainbowRobotics/rby1-sdk/blob/ac7e83056e0775c4680a50d8c7cb3d9c3c66164d/examples/python/37_mobile_test.py; example pose, checked for this scene, not certified travel posture",
     "parameter_provenance": "synthetic motion durations and verification tolerances; model qpos0 is the home target, not measured hardware calibration",
     "prepare_duration_s": 8.0,
     "return_drive_timeout_s": 30.0,
@@ -74,8 +89,20 @@
     "observation": "RGB-D tray perception; encoder wheel odometry; GT reserved for evaluation",
     "parameters": "synthetic design values; replace with measured calibration"
   },
+  "monitoring": {
+    "enabled": true,
+    "period_s": 1.0,
+    "role": "monitor_only; controller uses stationary full-resolution observations",
+    "width_px": 320
+  },
   "motion_duration_scale": 2.0,
   "payload_mass_scale": 1.0,
+  "perception": {
+    "estimator": "depth_cad",
+    "max_update_position_m": 0.025,
+    "max_update_yaw_rad": 0.08,
+    "source": "synthetic CAD/geometry gates; not measured sensor covariance"
+  },
   "physics_dt_s": 0.002,
   "record_dt_s": 0.02,
   "schema_version": 1,

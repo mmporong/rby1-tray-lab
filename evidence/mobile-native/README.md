@@ -1,34 +1,39 @@
-# 이동형 기본 CAD 그리퍼 왕복 실행 근거
+# 이동형 깊이 인식·양팔 운반 실행 근거
 
-소스 커밋 `4963881fe6dc27aa9f7ef741721ec0fdef038cd2`과 `configs/mobile-native.json`의 실행이다. 모델 기본 자세에서 출발해 낮은 작업 자세를 준비하고, RGB-D 바닥 트레이 인식·양팔 파지·적재 주행·1.20 m 컨테이너 안착·손 해제·회수를 수행했다. 이후 출발 위치로 후진하고 같은 모델 기본 자세로 돌아와 정지했다.
+소스 커밋 `c7967a9aab6a31fafc574150d959c36477f9cf59`의 실행이다. 모델 기본 자세에서 이동 준비 자세로 전환해 접근·정차하고 트레이를 인식했다. 파지 자세로 낮춘 후와 파지 접근 후에 재관측하고, 손목 깊이 형상과 FT로 파지를 확인했다. 적재 주행·1.20 m 컨테이너 안착·손 회수 후 출발 위치까지 후진해 기본 자세로 복귀했다.
+
+전체 작업은 151.232초에 6개 성공 조건을 통과했다. 주행·상승 중 양팔 상대 자세와 FT 지지력 비율을 50 Hz로 검사해 속도를 조절했다. 이는 기준 궤적의 감속과 지속 임계 초과 중단이며 힘 목표를 추종하는 제어는 아니다.
 
 | 파일 | 역할 |
 |---|---|
-| [rollout.mp4](rollout.mp4) / [rollout.gif](rollout.gif) | 같은 물리 실행의 약 4배속 프레임. MP4는 GIF 프레임을 H.264로 변환 |
-| [initial.png](initial.png) / [final.png](final.png) | 첫 렌더와 안착·후진·기본 자세 복귀 후 상태 |
-| [home-cycle-validation.json](home-cycle-validation.json) | 모델 qpos0 기준, 시작·종료 실제 상태, 후진 거리, 복귀 오차와 안착 유지 |
-| [pickup-approach.png](pickup-approach.png) | 별도 60 FPS 기록의 169번 프레임, 물리 22.534초 |
-| [result.json](result.json) | 140.246초, 성공, 6개 milestone, 최고 트레이 중심 1.307726 m |
-| [summary.json](summary.json) | 파지 후 첫 안착 전 50 Hz trace 3,420개 모두 secure, 최소 접촉력 2.652 N, 금지 접촉 기록 0 |
-| [trace.jsonl.gz](trace.jsonl.gz) | 실제 로봇·물체·접촉·독립 평가 상태. 물체 정답과 베이스 정답 pose는 제어 입력에서 제외 |
-| [controller-data/schema.json](controller-data/schema.json) | 단위·joint order·한계·클록·home_reference·어댑터 경계 |
-| [controller-data/frames.json](controller-data/frames.json) | 머리·양손목 RGB-D 5프레임의 시각과 원본 NPZ 경로 |
-| [controller-data/commands.jsonl.gz](controller-data/commands.jsonl.gz) | 500 Hz 명령·엔코더·그리퍼·FT 70,123개. 준비·후진·복귀 포함 |
-| [controller-data/perception.jsonl](controller-data/perception.jsonl) | 머리 인식·손목 확인·FT 안착 판정 |
-| [controller-validation.json](controller-validation.json) | 패킷 무결성과 저장된 RGB-D 인식 재실행 PASS |
-| [sensor-preview.png](sensor-preview.png) | 머리 1회·닫기 전 양손목 RGB/depth 표시. 깊이는 프레임별 1–99 백분위로 정규화 |
-| [pickup-path-comparison.json](pickup-path-comparison.json) | 픽업 접근·하강·폐쇄·유지 구간에 한정한 과거 기립 경유와 현재 낮은 경로의 저장 엔코더 FK 비교 |
-| [config.json](config.json) / [scene.xml](scene.xml) / [upstream.json](upstream.json) | 실행 설정·장면·고정 원본과 메시·라이선스 provenance |
-| [manifest.json](manifest.json) | 실행 소스와 원본 산출물 SHA-256. gzip은 압축 해제 내용으로 대조 |
-| [presentation-manifest.json](presentation-manifest.json) | 압축 파일·파생 파일 해시와 물리·재생 manifest 참조 |
+| [rollout.mp4](rollout.mp4), [rollout.gif](rollout.gif) | 같은 물리 실행의 약 4배속 렌더 |
+| [initial.png](initial.png), [final.png](final.png) | 출발과 안착·후진·기본 자세 복귀 상태 |
+| [result.json](result.json), [summary.json](summary.json) | 151.232초, 6개 조건 성공, 최대 토크·접촉·감속 지표 |
+| [home-cycle-validation.json](home-cycle-validation.json) | 실제 시작·종료 상태, 후진 변위, 복귀 오차, 안착 유지 |
+| [trace.jsonl.gz](trace.jsonl.gz) | 50 Hz 상태 기록. 각 물리 스텝의 독립 평가 결과 포함 |
+| [controller-data/commands.jsonl.gz](controller-data/commands.jsonl.gz) | 500 Hz 명령·엔코더·그리퍼·FT 75,616개 |
+| [controller-data/frames.json](controller-data/frames.json) | 정차 제어 관측 7프레임. 머리 3회, 양 손목 각각 2회 |
+| [controller-data/monitor-frames.json](controller-data/monitor-frames.json) | 1 Hz 모니터 456프레임의 카메라·시각·역할 |
+| [controller-data/monitor-observations](controller-data/monitor-observations) | 모니터 RGB·metric depth·K·TF·시각 NPZ |
+| [controller-data/perception.jsonl](controller-data/perception.jsonl) | 깊이/CAD 추정, 재관측 변화량, 국소 테두리 검증, 안착 판정 |
+| [controller-data/cooperation.jsonl](controller-data/cooperation.jsonl) | 운반 중 양팔 상대 자세·FT 하중 비율·감속 판단 |
+| [controller-data/schema.json](controller-data/schema.json) | 단위·관절 순서·명령과 관측 경계·기본 자세 기준 |
+| [controller-validation.json](controller-validation.json) | 패킷 무결성과 저장 관측 3회의 오프라인 인식 재실행 PASS |
+| [sensor-preview.png](sensor-preview.png) | 물리 40.002초 공통 배치의 RGB·고정 범위 깊이 6패널 |
+| [load-heatmap.png](load-heatmap.png), [SVG](load-heatmap.svg), [load-analysis.json](load-analysis.json) | 50 Hz 시간×관절 토크/모델 제한 비율, 손가락 접촉력과 수치·단위 |
+| [load-view.png](load-view.png), [load-view.json](load-view.json) | 46초의 3D 관절 부하 표시와 별도 재실행 대조 근거 |
+| [manifest.json](manifest.json) | 원본 소스·산출물 SHA-256. gzip은 압축 해제 내용으로 대조 |
+| [presentation-manifest.json](presentation-manifest.json) | 표시용 파생 자료·재생 자료·GUI 검증 연결 |
 
-모델 XML에는 별도 home 키프레임이 없다. `qpos0`의 몸통·양팔 20관절·헤드 2축은 0 rad, 그리퍼는 0 m다. 베이스 목표는 초기 스테이션 `[-0.4, 0, 0]`이다. 실제 종료 오차는 최대 관절 0.000636 rad, 헤드 0.000149 rad, 그리퍼 0.558 mm, 베이스 10.969 mm였다. 자세·속도가 선언한 허용 오차 안에서 0.5초 유지돼야 성공하며, 손 회수만으로는 실행이 끝나지 않는다. 베이스 정답 pose는 독립 평가 전용이다.
+파지 후 첫 안착 전 trace 3,559개가 모두 secure였고, 최소 손가락 접촉력은 2.534 N이었다. 최대 관절 추종 오차는 0.004848 rad, 최대 구동기 토크는 239.207 Nm다. 실제 복귀 최대 관절 오차는 0.000651 rad, 베이스 위치 오차는 10.859 mm다. 선언한 자세·속도 허용 오차에서 0.5초 유지해야 성공한다.
 
-FT 사전 상향 지지는 4.806 N, 안착 후 상향 지지는 0 N, signed world-Z는 -12.784 N이었다. 관절 FK로 추론한 안착 높이 오차는 3.099 mm다. 양손 회수 이후 후진·자세 복귀 중에도 트레이와 세 적재물의 안착·지지·정지 상태를 2 ms마다 검사했다.
+카메라 모니터는 세 대를 같은 물리 시각의 공통 배치로 기록한다. RGB와 깊이는 같은 NPZ에서 나오며 깊이는 미터 단위 optical Z다. 화면 PNG는 센서별 고정 범위를 사용하고 유효하지 않은 깊이를 자홍색으로 표시한다. 모니터 캡처는 복제한 MuJoCo 상태를 사용해 물리 solver cache를 바꾸지 않는다. 제어용 관측과 모니터 역할을 구분하며 둘을 30 FPS 실시간 제어 스트림으로 부르지 않는다.
 
-렌더 요청은 0.5초 간격이며 마지막은 140.246초다. GIF 재생 길이는 33.720초이며 정확한 물리 시각은 trace/commands를 따른다. `evidence/playback-native`는 같은 소스·설정의 별도 60 FPS 물리 재실행이다. 두 실행의 140.246초·6개 조건 성공을 대조했으며 한 프로세스의 기록이라고 주장하지 않는다.
+`evidence/playback-native`는 같은 소스·설정의 별도 물리 재실행이다. 60 FPS·1,136프레임·18.933초 영상으로 표시 1배속이 시뮬레이션 8배속에 대응한다. 두 실행의 151.232초·6개 조건 성공을 대조했다. 실물 실행·보정·하드웨어 전이 성능은 검증 범위에 포함하지 않는다. [센서·전이 계약](../../docs/sensors-and-transfer.md)에 교체할 값과 인터페이스를 기록한다.
 
-센서·물성·보정은 합성 조건이다. 제조사 stereo 복원·실측 보정·실물 SDK 실행·하드웨어 전이 성공은 검증하지 않았다. [센서·전이 계약](../../docs/sensors-and-transfer.md)에 교체할 값과 인터페이스를 기록한다. 대표 실패 영상은 기존 두 개를 유지한다.
+대표 실패 영상은 기존 두 개를 보존한다. 조건별 실험의 실패는 영상 수를 늘리지 않고 설정·결과·물리 기록으로 남긴다.
+
+[조건별 비교 18회](../robustness/README.md)의 요약·설정·원본 manifest도 보존한다. 부하 히트맵은 강체의 관절 토크와 접촉력이며 구조 응력·파손이나 실물 안전성을 검증하지 않는다. 모델 토크 제한도 하드웨어 실측 정격이 아니다. 50 Hz 표본 최대 토크 239.030 Nm와 500 Hz 전체 스텝 최대값 239.207 Nm를 구분한다.
 
 저장소 루트에서 검사한다.
 
@@ -36,5 +41,3 @@ FT 사전 상향 지지는 4.806 N, 안착 후 상향 지지는 0 N, signed worl
 .venv/bin/python tools/verify_evidence.py evidence/mobile-native
 .venv/bin/python tools/verify_controller_data.py evidence/mobile-native
 ```
-
-로봇 메시 복원은 `fetch-assets`를 따른다. `assets` 링크는 로컬 캐시 연결이며 Git에는 넣지 않는다.

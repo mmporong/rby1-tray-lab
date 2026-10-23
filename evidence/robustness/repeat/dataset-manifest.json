@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "source_sha256": {
+    "src/rby1_tray/__init__.py": "a91e0b62ede8dbc5203342f341b170cec7cb3eeee103e0e9e880657fae065a9f",
+    "src/rby1_tray/assets.py": "f6e4d3c51e91905b066c1c2f8ad24d401f7e3cfab65d21eb60a324ec0147d2c1",
+    "src/rby1_tray/camera.py": "527fd8315d8a7e0fb6f707b56a0d960a35b4e0932a9c3990f55e54fb49e58626",
+    "src/rby1_tray/cli.py": "db944e2781113a46f129dc6df72f7ef8474457e75d2075ce435c5e5f11266203",
+    "src/rby1_tray/cooperation.py": "48d2e488e422588edb1701a0d796315a6d5f8613734ecb92855ad246024bcb40",
+    "src/rby1_tray/evaluation.py": "ed9572841c847fd9ac14f8f91d3384e3e27331e1e9a8ff5f6696fbc4c455c587",
+    "src/rby1_tray/experiments.py": "4367a19702b29aedfe33365f12965abd62f21d6b6e1cb0cccdac64c52d6ac6fe",
+    "src/rby1_tray/mission.py": "d10be1b8231e9478b058132e1fb96032546447c5b72dd2212f85d98154baf903",
+    "src/rby1_tray/mobility.py": "ff8fd487d03c06cb69af1c9d43c0c04df34d0cc1cf3236fb1ccd99f05cfde538",
+    "src/rby1_tray/perception.py": "1a96f5e0cb11623e9e4f06666856bfa05eabe2ba720fbeef67a3a051db836785",
+    "src/rby1_tray/planning.py": "44d3df376f97f7d5ddb56814f21fc6eeb348bfa9cddf99280a1fc34fa38e29bd",
+    "src/rby1_tray/playback.py": "71550da1058031e321ecc75cf9b470678434055522f24fb95cf2cc974a81f225",
+    "src/rby1_tray/scene.py": "a919fef42bc28c93f90daf628447f0bd4bb4203257cae8aee09080c7a03e56cc",
+    "src/rby1_tray/session.py": "c83735bf1686ab8265dd591bcfbd96cba6a84847d3eae71298a6a96671189cee",
+    "src/rby1_tray/viewer.py": "749c3908f3e40338b6273ca374d9255e0266a68038ce19ddcc1f6eb615257c46",
+    "tools/benchmark_mobile.py": "12e7db40eebec8311ced248b99174f289e14d25ebef637d23d262d8efed1bbc1",
+    "configs/mobile-native.json": "d4b56a57a975b69a9249134e7841e421f60f016c0889649dac98963523221689"
+  },
+  "run_manifests": {
+    "nominal__coop-depth-cad__seed-1": {
+      "path": "nominal__coop-depth-cad__seed-1/manifest.json",
+      "sha256": "84ef992030da2b95b7cbfb8b12c244181b3e4f477b1e57655e0717f9ee8fb632"
+    },
+    "nominal__no-coop-depth-cad__seed-1": {
+      "path": "nominal__no-coop-depth-cad__seed-1/manifest.json",
+      "sha256": "fc603b2126186fdc9ff2e9b73e6f2d765072ba2c2024d55672aebd5edff95f31"
+    }
+  },
+  "artifact_sha256": {
+    "preregistered.json": "c4130fe2e8c8b42e78b0385edf32aa8f037f13f6b82a9f68dee70f8202d1b5a5",
+    "summary.json": "a2785d23ac37f74cef5d83d2f3c5b7b5a34421ee12c98ebbccf958f267eeb307"
+  }
+}

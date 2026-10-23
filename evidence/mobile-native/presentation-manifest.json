@@ -1,19 +1,47 @@
 {
-  "source_commit": "4963881fe6dc27aa9f7ef741721ec0fdef038cd2",
-  "original_run_manifest_sha256": "f8b0799f8cf21521251a325d44eee17c8924e985a67a5e7778cbfa58a766255a",
-  "playback_manifest_sha256": "4e20ebd3f1aef777546ebe99684c4ef85bd39eee0962bfd8c26529f394ffcae8",
-  "playback_browser_qa_sha256": "d5f936a24d436c03b5860319bb853d579e479668944fb650e88887c3936ef103",
-  "derivation": "MP4 uses this physical run GIF frames; sensor preview uses stored controller RGB-D and percentile normalization; summary uses recorded grasped and not seated predicates; pickup still is frame 169 of the separate same-source 60 FPS run at simulation time 22.534s; home-cycle validation summarizes actual-state trace and 2 ms evaluator output",
+  "schema_version": 2,
+  "physics_source_commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
+  "interface_source_commit": "c483f0e5138a7630394627c65fd6c086c9ebcf3f",
+  "scope": "Derived presentation evidence, separate from original captured-run manifest",
   "artifact_sha256": {
-    "rollout.mp4": "129561ff5ff0b07d9f17f3cde63a0d4952e27c3e3451296d140af23229dd58aa",
-    "summary.json": "7bfc1d18b911bc633b9f967cdae0489bfeaae6857354692678304818f7582625",
-    "sensor-preview.png": "1e08436d726e485377b58a2553ac62ed27adaaf5c521dbe14cda0b96fe2294dd",
-    "visualization-settings.json": "67365070accce0e252806324fcbfe399a7e6f0303533e53aa6a59a619b467b77",
-    "controller-validation.json": "5d5160b9c5d266b754be275da153e14a41e9895d7d6ed9e9b284cf2490a983c2",
-    "trace.jsonl.gz": "5f218a96765379b1e192ada8ee567fc822782f193b6925359045f25c1e493c7f",
-    "controller-data/commands.jsonl.gz": "3e19b672073b3066e5fd0fa2bb86e29a9cb2d71093e0d3b898c9b6ea02625e1d",
-    "pickup-path-comparison.json": "4031e8caeca915c8ee6c703bab6d971afe1bc9757dc6a04b062cdd63b88438c3",
-    "pickup-approach.png": "748b99bafd81edc67a9864739307f2afc491d68a239b0c940d3bd8c2b74d298f",
-    "home-cycle-validation.json": "ec0e23009a725e0afcc4521e1e54fedf3a5f5751180e841d3c15371091b273b9"
-  }
+    "README.md": "74856f5f32cf6da718b1b2b9ef57e7e074135443c38ed4e2c25a1e4a957a11a1",
+    "summary.json": "2007b541d017bcd8b87523ac9f7eb3863d3f30ad2502fddf89ec4ef4e50e5a42",
+    "home-cycle-validation.json": "96981ea00dc634ade2c5f1873d971e6888f832adfda2c84bf2c9785adffe5231",
+    "controller-validation.json": "a0539aa12a48b8ae8eacbee826f3aa6a0fb05290f575b4d234cb2e236c630133",
+    "sensor-preview.png": "0d16d01c6d53dc3b394c4b4595f6cb4459f06095ebb1cbe8e83da0a57c9bfdf9",
+    "rollout.mp4": "6cac88ac13fef7417d8cf43888c4c2a26eb082a1ff255cc96e6fb4f9566c89b6",
+    "load-analysis.json": "1c971e6124d8effa9ac181a4f31e634e35d34e2038774e5781fb53765a28afc6",
+    "load-heatmap.png": "5ca383acda73603db9713f569ed24f439e0026374aeeae66d13b212fd0869d71",
+    "load-heatmap.svg": "2d2c77046c759b49b485bab7d4d64bf96a496b5e743f27529b23398c56a77005",
+    "load-view.json": "e7d0add80b242675ba7ca343bc8ff142bb0364dc3ba7b1142c5ce8b1b1398bd0",
+    "load-view.png": "d4fa5a237e4c6bb90b2837fc6f0950a701e9042c150829061bc3d41226968515",
+    "manifest.json": "44039c70b4bfbf06db24cb61792f4def6e26d0dfc0b2100c87d963c31c95878c"
+  },
+  "linked_artifact_sha256": {
+    "evidence/playback-native/manifest.json": "d36eaa46dd90e97ecb67692b2df7a0e7ee81e22c3cf7c9552e723bfab91f9d9c",
+    "evidence/playback-native/browser-qa.json": "b41e5133f0a37f7e8cb73bf2ef8ec92a5900956eeae837cc56f8ecffef78c6d9",
+    "evidence/robustness/compact-manifest.json": "4b52f3136a9ad1c1ef23f2dc535389e96f97c381f43539c015d17cb1bf8d2a3d"
+  },
+  "source_script_sha256": {
+    "tools/build_load_view.py": "e8aae2b24cd7395e959408c5c7475da7b5eca7a27e198173962c249994868e18",
+    "tools/build_load_heatmap.py": "8b8156d8d8add26753b2ad3cf99ed069bd1c1ff137e51693236f804504f2cd98"
+  },
+  "validation_summary": {
+    "unit_tests": 151,
+    "unit_tests_pass": true,
+    "physics_duration_s": 151.231999999994,
+    "control_packets": 75616,
+    "control_rgbd_frames": 7,
+    "monitor_rgbd_frames": 456,
+    "load_reference_frames": 1136,
+    "maximum_load_view_physical_difference": 0.0,
+    "condition_trials": 18,
+    "task_completions": 12,
+    "expected_stale_rejections": 1
+  },
+  "limits": [
+    "joint load is not structural stress, contact pressure, fatigue or hardware safety rating",
+    "monitor cameras are 1 Hz, not a live hardware/control sensor stream",
+    "fixed small trial grid does not establish general success rate or cooperation superiority"
+  ]
 }

@@ -29,30 +29,30 @@
   "failure_event": null,
   "failure_reason": null,
   "failure_time_s": null,
-  "frame_count": 1053,
-  "last_time_s": 140.24599999994155,
+  "frame_count": 1136,
+  "last_time_s": 151.231999999994,
   "metrics": {
     "left_grasp_force_n": 0.0,
-    "max_payload_speed_m_s": 0.00012224932475243257,
+    "max_payload_speed_m_s": 0.004383895173344353,
     "min_pad_force_n": 0.0,
-    "return_home_base_linear_speed_m_s": 0.0019500857337435367,
-    "return_home_base_position_error_m": 0.010969256489362752,
-    "return_home_base_yaw_error_rad": 8.926141554608289e-07,
-    "return_home_base_yaw_speed_rad_s": 5.217143394692612e-06,
-    "return_home_max_gripper_error_m": 0.0005577419453457403,
-    "return_home_max_head_error_rad": 0.00014901588937140582,
-    "return_home_max_head_speed_rad_s": 2.030721591850434e-05,
-    "return_home_max_joint_error_rad": 0.0006361537498518298,
-    "return_home_max_joint_speed_rad_s": 0.003988976605139179,
+    "return_home_base_linear_speed_m_s": 0.0003040005537827862,
+    "return_home_base_position_error_m": 0.010859290201291146,
+    "return_home_base_yaw_error_rad": 7.541144136425423e-05,
+    "return_home_base_yaw_speed_rad_s": 7.269722540664186e-06,
+    "return_home_max_gripper_error_m": 0.0005627118214589176,
+    "return_home_max_head_error_rad": 0.0001490198334694657,
+    "return_home_max_head_speed_rad_s": 1.5469579500233988e-06,
+    "return_home_max_joint_error_rad": 0.0006509206825043834,
+    "return_home_max_joint_speed_rad_s": 0.003523024517411418,
     "right_grasp_force_n": 0.0
   },
   "milestone_times_s": {
-    "grasped": 34.79599999999656,
-    "lifted": 39.038000000001745,
-    "released": 107.11599999993176,
-    "returned_home": 140.24599999994155,
-    "seated": 103.18999999994091,
-    "withdrawn": 111.61599999992127
+    "grasped": 42.94600000000652,
+    "lifted": 47.17000000001168,
+    "released": 118.10599999990615,
+    "returned_home": 151.231999999994,
+    "seated": 114.12799999991542,
+    "withdrawn": 122.61599999989564
   },
   "milestones": {
     "grasped": true,
@@ -74,9 +74,9 @@
     ],
     "width": 960
   },
-  "simulation_time_s": 140.24599999994155,
+  "simulation_time_s": 151.231999999994,
   "success": true,
   "terminal": true,
-  "updates": 70124,
-  "wall_time_s": 142.62838509795256
+  "updates": 75617,
+  "wall_time_s": 209.34211545391008
 }

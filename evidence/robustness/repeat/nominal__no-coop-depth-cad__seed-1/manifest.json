@@ -1,0 +1,52 @@
+{
+  "python": "3.12.13",
+  "versions": {
+    "mujoco": "3.11.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "Pillow": "12.3.0"
+  },
+  "commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
+  "render_backend": "egl",
+  "egl_vendor": "/usr/share/glvnd/egl_vendor.d/50_mesa.json",
+  "source_sha256": {
+    "__init__.py": "a91e0b62ede8dbc5203342f341b170cec7cb3eeee103e0e9e880657fae065a9f",
+    "assets.py": "f6e4d3c51e91905b066c1c2f8ad24d401f7e3cfab65d21eb60a324ec0147d2c1",
+    "camera.py": "527fd8315d8a7e0fb6f707b56a0d960a35b4e0932a9c3990f55e54fb49e58626",
+    "cli.py": "db944e2781113a46f129dc6df72f7ef8474457e75d2075ce435c5e5f11266203",
+    "cooperation.py": "48d2e488e422588edb1701a0d796315a6d5f8613734ecb92855ad246024bcb40",
+    "evaluation.py": "ed9572841c847fd9ac14f8f91d3384e3e27331e1e9a8ff5f6696fbc4c455c587",
+    "experiments.py": "4367a19702b29aedfe33365f12965abd62f21d6b6e1cb0cccdac64c52d6ac6fe",
+    "mission.py": "d10be1b8231e9478b058132e1fb96032546447c5b72dd2212f85d98154baf903",
+    "mobility.py": "ff8fd487d03c06cb69af1c9d43c0c04df34d0cc1cf3236fb1ccd99f05cfde538",
+    "perception.py": "1a96f5e0cb11623e9e4f06666856bfa05eabe2ba720fbeef67a3a051db836785",
+    "planning.py": "44d3df376f97f7d5ddb56814f21fc6eeb348bfa9cddf99280a1fc34fa38e29bd",
+    "playback.py": "71550da1058031e321ecc75cf9b470678434055522f24fb95cf2cc974a81f225",
+    "scene.py": "a919fef42bc28c93f90daf628447f0bd4bb4203257cae8aee09080c7a03e56cc",
+    "session.py": "c83735bf1686ab8265dd591bcfbd96cba6a84847d3eae71298a6a96671189cee",
+    "viewer.py": "749c3908f3e40338b6273ca374d9255e0266a68038ce19ddcc1f6eb615257c46",
+    "web/index.html": "9d0838dd1243479845ea35829f0371d22e833840fdbd571b8b59ce6e2327ec94"
+  },
+  "artifact_sha256": {
+    "config.json": "629dffa8c456f654eacf0d64a2ece7083a3fb355c89d85e4e44f630bbf6f599d",
+    "controller-data/commands.jsonl": "b1d0f47bf0f518f302a0fd2245bab1bba00560a2bb4bcb2f75704c9ea21267ff",
+    "controller-data/cooperation.jsonl": "fb84e53ea3ba583391ce8d212e3f4a40a608b798874846bdd287daf34f0ca02a",
+    "controller-data/frames.json": "6e921b13ec2552c8915e6fb493b7c7df363b5dbcbb13a2aa19ec857e506dca3f",
+    "controller-data/monitor-frames.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "controller-data/observations/0000_head_rgbd.npz": "e2ab418c365cac12bbc2a33ea7f38fe214f0c8e900d2526c65bc0f318cf5348e",
+    "controller-data/observations/0001_head_rgbd.npz": "255df1a4a6000402c2f7673802cfb4503763155190bd3a661f58375a997ea3e6",
+    "controller-data/observations/0002_head_rgbd.npz": "e13c6b0ce986fa41cb772dc703b02d6637dc919bb151a56a9e5e22915c49d523",
+    "controller-data/observations/0003_left_wrist_rgbd.npz": "e72f3c7be102eb59c1cd613f21248a72ac66d402087a699a3f2337227eea300c",
+    "controller-data/observations/0004_right_wrist_rgbd.npz": "d9be2b37822b430765cbc3e9b56da8cbca36b7092f1a3cd445891d838158ad9f",
+    "controller-data/observations/0005_left_wrist_rgbd.npz": "886381ad98f32c22816b1845ee54ea8741c62a5a0795290ecef41609febed720",
+    "controller-data/observations/0006_right_wrist_rgbd.npz": "d26172f5d001f596515eb8bb7806442ced1c706add9b7ae504d4a82e03dedfbd",
+    "controller-data/perception.jsonl": "dcbaf6ef6c157f93674f89cb3af46b8d63696605f63362d680731e03fd76d7d2",
+    "controller-data/schema.json": "3024b59378cc6e321e190755ff8721c8fb00af2e52a810c9202e6bbd670dc589",
+    "ik.json": "a8b1b9ad38ff057bd5530e9d4b22dfa29df957cd9f8a79ee4745e189a854a543",
+    "model-audit.json": "83fb215bcb1803d645fd46800edd255279bf1b55e7a97b376784e61b858000a1",
+    "result.json": "246f29b2849b25d9e9f2927518938b48b3e8495db763975df39cb0ee2d657c87",
+    "scene.xml": "7fed0f32fc387795b8a1843a76309675d519da1f5e958fbb2d40ef2bbf5a4506",
+    "trace.jsonl": "42f1c7e5254c16b515b15e0a7829722bd74dd76aa9dca6e5e4df8641f129d646",
+    "upstream.json": "0ca6c252d9c6f64f1b2a4b3d87c86a2d0b5b9d0671996e666f404f9b04e9181b"
+  }
+}
