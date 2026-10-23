@@ -268,9 +268,9 @@
       const x=(projection[0]*point[0]+projection[4]*point[1]+projection[8]*point[2]+projection[12])/w*500+500,y=500-(projection[1]*point[0]+projection[5]*point[1]+projection[9]*point[2]+projection[13])/w*500;
       svg.setAttribute('viewBox','0 0 1000 1000');
       const line=document.createElementNS('http://www.w3.org/2000/svg','line');
-      for(const [key,value]of Object.entries({x1:x,y1:y,x2:x+35,y2:y-35,stroke:'#dde6f2','stroke-width':2}))line.setAttribute(key,String(value));
+      for(const [key,value]of Object.entries({x1:x,y1:y,x2:x+35,y2:y-35,stroke:'#4d2b7a','stroke-width':2}))line.setAttribute(key,String(value));
       const text=document.createElementNS('http://www.w3.org/2000/svg','text');
-      for(const [key,value]of Object.entries({x:x+39,y:y-35,fill:'#dde6f2','font-size':21}))text.setAttribute(key,String(value));
+      for(const [key,value]of Object.entries({x:x+39,y:y-35,fill:'#4d2b7a',stroke:'#ffffff','stroke-width':3,'stroke-linejoin':'round','paint-order':'stroke','font-size':21}))text.setAttribute(key,String(value));
       text.textContent='최대점';svg.append(line,text);
     }
 
@@ -301,7 +301,7 @@
       const labelJoints=(selected?shown:ranked).filter(j=>points.has(j.name)).slice(0,width<500?1:3);
       svg.dataset.jointCalloutCount=String(labelJoints.length);
       if(this.el.jointLegend)this.el.jointLegend.textContent=`관절 부하 · 전체 20개 중 ${selected?'선택 관절':'상위 부하'} ${labelJoints.length}개 지시선`;
-      labelJoints.forEach((j,i)=>{const p=points.get(j.name),x=width-154,y=16+i*48;make('polyline',{'data-joint':j.name,points:`${p[0]},${p[1]} ${x-10},${y+17} ${x},${y+17}`,fill:'none',stroke:j.load_fraction>=1?'#ff557b':'#d8b6fc','stroke-width':1.25,opacity:.9});make('rect',{x,y,width:144,height:38,rx:3,fill:'#26394b',opacity:.94});make('text',{x:x+8,y:y+14,fill:'#e6d3ff','font-size':11},j.label);make('text',{x:x+8,y:y+30,fill:'#fff','font-size':12,'font-weight':700},`${fmt(j.load_fraction*100,1)}% · ${fmt(j.torque_nm,1)} Nm`);});
+      labelJoints.forEach((j,i)=>{const p=points.get(j.name),x=width-154,y=16+i*48;make('polyline',{'data-joint':j.name,points:`${p[0]},${p[1]} ${x-10},${y+17} ${x},${y+17}`,fill:'none',stroke:j.load_fraction>=1?'#b42318':'#4d2b7a','stroke-width':1.25,opacity:.9});make('rect',{x,y,width:144,height:38,rx:3,fill:'#ffffff',stroke:'#9dadbc','stroke-width':1,opacity:.97});make('text',{x:x+8,y:y+14,fill:'#553384','font-size':11},j.label);make('text',{x:x+8,y:y+30,fill:'#172b3e','font-size':12,'font-weight':700},`${fmt(j.load_fraction*100,1)}% · ${fmt(j.torque_nm,1)} Nm`);});
     }
 
     localBounds(data,stride,offset,count){const min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];for(let i=0;i<count;i++){const base=(offset+i)*stride;for(let a=0;a<3;a++){min[a]=Math.min(min[a],data[base+a]);max[a]=Math.max(max[a],data[base+a]);}}return {min,max};}

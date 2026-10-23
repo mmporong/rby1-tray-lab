@@ -209,7 +209,7 @@
       "Existing original four binary files unchanged; only auxiliary diagnostic data and presentation changed."
     ]
   },
-  "current_ui": "clean_model_annotations",
+  "current_ui": "white_theme",
   "front_refinement": {
     "request": "joint circles removed; leader lines only; aligned media and compact UI",
     "default_mode": "original / stress + joint load",
@@ -397,6 +397,154 @@
       "scroll_y": 0
     },
     "console_errors_and_warnings": 0,
-    "limit": "Finite desktop UI observations; previous responsive/keyboard checks retained at their recorded source commit."
+    "limit": "Finite desktop UI observations; previous responsive/keyboard checks retained at their recorded source commit.",
+    "captured_source_commit": "4194e4d760331d7ce4baa13f9d8ca5ceed7cebb1"
+  },
+  "white_theme": {
+    "color_scheme": "light",
+    "body_background_rgb": [
+      244,
+      247,
+      250
+    ],
+    "panel_background_rgb": [
+      255,
+      255,
+      255
+    ],
+    "covers": [
+      "page",
+      "panels",
+      "buttons and selects",
+      "tables and sticky columns",
+      "loading and empty states",
+      "status and captions",
+      "joint callout cards"
+    ],
+    "data_colors_preserved": [
+      "stress ramp",
+      "depth grayscale and invalid swatch",
+      "original RGB/video",
+      "digital-twin grid and robot surface stress"
+    ],
+    "contrast": {
+      "method": "computed CSS text colors and alpha-composited ancestor backgrounds; sampled UI text, not rasterized robot pixels",
+      "ratios": {
+        "heading": 13.46,
+        "subtitle": 5.69,
+        "primary_button": 6.21,
+        "active_view_tab": 5.2,
+        "joint_note": 5.84,
+        "joint_button": 10.3,
+        "joint_table": 8.17,
+        "load_metric": 13.46,
+        "load_explanation": 5.84,
+        "wrench_table": 8.54,
+        "summary": 8.17,
+        "empty_state": 5.27
+      },
+      "sampled_minimum": 5.2
+    },
+    "maximum_point_label": {
+      "foreground": "#4d2b7a",
+      "halo": "#ffffff",
+      "paint_order": "stroke"
+    },
+    "desktop": {
+      "viewport_px": [
+        1862,
+        1047
+      ],
+      "equal_panel_heights": true,
+      "overflow": false
+    },
+    "medium": {
+      "viewport_px": [
+        1024,
+        900
+      ],
+      "panel_heights_px": [
+        446,
+        446
+      ],
+      "overflow": false
+    },
+    "mobile": {
+      "viewport_px": [
+        390,
+        900
+      ],
+      "panel_heights_px": [
+        359.75,
+        359.75
+      ],
+      "overflow": false,
+      "primary_controls_under_44px": 0
+    },
+    "dark_preference_emulation": {
+      "prefers_dark": true,
+      "actual_scheme": "light",
+      "body_rgb": [
+        244,
+        247,
+        250
+      ],
+      "restored": true
+    },
+    "font_200_percent": {
+      "viewport_width": 390,
+      "computed_font_px": 32,
+      "overflow": false,
+      "restored_font_px": 16
+    },
+    "keyboard": {
+      "space_toggle_off_callouts": 0,
+      "table_rows_preserved": 20,
+      "focus_outline_px": 3,
+      "focus_outline_rgb": [
+        0,
+        107,
+        122
+      ]
+    },
+    "sensor_expansion": {
+      "before_px": [
+        249.65625,
+        140.421875
+      ],
+      "after_px": [
+        790.984375,
+        480
+      ],
+      "source_width_px": 320,
+      "aria_pressed_true": true
+    },
+    "comparison_mode": {
+      "settings_hidden": true,
+      "caption_background": "rgba(255,255,255,0.96)",
+      "returned_to_structural": true
+    },
+    "playback_terminal": {
+      "video_time_s": 18.933333,
+      "expected_frame_index": 1135,
+      "stress_frame_index": 1135,
+      "joint_frame_index": 1135
+    },
+    "final": {
+      "frame_index": 0,
+      "joint_frame_index": 0,
+      "paused": true,
+      "joint_callouts": 3,
+      "overflow": false,
+      "viewport_override_reset": true,
+      "emulated_media_restored": true,
+      "temporary_font_style_cleared": true
+    },
+    "console_errors_and_warnings": 0,
+    "limits": [
+      "Finite CUA checks, not cross-browser certification.",
+      "Screenshots were visually inspected in CUA output; no screenshot file claimed."
+    ],
+    "cad_cutaway_click": true
   }
 }

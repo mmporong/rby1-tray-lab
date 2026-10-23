@@ -100,8 +100,8 @@
   "unit_tests": {
     "passed": 217,
     "command": "MUJOCO_GL=egl PYOPENGL_PLATFORM=egl EGL_PLATFORM=surfaceless __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json .venv/bin/python -m unittest discover -s tests -p 'test_*.py'",
-    "elapsed_s": 33.874,
-    "execution": "root fresh suite after force/moment model annotation removal"
+    "elapsed_s": 34.632,
+    "execution": "root fresh full suite for white theme; final peak-label halo additionally covered by browser and independent targeted review"
   },
   "static_analysis": {
     "tool": "pyright",
@@ -121,8 +121,8 @@
     "src/rby1_tray/section_stress.py": "122db397000253321687d022812fa1bbca339d5aa29217e2354c4ed0b82b9df2",
     "src/rby1_tray/structural_basis.py": "ece117b77ea6fe926cd0846d6e85382996ba1bda01fdd3a768ba39124d634800",
     "src/rby1_tray/structural_scene.py": "9d923a966ea6faa8d8692b9d65f789ac2ad57affda7f49571a3d85c04bb0dba8",
-    "src/rby1_tray/web/structural-scene.js": "15a9ec298080322577119519c99eac45e98bb1b79acc3ea009aa03d6d2b62cb4",
-    "src/rby1_tray/web/index.html": "0b83e4ac2eb920f6749b3d50aec09d0f54a970e69c08a3b77d03790da8cdade5",
+    "src/rby1_tray/web/structural-scene.js": "d37c2b6c22684f80cda74338d2085812225f606c2ee30f99e86f54ba80c76b65",
+    "src/rby1_tray/web/index.html": "3d14ff6e5c658967470f6b088f08f72dff3929e50e361918e920c28dfa6fc7e2",
     "src/rby1_tray/viewer.py": "8577b0b8732ed7c66a9c23e3b34c85b0457aa524c217ad73e077e70b4d0b6a17",
     "src/rby1_tray/cli.py": "59cff8ee78465fba481bec3fb20ed25604ec168e564ccca3bc2310d5e140df6e",
     "tests/test_section_stress.py": "9be052f2b4eb5f87774c0cd2dd5f7948b0bc9482b3907ebb23fde1016e02d9f1",
@@ -142,7 +142,7 @@
     "wheel_build": "PASS",
     "html_js_and_new_python_packaged_exact_source_match": true,
     "files_compared": 5,
-    "wheel_sha256": "2c433bd964448741d2e408bf387a77b347160a16781ae2669a33402a3a3a9a53"
+    "wheel_sha256": "5f5712674eaa7e82b26edfaad3bd99cc3b23ad41dcd327ac04d67232dc51aa1d"
   },
   "independent_review": {
     "role": "code-reviewer",
@@ -150,7 +150,7 @@
     "remaining_findings": 0,
     "targeted_tests_passed": 26,
     "root_full_suite_passed": 217,
-    "scope": "force/moment model annotations removed, peak-point coordinates retained, joint lines and numerical diagnostics preserved, current evidence and wheel verified"
+    "scope": "white UI colors, sampled contrast and peak-label halo, unchanged data colors/frame/physics, responsive keyboard/state behavior, final wheel and evidence"
   },
   "load_diagnostics": {
     "maximum_matched_physical_defined_field_difference": 0.0,
@@ -179,5 +179,10 @@
     "whole_selected_cad_and_playback_qa": "PASS",
     "browser_evidence": "evidence/structural-whole/browser-qa.json#clean_model_annotations"
   },
-  "implementation_source_commit": "4194e4d760331d7ce4baa13f9d8ca5ceed7cebb1"
+  "white_theme_validation": {
+    "javascript_syntax": "PASS",
+    "html_ids_unique": 77,
+    "browser_evidence": "evidence/structural-whole/browser-qa.json#white_theme",
+    "all_five_original_binary_assets_unchanged": true
+  }
 }
