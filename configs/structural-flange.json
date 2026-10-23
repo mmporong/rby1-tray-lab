@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "source_step_sha256": "387276a46fccbce4a48f50928710633305f525ec3aff825deabb086c8d524854",
+  "selected_import_volume_tag": 1672,
+  "part_label": "왼쪽 손목–그리퍼 연결 플랜지 후보 · CAD 개별 솔리드",
+  "selection_note": "Manufacturer part number and material not supplied; selected by left-side position, coaxial circular interfaces and standalone topology. Fast Grip differs from simulation native fingers.",
+  "expected_bbox_m": [
+    -0.031500100001468335,
+    0.18849990000400804,
+    0.4332837838070531,
+    0.03150009999860802,
+    0.25150010000400863,
+    0.44428398380752643
+  ],
+  "expected_volume_m3": 3.04588333491742e-05,
+  "cad_distal_origin_m": [
+    0,
+    0.2200000000040082,
+    0.433283883807286
+  ],
+  "R_cad_from_sensor": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ]
+  ],
+  "sensor_origin_in_cad_m": [
+    0,
+    0.2200000000040082,
+    0.433283883807286
+  ],
+  "mapping_source": "Assumed coaxial identity rotation and coincident distal face/sensor origin; no calibrated CAD-to-MuJoCo registration",
+  "material": {
+    "youngs_modulus_pa": 69000000000.0,
+    "poisson_ratio": 0.33,
+    "source": "assumed",
+    "description": "Isotropic aluminum-like nominal values; manufacturer material grade and heat treatment unknown"
+  },
+  "mesh_sizes_m": [
+    0.0028,
+    0.002,
+    0.0014
+  ],
+  "convergence_relative_tolerance": 0.05,
+  "load_phase_filter": [
+    "retract_low",
+    "drive_loaded",
+    "raise_high",
+    "drive_high"
+  ],
+  "support": "all nodes on proximal plane z=max(z), all three translations fixed",
+  "load": "distal minimum-z planar face, area-weighted six-axis minimum-norm wrench distribution",
+  "sensitivity_support_inner_radius_m": 0.025
+}

@@ -1,0 +1,283 @@
+{
+  "schema_version": 1,
+  "title": "왼쪽 손목–그리퍼 연결 플랜지 후보 · CAD 개별 솔리드",
+  "snapshot_time_s": 71.70400000001429,
+  "phase": "raise_high",
+  "material": {
+    "youngs_modulus_pa": 69000000000.0,
+    "poisson_ratio": 0.33,
+    "source": "assumed",
+    "description": "Isotropic aluminum-like nominal values; manufacturer material grade and heat treatment unknown"
+  },
+  "metrics": {
+    "max_displacement_m": 4.843508397045446e-09,
+    "peak_von_mises_pa": 38520.084891951075,
+    "volume_p95_von_mises_pa": 20904.734682188107,
+    "force_balance_relative": 6.522477589006382e-15,
+    "moment_balance_relative": 8.321088946031234e-16,
+    "energy_identity_relative": 7.465082454736701e-16,
+    "strain_energy_j": 3.545812087433999e-08,
+    "external_work_j": 7.091624174868003e-08,
+    "mesh_volume_m3": 3.0481412072090678e-05,
+    "reaction_force_n": [
+      -1.1723307429051626,
+      1.318479578960033,
+      7.742224049500246
+    ],
+    "reaction_moment_nm": [
+      0.1133615634254258,
+      0.3479384364621755,
+      -0.3366956675505106
+    ],
+    "mesh_converged": true
+  },
+  "assumptions": [
+    "재료 E=69 GPa, ν=0.33은 가정값이며 제조사 재료 카드가 아닙니다.",
+    "상단 평면의 병진 3축 완전 고정과 하단 평면의 등가 6축 분포 하중을 가정합니다. 볼트 프리로드·접촉 해석은 포함하지 않습니다.",
+    "공식 Fast Grip과 현재 시뮬레이터 손가락은 형상이 다릅니다. 축 방향과 센서 원점을 CAD 하단 면 중심에 일치시킨 전달 가정입니다.",
+    "71.704초의 고정 시점 정적 해석입니다. 주 영상의 현재 재생 시각에 따라 바뀌지 않습니다.",
+    "MuJoCo 기록 하중을 전달하는 단방향 선형탄성 후처리입니다. 이 CAD 부품의 자중·관성 체적력, 진동, 소성, 피로, 파손 안전율은 계산하지 않습니다.",
+    "모서리·완전 고정 경계의 국부 최대 응력은 메시와 체결 가정에 민감합니다. 수렴 판정은 체적 가중 P95·최대 변위·변형 에너지를 사용합니다."
+  ],
+  "load_provenance": {
+    "packet_index": 35852,
+    "timestamp_sim_s": 71.70400000001429,
+    "phase": "raise_high",
+    "sensor": "left_wrist_ft",
+    "raw_wrench": {
+      "force_n": [
+        -1.1723307429052103,
+        1.318479578960017,
+        7.7422240495002335
+      ],
+      "torque_nm": [
+        0.11336156342542549,
+        0.34793843646217537,
+        -0.3366956675505105
+      ]
+    },
+    "selected_packet_count": 29805,
+    "selection": "maximum norm of raw left local wrist torque in configured phases",
+    "commands_sha256": "e67cd2ad85ce7c0756e03d864447308840367ac6366a9769b49ce6dfc445c9ae"
+  },
+  "transferred_load": {
+    "force_n": [
+      1.1723307429052103,
+      -1.318479578960017,
+      -7.7422240495002335
+    ],
+    "moment_nm": [
+      -0.11336156342542549,
+      -0.34793843646217537,
+      0.3366956675505105
+    ],
+    "origin_cad_m": [
+      0,
+      0.2200000000040082,
+      0.433283883807286
+    ],
+    "sensor_origin_offset_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "R_cad_from_sensor": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "sign": "negative raw sensor wrench: distal subtree reaction on proximal CAD flange"
+  },
+  "mesh_levels": [
+    {
+      "mesh_size_m": 0.0028,
+      "nodes": 2577,
+      "tetrahedra": 9736,
+      "minimum_jacobian_determinant_m3": 1.2638521842957496e-09,
+      "minimum_scaled_inverse_condition_number": 0.254566145097575,
+      "distal_face_tags": [
+        15
+      ],
+      "proximal_face_tags": [
+        1
+      ],
+      "cad_boundary_faces": 21,
+      "connected_cad_volumes": 1,
+      "support_nodes": 516,
+      "max_displacement_m": 4.794158731773342e-09,
+      "peak_von_mises_pa": 33856.20963751049,
+      "volume_p95_von_mises_pa": 20112.373082888327,
+      "force_balance_relative": 2.4444701103290355e-15,
+      "moment_balance_relative": 5.23601178729428e-16,
+      "energy_identity_relative": 5.779205531433484e-16,
+      "strain_energy_j": 3.43513214632954e-08,
+      "external_work_j": 6.870264292659084e-08,
+      "mesh_volume_m3": 3.0524724861541566e-05,
+      "reaction_force_n": [
+        -1.1723307429052006,
+        1.3184795789600081,
+        7.742224049500217
+      ],
+      "reaction_moment_nm": [
+        0.11336156342542564,
+        0.3479384364621751,
+        -0.3366956675505104
+      ]
+    },
+    {
+      "mesh_size_m": 0.002,
+      "nodes": 5116,
+      "tetrahedra": 21048,
+      "minimum_jacobian_determinant_m3": 4.308890346036653e-10,
+      "minimum_scaled_inverse_condition_number": 0.22044100023070853,
+      "distal_face_tags": [
+        15
+      ],
+      "proximal_face_tags": [
+        1
+      ],
+      "cad_boundary_faces": 21,
+      "connected_cad_volumes": 1,
+      "support_nodes": 976,
+      "max_displacement_m": 4.76144640453472e-09,
+      "peak_von_mises_pa": 35354.827692698374,
+      "volume_p95_von_mises_pa": 20568.529044372153,
+      "force_balance_relative": 1.6789348701798376e-15,
+      "moment_balance_relative": 1.2126355019934487e-15,
+      "energy_identity_relative": 5.682372141016856e-16,
+      "strain_energy_j": 3.493670285684614e-08,
+      "external_work_j": 6.987340571369233e-08,
+      "mesh_volume_m3": 3.0511203729752625e-05,
+      "reaction_force_n": [
+        -1.1723307429051952,
+        1.3184795789600174,
+        7.7422240495002255
+      ],
+      "reaction_moment_nm": [
+        0.11336156342542503,
+        0.34793843646217554,
+        -0.3366956675505097
+      ]
+    },
+    {
+      "mesh_size_m": 0.0014,
+      "nodes": 12165,
+      "tetrahedra": 55946,
+      "minimum_jacobian_determinant_m3": 2.397068210883974e-10,
+      "minimum_scaled_inverse_condition_number": 0.2603801985081753,
+      "distal_face_tags": [
+        15
+      ],
+      "proximal_face_tags": [
+        1
+      ],
+      "cad_boundary_faces": 21,
+      "connected_cad_volumes": 1,
+      "support_nodes": 1958,
+      "max_displacement_m": 4.843508397045446e-09,
+      "peak_von_mises_pa": 38520.084891951075,
+      "volume_p95_von_mises_pa": 20904.734682188107,
+      "force_balance_relative": 6.522477589006382e-15,
+      "moment_balance_relative": 8.321088946031234e-16,
+      "energy_identity_relative": 7.465082454736701e-16,
+      "strain_energy_j": 3.545812087433999e-08,
+      "external_work_j": 7.091624174868003e-08,
+      "mesh_volume_m3": 3.0481412072090678e-05,
+      "reaction_force_n": [
+        -1.1723307429051626,
+        1.318479578960033,
+        7.742224049500246
+      ],
+      "reaction_moment_nm": [
+        0.1133615634254258,
+        0.3479384364621755,
+        -0.3366956675505106
+      ]
+    }
+  ],
+  "level_artifact_sha256": {
+    "level-0.npz": "03352c1891a673a2cf150815b1c03ec93c49e995baa80d63b96a3b335c5c8103",
+    "level-1.npz": "01cbb8b38b731e29865d7fa175fef090145d9e474362c9d541df46a073077d44",
+    "level-2.npz": "c5846e79662ce2491d3c82831db11de880e60223c0787746f4278b3c1f9b3f20"
+  },
+  "convergence": {
+    "relative_changes": {
+      "max_displacement_m": 0.016942675801033823,
+      "volume_p95_von_mises_pa": 0.016082750770447154,
+      "strain_energy_j": 0.01470517908553868
+    },
+    "tolerance": 0.05,
+    "passed": true,
+    "excludes": "peak element stress is reported but not a converged safety metric"
+  },
+  "support_sensitivity": {
+    "alternate": "proximal outer annulus r>=25mm clamped",
+    "support_nodes": 792,
+    "metrics": {
+      "max_displacement_m": 6.702214236462574e-09,
+      "peak_von_mises_pa": 106899.77675133922,
+      "volume_p95_von_mises_pa": 25643.319890079256,
+      "force_balance_relative": 6.693639444986448e-15,
+      "moment_balance_relative": 1.7158336619313374e-15,
+      "energy_identity_relative": 1.4824320820018741e-15,
+      "strain_energy_j": 4.9103021169353177e-08,
+      "external_work_j": 9.82060423387065e-08,
+      "mesh_volume_m3": 3.0481412072090678e-05,
+      "reaction_force_n": [
+        -1.172330742905157,
+        1.3184795789600152,
+        7.742224049500236
+      ],
+      "reaction_moment_nm": [
+        0.11336156342542501,
+        0.347938436462175,
+        -0.33669566755051034
+      ]
+    }
+  },
+  "source": {
+    "step_sha256": "387276a46fccbce4a48f50928710633305f525ec3aff825deabb086c8d524854",
+    "brep_sha256": "e1527c3d852d0b01ae795c1e2f591e9d5a4d27d290ab2d0a23ef76296164d2cc",
+    "config_sha256": "1b7333967983c7ff1d6cf5153e477aeb48fdc743ec2a1133e88d1bef26e329dd",
+    "gmsh_version": "4.15.2",
+    "selected_volume_tag": 1672,
+    "scripts": {
+      "tools/build_structural_case.py": "f7cf2bc02c46672ded6002fe719ab61ce48b2d834dcb8149b7518053350a862d",
+      "src/rby1_tray/structural.py": "0b203075ac0b35d618878a094a71c773d7776efaef3482079f0473d50ac9ff40",
+      "src/rby1_tray/structural_loads.py": "8551652f59c14a1c038e72369203ded5850235569ea274b6c58ac2bf68f7d1c1"
+    }
+  },
+  "elapsed_s": 16.098774986108765,
+  "artifact_sha256": {
+    "surface.png": "a288592eecb6466d9cb6a4f667322d48e331bef3449a72bb2293d484a99a6619",
+    "cutaway.png": "c3c04a99d6c428ec8320d47e0cca84bbaf8524d10166a4fb79007c3608ccbe11"
+  },
+  "rendering": {
+    "element_field": "constant von Mises per tet4; boundary triangles inherit adjacent tetra",
+    "section": "exact plane intersections with tetrahedra at x+y=0; no geometric hole filling",
+    "color_range_mpa": [
+      0,
+      0.03852008489195108
+    ],
+    "deformation_scale": 0,
+    "script_sha256": "611cc96be3359b75d49edf94a4b3491cc0056f959bdc94c0f5bbae14809164cb",
+    "field_verifier_sha256": "d5bdc9025844e9b6df3b67e1d1eda66153d77f4aa96b125fc7286622a1bbf983"
+  },
+  "distribution": {
+    "scope": "Public numerical summary and source hashes only. STEP, BREP, NPZ, rendered CAD PNGs remain local pending redistribution-license confirmation.",
+    "local_directory": "artifacts/structural-flange",
+    "viewer_mode": "optional; disabled on a fresh clone until locally regenerated"
+  }
+}

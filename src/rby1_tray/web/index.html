@@ -86,10 +86,22 @@
     .load-panel header { display: block; padding: 0 0 9px; }
     .load-panel h3 { margin: 0; color: #dce8ed; font-size: .76rem; }
     .load-panel p { margin: 4px 0 0; color: #71818b; font-size: .65rem; line-height: 1.45; }
+    .diagnostic-tabs, .structural-view-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin: 9px 0; }
+    .diagnostic-tabs button, .structural-view-tabs button { min-height: 40px; padding: 6px 8px; font-size: .68rem; }
     .load-media { position: relative; aspect-ratio: 4 / 3; border: 1px solid #2c3942; background: #030506; overflow: hidden; }
     .load-media video { display: block; width: 100%; height: 100%; object-fit: contain; }
     .load-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 18px; background: #050709; color: var(--muted); text-align: center; font-size: .7rem; line-height: 1.5; }
     .load-clock { display: block; padding: 8px 2px 0; color: #9caab3; font: .62rem/1.4 ui-monospace, monospace; }
+    .structural-media { position: relative; aspect-ratio: 4 / 3; margin: 0; border: 1px solid #2c3942; background: #030506; overflow: hidden; }
+    .structural-media img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .structural-media figcaption { position: absolute; inset: auto 0 0; padding: 7px 9px; background: rgba(5,7,9,.88); color: #c2cdd3; font-size: .62rem; }
+    .structural-summary { display: grid; grid-template-columns: 1fr 1fr; margin-top: 8px; border-top: 1px solid #2c3942; border-left: 1px solid #2c3942; }
+    .structural-summary div { min-width: 0; padding: 7px; border-right: 1px solid #2c3942; border-bottom: 1px solid #2c3942; }
+    .structural-summary dt { margin: 0 0 4px; color: #71818b; font-size: .58rem; }
+    .structural-summary dd { margin: 0; overflow-wrap: anywhere; color: #dce8ed; font: 700 .68rem/1.35 ui-monospace, monospace; }
+    .structural-context { margin-top: 8px !important; color: #aab7be !important; }
+    .structural-assumptions { margin: 7px 0 0; padding-left: 17px; color: #8797a1; font-size: .62rem; line-height: 1.5; }
+    .structural-assumptions li + li { margin-top: 3px; }
     aside { display: grid; gap: 14px; }
     .section { padding: 15px; }
     .section-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
@@ -185,12 +197,43 @@
           </div>
           </div>
           <section id="loadPanel" class="load-panel" aria-labelledby="loadTitle" hidden>
-            <header><h3 id="loadTitle">관절 부하</h3><p>관절 토크를 모델 힘 제한과 비교한 색상입니다. 구조 응력·파손 해석이 아닙니다.</p></header>
-            <div class="load-media">
-              <video id="loadVideo" aria-label="RB-Y1 관절 부하 기록" width="960" height="720" muted playsinline preload="auto"></video>
-              <p id="loadStatus" class="load-status" role="status">부하 기록을 불러오는 중입니다.</p>
+            <header><h3 id="loadTitle">하중·응력 진단</h3><p>관절 한계 사용률과 부품 내부의 정적 응력 결과를 구분해 확인합니다.</p></header>
+            <div class="diagnostic-tabs" role="group" aria-label="진단 결과 선택">
+              <button id="jointModeButton" type="button" aria-pressed="true">관절 부하</button>
+              <button id="structuralModeButton" type="button" aria-pressed="false" hidden>부품 응력</button>
             </div>
-            <output id="loadClock" class="load-clock">주 영상과 같은 기록 시각 · —</output>
+            <div id="jointPane">
+              <p>관절 토크를 모델 힘 제한과 비교한 색상입니다. 구조 응력·파손 해석이 아닙니다.</p>
+              <div class="load-media">
+                <video id="loadVideo" aria-label="RB-Y1 관절 부하 기록" width="960" height="720" muted playsinline preload="auto"></video>
+                <p id="loadStatus" class="load-status" role="status">부하 기록을 불러오는 중입니다.</p>
+              </div>
+              <output id="loadClock" class="load-clock">주 영상과 같은 기록 시각 · —</output>
+            </div>
+            <div id="structuralPane" hidden>
+              <p id="structuralTitle">부품 응력 결과를 불러오는 중입니다.</p>
+              <div class="structural-view-tabs" role="group" aria-label="응력 결과 단면 선택">
+                <button type="button" data-structural-view="surface" aria-pressed="true">표면</button>
+                <button type="button" data-structural-view="cutaway" aria-pressed="false">단면</button>
+              </div>
+              <figure class="structural-media">
+                <img id="structuralImage" alt="부품 표면의 von Mises 응력 분포" width="960" height="720">
+                <figcaption id="structuralCaption">표면 응력 분포</figcaption>
+                <p id="structuralStatus" class="load-status" role="status" hidden></p>
+              </figure>
+              <dl class="structural-summary">
+                <div><dt>고정 시점</dt><dd id="structuralSnapshot">—</dd></div>
+                <div><dt>재료 가정</dt><dd id="structuralMaterial">—</dd></div>
+                <div><dt>최대 변위</dt><dd id="structuralDisplacement">—</dd></div>
+                <div><dt>체적 95% 응력</dt><dd id="structuralP95">—</dd></div>
+                <div><dt>최대 응력</dt><dd id="structuralPeak">—</dd></div>
+                <div><dt>메시 수렴</dt><dd id="structuralConvergence">—</dd></div>
+                <div><dt>힘 평형 오차</dt><dd id="structuralForceBalance">—</dd></div>
+                <div><dt>모멘트 평형 오차</dt><dd id="structuralMomentBalance">—</dd></div>
+              </dl>
+              <p class="structural-context">고정된 한 시점의 단방향 선형 정적 해석입니다. 재생 영상과 시간 동기화되지 않으며 로봇 움직임에 변형을 되돌려 적용하지 않습니다.</p>
+              <ul id="structuralAssumptions" class="structural-assumptions" aria-label="구조 해석 가정"></ul>
+            </div>
           </section>
           </div>
         </section>
@@ -233,6 +276,11 @@
       checkWithdraw: $('checkWithdraw'), backendBadge: $('backendBadge'), baseBadge: $('baseBadge'), modelBadge: $('modelBadge'),
       sensorGrid: $('sensorGrid'), sensorBatchMeta: $('sensorBatchMeta'), sensorRows: [...document.querySelectorAll('[data-sensor-camera]')],
       loadPanel: $('loadPanel'), loadVideo: $('loadVideo'), loadStatus: $('loadStatus'), loadClock: $('loadClock'),
+      jointModeButton: $('jointModeButton'), structuralModeButton: $('structuralModeButton'), jointPane: $('jointPane'), structuralPane: $('structuralPane'),
+      structuralTitle: $('structuralTitle'), structuralImage: $('structuralImage'), structuralCaption: $('structuralCaption'), structuralStatus: $('structuralStatus'),
+      structuralSnapshot: $('structuralSnapshot'), structuralMaterial: $('structuralMaterial'), structuralDisplacement: $('structuralDisplacement'), structuralP95: $('structuralP95'), structuralPeak: $('structuralPeak'), structuralConvergence: $('structuralConvergence'),
+      structuralForceBalance: $('structuralForceBalance'), structuralMomentBalance: $('structuralMomentBalance'), structuralAssumptions: $('structuralAssumptions'),
+      structuralViewButtons: [...document.querySelectorAll('[data-structural-view]')],
       viewButtons: [...document.querySelectorAll('[data-view]')], timeline: [...document.querySelectorAll('.timeline-step')]
     };
     let playing = false, actionPromise = null, playGeneration = 0, framePromise = null, frameDirty = false;
@@ -241,6 +289,7 @@
     let playbackInfo = null, playbackStates = [], videoGeneration = 0, animationFrame = null;
     let videoLoading = false;
     let loadReady = false, loadFailed = false;
+    let diagnosticMode = 'joint', structuralInfo = null;
     let lastStateFrame = -1, lastStatePaint = 0;
     const elevation = -20;
     const phaseLabels = {
@@ -375,6 +424,50 @@
       }
       syncLoadVideo(force);
     }
+    function setDiagnosticMode(mode) {
+      if (mode==='structural' && !structuralInfo) return;
+      diagnosticMode=mode;
+      ui.jointPane.hidden=mode!=='joint';ui.structuralPane.hidden=mode!=='structural';
+      ui.jointModeButton.setAttribute('aria-pressed',String(mode==='joint'));
+      ui.structuralModeButton.setAttribute('aria-pressed',String(mode==='structural'));
+      if(mode==='structural')ui.loadVideo.pause();
+      else if(playbackInfo&&!ui.video.paused)playLoadVideo();
+    }
+    function setStructuralView(name) {
+      if(!structuralInfo?.image_urls?.[name])return;
+      ui.structuralStatus.textContent='응력 이미지를 불러오는 중입니다.';ui.structuralStatus.hidden=false;
+      ui.structuralImage.onload=()=>{ui.structuralStatus.hidden=true;};
+      ui.structuralImage.onerror=()=>{ui.structuralStatus.textContent='응력 이미지를 표시하지 못했습니다. 주 영상 재생은 계속 사용할 수 있습니다.';ui.structuralStatus.hidden=false;};
+      ui.structuralImage.src=`${structuralInfo.image_urls[name]}?v=${Date.now()}`;
+      ui.structuralImage.alt=name==='surface'?'부품 표면의 von Mises 응력 분포':'부품 단면의 von Mises 응력 분포';
+      ui.structuralCaption.textContent=name==='surface'?'표면 응력 분포':'단면 응력 분포';
+      ui.structuralViewButtons.forEach((button)=>button.setAttribute('aria-pressed',String(button.dataset.structuralView===name)));
+    }
+    async function initializeStructural(jointAvailable) {
+      try {
+        const info=await request('/api/structural');
+        if(!info.enabled)return;
+        const summary=info.summary, metrics=summary.metrics, material=summary.material;
+        structuralInfo=info;ui.loadPanel.hidden=false;ui.structuralModeButton.hidden=false;
+        ui.jointModeButton.hidden=!jointAvailable;
+        ui.structuralTitle.textContent=summary.title;
+        ui.structuralSnapshot.textContent=`${formatNumber(summary.snapshot_time_s,3)} s · ${summary.phase}`;
+        ui.structuralMaterial.textContent=`E ${formatNumber(material.youngs_modulus_pa/1e9,1)} GPa · ν ${formatNumber(material.poisson_ratio,2)} · 가정값`;
+        const displacement=metrics.max_displacement_m;
+        ui.structuralDisplacement.textContent=displacement<1e-6?`${formatNumber(displacement*1e9,3)} nm`:`${formatNumber(displacement*1000,3)} mm`;
+        ui.structuralP95.textContent=`${formatNumber(metrics.volume_p95_von_mises_pa/1e6,4)} MPa`;
+        ui.structuralPeak.textContent=`${formatNumber(metrics.peak_von_mises_pa/1e6,4)} MPa`;
+        ui.structuralConvergence.textContent=metrics.mesh_converged?'통과':'미통과';
+        ui.structuralConvergence.className=metrics.mesh_converged?'good':'warn';
+        ui.structuralForceBalance.textContent=`${(metrics.force_balance_relative*100).toExponential(2)} %`;
+        ui.structuralMomentBalance.textContent=`${(metrics.moment_balance_relative*100).toExponential(2)} %`;
+        ui.structuralAssumptions.replaceChildren(...summary.assumptions.map((assumption)=>{const item=document.createElement('li');item.textContent=assumption;return item;}));
+        setStructuralView('surface');
+        if(!jointAvailable)setDiagnosticMode('structural');
+      } catch(error) {
+        console.warn(`부품 응력 결과를 격리했습니다: ${error.message}`);
+      }
+    }
     function updateLoadClock() {
       if (ui.loadPanel.hidden) return;
       const recorded=Number(ui.video.currentTime), simulation=Number(currentState?.time_s);
@@ -388,7 +481,7 @@
       if (force || Math.abs(ui.loadVideo.currentTime-target)>0.1) ui.loadVideo.currentTime=target;
     }
     async function playLoadVideo() {
-      if (!loadReady || loadFailed || document.hidden || ui.video.paused) return;
+      if (!loadReady || loadFailed || diagnosticMode!=='joint' || document.hidden || ui.video.paused) return;
       syncLoadVideo(true);
       if (ui.video.currentTime >= ui.loadVideo.duration - 1 / playbackInfo.fps) { ui.loadVideo.pause(); return; }
       try { await ui.loadVideo.play(); }
@@ -515,6 +608,9 @@
       ui.viewButtons.forEach((item)=>item.setAttribute('aria-pressed',String(item===button)));
       if(playbackInfo)loadRecordedView(selectedView,playing);else refreshFrame().catch((error)=>showError(error.message));
     }));
+    ui.jointModeButton.addEventListener('click',()=>setDiagnosticMode('joint'));
+    ui.structuralModeButton.addEventListener('click',()=>setDiagnosticMode('structural'));
+    ui.structuralViewButtons.forEach((button)=>button.addEventListener('click',()=>setStructuralView(button.dataset.structuralView)));
     ui.sensorRows.forEach((row)=>{ const toggle=()=>{ const expand=!row.classList.contains('expanded'); ui.sensorRows.forEach((other)=>{other.classList.toggle('expanded',expand&&other===row); const button=other.querySelector('[data-sensor-expand]'); button.setAttribute('aria-pressed',String(expand&&other===row)); button.textContent=expand&&other===row?'축소':'확대';}); }; row.querySelector('[data-sensor-expand]').addEventListener('click',toggle); row.querySelectorAll('.sensor-media').forEach((figure)=>figure.addEventListener('click',toggle)); });
     ui.raw.closest('details').addEventListener('toggle',()=>{if(currentState&&ui.raw.closest('details').open)ui.raw.textContent=JSON.stringify(currentState,null,2);});
     document.addEventListener('visibilitychange', () => { if (document.hidden) stopPlayback(); });
@@ -528,10 +624,12 @@
           playbackInfo=info;playbackStates=states;ui.single.textContent='한 프레임';
           ui.viewButtons.forEach(button=>{button.hidden=!info.videos[button.dataset.view];});
           initializeLoadVideo(info.videos.load);
+          await initializeStructural(Boolean(info.videos.load));
           ui.playbackHelp.textContent='검증된 물리 실행을 60 FPS 영상으로 재생합니다. 기본 1배속은 시뮬레이션 8배속에 해당하며, 상태·센서도 같은 기록 시각을 따릅니다.';
           await loadRecordedView(selectedView);
         } else {
           ui.playbackHelp.textContent='실시간 물리 계산 모드입니다. 배율은 목표값이며 실제 진행 속도는 CPU 계산과 렌더 속도에 따라 달라집니다.';
+          await initializeStructural(false);
           await Promise.all([request('/api/state').then(updateState),refreshFrame()]);
         }
       } catch(error){showError(`${error.message} 서버 연결을 확인해 주세요.`);}

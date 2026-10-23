@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "interface_html_sha256": "8fbc2cf60fdd0eb013847023cf4d615ba9973f31f5a2892cec9aa8404e008fda",
+  "method": "CUA Chrome existing local viewer tab; actual clicks and read-only DOM/video observations",
+  "screenshots": "Emitted through CUA for visual review; no persisted browser screenshot file was available",
+  "checks": {
+    "original_upper_views": [
+      "전체",
+      "파지",
+      "안착"
+    ],
+    "mode_switch_joint_to_structural_to_joint_during_playback": "PASS",
+    "surface_and_actual_section_png": "PASS, 1152x864",
+    "nonzero_displacement_display": "4.844 nm",
+    "stress_display_mpa": {
+      "p95": "0.0209",
+      "peak": "0.0385"
+    },
+    "snapshot_fixed_while_main_played": "71.704 s · raise_high",
+    "observed_main_during_structural": {
+      "time_s": 12.270202,
+      "paused": false,
+      "rate": 1
+    },
+    "observed_aux_during_structural": {
+      "paused": true
+    },
+    "original_run_terminal": {
+      "video_time_s": 18.933333,
+      "success": true,
+      "home_return": "PASS"
+    },
+    "sensor_loaded_images": 6,
+    "desktop": {
+      "viewport_width": 1862,
+      "sensor_grid_width_px": 841.234375,
+      "analysis_panel_width_px": 332.59375,
+      "same_diagnostics_row": true,
+      "horizontal_overflow": false
+    },
+    "mobile": {
+      "viewport_width": 390,
+      "analysis_panel_width_px": 325,
+      "image_width_px": 303,
+      "horizontal_overflow": false,
+      "stacked_below_sensors": true
+    },
+    "viewport_override_reset": true,
+    "console_warning_error_count": 0,
+    "final_state": {
+      "video_time_s": 0.016666,
+      "paused": true,
+      "displayed_simulation_time_s": 0.134,
+      "mode": "structural surface",
+      "sensor_loaded_images": 6,
+      "viewport_width": 1862
+    }
+  },
+  "limits": [
+    "Observed discrete playback states and responsive layouts; continuous zero-drift video synchronization was not measured in this pass",
+    "Structural analysis is a fixed snapshot, intentionally independent of playback clock"
+  ]
+}

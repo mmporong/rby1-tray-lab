@@ -164,7 +164,9 @@ def _byte_range(header: str | None, size: int) -> tuple[int, int] | None:
     return start, end
 
 
-def _make_handler(session: Any, playback: Any = None) -> type[BaseHTTPRequestHandler]:
+def _make_handler(
+    session: Any, playback: Any = None, structural: Any = None
+) -> type[BaseHTTPRequestHandler]:
     class ViewerHandler(BaseHTTPRequestHandler):
         server_version = "RBY1TrayViewer/0.1"
 
@@ -179,8 +181,17 @@ def _make_handler(session: Any, playback: Any = None) -> type[BaseHTTPRequestHan
             if request.path == "/api/playback":
                 self._send_json(HTTPStatus.OK, playback.info() if playback else {"enabled": False})
                 return
+            if request.path == "/api/structural":
+                self._send_json(
+                    HTTPStatus.OK,
+                    structural.info() if structural else {"enabled": False},
+                )
+                return
             if request.path.startswith("/playback/"):
                 self._serve_playback(request.path)
+                return
+            if request.path.startswith("/structural/"):
+                self._serve_structural(request.path)
                 return
             if request.path == "/frame.png":
                 query = parse_qs(request.query)
@@ -240,8 +251,31 @@ def _make_handler(session: Any, playback: Any = None) -> type[BaseHTTPRequestHan
             request = urlsplit(self.path)
             if request.path.startswith("/playback/"):
                 self._serve_playback(request.path, head_only=True)
+            elif request.path.startswith("/structural/"):
+                self._serve_structural(request.path, head_only=True)
             else:
                 self.send_error(HTTPStatus.NOT_FOUND)
+
+        def _serve_structural(
+            self, request_path: str, head_only: bool = False
+        ) -> None:
+            asset = (
+                structural.asset(request_path.removeprefix("/structural/"))
+                if structural
+                else None
+            )
+            if asset is None:
+                self.send_error(HTTPStatus.NOT_FOUND)
+                return
+            body = asset
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Type", "image/png")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.send_header("X-Content-Type-Options", "nosniff")
+            self.end_headers()
+            if not head_only:
+                self.wfile.write(body)
 
         def _serve_playback(self, request_path: str, head_only: bool = False) -> None:
             asset = playback.asset(request_path.removeprefix("/playback/")) if playback else None
@@ -361,7 +395,12 @@ def _make_handler(session: Any, playback: Any = None) -> type[BaseHTTPRequestHan
     return ViewerHandler
 
 
-def serve(session: Any, host: str = "127.0.0.1", port: int = 8786) -> None:
+def serve(
+    session: Any,
+    host: str = "127.0.0.1",
+    port: int = 8786,
+    structural_directory: str | Path | None = None,
+) -> None:
     """Serve the local viewer until interrupted.
 
     The caller owns process lifetime; this function does not start daemon
@@ -378,7 +417,17 @@ def serve(session: Any, host: str = "127.0.0.1", port: int = 8786) -> None:
         playback = PlaybackAssets(directory, session.config)
     except (FileNotFoundError, ValueError) as exc:
         print(f"[viewer] Recorded playback unavailable; live controls remain available: {exc}")
-    server = HTTPServer((host, port), _make_handler(session, playback))
+    structural = None
+    if structural_directory is not None:
+        from .structural_view import StructuralAssets
+        try:
+            structural = StructuralAssets(structural_directory)
+        except (OSError, ValueError) as exc:
+            print(
+                "[viewer] Structural result unavailable; primary playback remains "
+                f"available: {exc}"
+            )
+    server = HTTPServer((host, port), _make_handler(session, playback, structural))
     print(f"RB-Y1 Tray Lab: http://{host}:{server.server_port}")
     try:
         server.serve_forever(poll_interval=0.2)

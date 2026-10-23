@@ -19,7 +19,7 @@
 | 복귀 후 베이스 위치 오차 | 10.859 mm, 기준 20 mm |
 | 제어 데이터 | 500 Hz·75,616 패킷, 몸통/양팔/머리/휠/그리퍼/FT |
 | RGB-D | 머리·양손목 3대, 제어 7프레임·1 Hz 모니터 456프레임 |
-| 자동 검증 | 테스트 151개, 산출물/소스 해시·오프라인 인식 재실행 통과 |
+| 자동 검증 | 테스트 175개 통과, 실행 산출물/소스 해시·오프라인 인식 검증 근거 보존 |
 
 출발·종료 자세는 원본 모델의 `qpos0`다. 몸통·양팔 20관절과 헤드는 0 rad, 그리퍼는 0 m이고 베이스는 설정된 초기 위치로 돌아온다. 이동 준비 자세로 접근·정차한 뒤 머리 RGB-D로 트레이를 찾고, 파지 자세로 낮춘 후와 파지 접근 후에 다시 관측한다. 관측 변화량이 허용 범위를 벗어나면 작업을 거부하며, 픽업 위치에서 다시 기립하는 경유는 없다. 안착·손 회수 뒤에는 상체를 유지하고 후진한 다음 기본 자세로 복귀한다. [왕복 검증 근거](evidence/mobile-native/home-cycle-validation.json)에 시작·종료 실제 상태와 후진 거리를 기록했다.
 
@@ -127,7 +127,9 @@ python3 -m venv .venv
 
 이는 강체 동역학의 관절 부하와 접촉력 분석이다. 고정 Menagerie 모델의 힘 제한은 실측 하드웨어 정격이 아니며, 링크의 von Mises 응력·변형·피로·파손 또는 접촉 압력을 산출하지 않는다. 그런 구조 CAE에는 별도의 구조 메시·재료·경계조건과 검증이 필요하다. MuJoCo의 [힘·토크 센서](https://mujoco.readthedocs.io/en/stable/XMLreference.html#sensor-force)와 [변형체 모델](https://mujoco.readthedocs.io/en/stable/modeling.html#deformable-objects)의 범위를 구분한다.
 
-제조사 **RB-Y1 V1.2 Mecanum 3D CAD ZIP과 약 98.9 MB STEP**을 확보하고 압축 무결성과 텍스트 엔티티를 검사했다. 솔리드·중공 BRep 정의가 포함되지만 CAD 커널에서 유효 체적·내부 구조·단위·부품 구성을 검증하기 전이며, 재료·체결 조건과 재배포 라이선스도 미확인이다. 원본 CAD는 로컬에만 보관한다. [CAD 배포처와 구조해석 적합성 확인](docs/structural-cad.md)에 다운로드 주소 불일치 해결과 검사 결과를 기록한다. 부품 내부 응력 분포는 현재 관절 부하 표시와 별도 기능이며, 계산 완료 결과로 제시하지 않는다.
+제조사 **RB-Y1 V1.2 Mecanum STEP의 연결 플랜지 후보**를 Gmsh/OpenCASCADE로 추출하고, 71.704초의 기록 손목 하중을 전달한 정적 Tet4 FEM을 구현했다. 55,946개 요소의 표면·실제 단면에서 부품 내부 von Mises 응력을 표시한다. 최대 변위는 4.844 nm, 체적 가중 P95 응력은 0.0209 MPa이며, 3단계 메시의 마지막 두 단계에서 변위·P95·에너지가 5% 변화 기준을 통과했다. 재료·체결·좌표 정합은 가정이고 공식 Fast Grip과 시뮬레이터 손가락 형상도 다르다. 실물 안전성 검증은 아니다.
+
+센서 옆 **관절 부하 / 부품 응력**으로 모드를 바꾸고 **표면 / 단면**을 선택한다. 응력은 고정 시점 결과이며 주 영상과 시간 동기화하지 않는다. 원본 CAD·체적 메시·CAD 렌더 PNG는 재배포 범위 미확인으로 로컬에만 보관하므로 새 clone에서는 구조 모드가 비활성이다. [수치 요약](evidence/structural-flange/summary.json)과 [계산 가정·검증·로컬 재현 절차](docs/structural-analysis.md)는 저장소에 포함한다. [CAD 확보 근거](docs/structural-cad.md)도 함께 기록한다. 이 후처리는 기존 MuJoCo 물리와 관절 부하 영상을 바꾸지 않는다.
 
 ```bash
 .venv/bin/python tools/build_load_view.py --bundle evidence/playback-native --output artifacts/load-view-check

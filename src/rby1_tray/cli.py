@@ -121,8 +121,9 @@ def run_episode(config, output, render=False, lift_only=False):
         evaluation = session.evaluator.result()
         save_json(output / "ik.json", session.ik_errors)
         save_json(output / "model-audit.json", session.audit)
-        if hasattr(session, "export_sim2real_dataset"):
-            session.export_sim2real_dataset(output / "controller-data")
+        export_dataset = getattr(session, "export_sim2real_dataset", None)
+        if callable(export_dataset):
+            export_dataset(output / "controller-data")
         result = dict(evaluation)
         result["evaluation"] = evaluation
         result["run_completed"] = True
@@ -158,6 +159,10 @@ def main(argv=None):
     parser.add_argument("--render", action="store_true")
     parser.add_argument("--lift-only", action="store_true")
     parser.add_argument("--port", type=int, default=8786)
+    parser.add_argument(
+        "--structural-directory",
+        help="local directory containing a validated structural report and PNGs",
+    )
     parser.add_argument("--heights", default="0.45,0.65,0.85")
     parser.add_argument("--seeds", default="0,1,2")
     args = parser.parse_args(argv)
@@ -190,7 +195,20 @@ def main(argv=None):
     if args.command == "view":
         from .viewer import serve
         session = create_session(config, lift_only=args.lift_only)
-        try: serve(session, port=args.port)
+        default_structural = (
+            Path(__file__).resolve().parents[2] / "artifacts" / "structural-flange"
+        )
+        structural_directory = (
+            Path(args.structural_directory)
+            if args.structural_directory
+            else default_structural if default_structural.is_dir() else None
+        )
+        try:
+            serve(
+                session,
+                port=args.port,
+                structural_directory=structural_directory,
+            )
         finally: session.close()
         return 0
     if args.command == "run":

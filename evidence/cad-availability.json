@@ -322,5 +322,24 @@
       "contact/boundary conditions"
     ]
   },
-  "next_step": "Import the acquired V1.2 Fast Grip/Mecanum STEP in a CAD kernel, validate BRep topology and units, identify load-bearing parts and mounting interfaces, and compare the assembly/gripper to the current simulation. STEP text entity counts are an inventory and do not prove geometric validity or an FEA-ready part. Material, boundary and mesh-convergence checks remain required before component stress claims."
+  "next_step": "Obtain manufacturer material/fastener/contact data and verify part identity plus CAD-to-simulation registration before hardware strength claims. Current local study transfers one recorded wrench with declared assumptions; it does not establish real gripper structural safety.",
+  "kernel_postprocessing": {
+    "status": "completed_for_one_selected_volume_with_assumed_material_and_boundaries",
+    "gmsh_version": "4.15.2",
+    "kernel": "OpenCASCADE",
+    "target_unit": "M",
+    "source_step_sha256": "387276a46fccbce4a48f50928710633305f525ec3aff825deabb086c8d524854",
+    "imported_volume_entities": 1676,
+    "entity_count_is_not_part_count": true,
+    "selected_volume_tag": 1672,
+    "selected_part_identity": "unnamed left wrist–gripper circular interface flange candidate; manufacturer part number unknown",
+    "selected_volume_m3": 3.04588333491742e-05,
+    "selected_brep_volumes": 1,
+    "selected_brep_faces": 21,
+    "scope": "positive OCC volume, successful tet4 meshing and positive Jacobians; not whole-CAD integrity certification",
+    "simulation_gripper_geometry_match": false,
+    "registration": "assumed coaxial identity rotation and coincident distal load plane/sensor origin",
+    "numerical_evidence": "evidence/structural-flange/summary.json",
+    "method": "docs/structural-analysis.md"
+  }
 }

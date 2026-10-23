@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "physics_source_commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
+  "scope": "Recorded load read-only CAD/FEM postprocess plus local viewer; original full physics episode not rerun",
+  "full_unit_suite": {
+    "passed": 175,
+    "elapsed_s": 31.954,
+    "command": "PYTHONPATH=.:src MUJOCO_GL=egl PYOPENGL_PLATFORM=egl EGL_PLATFORM=surfaceless .venv/bin/python -m unittest discover -s tests -q"
+  },
+  "targeted_after_final_type_clarity": {
+    "passed": 24,
+    "elapsed_s": 1.588,
+    "pattern": "test_structural*.py"
+  },
+  "static_analysis": {
+    "tool": "pyright",
+    "errors": 0,
+    "warnings": 0,
+    "scope": [
+      "structural.py",
+      "structural_loads.py",
+      "structural_evidence.py",
+      "structural_view.py",
+      "viewer.py",
+      "test_structural*.py",
+      "tools/prepare_structural_cad.py",
+      "tools/build_structural_case.py",
+      "tools/render_structural_case.py",
+      "cli.py"
+    ]
+  },
+  "javascript_syntax": "PASS: node --check",
+  "diff_whitespace": "PASS",
+  "independent_review": {
+    "role": "code-reviewer",
+    "verdict": "APPROVE",
+    "reviewed_files": 24,
+    "findings": 0,
+    "full_suite_passed": 175,
+    "full_suite_elapsed_s": 32.379,
+    "targeted_structural_passed": 24,
+    "viewer_passed": 12,
+    "playback_passed": 16,
+    "pyright_errors": 0,
+    "pyright_warnings": 0,
+    "verified": "source/report/three NPZ/two PNG/public summary/config/BREP hashes, equilibrium, energy, convergence, disclosure and asset isolation"
+  },
+  "source_sha256": {
+    "src/rby1_tray/structural.py": "0b203075ac0b35d618878a094a71c773d7776efaef3482079f0473d50ac9ff40",
+    "src/rby1_tray/structural_loads.py": "8551652f59c14a1c038e72369203ded5850235569ea274b6c58ac2bf68f7d1c1",
+    "src/rby1_tray/structural_evidence.py": "d5bdc9025844e9b6df3b67e1d1eda66153d77f4aa96b125fc7286622a1bbf983",
+    "src/rby1_tray/structural_view.py": "1717e1a5bcc66779abebaed6f88ab3107730863746cabc6dc2d342e11bcdb06c",
+    "src/rby1_tray/viewer.py": "155df411eb4a8b35fa678fd3c944a579d24a5ff84c9fdd04c04bcdb01d305f7b",
+    "src/rby1_tray/cli.py": "858eab8b204c7f94428fe72a69717c72b0915d1ae2aa81ad605de019901ff628",
+    "src/rby1_tray/web/index.html": "8fbc2cf60fdd0eb013847023cf4d615ba9973f31f5a2892cec9aa8404e008fda",
+    "tools/prepare_structural_cad.py": "d61b2342c489fce2c2d9b0bca7fac9449c8d7600bb2b6b5134ba18ae91e62d59",
+    "tools/build_structural_case.py": "f7cf2bc02c46672ded6002fe719ab61ce48b2d834dcb8149b7518053350a862d",
+    "tools/render_structural_case.py": "611cc96be3359b75d49edf94a4b3491cc0056f959bdc94c0f5bbae14809164cb",
+    "configs/structural-flange.json": "1b7333967983c7ff1d6cf5153e477aeb48fdc743ec2a1133e88d1bef26e329dd",
+    "requirements-cae.txt": "cd7831b73ffea2e84a6df9ba9bc1154ca0564b7771a0ee54fe4bd6401bfa2dc2"
+  },
+  "artifact_sha256": {
+    "summary.json": "172e7dc5cb5332bab97b43ea11a20443e2f6b60b286910ccd25ad512305b3a86",
+    "browser-qa.json": "41b339681a659513dea12a547916bc58e30427f1da1b687cd30622212a9c7dfb"
+  },
+  "local_report_sha256": "52c28077662f5edc99faf85e3402d6776273f82768253bd49e4813dc793c5c7a",
+  "local_cad_selection_sha256": "4d9383c1f06604084beec605d20c43809300e3d9bdef651d2e6f037e0d5d557b",
+  "local_assets_not_redistributed": [
+    "STEP",
+    "BREP",
+    "NPZ solved mesh",
+    "CAD render PNG"
+  ]
+}

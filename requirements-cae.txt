@@ -1,0 +1,4 @@
+# Optional local CAD preprocessing; excluded from the MuJoCo runtime dependency set.
+# Gmsh is GPL-2.0-or-later with its upstream linking exception.
+gmsh==4.15.2
+matplotlib==3.11.1
