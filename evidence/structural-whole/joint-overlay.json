@@ -1,0 +1,603 @@
+{
+  "schema_version": 1,
+  "scope": "기록 응력 장면에 같은 프레임의 몸통·양팔 관절 액추에이터 토크를 겹쳐 표시",
+  "physics_source_commit": "c7967a9aab6a31fafc574150d959c36477f9cf59",
+  "metadata": {
+    "available": true,
+    "scope": "20개 단위 기어 회전 관절의 모델 액추에이터 부하율입니다. 하드웨어 정격·안전율·구조응력이 아닙니다.",
+    "joint_names_order": [
+      "torso_0",
+      "torso_1",
+      "torso_2",
+      "torso_3",
+      "torso_4",
+      "torso_5",
+      "right_arm_0",
+      "right_arm_1",
+      "right_arm_2",
+      "right_arm_3",
+      "right_arm_4",
+      "right_arm_5",
+      "right_arm_6",
+      "left_arm_0",
+      "left_arm_1",
+      "left_arm_2",
+      "left_arm_3",
+      "left_arm_4",
+      "left_arm_5",
+      "left_arm_6"
+    ],
+    "ratio_definition": "abs(joint_state.actuator_force[name]) / limit_nm",
+    "joints": [
+      {
+        "name": "torso_0",
+        "label": "몸통 관절 1",
+        "part_id": "link_torso_0",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 270.0
+      },
+      {
+        "name": "torso_1",
+        "label": "몸통 관절 2",
+        "part_id": "link_torso_1",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 270.0
+      },
+      {
+        "name": "torso_2",
+        "label": "몸통 관절 3",
+        "part_id": "link_torso_2",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 270.0
+      },
+      {
+        "name": "torso_3",
+        "label": "몸통 관절 4",
+        "part_id": "link_torso_3",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 270.0
+      },
+      {
+        "name": "torso_4",
+        "label": "몸통 관절 5",
+        "part_id": "link_torso_4",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 120.0
+      },
+      {
+        "name": "torso_5",
+        "label": "몸통 관절 6",
+        "part_id": "link_torso_5",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 120.0
+      },
+      {
+        "name": "right_arm_0",
+        "label": "오른팔 관절 1",
+        "part_id": "link_right_arm_0",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 70.0
+      },
+      {
+        "name": "right_arm_1",
+        "label": "오른팔 관절 2",
+        "part_id": "link_right_arm_1",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 70.0
+      },
+      {
+        "name": "right_arm_2",
+        "label": "오른팔 관절 3",
+        "part_id": "link_right_arm_2",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 70.0
+      },
+      {
+        "name": "right_arm_3",
+        "label": "오른팔 관절 4",
+        "part_id": "link_right_arm_3",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 40.0
+      },
+      {
+        "name": "right_arm_4",
+        "label": "오른팔 관절 5",
+        "part_id": "link_right_arm_4",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 10.0
+      },
+      {
+        "name": "right_arm_5",
+        "label": "오른팔 관절 6",
+        "part_id": "link_right_arm_5",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 10.0
+      },
+      {
+        "name": "right_arm_6",
+        "label": "오른팔 관절 7",
+        "part_id": "link_right_arm_6",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 8.0
+      },
+      {
+        "name": "left_arm_0",
+        "label": "왼팔 관절 1",
+        "part_id": "link_left_arm_0",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 70.0
+      },
+      {
+        "name": "left_arm_1",
+        "label": "왼팔 관절 2",
+        "part_id": "link_left_arm_1",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 70.0
+      },
+      {
+        "name": "left_arm_2",
+        "label": "왼팔 관절 3",
+        "part_id": "link_left_arm_2",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 70.0
+      },
+      {
+        "name": "left_arm_3",
+        "label": "왼팔 관절 4",
+        "part_id": "link_left_arm_3",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 40.0
+      },
+      {
+        "name": "left_arm_4",
+        "label": "왼팔 관절 5",
+        "part_id": "link_left_arm_4",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 10.0
+      },
+      {
+        "name": "left_arm_5",
+        "label": "왼팔 관절 6",
+        "part_id": "link_left_arm_5",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 10.0
+      },
+      {
+        "name": "left_arm_6",
+        "label": "왼팔 관절 7",
+        "part_id": "link_left_arm_6",
+        "anchor_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "limit_nm": 8.0
+      }
+    ]
+  },
+  "frames_validated": 1136,
+  "state_payload_sha256": "b6b975a89f8b1b0a0a0532c83fb97a2f002ce4dab829fe47d8e2fc99be9a8bbc",
+  "maximum_joint_load": {
+    "frame_index": 345,
+    "name": "torso_1",
+    "torque_nm": -238.63362982392619,
+    "limit_nm": 270.0,
+    "load_fraction": 0.883828258607134
+  },
+  "representative_samples": [
+    {
+      "frame_index": 0,
+      "time_s": 0.0,
+      "joints": [
+        {
+          "name": "torso_0",
+          "torque_nm": -5.80186086551091,
+          "load_fraction": 0.021488373575966332
+        },
+        {
+          "name": "torso_1",
+          "torque_nm": 3.026117575373265,
+          "load_fraction": 0.011207842871752834
+        },
+        {
+          "name": "torso_2",
+          "torque_nm": 2.5406075924462517,
+          "load_fraction": 0.009409657749800932
+        },
+        {
+          "name": "torso_3",
+          "torque_nm": 3.5343261791630436,
+          "load_fraction": 0.013090096959863124
+        },
+        {
+          "name": "torso_4",
+          "torque_nm": -1.8257918583879118,
+          "load_fraction": 0.015214932153232599
+        },
+        {
+          "name": "torso_5",
+          "torque_nm": -0.010252751410954905,
+          "load_fraction": 8.543959509129087e-05
+        },
+        {
+          "name": "right_arm_0",
+          "torque_nm": -0.20508198143606732,
+          "load_fraction": 0.002929742591943819
+        },
+        {
+          "name": "right_arm_1",
+          "torque_nm": -0.42434244299037527,
+          "load_fraction": 0.006062034899862504
+        },
+        {
+          "name": "right_arm_2",
+          "torque_nm": -0.002762564733488495,
+          "load_fraction": 3.946521047840707e-05
+        },
+        {
+          "name": "right_arm_3",
+          "torque_nm": 1.2210171949545456,
+          "load_fraction": 0.03052542987386364
+        },
+        {
+          "name": "right_arm_4",
+          "torque_nm": -0.0012834848302595379,
+          "load_fraction": 0.0001283484830259538
+        },
+        {
+          "name": "right_arm_5",
+          "torque_nm": -0.10038326321246478,
+          "load_fraction": 0.010038326321246478
+        },
+        {
+          "name": "right_arm_6",
+          "torque_nm": -0.00014441266688224104,
+          "load_fraction": 1.805158336028013e-05
+        },
+        {
+          "name": "left_arm_0",
+          "torque_nm": -0.2424393132441043,
+          "load_fraction": 0.0034634187606300618
+        },
+        {
+          "name": "left_arm_1",
+          "torque_nm": 0.08712257243172271,
+          "load_fraction": 0.0012446081775960387
+        },
+        {
+          "name": "left_arm_2",
+          "torque_nm": 0.0012329840725695555,
+          "load_fraction": 1.761405817956508e-05
+        },
+        {
+          "name": "left_arm_3",
+          "torque_nm": 1.1360320371285808,
+          "load_fraction": 0.02840080092821452
+        },
+        {
+          "name": "left_arm_4",
+          "torque_nm": 4.42209523321842e-05,
+          "load_fraction": 4.4220952332184205e-06
+        },
+        {
+          "name": "left_arm_5",
+          "torque_nm": -0.14189894271509063,
+          "load_fraction": 0.014189894271509063
+        },
+        {
+          "name": "left_arm_6",
+          "torque_nm": 0.00014352751359563521,
+          "load_fraction": 1.7940939199454402e-05
+        }
+      ]
+    },
+    {
+      "frame_index": 345,
+      "time_s": 46.00000000001025,
+      "joints": [
+        {
+          "name": "torso_0",
+          "torque_nm": -5.432581883459703,
+          "load_fraction": 0.020120673642443344
+        },
+        {
+          "name": "torso_1",
+          "torque_nm": -238.63362982392619,
+          "load_fraction": 0.883828258607134
+        },
+        {
+          "name": "torso_2",
+          "torque_nm": -43.56760162820956,
+          "load_fraction": 0.16136148751188725
+        },
+        {
+          "name": "torso_3",
+          "torque_nm": -127.10069799792473,
+          "load_fraction": 0.47074332591823975
+        },
+        {
+          "name": "torso_4",
+          "torque_nm": -0.686398192495694,
+          "load_fraction": 0.005719984937464117
+        },
+        {
+          "name": "torso_5",
+          "torque_nm": -1.7072418204687816,
+          "load_fraction": 0.01422701517057318
+        },
+        {
+          "name": "right_arm_0",
+          "torque_nm": -7.717202602096677,
+          "load_fraction": 0.11024575145852396
+        },
+        {
+          "name": "right_arm_1",
+          "torque_nm": -5.6649232067948105,
+          "load_fraction": 0.08092747438278301
+        },
+        {
+          "name": "right_arm_2",
+          "torque_nm": -0.5283922729659025,
+          "load_fraction": 0.007548461042370036
+        },
+        {
+          "name": "right_arm_3",
+          "torque_nm": 2.930635803834491,
+          "load_fraction": 0.07326589509586227
+        },
+        {
+          "name": "right_arm_4",
+          "torque_nm": -0.08399006858780922,
+          "load_fraction": 0.008399006858780922
+        },
+        {
+          "name": "right_arm_5",
+          "torque_nm": -0.15001733667389772,
+          "load_fraction": 0.015001733667389772
+        },
+        {
+          "name": "right_arm_6",
+          "torque_nm": -0.11191717260771838,
+          "load_fraction": 0.013989646575964798
+        },
+        {
+          "name": "left_arm_0",
+          "torque_nm": -7.4839977003293825,
+          "load_fraction": 0.10691425286184832
+        },
+        {
+          "name": "left_arm_1",
+          "torque_nm": 4.804827785259249,
+          "load_fraction": 0.06864039693227499
+        },
+        {
+          "name": "left_arm_2",
+          "torque_nm": 0.37495336992742523,
+          "load_fraction": 0.005356476713248932
+        },
+        {
+          "name": "left_arm_3",
+          "torque_nm": 2.425392339565917,
+          "load_fraction": 0.06063480848914793
+        },
+        {
+          "name": "left_arm_4",
+          "torque_nm": -0.10252708745429118,
+          "load_fraction": 0.010252708745429117
+        },
+        {
+          "name": "left_arm_5",
+          "torque_nm": -0.00866651728154011,
+          "load_fraction": 0.0008666517281540109
+        },
+        {
+          "name": "left_arm_6",
+          "torque_nm": -0.16771521878581552,
+          "load_fraction": 0.02096440234822694
+        }
+      ]
+    },
+    {
+      "frame_index": 1135,
+      "time_s": 151.231999999994,
+      "joints": [
+        {
+          "name": "torso_0",
+          "torque_nm": -5.779056817818093,
+          "load_fraction": 0.02140391414006701
+        },
+        {
+          "name": "torso_1",
+          "torque_nm": 2.974448673757468,
+          "load_fraction": 0.011016476569472102
+        },
+        {
+          "name": "torso_2",
+          "torque_nm": 3.616053526819801,
+          "load_fraction": 0.013392790840073337
+        },
+        {
+          "name": "torso_3",
+          "torque_nm": 4.111674762338488,
+          "load_fraction": 0.015228425045698104
+        },
+        {
+          "name": "torso_4",
+          "torque_nm": -1.8205300043905586,
+          "load_fraction": 0.015171083369921321
+        },
+        {
+          "name": "torso_5",
+          "torque_nm": 0.0021079312887714347,
+          "load_fraction": 1.756609407309529e-05
+        },
+        {
+          "name": "right_arm_0",
+          "torque_nm": -0.38963842475218946,
+          "load_fraction": 0.0055662632107455635
+        },
+        {
+          "name": "right_arm_1",
+          "torque_nm": -0.4394192029770526,
+          "load_fraction": 0.006277417185386466
+        },
+        {
+          "name": "right_arm_2",
+          "torque_nm": -0.002237051385437394,
+          "load_fraction": 3.195787693481992e-05
+        },
+        {
+          "name": "right_arm_3",
+          "torque_nm": 1.148056215615103,
+          "load_fraction": 0.028701405390377577
+        },
+        {
+          "name": "right_arm_4",
+          "torque_nm": 0.0037485500123057847,
+          "load_fraction": 0.00037485500123057847
+        },
+        {
+          "name": "right_arm_5",
+          "torque_nm": -0.11646497154577545,
+          "load_fraction": 0.011646497154577546
+        },
+        {
+          "name": "right_arm_6",
+          "torque_nm": -0.0020947408428071412,
+          "load_fraction": 0.00026184260535089265
+        },
+        {
+          "name": "left_arm_0",
+          "torque_nm": -0.4182521624243427,
+          "load_fraction": 0.005975030891776325
+        },
+        {
+          "name": "left_arm_1",
+          "torque_nm": 0.09810194672139522,
+          "load_fraction": 0.0014014563817342173
+        },
+        {
+          "name": "left_arm_2",
+          "torque_nm": 0.0029176380325085516,
+          "load_fraction": 4.1680543321550735e-05
+        },
+        {
+          "name": "left_arm_3",
+          "torque_nm": 1.0640106769698705,
+          "load_fraction": 0.026600266924246763
+        },
+        {
+          "name": "left_arm_4",
+          "torque_nm": -0.0030978502802430086,
+          "load_fraction": 0.00030978502802430085
+        },
+        {
+          "name": "left_arm_5",
+          "torque_nm": -0.15771152861448212,
+          "load_fraction": 0.01577115286144821
+        },
+        {
+          "name": "left_arm_6",
+          "torque_nm": -0.0024625626988682425,
+          "load_fraction": 0.0003078203373585303
+        }
+      ]
+    }
+  ],
+  "local_asset_sha256": {
+    "geometry.bin": "27a53c752336620ac763f388d8f1826aae9bcd531e7d20729b4c995b0bd944ae",
+    "frames.bin": "f498f7b28eb03110980ce12336d4c435624a4c4203f78d8e2253b3c5b74d2bc5",
+    "fem-surface.bin": "2125767a87dfd038870f3c425fc5de896a0debbcbb7a1f6edcce6a513daed796",
+    "fem-cutaway.bin": "1b99171d660ff75257c9107f6a8078ff2cb092f09800da06f061db49db3ba743",
+    "diagnostics.bin": "ea34b04aaf04fb5bd51c1fc995b8f8bd4e00626e8db1112dd3515e03d3dfcf1a"
+  },
+  "all_five_original_structural_assets_unchanged": true,
+  "display": {
+    "background": "blue-gray sky gradient and visual-only 0.25 m floor grid",
+    "joint_ring": "purple arc, fill clipped at 100%; numeric values remain unclamped",
+    "surface": "separate stress MPa color scale",
+    "world_anchor": "recorded body pose * model.jnt_pos",
+    "cad_detail": "joint location rings omitted; global recorded numerical list retained"
+  },
+  "limits": [
+    "Model actuator limits, not hardware ratings or safety factors.",
+    "Joint torque and structural stress are different quantities.",
+    "Visual background adds no MuJoCo collisions or simulation forces."
+  ]
+}

@@ -16,7 +16,7 @@
     [hidden] { display: none !important; }
     body { margin: 0; min-width: 300px; background: var(--void); color: var(--text); }
     button, select { font: inherit; }
-    button:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+    button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
     .shell { width: min(1680px, 100%); margin: 0 auto; padding: 18px; }
     header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 5px 3px 17px; }
     .eyebrow { margin: 0 0 6px; color: var(--cyan); font: 750 .69rem/1 ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; }
@@ -109,13 +109,34 @@
     .structural-scene-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 9px 12px; }
     .structural-scene-controls label { display: grid; gap: 4px; color: #8797a1; font-size: .6rem; }
     .structural-scene-controls select { min-width: 0; min-height: 40px; border: 1px solid #34424d; border-radius: 6px; background: #111920; color: #e4edf1; padding: 6px 8px; }
-    .structural-canvas-wrap { position: relative; aspect-ratio: 4 / 3; border: 1px solid #2c3942; background: #030506; overflow: hidden; }
+    .structural-canvas-wrap { position: relative; aspect-ratio: 4 / 3; border: 1px solid #526773; background: linear-gradient(180deg,#a8bbc7 0%,#8fa6b5 47%,#738c9e 100%); overflow: hidden; }
     .structural-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
-    .structural-wrench-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+    .structural-wrench-overlay, .joint-load-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
     .structural-overlay { position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; gap: 8px; padding: 7px 9px; background: rgba(5,7,9,.88); color: #c2cdd3; font: .58rem/1.35 ui-monospace, monospace; }
     .stress-ramp { height: 8px; margin: 7px 12px 0; border-radius: 3px; background: linear-gradient(90deg,#143f94,#0dc7e0,#4cdb61,#ffc41f,#ed1f1f); }
     .structural-scene-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 8px; margin: 5px 12px 0; color: #8797a1; font: .58rem/1.4 ui-monospace, monospace; }
     #structuralVectorLegend { margin-left: auto; text-align: right; }
+    .joint-load-card { margin: 8px 12px 0; border: 1px solid #344650; background: #0b1217; padding: 9px; }
+    .joint-load-card-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; border-bottom: 1px solid #263842; padding-bottom: 7px; }
+    #jointLoadLegend { color: #e5f0f4; font: 700 .62rem/1.45 ui-monospace, monospace; }
+    .joint-load-toggle { display: inline-flex; min-height: 44px; align-items: center; color: #d6e1e6; font-size: .66rem; }
+    .joint-load-toggle input { width: 18px; height: 18px; margin: 0; accent-color: var(--cyan); }
+    .joint-load-scale { display: flex; align-items: center; gap: 12px; margin-top: 8px; color: #91a0aa; font: .57rem/1.25 ui-monospace, monospace; }
+    .joint-load-ring-key { position: relative; flex: 0 0 26px; width: 26px; height: 26px; border-radius: 50%; background: conic-gradient(#c080ff 0 72%,#223445 72% 100%); transform: rotate(-90deg); }
+    .joint-load-ring-key::after { position: absolute; inset: 6px; border-radius: 50%; background: #0b1217; content: ""; }
+    .joint-load-scale strong { color: #d9b8ff; font-weight: 750; }
+    .joint-load-scale span:last-child { margin-left: auto; text-align: right; }
+    .joint-load-note { margin: 7px 0 0 !important; color: #8797a1 !important; font-size: .6rem !important; line-height: 1.45 !important; }
+    .joint-load-summary { min-width: 0; margin-top: 8px; }
+    .joint-load-status { margin: 0 0 6px; color: #91a0aa; font-size: .61rem; line-height: 1.45; }
+    .joint-load-top { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+    .joint-load-top > * { min-width: 0; min-height: 44px; border: 1px solid #3c4d57; border-left: 2px solid var(--amber); background: #111920; padding: 7px 8px; overflow-wrap: anywhere; color: #dce8ed; font: 650 .61rem/1.45 ui-monospace, monospace; text-align: left; }
+    .joint-load-summary details { margin-top: 8px; border: 1px solid #293740; }
+    .joint-load-summary summary { padding: 9px; font-size: .62rem; }
+    .joint-load-table { width: 100%; min-width: 0; overflow-x: auto; }
+    .joint-load-table table { width: 100%; min-width: 540px; border-collapse: collapse; color: #aebcc4; font: .59rem/1.4 ui-monospace, monospace; }
+    .joint-load-table th, .joint-load-table td { padding: 7px 8px; border-top: 1px solid #293740; text-align: right; white-space: nowrap; }
+    .joint-load-table th:first-child, .joint-load-table td:first-child { position: sticky; left: 0; min-width: 150px; background: #0d151a; text-align: left; }
     .structural-diagnostics { width: 100%; min-width: 0; padding: 14px; }
     .structural-support { margin: 8px 12px 0; border: 1px solid #293740; background: #0b1116; }
     .structural-support .structural-summary { margin: 0 12px 10px; }
@@ -169,6 +190,7 @@
     @media (max-width: 1050px) { header { align-items: flex-start; flex-direction: column; } .condition { justify-content: flex-start; } aside { grid-template-columns: 1fr 1fr; } aside .result-panel { grid-column: 1 / -1; } }
     @media (max-width: 880px) { .primary-grid { grid-template-columns: 1fr; } .primary-grid .stage, .primary-grid .load-media, .primary-grid .structural-media, .primary-grid .structural-canvas-wrap { height: auto; aspect-ratio: 4 / 3; min-height: 0; } }
     @media (max-width: 680px) { .shell { padding: 10px; } .stage { min-height: 0; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(3, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-row { grid-template-columns: 1fr; } .sensor-row-header { grid-column: auto; } .sensor-media img, .sensor-row.expanded .sensor-media img { height: auto; aspect-ratio: 16 / 9; } aside { grid-template-columns: 1fr; } aside .result-panel, aside > .panel:last-child { grid-column: auto; } }
+    @media (max-width: 680px) { .joint-load-top { grid-template-columns: 1fr; } }
     @media (max-width: 680px) { .sensor-row.expanded .sensor-media { overflow-x: auto; } .sensor-row.expanded .sensor-media img { width: 640px; height: auto; max-width: none; aspect-ratio: auto; } }
     @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
   </style>
@@ -233,6 +255,7 @@
             <div id="structuralSceneContent">
             <div class="structural-canvas-wrap">
               <canvas id="structuralCanvas" width="480" height="360" aria-label="기록 시각과 동기화된 로봇 응력 분포"></canvas>
+              <svg id="jointLoadOverlay" class="joint-load-overlay" viewBox="0 0 480 360" preserveAspectRatio="none" aria-hidden="true"></svg>
               <svg id="structuralWrenchOverlay" class="structural-wrench-overlay" viewBox="0 0 480 360" preserveAspectRatio="none" aria-hidden="true"></svg>
               <div class="structural-overlay"><output id="structuralSceneClock">기록 프레임 —</output><output id="structuralSceneMaximum">현재 최대 —</output></div>
             </div>
@@ -247,6 +270,15 @@
             </div>
             <div class="stress-ramp" aria-hidden="true"></div>
             <div class="structural-scene-meta"><span id="structuralLegend">응력 범례 · MPa</span><span id="structuralVectorLegend">von Mises · 하중 벡터</span></div>
+            <section class="joint-load-card" aria-label="관절 부하 오버레이 설정과 요약">
+              <div class="joint-load-card-header">
+                <span id="jointLoadLegend">관절 부하 · 몸통·양팔 20관절 · τ/모델 제한</span>
+                <label class="joint-load-toggle"><input id="showJointLoad" type="checkbox" checked aria-label="관절 부하 겹쳐 보기">관절 부하 겹쳐 보기</label>
+              </div>
+              <div class="joint-load-scale" aria-hidden="true"><i class="joint-load-ring-key"></i><strong>보라색 원호 길이 · 0–100%</strong><span>바탕 링=0% · 한 바퀴=100%</span></div>
+              <p class="joint-load-note">링은 현재 토크와 모델 제한의 비율이며 Nm 값을 함께 표시합니다. 응력 MPa 범례와 별도이고 하드웨어 정격을 뜻하지 않습니다.</p>
+              <div id="jointLoadSummary" class="joint-load-summary"><span>기록 관절 상태를 불러오는 중입니다.</span></div>
+            </section>
             <details class="structural-support"><summary>선택 부품 하중·해석 기준</summary>
               <dl class="structural-summary">
                 <div><dt>현재 힘 · 선택 좌표계</dt><dd id="structuralForce">부품 선택 시 표시</dd></div>
@@ -283,10 +315,10 @@
           <ul id="structuralAssumptions" class="structural-assumptions" aria-label="구조 해석 가정"></ul>
           </div>
         </div>
-        <header><h3 id="loadTitle">하중·응력 진단</h3><p>원본 동작과 같은 기록 시각의 전신 구조 응력을 비교하고, 관절 한계 사용률로 전환해 확인합니다.</p></header>
+        <header><h3 id="loadTitle">통합 하중·응력 진단</h3><p>같은 기록 시각의 전신 구조 응력과 관절 한계 사용률을 겹쳐 보고, 기존 관절 부하 영상과 비교합니다.</p></header>
         <div class="diagnostic-tabs" role="group" aria-label="진단 결과 선택">
-          <button id="jointModeButton" type="button" aria-pressed="true">관절 부하</button>
-          <button id="structuralModeButton" type="button" aria-pressed="false" hidden>구조 응력</button>
+          <button id="jointModeButton" type="button" aria-pressed="true">관절 부하 영상</button>
+          <button id="structuralModeButton" type="button" aria-pressed="false" hidden>응력 + 관절 부하</button>
         </div>
       </section>
       </div>
@@ -363,7 +395,7 @@
       structuralSnapshot: $('structuralSnapshot'), structuralMaterial: $('structuralMaterial'), structuralDisplacement: $('structuralDisplacement'), structuralP95: $('structuralP95'), structuralPeak: $('structuralPeak'), structuralConvergence: $('structuralConvergence'),
       structuralForceBalance: $('structuralForceBalance'), structuralMomentBalance: $('structuralMomentBalance'), structuralAssumptions: $('structuralAssumptions'),
       structuralViewButtons: [...document.querySelectorAll('[data-structural-view]')],
-      structuralSceneRoot: $('structuralSceneRoot'), structuralSceneContent: $('structuralSceneContent'), structuralLegacy: $('structuralLegacy'), structuralSceneTitle: $('structuralSceneTitle'), structuralSceneError: $('structuralSceneError'), structuralPart: $('structuralPart'), structuralScale: $('structuralScale'), structuralSceneViews: $('structuralSceneViews'), structuralSceneViewButtons: [...document.querySelectorAll('[data-scene-view]')], structuralCanvas: $('structuralCanvas'), structuralWrenchOverlay: $('structuralWrenchOverlay'), structuralSceneClock: $('structuralSceneClock'), structuralSceneMaximum: $('structuralSceneMaximum'), structuralLegend: $('structuralLegend'), structuralVectorLegend: $('structuralVectorLegend'), structuralDiagnostics: $('structuralDiagnostics'), structuralForce: $('structuralForce'), structuralMoment: $('structuralMoment'), structuralScope: $('structuralScope'), structuralPartAssumptions: $('structuralPartAssumptions'), structuralSceneAssumptions: $('structuralSceneAssumptions'),
+      structuralSceneRoot: $('structuralSceneRoot'), structuralSceneContent: $('structuralSceneContent'), structuralLegacy: $('structuralLegacy'), structuralSceneTitle: $('structuralSceneTitle'), structuralSceneError: $('structuralSceneError'), structuralPart: $('structuralPart'), structuralScale: $('structuralScale'), structuralSceneViews: $('structuralSceneViews'), structuralSceneViewButtons: [...document.querySelectorAll('[data-scene-view]')], structuralCanvas: $('structuralCanvas'), structuralWrenchOverlay: $('structuralWrenchOverlay'), jointLoadOverlay: $('jointLoadOverlay'), structuralSceneClock: $('structuralSceneClock'), structuralSceneMaximum: $('structuralSceneMaximum'), structuralLegend: $('structuralLegend'), structuralVectorLegend: $('structuralVectorLegend'), jointLoadLegend: $('jointLoadLegend'), jointLoadSummary: $('jointLoadSummary'), showJointLoad: $('showJointLoad'), structuralDiagnostics: $('structuralDiagnostics'), structuralForce: $('structuralForce'), structuralMoment: $('structuralMoment'), structuralScope: $('structuralScope'), structuralPartAssumptions: $('structuralPartAssumptions'), structuralSceneAssumptions: $('structuralSceneAssumptions'),
       viewButtons: [...document.querySelectorAll('[data-view]')], timeline: [...document.querySelectorAll('.timeline-step')]
     };
     let playing = false, actionPromise = null, playGeneration = 0, framePromise = null, frameDirty = false;
@@ -523,6 +555,7 @@
         lastStateFrame=index; updateState(playbackStates[index].state);
         ui.backendBadge.textContent='MuJoCo · 기록 재생';
       }
+      structuralScene?.setJointState(playbackStates[index].state.joint_state,index);
       structuralScene?.seekFrame(index,selectedTime);
       syncLoadVideo(force);
     }
@@ -551,9 +584,10 @@
       try {
         sceneInfo=await request('/api/structural-scene');
         if(sceneInfo.enabled){
-          structuralScene=new window.StructuralScene({root:ui.structuralSceneRoot,title:ui.structuralSceneTitle,part:ui.structuralPart,scale:ui.structuralScale,viewGroup:ui.structuralSceneViews,views:ui.structuralSceneViewButtons,canvas:ui.structuralCanvas,overlay:ui.structuralWrenchOverlay,clock:ui.structuralSceneClock,maximum:ui.structuralSceneMaximum,legend:ui.structuralLegend,vectorLegend:ui.structuralVectorLegend,diagnostic:ui.structuralDiagnostics,force:ui.structuralForce,moment:ui.structuralMoment,scope:ui.structuralScope,partAssumptions:ui.structuralPartAssumptions,assumptions:ui.structuralSceneAssumptions});
+          structuralScene=new window.StructuralScene({root:ui.structuralSceneRoot,title:ui.structuralSceneTitle,part:ui.structuralPart,scale:ui.structuralScale,viewGroup:ui.structuralSceneViews,views:ui.structuralSceneViewButtons,canvas:ui.structuralCanvas,overlay:ui.structuralWrenchOverlay,jointOverlay:ui.jointLoadOverlay,clock:ui.structuralSceneClock,maximum:ui.structuralSceneMaximum,legend:ui.structuralLegend,vectorLegend:ui.structuralVectorLegend,jointLegend:ui.jointLoadLegend,jointSummary:ui.jointLoadSummary,jointToggle:ui.showJointLoad,diagnostic:ui.structuralDiagnostics,force:ui.structuralForce,moment:ui.structuralMoment,scope:ui.structuralScope,partAssumptions:ui.structuralPartAssumptions,assumptions:ui.structuralSceneAssumptions});
           await structuralScene.load(sceneInfo);
-          structuralInfo={synchronized:true};ui.structuralSceneError.hidden=true;ui.structuralSceneContent.hidden=false;ui.structuralLegacy.hidden=true;ui.loadPanel.hidden=false;ui.structuralModeButton.hidden=false;ui.structuralModeButton.textContent='구조 응력';ui.jointModeButton.hidden=!jointAvailable;
+          if(lastStateFrame>=0&&playbackStates[lastStateFrame]){structuralScene.setJointState(playbackStates[lastStateFrame].state.joint_state,lastStateFrame);structuralScene.seekFrame(lastStateFrame,lastStateFrame/playbackInfo.fps);}
+          structuralInfo={synchronized:true};ui.structuralSceneError.hidden=true;ui.structuralSceneContent.hidden=false;ui.structuralLegacy.hidden=true;ui.loadPanel.hidden=false;ui.structuralModeButton.hidden=false;ui.structuralModeButton.textContent='응력 + 관절 부하';ui.jointModeButton.hidden=!jointAvailable;
           ui.structuralPart.value='whole';setDiagnosticMode('structural');
           return;
         }

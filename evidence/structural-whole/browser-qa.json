@@ -208,5 +208,75 @@
       "Finite UI samples, not continuous zero-drift or cross-browser performance certification.",
       "Existing original four binary files unchanged; only auxiliary diagnostic data and presentation changed."
     ]
+  },
+  "merged_stress_joint_overlay": {
+    "default_button": "응력 + 관절 부하",
+    "default_joint_checked": true,
+    "joint_count": 20,
+    "background": "blue-gray gradient and 0.25 m visual floor grid, visually inspected in CUA",
+    "separate_legend": "MPa surface color and purple arc length 0–100%",
+    "same_frame_observations": [
+      {
+        "case": "running 2x (16x physics)",
+        "sync_video_time_s": 0.033333,
+        "expected_frame_index": 2,
+        "stress_frame": 2,
+        "joint_frame": 2
+      },
+      {
+        "case": "terminal",
+        "video_time_s": 18.933333,
+        "stress_frame": 1135,
+        "joint_frame": 1135
+      },
+      {
+        "case": "reset",
+        "stress_frame": 0,
+        "joint_frame": 0
+      },
+      {
+        "case": "single frame",
+        "video_time_s": 0.016666,
+        "stress_frame": 1,
+        "joint_frame": 1
+      }
+    ],
+    "toggle_off_svg_children": 0,
+    "toggle_on_whole_rings": 20,
+    "top_joint_selection": {
+      "part": "link_right_arm_3",
+      "rings": 1,
+      "preserved_frame_index": 1135,
+      "video_time_s": 18.933333
+    },
+    "cad_selected": {
+      "part": "left_flange_fem",
+      "rings": 0,
+      "omission_reason_visible": true
+    },
+    "responsive": [
+      {
+        "viewport_width": 390,
+        "canvas_px": [
+          351,
+          263
+        ],
+        "horizontal_overflow": false,
+        "joint_table_client_width": 307,
+        "joint_table_scroll_width": 540
+      },
+      {
+        "viewport_width": 1024,
+        "canvas_px": [
+          476,
+          358
+        ],
+        "horizontal_overflow": false
+      }
+    ],
+    "viewport_override_reset": true,
+    "limitations": "Finite DOM/visual samples, not continuous zero-drift, sustained FPS or cross-browser certification. No screenshot file claimed.",
+    "comparison_video_switch_returned_to_merged_mode": true,
+    "service_restart_loaded_same_frame_0_and_20_joint_rings": true
   }
 }

@@ -183,6 +183,7 @@ def _make_handler(
     playback: Any = None,
     structural: Any = None,
     structural_scene: Any = None,
+    joint_load: dict[str, Any] | None = None,
 ) -> type[BaseHTTPRequestHandler]:
     class ViewerHandler(BaseHTTPRequestHandler):
         server_version = "RBY1TrayViewer/0.1"
@@ -205,11 +206,16 @@ def _make_handler(
                 )
                 return
             if request.path == "/api/structural-scene":
-                self._send_json(
-                    HTTPStatus.OK,
+                info: dict[str, Any] = dict(
                     structural_scene.info()
                     if structural_scene
-                    else {"enabled": False, "configured": False},
+                    else {"enabled": False, "configured": False}
+                )
+                if joint_load is not None:
+                    info["joint_load"] = dict(joint_load)
+                self._send_json(
+                    HTTPStatus.OK,
+                    info,
                 )
                 return
             if request.path in {"/structural-scene.js", "/structural-diagnostics.js"}:
@@ -500,8 +506,12 @@ def serve(
                 f"modes remain available: {exc}"
             )
             structural_scene = _UnavailableStructuralScene()
+    from .joint_overlay import joint_load_metadata
+
+    joint_load = joint_load_metadata(session)
     server = HTTPServer(
-        (host, port), _make_handler(session, playback, structural, structural_scene)
+        (host, port),
+        _make_handler(session, playback, structural, structural_scene, joint_load),
     )
     print(f"RB-Y1 Tray Lab: http://{host}:{server.server_port}")
     try:

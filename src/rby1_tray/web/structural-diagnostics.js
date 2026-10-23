@@ -94,5 +94,26 @@
     };
   }
 
-  return Object.freeze({ resultant, sectionPoint, femTensorMetrics });
+  function jointLoads(state, metadata) {
+    const joints = metadata?.joints;
+    if (!metadata?.available || !Array.isArray(joints) || !joints.length) {
+      return {available: false, reason: metadata?.reason || '관절 메타데이터 없음', joints: []};
+    }
+    const names = state?.names, forces = state?.actuator_force;
+    if (!Array.isArray(names) || !Array.isArray(forces) || names.length !== forces.length ||
+        new Set(names).size !== names.length || !forces.every(Number.isFinite)) {
+      return {available: false, reason: '기록 관절 하중의 이름·길이·유한값 확인 실패', joints: []};
+    }
+    const byName = new Map(names.map((name, i) => [name, forces[i]]));
+    if (new Set(joints.map(j => j.name)).size !== joints.length || joints.some(j =>
+      !byName.has(j.name) || !Number.isFinite(j.limit_nm) || j.limit_nm <= 0)) {
+      return {available: false, reason: '관절 이름 또는 모델 토크 제한 불일치', joints: []};
+    }
+    return {available: true, joints: joints.map(j => {
+      const torque = byName.get(j.name), fraction = Math.abs(torque) / j.limit_nm;
+      return {...j, torque_nm: torque, load_fraction: fraction, fill_fraction: Math.min(1, fraction)};
+    })};
+  }
+
+  return Object.freeze({ resultant, sectionPoint, femTensorMetrics, jointLoads });
 });

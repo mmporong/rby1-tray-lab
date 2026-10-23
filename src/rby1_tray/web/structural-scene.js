@@ -61,7 +61,7 @@
 
   class StructuralScene {
     constructor(elements) {
-      this.el=elements; this.frameIndex=-1; this.selection='whole'; this.femView='surface'; this.scale='log';this.component='total';
+      this.el=elements; this.frameIndex=-1; this.selection='whole'; this.femView='surface'; this.scale='log';this.component='total';this.jointStateFrame=-1;
     }
 
     async load(info) {
@@ -75,7 +75,21 @@
       this.sectionParts=this.parts.filter((part)=>part.kind==='section');
       this.bounds=new Map(this.sectionParts.map((part)=>[part.id,this.localBounds(this.geometry,6,part.vertex_offset,part.vertex_count)]));
       this.femBounds={surface:this.localBounds(this.fem.surface,42,0,info.fem_surface_vertex_count),cutaway:this.localBounds(this.fem.cutaway,42,0,info.fem_cutaway_vertex_count)};
-      this.setupDiagnostics();this.setupControls(); this.setupWebGL(); this.seekFrame(0);
+      this.setupDiagnostics();this.setupJointSummary();this.setupControls(); this.setupWebGL(); this.seekFrame(0);
+    }
+
+    setupJointSummary() {
+      if(!this.el.jointSummary)return;
+      this.jointStatus=element('p',undefined,'joint-load-status');this.jointTop=element('div',undefined,'joint-load-top');
+      const details=element('details'),summary=element('summary','몸통·양팔 20개 관절 수치'),table=element('table');
+      table.innerHTML='<thead><tr><th scope="col">관절</th><th scope="col">토크 Nm</th><th scope="col">모델 제한 Nm</th><th scope="col">사용률 %</th></tr></thead>';
+      this.jointRows=element('tbody');table.append(this.jointRows);const wrap=element('div',undefined,'joint-load-table');wrap.append(table);details.append(summary,wrap);
+      this.jointDetails=details;this.el.jointSummary.replaceChildren(this.jointStatus,this.jointTop,details);
+      this.el.jointToggle?.addEventListener('change',()=>this.render());
+    }
+
+    setJointState(state,index) {
+      this.jointState=state;this.jointStateFrame=Number(index);this.jointDirty=true;
     }
 
     setupDiagnostics() {
@@ -127,7 +141,7 @@
     }
 
     setupWebGL() {
-      const gl=this.el.canvas.getContext('webgl',{antialias:true,alpha:false});
+      const gl=this.el.canvas.getContext('webgl',{antialias:true,alpha:true});
       if(!gl)throw new Error('이 브라우저에서 WebGL을 사용할 수 없습니다.'); this.gl=gl;
       this.program=program(gl,`
         attribute vec3 aPosition; attribute vec3 aNormal; attribute float aStress;
@@ -164,7 +178,19 @@
       this.geometryBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,this.geometryBuffer);gl.bufferData(gl.ARRAY_BUFFER,this.geometry,gl.STATIC_DRAW);
       this.stressBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,this.stressBuffer);gl.bufferData(gl.ARRAY_BUFFER,this.geometry.length/6*4,gl.DYNAMIC_DRAW);
       this.femBuffers={}; for(const name of ['surface','cutaway']){const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,this.fem[name],gl.STATIC_DRAW);this.femBuffers[name]=buffer;}
-      gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);gl.clearColor(.012,.022,.029,1);
+      this.floorProgram=program(gl,`
+        attribute vec2 aPosition;uniform mat4 uViewProjection;uniform mediump vec2 uCenter;uniform mediump float uRadius;varying mediump vec2 vWorld;
+        void main(){vWorld=aPosition*uRadius+uCenter;gl_Position=uViewProjection*vec4(vWorld,-.001,1.);}
+      `,`
+        precision mediump float;varying vec2 vWorld;uniform vec2 uCenter;uniform vec2 uBase;uniform float uRadius;
+        void main(){vec2 cell=abs(fract(vWorld/.25-.5)-.5)*.25;float line=1.-smoothstep(.001,.004,min(cell.x,cell.y));
+          float checker=mod(floor(vWorld.x/.25)+floor(vWorld.y/.25),2.);vec3 color=mix(vec3(.35,.43,.48),vec3(.40,.49,.54),checker);
+          color=mix(color,vec3(.57,.69,.73),line*.38);float shadow=exp(-dot(vWorld-uBase,vWorld-uBase)/.13);color*=1.-shadow*.16;
+          float alpha=1.-smoothstep(uRadius*.55,uRadius,length(vWorld-uCenter));gl_FragColor=vec4(color,alpha);}
+      `);
+      this.floorLocations={position:gl.getAttribLocation(this.floorProgram,'aPosition'),view:gl.getUniformLocation(this.floorProgram,'uViewProjection'),center:gl.getUniformLocation(this.floorProgram,'uCenter'),base:gl.getUniformLocation(this.floorProgram,'uBase'),radius:gl.getUniformLocation(this.floorProgram,'uRadius')};
+      this.floorBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,this.floorBuffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,1,1,-1,-1,1,1,-1,1]),gl.STATIC_DRAW);
+      gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);gl.clearColor(0,0,0,0);
       if(typeof ResizeObserver==='function'){
         this.resizeObserver=new ResizeObserver(()=>this.render());this.resizeObserver.observe(this.el.canvas);
       }else{
@@ -176,8 +202,15 @@
       if(!this.info)return;
       const bounded=Math.min(this.info.frame_count-1,Math.max(0,Number(index)|0));
       if(Number.isFinite(Number(videoTime)))this.el.canvas.dataset.syncVideoTime=Number(videoTime).toFixed(6);
-      if(bounded===this.frameIndex)return;
+      if(bounded===this.frameIndex&&!this.jointDirty)return;
+      this.jointDirty=false;
       this.frameIndex=bounded;this.el.canvas.dataset.frameIndex=String(bounded);this.render();
+    }
+
+    drawEnvironment(projection,bounds) {
+      const gl=this.gl,l=this.floorLocations,center=[(bounds.min[0]+bounds.max[0])/2,(bounds.min[1]+bounds.max[1])/2],baseIndex=this.partIndex.get('base'),baseOffset=this.frameIndex*this.info.frame_stride_floats+(baseIndex||0)*19;
+      gl.useProgram(this.floorProgram);gl.uniformMatrix4fv(l.view,false,projection);gl.uniform2fv(l.center,center);gl.uniform2f(l.base,this.frames[baseOffset],this.frames[baseOffset+1]);gl.uniform1f(l.radius,4);
+      gl.bindBuffer(gl.ARRAY_BUFFER,this.floorBuffer);gl.enableVertexAttribArray(l.position);gl.vertexAttribPointer(l.position,2,gl.FLOAT,false,8,0);gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.drawArrays(gl.TRIANGLES,0,6);gl.disable(gl.BLEND);gl.useProgram(this.program);
     }
 
     femStress(part, data) {
@@ -245,6 +278,35 @@
       if(this.el.vectorLegend)this.el.vectorLegend.textContent='F 청록 화살표 · M 주황 회전 · 흰 점=합력 원점 · 길이는 방향 표시용 정규화';
     }
 
+    drawJointOverlay(projection,selected) {
+      const svg=this.el.jointOverlay;if(!svg)return;svg.replaceChildren();
+      const current=this.jointStateFrame===this.frameIndex,loads=window.StructuralDiagnostics.jointLoads(current?this.jointState:null,this.info.joint_load),enabled=this.el.jointToggle?.checked!==false;
+      svg.hidden=!enabled;svg.dataset.frameIndex=current?String(this.frameIndex):'';svg.dataset.jointCount='0';
+      this.jointDetails.hidden=!loads.available;
+      if(!loads.available){this.jointStatus.textContent=`관절 부하 표시 불가 · ${current?loads.reason:'같은 기록 프레임의 관절 상태 대기'}`;this.jointTop.replaceChildren();this.jointTopKey=null;if(this.el.jointLegend)this.el.jointLegend.textContent='관절 데이터 없음 · 0%로 대체하지 않습니다.';this.el.canvas.dataset.jointFrameIndex='';return;}
+      this.el.canvas.dataset.jointFrameIndex=String(this.jointStateFrame);
+      const ranked=loads.joints.slice().sort((a,b)=>b.load_fraction-a.load_fraction),peak=ranked[0];
+      this.jointStatus.textContent=`전신 20개 관절 중 최대 · ${peak.label} ${fmt(peak.load_fraction*100,1)}% · τ ${fmt(peak.torque_nm)} Nm / 모델 제한 ${fmt(peak.limit_nm,0)} Nm`;
+      const keys=ranked.slice(0,3).map(j=>j.name).join(',');if(keys!==this.jointTopKey){this.jointTopKey=keys;this.jointTop.replaceChildren(...ranked.slice(0,3).map(j=>{const button=element('button');button.type='button';button.dataset.joint=j.name;button.addEventListener('click',()=>{if(!this.partIndex.has(j.part_id))return;this.selection=j.part_id;this.el.part.value=j.part_id;this.updateControls();this.render();});return button;}));}
+      [...this.jointTop.children].forEach((button,i)=>{const j=ranked[i];button.textContent=`${j.label} · ${fmt(j.load_fraction*100,1)}%`;});
+      if(!this.jointCells){this.jointCells=new Map();this.jointRows.replaceChildren(...loads.joints.map(j=>{const row=element('tr'),cells=[element('th',j.label),element('td'),element('td'),element('td')];row.append(...cells);this.jointCells.set(j.name,cells);return row;}));}
+      for(const j of loads.joints){const cells=this.jointCells.get(j.name);cells[1].textContent=fmt(j.torque_nm);cells[2].textContent=fmt(j.limit_nm,0);cells[3].textContent=fmt(j.load_fraction*100,1);}
+      const fem=selected?.kind==='fem',shown=fem?[]:loads.joints.filter(j=>this.partIndex.has(j.part_id)&&(!selected||j.part_id===selected.id));
+      if(this.el.jointLegend)this.el.jointLegend.textContent=`관절 링 0–100% · |토크| / 모델 제한 · ${fem?'CAD 상세에서는 위치 링 생략':`표시 ${shown.length}/20관절`}${enabled?'':' · 겹쳐 보기 꺼짐'} · 실물 정격 아님`;
+      if(!enabled||fem)return;
+      const ns='http://www.w3.org/2000/svg',width=svg.clientWidth||this.el.canvas.clientWidth,height=svg.clientHeight||this.el.canvas.clientHeight,radius=Math.max(6,Math.min(10,width/85)),make=(tag,attrs,text)=>{const node=document.createElementNS(ns,tag);for(const [key,value]of Object.entries(attrs))node.setAttribute(key,String(value));if(text)node.textContent=text;svg.append(node);return node;};
+      svg.setAttribute('viewBox',`0 0 ${width} ${height}`);const points=new Map();
+      for(const j of shown){const offset=this.frameIndex*this.info.frame_stride_floats+this.partIndex.get(j.part_id)*19,world=transform(selected?identity():poseMatrix(this.frames,offset),j.anchor_body_m),w=projection[3]*world[0]+projection[7]*world[1]+projection[11]*world[2]+projection[15];if(w<=0)continue;
+        const x=((projection[0]*world[0]+projection[4]*world[1]+projection[8]*world[2]+projection[12])/w*.5+.5)*width,y=(.5-(projection[1]*world[0]+projection[5]*world[1]+projection[9]*world[2]+projection[13])/w*.5)*height;
+        if(x<0||x>width||y<0||y>height)continue;points.set(j.name,[x,y]);
+        make('circle',{cx:x,cy:y,r:radius,fill:'none',stroke:'#223445','stroke-width':7,opacity:.8});make('circle',{cx:x,cy:y,r:radius,fill:'none',stroke:'#d9e6f1','stroke-width':3});
+        const circumference=2*Math.PI*radius;make('circle',{cx:x,cy:y,r:radius,fill:'none',stroke:j.load_fraction>=1?'#ff557b':'#c080ff','stroke-width':4,'stroke-dasharray':`${circumference*j.fill_fraction} ${circumference}`,'transform':`rotate(-90 ${x} ${y})`});
+      }
+      svg.dataset.jointCount=String(points.size);
+      const labelJoints=(selected?shown:ranked).filter(j=>points.has(j.name)).slice(0,width<500?1:3);
+      labelJoints.forEach((j,i)=>{const p=points.get(j.name),x=width-142,y=16+i*39;make('polyline',{points:`${p[0]},${p[1]} ${x-8},${y+13} ${x},${y+13}`,fill:'none',stroke:'#dde6f2','stroke-width':1,opacity:.65});make('rect',{x,y,width:132,height:31,rx:4,fill:'#26394b',opacity:.94});make('text',{x:x+7,y:y+12,fill:'#f0e3ff','font-size':10},j.label);make('text',{x:x+7,y:y+25,fill:'#fff','font-size':11,'font-weight':700},`${fmt(j.load_fraction*100,1)}% · ${fmt(j.torque_nm,1)} Nm`);});
+    }
+
     localBounds(data,stride,offset,count){const min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];for(let i=0;i<count;i++){const base=(offset+i)*stride;for(let a=0;a<3;a++){min[a]=Math.min(min[a],data[base+a]);max[a]=Math.max(max[a],data[base+a]);}}return {min,max};}
     includeBounds(total,bounds,matrix){for(const x of [bounds.min[0],bounds.max[0]])for(const y of [bounds.min[1],bounds.max[1]])for(const z of [bounds.min[2],bounds.max[2]]){const p=transform(matrix,[x,y,z]);for(let a=0;a<3;a++){total.min[a]=Math.min(total.min[a],p[a]);total.max[a]=Math.max(total.max[a],p[a]);}}}
     viewProjection(bounds){const center=bounds.min.map((v,i)=>(v+bounds.max[i])/2),radius=Math.max(.08,Math.hypot(...bounds.max.map((v,i)=>v-bounds.min[i]))/2),eye=[center[0]+radius*1.5,center[1]-radius*2.1,center[2]+radius*1.15];return multiply(perspective(this.el.canvas.width/this.el.canvas.height),lookAt(eye,center));}
@@ -265,14 +327,14 @@
       }else{
         const shown=selected?[selected]:this.sectionParts;
         for(const part of shown){const offset=this.partIndex.get(part.id)*19;if(part.analysis_status!=='visual_only')maximum=Math.max(maximum,this.frames[frameBase+offset+18]);const model=selected?identity():poseMatrix(this.frames,frameBase+offset);this.includeBounds(totalBounds,this.bounds.get(part.id),model);}
-        this.bindGeometry(this.geometryBuffer,6,false);gl.uniform1f(this.locations.fem,0);projection=this.viewProjection(totalBounds);gl.uniformMatrix4fv(this.locations.view,false,projection);
+        projection=this.viewProjection(totalBounds);if(!selected)this.drawEnvironment(projection,totalBounds);this.bindGeometry(this.geometryBuffer,6,false);gl.uniform1f(this.locations.fem,0);gl.uniformMatrix4fv(this.locations.view,false,projection);
         for(const part of shown){const offset=this.partIndex.get(part.id)*19,s=part.section;gl.uniform1f(this.locations.visualOnly,part.analysis_status==='visual_only'?1:0);gl.uniform3fv(this.locations.force,this.frames.subarray(frameBase+offset+12,frameBase+offset+15));gl.uniform3fv(this.locations.moment,this.frames.subarray(frameBase+offset+15,frameBase+offset+18));gl.uniform3fv(this.locations.origin,s.origin_body_m);gl.uniformMatrix3fv(this.locations.basis,false,s.basis_body);gl.uniform3f(this.locations.section,s.area_m2,s.I_m4,s.J_m4);gl.uniformMatrix4fv(this.locations.model,false,selected?identity():poseMatrix(this.frames,frameBase+offset));gl.drawArrays(gl.TRIANGLES,part.vertex_offset,part.vertex_count);}
       }
       const time=this.info.frame_times_s[this.frameIndex],visualOnly=selected?.analysis_status==='visual_only';this.el.clock.textContent=`기록 프레임 ${this.frameIndex+1} / ${this.info.frame_count} · ${time.toFixed(3)} s`;
       this.el.maximum.textContent=visualOnly?'현재 최대 · 미계산':`${selected?.kind==='fem'?'현재 전체 FEM 최대':'현재 합성 VM 최대'} ${maximum/1e6<.01?(maximum/1e3).toFixed(2)+' kPa':(maximum/1e6).toFixed(3)+' MPa'}`;
       this.el.legend.textContent=visualOnly?'회색 · 비구조 외장 · 응력 미계산':`${componentOptions[this.component]} · 0 — ${(this.info.max_von_mises_pa/1e6).toFixed(2)} MPa · ${this.scale==='log'?'로그':'선형'} 색상`;
       if(visualOnly){this.el.force.textContent='비구조 외장 · 미적용';this.el.moment.textContent='비구조 외장 · 미적용';}else if(selected){const offset=frameBase+this.partIndex.get(selected.id)*19,f=this.frames.subarray(offset+12,offset+15),m=this.frames.subarray(offset+15,offset+18);this.el.force.textContent=`Fx ${f[0].toFixed(2)} · Fy ${f[1].toFixed(2)} · Fz ${f[2].toFixed(2)} N`;this.el.moment.textContent=`Mx ${m[0].toFixed(3)} · My ${m[1].toFixed(3)} · Mz ${m[2].toFixed(3)} N·m`;}else{this.el.force.textContent='부품 선택 시 표시';this.el.moment.textContent='부품 선택 시 표시';}
-      this.updateDiagnostics(selected,frameBase,projection);canvas.dataset.component=this.component;
+      this.updateDiagnostics(selected,frameBase,projection);this.drawJointOverlay(projection,selected);canvas.dataset.component=this.component;
       const elapsed=performance.now()-renderStarted,previous=Number(canvas.dataset.maxRenderMs)||0;canvas.dataset.lastRenderMs=elapsed.toFixed(3);canvas.dataset.maxRenderMs=Math.max(previous,elapsed).toFixed(3);
     }
   }

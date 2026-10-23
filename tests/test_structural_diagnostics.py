@@ -25,6 +25,20 @@ class StructuralDiagnosticsTests(unittest.TestCase):
     def assertClose(self, actual, expected, relative=1e-12, absolute=1e-12):
         self.assertLessEqual(abs(actual - expected), absolute + relative * abs(expected))
 
+    def test_joint_load_matches_names_and_preserves_over_limit_value(self):
+        got = run_node("d.jointLoads({names:['b','a'],actuator_force:[12,-5]}, {available:true,joints:[{name:'a',limit_nm:10},{name:'b',limit_nm:10}]})")
+        self.assertTrue(got['available'])
+        self.assertEqual([j['torque_nm'] for j in got['joints']], [-5, 12])
+        self.assertEqual([j['load_fraction'] for j in got['joints']], [.5, 1.2])
+        self.assertEqual([j['fill_fraction'] for j in got['joints']], [.5, 1])
+
+    def test_invalid_joint_load_is_unavailable_instead_of_false_zero(self):
+        states = ["null", "{names:['a','a'],actuator_force:[0,1]}", "{names:['b'],actuator_force:[0]}", "{names:['a'],actuator_force:[NaN]}"]
+        for state in states:
+            got = run_node(f"d.jointLoads({state},{{available:true,joints:[{{name:'a',limit_nm:10}}]}})")
+            self.assertFalse(got['available'])
+            self.assertEqual(got['joints'], [])
+
     def test_resultant_resolves_signed_axial_torsion_and_norms(self):
         got = run_node("d.resultant([3,4,-12],[6,8,-10])")
         self.assertEqual(got["axial_n"], -12)

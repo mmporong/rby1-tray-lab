@@ -98,29 +98,22 @@
   "basis_metadata_sha256": "b0ea2dbfd6fae96a1fd55799d2dbac5a1ffe3c16ab5d4f07970b0e369bf263ec",
   "local_scene_manifest_sha256": "06f2c4093a2a3095ec0773550f6b140b880f191a2b9c5dadd7ac5ceec63318b7",
   "unit_tests": {
-    "passed": 211,
+    "passed": 217,
+    "command": "MUJOCO_GL=egl PYOPENGL_PLATFORM=egl EGL_PLATFORM=surfaceless __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json .venv/bin/python -m unittest discover -s tests -p 'test_*.py'",
+    "elapsed_s": 34.341,
+    "execution": "root fresh final suite after transmission/limit/symmetry regression additions",
     "independent_fresh_rerun": true,
-    "command": "MUJOCO_GL=egl PYOPENGL_PLATFORM=egl EGL_PLATFORM=surfaceless __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json .venv/bin/python -m unittest discover -s tests -p test_*.py",
-    "elapsed_s": 34.014,
-    "independent_elapsed_s": 34.014,
-    "root_prior_run": {
-      "passed": 210,
-      "elapsed_s": 34.495,
-      "scope": "before final cut-action regression was added; final independent suite includes it"
-    }
+    "independent_elapsed_s": 32.645
   },
   "static_analysis": {
     "tool": "pyright",
     "errors": 0,
     "warnings": 0,
     "scope": [
-      "src/rby1_tray/structural_scene.py",
+      "src/rby1_tray/joint_overlay.py",
       "src/rby1_tray/viewer.py",
-      "src/rby1_tray/load_path.py",
-      "tools/build_load_diagnostics.py",
-      "tests/test_structural_scene.py",
-      "tests/test_structural_diagnostics.py",
-      "tests/test_load_path.py"
+      "tests/test_joint_overlay.py",
+      "tests/test_structural_diagnostics.py"
     ]
   },
   "source_sha256": {
@@ -129,9 +122,9 @@
     "src/rby1_tray/section_stress.py": "122db397000253321687d022812fa1bbca339d5aa29217e2354c4ed0b82b9df2",
     "src/rby1_tray/structural_basis.py": "ece117b77ea6fe926cd0846d6e85382996ba1bda01fdd3a768ba39124d634800",
     "src/rby1_tray/structural_scene.py": "9d923a966ea6faa8d8692b9d65f789ac2ad57affda7f49571a3d85c04bb0dba8",
-    "src/rby1_tray/web/structural-scene.js": "3c3e563a630ac5418de4a3fbd9dbd1ac442f986a31478fd23c4f4f83ff01ab0a",
-    "src/rby1_tray/web/index.html": "2bb1dc47bd903c95c3edf2153c2dade175e1e301bc61268604dc7e0637b9c9b5",
-    "src/rby1_tray/viewer.py": "219e5dbe8c00f6bb97368fa693fcf5276b572e2652126524bb3d8694b5b6291c",
+    "src/rby1_tray/web/structural-scene.js": "e32c64978e1b2c7b0a733eeda56caf5e6c08e137e4d033f31570dc9e63182336",
+    "src/rby1_tray/web/index.html": "9472c2313a8d810f151aaf96891837d794b5d20e2160828661ed331c97952b9a",
+    "src/rby1_tray/viewer.py": "8577b0b8732ed7c66a9c23e3b34c85b0457aa524c217ad73e077e70b4d0b6a17",
     "src/rby1_tray/cli.py": "59cff8ee78465fba481bec3fb20ed25604ec168e564ccca3bc2310d5e140df6e",
     "tests/test_section_stress.py": "9be052f2b4eb5f87774c0cd2dd5f7948b0bc9482b3907ebb23fde1016e02d9f1",
     "tests/test_structural_scene.py": "42a602d4ae5425556320d9b36d1d6d33b8b14fc995dff1791116391b6d872a49",
@@ -139,29 +132,38 @@
     "pyproject.toml": "8ea2b2621b8f0cd38440b31f50192ca016a153b607243a3c433204551429d71d",
     "src/rby1_tray/load_path.py": "3227383735fd0dd72a1a754eadd83d3ce6f157f226923cab7e2e298be9c63c8d",
     "tools/build_load_diagnostics.py": "1a028599b415ca601839b01e6b31236af728c68988d7118f5bb984bb6853a762",
-    "src/rby1_tray/web/structural-diagnostics.js": "5994bae8fe0abc6d76093eafe6340506a698fa662bbad7f1a0f3854b35e60a39",
+    "src/rby1_tray/web/structural-diagnostics.js": "c2de4bb91caf6d64052a773429975e927d26034223f3dc558ad7e5c75f23d2c1",
     "tests/test_load_path.py": "8ac08bb1904c2dba107c7fa40062bd6352894f6b27f3f4ab69853b45b5e067ba",
-    "tests/test_structural_diagnostics.py": "ae164b88cc3b08c4700daadcaa293b0da4e412ce81fed33566c13fcb2ae0cb18"
+    "tests/test_structural_diagnostics.py": "2cf155dd4499a1bd0b4f1e99f32256715f318375de5fd734f99d65f2146a7914",
+    "src/rby1_tray/joint_overlay.py": "e3784da85ce3b36c35dd3315cf117e1cc6dd2576857750f842ee3c4ae929f56c",
+    "tests/test_joint_overlay.py": "61aa46c653da745bbc22ebdc3b7f715c86f098d8cc060733cab08bc0985ee8bd"
   },
   "browser_qa": "PASS: evidence/structural-whole/browser-qa.json",
   "packaging": {
     "wheel_build": "PASS",
-    "html_js_packaged_exact_source_match": true,
-    "wheel_sha256": "70f6b5f104758a7ebfed380efb5e9f92440eddb1c7cb6e55b7d859a2f3c53603"
+    "html_js_and_new_python_packaged_exact_source_match": true,
+    "files_compared": 5,
+    "wheel_sha256": "92ddff46ea541e8a9cf8e14efce5e6e164ce0ebbca9340c6bea1281732bca891"
   },
-  "implementation_source_commit": "ef7bd8bb71c5224067b65f8e78a737d89a01a3cf",
   "independent_review": {
     "role": "code-reviewer",
     "verdict": "APPROVE",
     "remaining_findings": 0,
-    "full_suite_passed": 211,
-    "full_suite_elapsed_s": 34.014,
-    "scope": "default split layout, stress/wrench mechanisms, G/E/I accounting, actual 5-asset bundle, metadata security, numerical regressions and UI evidence"
+    "full_suite_passed": 217,
+    "full_suite_elapsed_s": 32.645,
+    "targeted_tests_passed": 26,
+    "scope": "merged stress/joint overlay, active symmetric +1 joint torque model contract, anchors and frame identity, five unchanged binaries, exact numerical evidence, wheel source match, UI evidence and documentation"
   },
   "load_diagnostics": {
     "maximum_matched_physical_defined_field_difference": 0.0,
     "maximum_frame_wrench_absolute_difference": 3.0495380883621692e-05,
     "maximum_float32_reconstruction_absolute_difference": 6.103515625e-05,
     "derived_dynamics_on_scratch_only": true
+  },
+  "joint_overlay": {
+    "evidence": "evidence/structural-whole/joint-overlay.json",
+    "joint_count": 20,
+    "source_frames_checked": 1136,
+    "all_five_original_structural_assets_unchanged": true
   }
 }
