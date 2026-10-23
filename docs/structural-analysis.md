@@ -10,11 +10,27 @@
 - 왼쪽 플랜지는 별도 CAD FEM 상세다. 단위 Fx·Fy·Fz·Mx·My·Mz에 대한 응력 텐서 6성분 기저를 선형 합성한 뒤 von Mises를 계산한다. 비선형 스칼라인 von Mises 값을 하중별로 합산하지 않는다.
 - 주 영상의 `requestVideoFrameCallback` `mediaTime`이 프레임 선택 기준이다. 미지원 브라우저에서는 영상 시간 이벤트로 보완한다. 시간·선택 부품·FEM 표면/단면 모드는 뷰 전환 뒤에도 유지한다.
 
-원본 상태 1,136개와 물리 소스 커밋 `c7967a9aab6a31fafc574150d959c36477f9cf59`를 유지하고, 파생 동역학은 scratch 데이터에서만 계산했다. 정의된 관절 위치·토크, 베이스, 트레이와 적재물 위치·속도 및 단계 대조의 최대 차이는 0이다. 원본에 없는 적재물 회전은 대조하지 않았다. 손목 FT 교차검증 절댓값 최대는 `1.7763568394002505e-15`다. 기준 번들 생성은 136.403초가 걸렸다. [전신 요약](../evidence/structural-whole/summary.json), [수치 검증](../evidence/structural-whole/validation.json), [브라우저 동기화 검증](../evidence/structural-whole/browser-qa.json)에 공개 가능한 근거를 둔다.
+원본 상태 1,136개와 물리 소스 커밋 `c7967a9aab6a31fafc574150d959c36477f9cf59`를 유지하고, 파생 동역학은 scratch 데이터에서만 계산했다. 정의된 관절 위치·토크, 베이스, 트레이와 적재물 위치·속도 및 단계 대조의 최대 차이는 0이다. 원본에 없는 적재물 회전은 대조하지 않았다. 손목 FT 교차검증 절댓값 최대는 `1.7763568394002505e-15`다. 기준 번들 생성은 136.403초가 걸렸다. [전신 요약](../evidence/structural-whole/summary.json), [수치 검증](../evidence/structural-whole/validation.json), [하중 진단 검증](../evidence/structural-whole/load-diagnostics.json), [브라우저 동기화 검증](../evidence/structural-whole/browser-qa.json)에 공개 가능한 근거를 둔다.
 
 `cfrc_int`의 순서는 모멘트·힘이며, 세계축을 사용하고 원점은 해당 운동학 트리의 `subtree_com[body_rootid[b]]`다. 단면 원점 p로 옮길 때 `M_p = M_c + (c-p)×F`를 적용하고, 힘과 모멘트를 단면 좌표계로 회전한다. 렌더 시점에 맞춘 `mj_forward`와 `mj_rnePostConstraint`는 복제한 데이터에만 적용한다. 정의와 좌표 변환은 [MuJoCo 3.11.0 데이터 선언](https://github.com/google-deepmind/mujoco/blob/3.11.0/include/mujoco/mjdata.h), [공간 벡터 변환 소스](https://github.com/google-deepmind/mujoco/blob/3.11.0/src/engine/engine_util_spatial.c), [시뮬레이션 파이프라인](https://mujoco.readthedocs.io/en/3.11.0/programming/simulation.html)을 따른다.
 
 등가 단면은 외피의 반경 범위를 감싸는 원형 관으로 가정하며, 두께는 `clamp(0.10R, 1 mm, 6 mm)`다. 실제 CAD의 내부 두께가 아니다. 축·굽힘 응력, 비틀림 전단과 공칭 평균 횡전단 `V/A`를 조합한다. 길이 방향으로 `Mx(z)=Mx(0)+z·Fy`, `My(z)=My(0)-z·Fx`를 적용한다. 분포 체적력·국부 체결 응력은 복원하지 않는다. 플랜지의 화면 수치는 표면/단면에 나타난 부분 최대가 아닌 전체 Tet4의 현재 최대값이다.
+
+## 하중 경로와 응력 성분 진단
+
+선택 부품의 단면 좌표에서 축력은 `N=Fz`, 횡전단력은 `V=hypot(Fx,Fy)`, 굽힘 모멘트는 `Mb=hypot(Mx,My)`, 비틀림은 `T=Mz`로 표시한다. 부호가 있는 `N`과 `T`, 각 축의 Fx·Fy·Fz·Mx·My·Mz도 함께 남긴다. 전신 등가 단면은 합성·축력·굽힘·횡전단·비틀림 응력을 바꿔 볼 수 있다. CAD FEM은 합성 von Mises, 법선 편차와 좌표축 전단으로 나눈다. FEM의 법선 편차/전단 분리는 선택한 좌표축에 따라 달라지고 두 값의 제곱합의 제곱근이 합성 von Mises가 된다. 여기서 좌표축 전단은 단면 횡전단력 `V`와 같은 항이 아니다.
+
+청록 `F` 화살표와 주황 `M` 회전 표시는 크기가 아니라 방향을 보기 위해 정규화한다. 채운 흰 점은 합력 원점이고 흰 윤곽점은 표시 외피에서 찾은 최대 응력 표본이다. 전체 보기에서는 현재 프레임의 합성 응력이 큰 부품 세 개를 제시하며 버튼으로 해당 부품을 선택할 수 있다.
+
+현재 합력 `W`를 같은 원점과 좌표계에서 다음 세 항으로 회계한다.
+
+- 자중 지지 `G=-Σm_i g`: 선택 절단면 아래 로봇 subtree의 질량에 대한 지지 하중이다.
+- 외력 반작용 `E=-Σcfrc_ext`: subtree에 작용한 접촉·적용 외력·공간 구속 wrench를 절단 원점으로 옮긴 반작용이다.
+- 운동 잔차 `I=W-G-E`: 현재 합력에서 자중 지지와 외력 반작용을 뺀 회계 잔차다.
+
+외력과 내력의 누적 정의는 [MuJoCo 3.11.0 RNE 구현](https://github.com/google-deepmind/mujoco/blob/3.11.0/src/engine/engine_core_smooth.c#L2211-L2405)을 따른다. 세 항은 원인별 응력 기여율이 아니다. 부호 있는 응력의 상쇄와 6축 결합이 있으므로 항별 등가응력을 더해 합성 응력을 복원하지 않는다. 적재물 질량은 로봇 subtree 질량에 포함하지 않으며 접촉 외력으로 전달된다. 화면은 부모와 하부 구조 사이의 경로와 포함된 로봇 질량을 함께 표시한다. 베이스 proxy는 프레임마다 선택되는 장착부가 달라질 수 있어 경로와 포함 질량도 프레임별로 기록한다.
+
+일반 절단면의 `W`는 parent가 child subtree를 지지하는 `parent_on_child` 부호다. 베이스 proxy와 CAD 플랜지는 하부가 상부에 가하는 반작용인 `child_on_parent` 부호를 쓴다. 1,136×38×18개의 float32 값에는 G·E·I의 6축 wrench가 들어간다. 현재 구조 번들의 `diagnostics.bin`은 3,108,096 B다. 정의된 원본 필드의 최대 차이는 0, 현재 wrench 대조의 최대 절댓값 차이는 `3.049538e-05`, `W-(G+E+I)` 재구성 잔차는 `6.103515625e-05`다. 이 수치는 float32 저장 정밀도를 포함한다.
 
 ## 플랜지 대상과 확인 범위
 
@@ -68,13 +84,13 @@
 
 ## 화면과 배포 범위
 
-상단 원본 영상 아래 RGB·깊이 모니터 옆에서 **구조 응력**을 선택한다. 기본 화면은 전신 등가 단면 응력 추정이며, 목록에서 부품을 고르면 격리해 확대한다. 왼쪽 플랜지에서는 표면/단면을 선택할 수 있다. 단면은 `x+y=0` 평면과 실제 Tet4의 교차다. 홈·홀을 임의로 메우거나 요소 안에 임의 응력 경사를 만들지 않는다. 실제 형상 크기로 표시하며 변형은 확대해 그리지 않는다.
+첫 화면은 원본 동작과 전신 구조 응력을 같은 높이의 두 화면으로 보여 준다. 선택 부품의 하중 진단은 그 아래 전체 폭에 놓고, RGB·깊이 6패널은 다음 줄에 둔다. 기본 화면은 전신 등가 단면 응력 추정이며, 목록이나 현재 고응력 부품 세 개 중 하나를 고르면 격리해 확대한다. 왼쪽 플랜지에서는 표면/단면을 선택할 수 있다. 단면은 `x+y=0` 평면과 실제 Tet4의 교차다. 홈·홀을 임의로 메우거나 요소 안에 임의 응력 경사를 만들지 않는다. 실제 형상 크기로 표시하며 변형은 확대해 그리지 않는다.
 
 전신과 플랜지 하중은 영상의 같은 기록 프레임을 사용한다. 결과는 기록 하중을 이용한 단방향 후처리이며, 원본 시뮬레이션의 위치·질량·관성·접촉·제어에 되돌려 적용하지 않는다. 71.704초의 정적 플랜지 결과는 메시 수렴과 경계조건 민감도 검증 사례로 보존한다.
 
-STEP/BREP/NPZ와 CAD 파생 데이터가 포함된 동기 구조 번들의 네 바이너리의 재배포 허용 범위가 확인되지 않아 `artifacts/` 아래 로컬에만 둔다. **새 clone에서는 동기 구조 모드가 비활성**이며, 원본 3개 영상·관절 부하·RGB-D 재생은 계속 사용할 수 있다. 구조 번들이 아예 없을 때만 기존 71.704초 고정 스냅샷을 명시해 표시한다.
+STEP/BREP/NPZ와 CAD 파생 데이터가 포함된 동기 구조 번들의 재배포 허용 범위가 확인되지 않아 `artifacts/` 아래 로컬에만 둔다. **새 clone에서는 동기 구조 모드가 비활성**이며, 원본 3개 영상·관절 부하·RGB-D 재생은 계속 사용할 수 있다. 구조 번들이 아예 없을 때만 기존 71.704초 고정 스냅샷을 명시해 표시한다.
 
-서버는 허용한 네 바이너리만 고정 경로로 제공하며 해시·스키마·수치 유한성·버퍼 길이·회전축·단면 물성을 검사한다. 구성된 번들이 검증에 실패하면 구조 패널에 오류를 표시하고 고정 스냅샷으로 우회하지 않는다. CAD·NPZ와 내부 파일 경로는 다운로드 경로로 노출하지 않는다.
+서버는 필수 바이너리 네 개와 선택 진단 바이너리 `diagnostics.bin`만 고정 경로로 제공한다. 선택 파일도 manifest에 기록한 해시·스키마·크기를 검사한다. 하중 진단을 덧붙인 번들은 기존 네 바이너리의 바이트를 바꾸지 않는다. 구성된 번들이 검증에 실패하면 구조 패널에 오류를 표시하고 고정 스냅샷으로 우회하지 않는다. CAD·NPZ와 내부 파일 경로는 다운로드 경로로 노출하지 않는다.
 
 ## 재현
 
@@ -95,8 +111,12 @@ uv pip install --python .venv-cae/bin/python numpy==2.5.2 scipy==1.18.1 -r requi
   --input artifacts/structural-flange/level-2.npz \
   --output artifacts/structural-basis
 .venv/bin/python tools/build_whole_structural.py --output artifacts/structural-whole
+.venv/bin/python tools/build_load_diagnostics.py \
+  --scene artifacts/structural-whole \
+  --output artifacts/structural-with-load-path
 MUJOCO_GL=egl .venv/bin/python -m unittest discover -s tests -v
-.venv/bin/python -m rby1_tray.cli view
+.venv/bin/python -m rby1_tray.cli view \
+  --structural-scene-directory artifacts/structural-with-load-path
 ```
 
-각 `--output` 경로는 실행 전에 존재하지 않아야 한다. `view`는 기본 경로 `artifacts/structural-whole`을 자동 확인하며, 다른 위치는 `--structural-scene-directory`로 지정한다. 원본 STEP은 ZIP 안의 하위 폴더에 있으므로 압축 해제 위치가 다르면 `--step` 경로를 바꾼다. 선택 형상은 원본 해시·bbox·체적으로 검사한다. Gmsh 가져오기·visible-only BREP 내보내기와 메시 API는 [공식 Gmsh 4.15.2 매뉴얼](https://gmsh.info/doc/texinfo/gmsh.html)을 따른다. Gmsh의 GPL-2.0-or-later 및 upstream 링크 예외는 [공식 배포 조건](https://gmsh.info/)을 확인한다. Gmsh를 프로젝트 코드의 MIT 라이선스로 재배포하지 않는다.
+각 `--output` 경로는 실행 전에 존재하지 않아야 한다. 하중 진단 출력은 원본 구조 번들을 읽어 새 디렉터리에 다섯 번째 파일과 갱신한 manifest를 만들며, 기존 네 바이너리는 그대로 복사한다. 수동으로 기본 폴더를 교체할 필요 없이 `--structural-scene-directory`에 새 출력 경로를 지정한다. `view`는 옵션이 없으면 기본 경로 `artifacts/structural-whole`을 확인한다. 원본 STEP은 ZIP 안의 하위 폴더에 있으므로 압축 해제 위치가 다르면 `--step` 경로를 바꾼다. 선택 형상은 원본 해시·bbox·체적으로 검사한다. Gmsh 가져오기·visible-only BREP 내보내기와 메시 API는 [공식 Gmsh 4.15.2 매뉴얼](https://gmsh.info/doc/texinfo/gmsh.html)을 따른다. Gmsh의 GPL-2.0-or-later 및 upstream 링크 예외는 [공식 배포 조건](https://gmsh.info/)을 확인한다. Gmsh를 프로젝트 코드의 MIT 라이선스로 재배포하지 않는다.

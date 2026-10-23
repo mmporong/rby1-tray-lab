@@ -52,10 +52,16 @@
     frame[offset],frame[offset+1],frame[offset+2],1,
   ]);
   const transform = (m,p) => [m[0]*p[0]+m[4]*p[1]+m[8]*p[2]+m[12],m[1]*p[0]+m[5]*p[1]+m[9]*p[2]+m[13],m[2]*p[0]+m[6]*p[1]+m[10]*p[2]+m[14]];
+  const applyBasis = (b,p) => [b[0]*p[0]+b[1]*p[1]+b[2]*p[2],b[3]*p[0]+b[4]*p[1]+b[5]*p[2],b[6]*p[0]+b[7]*p[1]+b[8]*p[2]];
+  const fmt = (value,digits=2) => Number(value).toLocaleString('ko-KR',{maximumFractionDigits:digits,minimumFractionDigits:digits});
+  const stressText = (value) => Math.abs(value)<1e4?`${fmt(value/1e3)} kPa`:`${fmt(value/1e6,3)} MPa`;
+  const componentOptions = {total:'합성 등가응력',axial:'축력만 · |σN|',bending:'굽힘만 · |σB|',shear:'횡전단만 · √3|τV|',torsion:'비틀림만 · √3|τT|',normaldev:'법선 편차 성분',femshear:'좌표축 전단 성분'};
+  const bodyLabel = (text) => ({left_ft_mount:'왼손목 FT 연결부',right_ft_mount:'오른손목 FT 연결부'}[text]||text);
+  const element = (tag,text,className) => {const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(className)node.className=className;return node;};
 
   class StructuralScene {
     constructor(elements) {
-      this.el=elements; this.frameIndex=-1; this.selection='whole'; this.femView='surface'; this.scale='log';
+      this.el=elements; this.frameIndex=-1; this.selection='whole'; this.femView='surface'; this.scale='log';this.component='total';
     }
 
     async load(info) {
@@ -64,11 +70,38 @@
       const data=await Promise.all(names.map((name)=>fetchBuffer(info.asset_urls[name])));
       this.geometry=new Float32Array(data[0]); this.frames=new Float32Array(data[1]);
       this.fem={surface:new Float32Array(data[2]),cutaway:new Float32Array(data[3])};
+      if(info.load_diagnostics){this.loads=new Float32Array(await fetchBuffer(info.load_diagnostics.asset_url));}
       this.parts=info.parts; this.partIndex=new Map(this.parts.map((part,index)=>[part.id,index]));
       this.sectionParts=this.parts.filter((part)=>part.kind==='section');
       this.bounds=new Map(this.sectionParts.map((part)=>[part.id,this.localBounds(this.geometry,6,part.vertex_offset,part.vertex_count)]));
       this.femBounds={surface:this.localBounds(this.fem.surface,42,0,info.fem_surface_vertex_count),cutaway:this.localBounds(this.fem.cutaway,42,0,info.fem_cutaway_vertex_count)};
-      this.setupControls(); this.setupWebGL(); this.seekFrame(0);
+      this.setupDiagnostics();this.setupControls(); this.setupWebGL(); this.seekFrame(0);
+    }
+
+    setupDiagnostics() {
+      if(!this.el.diagnostic)return;
+      const controls=element('div',undefined,'structural-mechanism-controls'),label=element('label','응력 성분 보기');
+      this.componentSelect=element('select');this.componentSelect.id='structuralComponent';this.componentSelect.setAttribute('aria-label','응력 성분 보기');label.append(this.componentSelect);controls.append(label);
+      this.componentSelect.addEventListener('change',()=>{this.component=this.componentSelect.value;this.render();});
+      this.diagnosticBody=element('div');
+      this.diagnosticBody.innerHTML=`<p class="structural-diagnostic-summary" data-focus></p><div class="structural-hot-parts" aria-label="현재 응력이 큰 부품"></div>
+        <dl class="structural-load-grid">
+          <div class="structural-load-metric"><dt>축력 N · z방향</dt><dd data-axial></dd><small>길이축 방향 힘</small></div>
+          <div class="structural-load-metric"><dt>횡전단력 V · xy</dt><dd data-shear></dd><small>길이축에 수직인 힘</small></div>
+          <div class="structural-load-metric"><dt>굽힘 모멘트 Mb · xy</dt><dd data-bending></dd><small>길이축을 휘게 하는 모멘트</small></div>
+          <div class="structural-load-metric"><dt>비틀림 T · z축</dt><dd data-torsion></dd><small>길이축 주위 모멘트</small></div>
+        </dl>
+        <p class="structural-axis-readout" data-origin></p>
+        <details class="structural-explain" open><summary>어디서 전달된 하중인가</summary><p data-path></p><p data-load-note></p>
+          <div class="structural-wrench-table"><table><caption>같은 원점·좌표계의 하중 분해</caption><thead><tr><th scope="col">지지 하중 항</th><th scope="col">Fx N</th><th scope="col">Fy N</th><th scope="col">Fz N</th><th scope="col">Mx N·m</th><th scope="col">My N·m</th><th scope="col">Mz N·m</th></tr></thead><tbody data-sources></tbody></table></div>
+        </details>
+        <details class="structural-explain"><summary>표시점의 응력과 계산 기준</summary><p data-point></p><p data-components></p><p data-properties></p>
+          <p>성분 보기는 해당 항만 남긴 가상 응력입니다. 부호에 따른 상쇄가 있어 단독 등가응력을 더하거나 기여율로 읽을 수 없습니다. 파손·안전율 판정은 포함하지 않습니다.</p>
+        </details>`;
+      this.el.diagnostic.replaceChildren(controls,this.diagnosticBody);
+      this.fields=Object.fromEntries(['focus','axial','shear','bending','torsion','origin','path','load-note','sources','point','components','properties'].map((key)=>[key,this.diagnosticBody.querySelector(`[data-${key}]`)]));
+      this.hotParts=this.diagnosticBody.querySelector('.structural-hot-parts');
+      this.timelinePeaks=new Map(this.info.parts.map((part,i)=>{let value=-1,index=0;for(let n=0;n<this.info.frame_count;n++){const peak=this.frames[n*this.info.frame_stride_floats+i*19+18];if(peak>value){value=peak;index=n;}}return [part.id,{value,index}];}));
     }
 
     setupControls() {
@@ -90,6 +123,7 @@
       this.el.title.textContent=this.selection==='whole'?'전체 로봇 · 등가 단면 응력 추정':visualOnly?`${part.label} · 비구조 외장 · 응력 미계산`:fem?`${part.label} · 준정적 CAD FEM · 가정`:`${part.label} · 등가 단면 응력 추정`;
       const assumptions=part?.assumptions||this.info.assumptions;
       this.el.partAssumptions.replaceChildren(...assumptions.map((text)=>{const item=document.createElement('li');item.textContent=text;return item;}));
+      if(this.componentSelect){const allowed=fem?['total','normaldev','femshear']:['total','axial','bending','shear','torsion'];if(!allowed.includes(this.component))this.component='total';this.componentSelect.replaceChildren(...allowed.map((key)=>{const option=element('option',componentOptions[key]);option.value=key;return option;}));this.componentSelect.value=this.component;this.componentSelect.disabled=visualOnly;}
     }
 
     setupWebGL() {
@@ -98,15 +132,19 @@
       this.program=program(gl,`
         attribute vec3 aPosition; attribute vec3 aNormal; attribute float aStress;
         uniform mat4 uModel; uniform mat4 uViewProjection; uniform float uMaximum; uniform float uLogScale; uniform float uFemMode;
-        uniform vec3 uForce; uniform vec3 uMoment; uniform vec3 uOrigin; uniform mat3 uBasis; uniform vec3 uSection;
+        uniform vec3 uForce; uniform vec3 uMoment; uniform vec3 uOrigin; uniform mat3 uBasis; uniform vec3 uSection;uniform float uComponent;
         varying vec3 vNormal; varying float vValue;
         void main(){gl_Position=uViewProjection*uModel*vec4(aPosition,1.0);vNormal=mat3(uModel)*aNormal;
           float stress;
           if(uFemMode>.5){stress=aStress;}else{
             vec3 q=uBasis*(aPosition-uOrigin);float mx=uMoment.x+q.z*uForce.y;float my=uMoment.y-q.z*uForce.x;
-            float sigma=uForce.z/uSection.x+mx*q.y/uSection.y-my*q.x/uSection.y;
-            float tx=uForce.x/uSection.x-uMoment.z*q.y/uSection.z;float ty=uForce.y/uSection.x+uMoment.z*q.x/uSection.z;
-            stress=sqrt(sigma*sigma+3.0*(tx*tx+ty*ty));
+            float axial=uForce.z/uSection.x;float bending=mx*q.y/uSection.y-my*q.x/uSection.y;
+            vec2 shear=uForce.xy/uSection.x;vec2 torsion=vec2(-uMoment.z*q.y,uMoment.z*q.x)/uSection.z;
+            stress=sqrt((axial+bending)*(axial+bending)+3.0*dot(shear+torsion,shear+torsion));
+            if(uComponent>.5&&uComponent<1.5)stress=abs(axial);
+            else if(uComponent>1.5&&uComponent<2.5)stress=abs(bending);
+            else if(uComponent>2.5&&uComponent<3.5)stress=sqrt(3.0)*length(shear);
+            else if(uComponent>3.5)stress=sqrt(3.0)*length(torsion);
           }
           float linear=clamp(stress/uMaximum,0.0,1.0);float logarithmic=log(1.0+stress/1000.0)/log(1.0+uMaximum/1000.0);
           vValue=mix(linear,logarithmic,uLogScale);}
@@ -121,7 +159,7 @@
       gl.useProgram(this.program);
       this.locations={
         position:gl.getAttribLocation(this.program,'aPosition'),normal:gl.getAttribLocation(this.program,'aNormal'),stress:gl.getAttribLocation(this.program,'aStress'),
-        model:gl.getUniformLocation(this.program,'uModel'),view:gl.getUniformLocation(this.program,'uViewProjection'),maximum:gl.getUniformLocation(this.program,'uMaximum'),log:gl.getUniformLocation(this.program,'uLogScale'),fem:gl.getUniformLocation(this.program,'uFemMode'),visualOnly:gl.getUniformLocation(this.program,'uVisualOnly'),force:gl.getUniformLocation(this.program,'uForce'),moment:gl.getUniformLocation(this.program,'uMoment'),origin:gl.getUniformLocation(this.program,'uOrigin'),basis:gl.getUniformLocation(this.program,'uBasis'),section:gl.getUniformLocation(this.program,'uSection'),
+        model:gl.getUniformLocation(this.program,'uModel'),view:gl.getUniformLocation(this.program,'uViewProjection'),maximum:gl.getUniformLocation(this.program,'uMaximum'),log:gl.getUniformLocation(this.program,'uLogScale'),fem:gl.getUniformLocation(this.program,'uFemMode'),visualOnly:gl.getUniformLocation(this.program,'uVisualOnly'),force:gl.getUniformLocation(this.program,'uForce'),moment:gl.getUniformLocation(this.program,'uMoment'),origin:gl.getUniformLocation(this.program,'uOrigin'),basis:gl.getUniformLocation(this.program,'uBasis'),section:gl.getUniformLocation(this.program,'uSection'),component:gl.getUniformLocation(this.program,'uComponent'),
       };
       this.geometryBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,this.geometryBuffer);gl.bufferData(gl.ARRAY_BUFFER,this.geometry,gl.STATIC_DRAW);
       this.stressBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,this.stressBuffer);gl.bufferData(gl.ARRAY_BUFFER,this.geometry.length/6*4,gl.DYNAMIC_DRAW);
@@ -144,11 +182,67 @@
 
     femStress(part, data) {
       const partOffset=this.frameIndex*this.info.frame_stride_floats+this.partIndex.get(part.id)*19,c0=this.frames[partOffset+12],c1=this.frames[partOffset+13],c2=this.frames[partOffset+14],c3=this.frames[partOffset+15],c4=this.frames[partOffset+16],c5=this.frames[partOffset+17];
-      const count=data.length/42,stress=new Float32Array(count);
+      const count=data.length/42,stress=new Float32Array(count);let sampleMaximum=-1;
       for(let vertex=0;vertex<count;vertex++){
         const b=vertex*42+6,xx=c0*data[b]+c1*data[b+6]+c2*data[b+12]+c3*data[b+18]+c4*data[b+24]+c5*data[b+30],yy=c0*data[b+1]+c1*data[b+7]+c2*data[b+13]+c3*data[b+19]+c4*data[b+25]+c5*data[b+31],zz=c0*data[b+2]+c1*data[b+8]+c2*data[b+14]+c3*data[b+20]+c4*data[b+26]+c5*data[b+32],xy=c0*data[b+3]+c1*data[b+9]+c2*data[b+15]+c3*data[b+21]+c4*data[b+27]+c5*data[b+33],yz=c0*data[b+4]+c1*data[b+10]+c2*data[b+16]+c3*data[b+22]+c4*data[b+28]+c5*data[b+34],zx=c0*data[b+5]+c1*data[b+11]+c2*data[b+17]+c3*data[b+23]+c4*data[b+29]+c5*data[b+35],value=Math.sqrt(.5*((xx-yy)**2+(yy-zz)**2+(zz-xx)**2)+3*(xy*xy+yz*yz+zx*zx));
-        stress[vertex]=value;
+        const normal=Math.sqrt(.5*((xx-yy)**2+(yy-zz)**2+(zz-xx)**2)),shear=Math.sqrt(3*(xy*xy+yz*yz+zx*zx));
+        stress[vertex]=this.component==='normaldev'?normal:this.component==='femshear'?shear:value;
+        if(value>sampleMaximum){sampleMaximum=value;this.femSample={point:Array.from(data.subarray(vertex*42,vertex*42+3)),tensor:[xx,yy,zz,xy,yz,zx]};}
       } return stress;
+    }
+
+    sectionPeak(part,force,moment) {
+      const key=`${part.id}:${this.frameIndex}`;if(this.sectionSample?.key===key)return this.sectionSample;
+      const s=part.section,b=s.basis_body,o=s.origin_body_m,g=this.geometry;let maximum=-1,point=[0,0,0],q=[0,0,0];
+      const axial=force[2]/s.area_m2,sx=force[0]/s.area_m2,sy=force[1]/s.area_m2;
+      for(let n=part.vertex_offset;n<part.vertex_offset+part.vertex_count;n++){
+        const dx=g[n*6]-o[0],dy=g[n*6+1]-o[1],dz=g[n*6+2]-o[2],x=b[0]*dx+b[3]*dy+b[6]*dz,y=b[1]*dx+b[4]*dy+b[7]*dz,z=b[2]*dx+b[5]*dy+b[8]*dz;
+        const sigma=axial+((moment[0]+z*force[1])*y-(moment[1]-z*force[0])*x)/s.I_m4,tx=sx-moment[2]*y/s.J_m4,ty=sy+moment[2]*x/s.J_m4,value=sigma*sigma+3*(tx*tx+ty*ty);
+        if(value>maximum){maximum=value;point=[g[n*6],g[n*6+1],g[n*6+2]];q=[x,y,z];}
+      }
+      this.sectionSample={key,point,q};return this.sectionSample;
+    }
+
+    updateDiagnostics(selected,frameBase,projection) {
+      if(!this.fields)return;
+      const ranked=this.sectionParts.filter(p=>p.analysis_status!=='visual_only').map(p=>({part:p,value:this.frames[frameBase+this.partIndex.get(p.id)*19+18]})).sort((a,b)=>b.value-a.value),part=selected||ranked[0]?.part;
+      if(!part)return;
+      const offset=frameBase+this.partIndex.get(part.id)*19,force=this.frames.subarray(offset+12,offset+15),moment=this.frames.subarray(offset+15,offset+18),visualOnly=part.analysis_status==='visual_only',fem=part.kind==='fem',d=window.StructuralDiagnostics;
+      this.fields.focus.textContent=`${selected?'선택 부품':'현재 합성응력이 가장 큰 부품'} · ${part.label}`;
+      if(this.hotKey!==ranked.slice(0,3).map(x=>x.part.id).join(',')){
+        this.hotKey=ranked.slice(0,3).map(x=>x.part.id).join(',');
+        this.hotParts.replaceChildren(...ranked.slice(0,3).map(({part:p},i)=>{const button=element('button',`${i+1}. ${p.label}`);button.type='button';button.addEventListener('click',()=>{this.selection=p.id;this.el.part.value=p.id;this.updateControls();this.render();});return button;}));
+      }
+      if(visualOnly){for(const key of ['axial','shear','bending','torsion'])this.fields[key].textContent='미계산';this.fields.path.textContent='내력 경로가 정의되지 않은 무질량 외장입니다.';this.fields.origin.textContent='응력 0 또는 안전 상태를 뜻하지 않습니다.';for(const key of ['load-note','point','components','properties'])this.fields[key].textContent='';this.fields.sources.replaceChildren();this.el.overlay?.replaceChildren();return;}
+      const r=d.resultant(force,moment);this.fields.axial.textContent=`${fmt(r.axial_n)} N`;this.fields.shear.textContent=`${fmt(r.shear_n)} N`;this.fields.bending.textContent=`${fmt(r.bending_nm,3)} N·m`;this.fields.torsion.textContent=`${fmt(r.torsion_nm,3)} N·m`;
+      const meta=this.info.load_diagnostics?.parts[this.partIndex.get(part.id)],source=meta?.source_body_per_frame?.[this.frameIndex],mass=source?meta?.subtree_mass_kg_by_source?.[source]:meta?.subtree_mass_kg;
+      const worldOrigin=fem?Array.from(this.frames.subarray(offset,offset+3)):transform(poseMatrix(this.frames,offset),part.section.origin_body_m);
+      this.fields.origin.textContent=`합력 기준 원점 · 세계 [${worldOrigin.map(x=>fmt(x,3)).join(', ')}] m · ${fem?'CAD 축':'단면 축'} z=길이축, x·y=횡방향. +/−는 표시축 방향입니다.`;
+      this.fields.path.textContent=meta?`${bodyLabel(meta.parent_label)} ↔ ${bodyLabel(source?(meta.source_labels?.[source]||source):meta.source_body_label)} · ${meta.action==='child_on_parent'?'하부가 상부에 가하는 반작용':'부모가 하부 구조를 지지하는 합력'}${Number.isFinite(mass)?` · 포함된 로봇 하부 질량 ${fmt(mass,3)} kg`:''}`:'부모–자식 연결부를 통과하는 6축 합력입니다. 원인별 분해 데이터는 이 번들에 없습니다.';
+      this.fields['load-note'].textContent=this.loads?'자중 지지 + 외력 반작용 + 운동 잔차 = 현재 합력. 외력 항은 접촉·적용 외력·공간 구속을 포함합니다. 운동 잔차는 앞 두 항을 뺀 값이며 독립적인 원인별 기여율이 아닙니다. 적재물 하중은 접촉을 통해 전달되며 위 로봇 질량에는 포함되지 않습니다.':'자중·운동·접촉이 반영된 합력이며, 이 값만으로 각각의 원인을 분리하지 않습니다.';
+      const rows=[];if(this.loads){const start=this.frameIndex*this.info.load_diagnostics.frame_stride_floats+this.partIndex.get(part.id)*18;for(let i=0;i<3;i++)rows.push([['자중 지지','외력 반작용','운동 잔차'][i],Array.from(this.loads.subarray(start+i*6,start+i*6+6))]);}
+      rows.push(['현재 합력',[...force,...moment]]);this.fields.sources.replaceChildren(...rows.map(([label,values])=>{const tr=element('tr');tr.append(element('th',label));values.forEach((v,i)=>tr.append(element('td',fmt(v,i<3?2:3))));return tr;}));
+      const peak=this.timelinePeaks.get(part.id);let point;
+      if(fem&&this.femSample){const metrics=d.femTensorMetrics(this.femSample.tensor);point=this.femSample.point;this.fields.point.textContent=`표시 ${this.femView==='cutaway'?'단면':'표면'}의 합성 VM 최대 표본 · CAD [${point.map(x=>fmt(x*1000,2)).join(', ')}] mm · ${stressText(metrics.von_mises_pa)}. 전체 요소 최대와는 별도입니다.`;this.fields.components.textContent=`같은 점의 법선 편차 ${stressText(metrics.normal_deviatoric_vm_pa)} · 좌표축 전단 ${stressText(metrics.shear_vm_pa)} · 평균 법선응력 ${stressText(metrics.hydrostatic_pa)}`;this.fields.properties.textContent='FEM 좌표축 전단은 τxy·τyz·τzx의 조합입니다. 단면의 횡전단력 V와 같은 항이 아닙니다. E=69 GPa, ν=0.33·상단 고정·좌표 정합 가정.';}
+      else if(!fem&&selected){const sample=this.sectionPeak(part,force,moment),metrics=d.sectionPoint(sample.q,force,moment,part.section);point=sample.point;this.fields.point.textContent=`표시 외피의 합성 VM 최대점 · 단면 [${sample.q.map(x=>fmt(x*1000,1)).join(', ')}] mm · ${stressText(metrics.total_pa)}`;this.fields.components.textContent=`같은 점의 부호 있는 법선응력: 축력 ${stressText(metrics.axial_pa)} + 굽힘 ${stressText(metrics.bending_pa)}. 단독 등가응력: 횡전단 ${stressText(metrics.shear_vm_pa)} · 비틀림 ${stressText(metrics.torsion_vm_pa)}.`;this.fields.properties.textContent=`가정 단면 A=${fmt(part.section.area_m2*1e6)} mm² · I=${fmt(part.section.I_m4*1e12)} mm⁴ · J=${fmt(part.section.J_m4*1e12)} mm⁴. 횡전단 V/A는 공칭 평균이며 분포 체적력·국부 체결 응력은 복원하지 않습니다.`;}
+      else{this.fields.point.textContent='목록이나 위 순위의 부품을 선택하면 같은 프레임의 상세 분해와 응력 최대점을 표시합니다.';this.fields.components.textContent='축력·굽힘은 법선응력을, 횡전단·비틀림은 전단응력을 만듭니다. 성분 선택으로 각 항의 분포를 비교할 수 있습니다.';this.fields.properties.textContent='전신은 가정 단면 추정이며 전체 CAD FEM이 아닙니다.';}
+      if(peak)this.fields.properties.textContent+=` · 전 구간 합성 VM 최대 ${stressText(peak.value)} / ${fmt(this.info.frame_times_s[peak.index],3)} s`;
+      this.drawWrench(part,force,moment,projection,!selected,point);
+    }
+
+    drawWrench(part,force,moment,projection,whole,point) {
+      const svg=this.el.overlay;if(!svg)return;svg.replaceChildren();const ns='http://www.w3.org/2000/svg',make=(tag,attrs,text)=>{const node=document.createElementNS(ns,tag);for(const [key,value]of Object.entries(attrs))node.setAttribute(key,String(value));if(text)node.textContent=text;svg.append(node);return node;};
+      svg.setAttribute('viewBox','0 0 1000 1000');
+      const offset=this.frameIndex*this.info.frame_stride_floats+this.partIndex.get(part.id)*19,fem=part.kind==='fem',model=whole?poseMatrix(this.frames,offset):identity(),basis=fem?[1,0,0,0,1,0,0,0,1]:part.section.basis_body,origin=fem?[0,0,0]:part.section.origin_body_m,bounds=fem?this.femBounds[this.femView]:this.bounds.get(part.id),length=Math.max(.01,Math.hypot(...bounds.max.map((x,i)=>x-bounds.min[i]))*.30);
+      const project=(p)=>{const v=transform(model,p),w=projection[3]*v[0]+projection[7]*v[1]+projection[11]*v[2]+projection[15];if(w<=0)return null;return [(projection[0]*v[0]+projection[4]*v[1]+projection[8]*v[2]+projection[12])/w*500+500,500-(projection[1]*v[0]+projection[5]*v[1]+projection[9]*v[2]+projection[13])/w*500];};
+      const o=project(origin);if(!o)return;
+      const defs=make('defs',{});for(const [id,color]of [['force','#68edf4'],['moment','#ffbd61']]){const marker=document.createElementNS(ns,'marker');marker.setAttribute('id',`load-${id}`);marker.setAttribute('viewBox','0 0 10 10');marker.setAttribute('refX','9');marker.setAttribute('refY','5');marker.setAttribute('markerWidth','7');marker.setAttribute('markerHeight','7');marker.setAttribute('orient','auto');const p=document.createElementNS(ns,'path');p.setAttribute('d','M0 0 L10 5 L0 10z');p.setAttribute('fill',color);marker.append(p);defs.append(marker);}
+      for(let i=0;i<3;i++){const axis=[0,0,0];axis[i]=length*.7;const end=project(applyBasis(basis,axis).map((v,j)=>v+origin[j]));if(end){make('line',{x1:o[0],y1:o[1],x2:end[0],y2:end[1],stroke:['#ed7474','#82d995','#8caeff'][i],'stroke-width':3});make('text',{x:end[0]+6,y:end[1]-5,fill:['#ed7474','#82d995','#8caeff'][i],'font-size':23},['x','y','z'][i]);}}
+      make('circle',{cx:o[0],cy:o[1],r:5,fill:'#fff'});
+      const normF=Math.hypot(...force);if(normF>.01){const end=project(applyBasis(basis,Array.from(force,x=>x/normF*length)).map((v,j)=>v+origin[j]));if(end){make('line',{x1:o[0],y1:o[1],x2:end[0],y2:end[1],stroke:'#68edf4','stroke-width':5,'marker-end':'url(#load-force)'});make('text',{x:end[0]+8,y:end[1]+22,fill:'#68edf4','font-size':25},'F');}}
+      const normM=Math.hypot(...moment);if(normM>.001){const axis=normalize(applyBasis(basis,Array.from(moment))),helper=Math.abs(axis[2])<.9?[0,0,1]:[0,1,0],u=normalize(cross(axis,helper)),v=cross(axis,u),points=[];for(let i=0;i<=24;i++){const angle=i/24*Math.PI*1.5,p=project(origin.map((x,j)=>x+length*.52*(Math.cos(angle)*u[j]+Math.sin(angle)*v[j])));if(p)points.push(p);}if(points.length>1){make('polyline',{points:points.map(p=>p.join(',')).join(' '),fill:'none',stroke:'#ffbd61','stroke-width':4,'marker-end':'url(#load-moment)'});make('text',{x:points[0][0]+8,y:points[0][1]-8,fill:'#ffbd61','font-size':25},'M');}}
+      if(point){const p=project(point);if(p)make('circle',{cx:p[0],cy:p[1],r:8,fill:'none',stroke:'#fff','stroke-width':3});}
+      if(this.el.vectorLegend)this.el.vectorLegend.textContent='F 청록 화살표 · M 주황 회전 · 흰 점=합력 원점 · 길이는 방향 표시용 정규화';
     }
 
     localBounds(data,stride,offset,count){const min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];for(let i=0;i<count;i++){const base=(offset+i)*stride;for(let a=0;a<3;a++){min[a]=Math.min(min[a],data[base+a]);max[a]=Math.max(max[a],data[base+a]);}}return {min,max};}
@@ -164,19 +258,21 @@
       if(!this.gl||this.frameIndex<0)return;const renderStarted=performance.now(),gl=this.gl,canvas=this.el.canvas,ratio=Math.min(window.devicePixelRatio||1,2),width=Math.max(2,Math.round(canvas.clientWidth*ratio)),height=Math.max(2,Math.round(canvas.clientHeight*ratio));
       if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}gl.viewport(0,0,width,height);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(this.program);
       gl.uniform1f(this.locations.maximum,this.info.max_von_mises_pa);gl.uniform1f(this.locations.log,this.scale==='log'?1:0);
-      const selected=this.parts.find((part)=>part.id===this.selection),frameBase=this.frameIndex*this.info.frame_stride_floats,totalBounds={min:[Infinity,Infinity,Infinity],max:[-Infinity,-Infinity,-Infinity]};let maximum=0;
+      gl.uniform1f(this.locations.component,Math.max(0,['total','axial','bending','shear','torsion'].indexOf(this.component)));
+      const selected=this.parts.find((part)=>part.id===this.selection),frameBase=this.frameIndex*this.info.frame_stride_floats,totalBounds={min:[Infinity,Infinity,Infinity],max:[-Infinity,-Infinity,-Infinity]};let maximum=0,projection;
       if(selected?.kind==='fem'){
-        const data=this.fem[this.femView],stress=this.femStress(selected,data),offset=this.partIndex.get(selected.id)*19;maximum=this.frames[frameBase+offset+18];gl.bindBuffer(gl.ARRAY_BUFFER,this.stressBuffer);gl.bufferData(gl.ARRAY_BUFFER,stress,gl.DYNAMIC_DRAW);this.bindGeometry(this.femBuffers[this.femView],42,true);gl.uniform1f(this.locations.fem,1);gl.uniform1f(this.locations.visualOnly,0);gl.uniformMatrix4fv(this.locations.model,false,identity());this.includeBounds(totalBounds,this.femBounds[this.femView],identity());gl.uniformMatrix4fv(this.locations.view,false,this.viewProjection(totalBounds));gl.drawArrays(gl.TRIANGLES,0,data.length/42);
+        const data=this.fem[this.femView],stress=this.femStress(selected,data),offset=this.partIndex.get(selected.id)*19;maximum=this.frames[frameBase+offset+18];gl.bindBuffer(gl.ARRAY_BUFFER,this.stressBuffer);gl.bufferData(gl.ARRAY_BUFFER,stress,gl.DYNAMIC_DRAW);this.bindGeometry(this.femBuffers[this.femView],42,true);gl.uniform1f(this.locations.fem,1);gl.uniform1f(this.locations.visualOnly,0);gl.uniformMatrix4fv(this.locations.model,false,identity());this.includeBounds(totalBounds,this.femBounds[this.femView],identity());projection=this.viewProjection(totalBounds);gl.uniformMatrix4fv(this.locations.view,false,projection);gl.drawArrays(gl.TRIANGLES,0,data.length/42);
       }else{
         const shown=selected?[selected]:this.sectionParts;
         for(const part of shown){const offset=this.partIndex.get(part.id)*19;if(part.analysis_status!=='visual_only')maximum=Math.max(maximum,this.frames[frameBase+offset+18]);const model=selected?identity():poseMatrix(this.frames,frameBase+offset);this.includeBounds(totalBounds,this.bounds.get(part.id),model);}
-        this.bindGeometry(this.geometryBuffer,6,false);gl.uniform1f(this.locations.fem,0);gl.uniformMatrix4fv(this.locations.view,false,this.viewProjection(totalBounds));
+        this.bindGeometry(this.geometryBuffer,6,false);gl.uniform1f(this.locations.fem,0);projection=this.viewProjection(totalBounds);gl.uniformMatrix4fv(this.locations.view,false,projection);
         for(const part of shown){const offset=this.partIndex.get(part.id)*19,s=part.section;gl.uniform1f(this.locations.visualOnly,part.analysis_status==='visual_only'?1:0);gl.uniform3fv(this.locations.force,this.frames.subarray(frameBase+offset+12,frameBase+offset+15));gl.uniform3fv(this.locations.moment,this.frames.subarray(frameBase+offset+15,frameBase+offset+18));gl.uniform3fv(this.locations.origin,s.origin_body_m);gl.uniformMatrix3fv(this.locations.basis,false,s.basis_body);gl.uniform3f(this.locations.section,s.area_m2,s.I_m4,s.J_m4);gl.uniformMatrix4fv(this.locations.model,false,selected?identity():poseMatrix(this.frames,frameBase+offset));gl.drawArrays(gl.TRIANGLES,part.vertex_offset,part.vertex_count);}
       }
       const time=this.info.frame_times_s[this.frameIndex],visualOnly=selected?.analysis_status==='visual_only';this.el.clock.textContent=`기록 프레임 ${this.frameIndex+1} / ${this.info.frame_count} · ${time.toFixed(3)} s`;
-      this.el.maximum.textContent=visualOnly?'현재 최대 · 미계산':`${selected?.kind==='fem'?'현재 전체 FEM 최대':'현재 최대'} ${maximum/1e6<.01?(maximum/1e3).toFixed(2)+' kPa':(maximum/1e6).toFixed(3)+' MPa'}`;
-      this.el.legend.textContent=visualOnly?'회색 · 비구조 외장 · 응력 미계산':`0 — ${(this.info.max_von_mises_pa/1e6).toFixed(2)} MPa · ${this.scale==='log'?'로그':'선형'} 색상`;
+      this.el.maximum.textContent=visualOnly?'현재 최대 · 미계산':`${selected?.kind==='fem'?'현재 전체 FEM 최대':'현재 합성 VM 최대'} ${maximum/1e6<.01?(maximum/1e3).toFixed(2)+' kPa':(maximum/1e6).toFixed(3)+' MPa'}`;
+      this.el.legend.textContent=visualOnly?'회색 · 비구조 외장 · 응력 미계산':`${componentOptions[this.component]} · 0 — ${(this.info.max_von_mises_pa/1e6).toFixed(2)} MPa · ${this.scale==='log'?'로그':'선형'} 색상`;
       if(visualOnly){this.el.force.textContent='비구조 외장 · 미적용';this.el.moment.textContent='비구조 외장 · 미적용';}else if(selected){const offset=frameBase+this.partIndex.get(selected.id)*19,f=this.frames.subarray(offset+12,offset+15),m=this.frames.subarray(offset+15,offset+18);this.el.force.textContent=`Fx ${f[0].toFixed(2)} · Fy ${f[1].toFixed(2)} · Fz ${f[2].toFixed(2)} N`;this.el.moment.textContent=`Mx ${m[0].toFixed(3)} · My ${m[1].toFixed(3)} · Mz ${m[2].toFixed(3)} N·m`;}else{this.el.force.textContent='부품 선택 시 표시';this.el.moment.textContent='부품 선택 시 표시';}
+      this.updateDiagnostics(selected,frameBase,projection);canvas.dataset.component=this.component;
       const elapsed=performance.now()-renderStarted,previous=Number(canvas.dataset.maxRenderMs)||0;canvas.dataset.lastRenderMs=elapsed.toFixed(3);canvas.dataset.maxRenderMs=Math.max(previous,elapsed).toFixed(3);
     }
   }

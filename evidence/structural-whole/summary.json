@@ -478,18 +478,20 @@
     }
   ],
   "local_artifact_sha256": {
-    "manifest.json": "e54758e0fa5e447a243e72866987b245e4b1875a3fe444d916b6ac3aff3db7ea",
+    "manifest.json": "06f2c4093a2a3095ec0773550f6b140b880f191a2b9c5dadd7ac5ceec63318b7",
     "geometry.bin": "27a53c752336620ac763f388d8f1826aae9bcd531e7d20729b4c995b0bd944ae",
     "frames.bin": "f498f7b28eb03110980ce12336d4c435624a4c4203f78d8e2253b3c5b74d2bc5",
     "fem-surface.bin": "2125767a87dfd038870f3c425fc5de896a0debbcbb7a1f6edcce6a513daed796",
-    "fem-cutaway.bin": "1b99171d660ff75257c9107f6a8078ff2cb092f09800da06f061db49db3ba743"
+    "fem-cutaway.bin": "1b99171d660ff75257c9107f6a8078ff2cb092f09800da06f061db49db3ba743",
+    "diagnostics.bin": "ea34b04aaf04fb5bd51c1fc995b8f8bd4e00626e8db1112dd3515e03d3dfcf1a"
   },
   "local_artifact_bytes": {
-    "manifest.json": 140012,
+    "manifest.json": 193852,
     "geometry.bin": 17043408,
     "frames.bin": 3280768,
     "fem-surface.bin": 6339312,
-    "fem-cutaway.bin": 994896
+    "fem-cutaway.bin": 994896,
+    "diagnostics.bin": 3108096
   },
   "reference_states_sha256": "b6b975a89f8b1b0a0a0532c83fb97a2f002ce4dab829fe47d8e2fc99be9a8bbc",
   "source": {
@@ -507,5 +509,13 @@
     "공칭 전단 V/A는 평균 지표이며 중공 단면의 실제 최대 전단 분포가 아니다.",
     "CAD 및 파생 binary는 재배포 허용 범위 미확인으로 로컬에만 보존한다. 새 clone은 별도 CAD 확보 및 생성이 필요하다.",
     "강도 정격,안전율,실물 전이 성공은 검증하지 않았다."
-  ]
+  ],
+  "load_diagnostics": {
+    "binary_shape": [
+      1136,
+      38,
+      18
+    ],
+    "summary": "evidence/structural-whole/load-diagnostics.json"
+  }
 }

@@ -212,10 +212,10 @@ def _make_handler(
                     else {"enabled": False, "configured": False},
                 )
                 return
-            if request.path == "/structural-scene.js":
+            if request.path in {"/structural-scene.js", "/structural-diagnostics.js"}:
                 self._send(
                     HTTPStatus.OK,
-                    (Path(__file__).with_name("web") / "structural-scene.js").read_bytes(),
+                    (Path(__file__).with_name("web") / request.path[1:]).read_bytes(),
                     "text/javascript; charset=utf-8",
                 )
                 return
@@ -288,8 +288,8 @@ def _make_handler(
                 self._serve_playback(request.path, head_only=True)
             elif request.path.startswith("/structural-scene/"):
                 self._serve_structural_scene(request.path, head_only=True)
-            elif request.path == "/structural-scene.js":
-                body = (Path(__file__).with_name("web") / "structural-scene.js").read_bytes()
+            elif request.path in {"/structural-scene.js", "/structural-diagnostics.js"}:
+                body = (Path(__file__).with_name("web") / request.path[1:]).read_bytes()
                 self.send_response(HTTPStatus.OK)
                 self.send_header("Content-Type", "text/javascript; charset=utf-8")
                 self.send_header("Content-Length", str(len(body)))

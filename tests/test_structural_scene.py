@@ -126,6 +126,81 @@ class StructuralSceneAssetsTests(unittest.TestCase):
         self.assertIsNone(assets.asset("../manifest.json"))
         self.assertIsNone(assets.asset("manifest.json"))
 
+    def add_load_diagnostics(self):
+        terms = [0, 0, 4, 0, 0, 0, 1, 0, 6, 0, .5, 0, 4, 0, 0, 0, .5, 0]
+        payload = floats(*(terms * 4))
+        (self.directory / "diagnostics.bin").write_bytes(payload)
+        digest = hashlib.sha256(payload).hexdigest()
+        self.manifest["assets"]["diagnostics.bin"] = digest
+        self.manifest["load_diagnostics"] = {
+            "asset": "diagnostics.bin", "sha256": digest,
+            "part_stride_floats": 18, "frame_stride_floats": 36,
+            "parts": [{"id": part["id"], "parent_label": "부모", "source_body_label": "하부",
+                       "action": "child_on_parent" if part["kind"] == "fem" else "parent_on_child", "subtree_mass_kg": 1.0,
+                       "origin_body_m": [0, 0, 0], "basis_body": [1, 0, 0, 0, 1, 0, 0, 0, 1]}
+                      for part in self.manifest["parts"]],
+        }
+        self.write_manifest(self.manifest)
+
+    def test_optional_load_terms_must_reconstruct_same_frame_wrench(self):
+        self.add_load_diagnostics()
+        assets = StructuralSceneAssets(self.directory, FakePlayback())
+        self.assertEqual(assets.info()["load_diagnostics"]["frame_stride_floats"], 36)
+        self.assertIn("diagnostics.bin", assets.info()["asset_urls"])
+        served = assets.asset("diagnostics.bin")
+        assert served is not None
+        self.assertEqual(len(served), 2 * 2 * 18 * 4)
+        # A self-consistent byte hash cannot hide a wrong force decomposition.
+        payload = bytearray((self.directory / "diagnostics.bin").read_bytes())
+        struct.pack_into('<f', payload, 0, 100)
+        (self.directory / "diagnostics.bin").write_bytes(payload)
+        digest = hashlib.sha256(payload).hexdigest()
+        self.manifest["assets"]["diagnostics.bin"] = digest
+        self.manifest["load_diagnostics"]["sha256"] = digest
+        self.write_manifest(self.manifest)
+        with self.assertRaisesRegex(ValueError, "reconstruct"):
+            StructuralSceneAssets(self.directory, FakePlayback())
+
+    def test_load_metadata_rejects_mismatched_frame_mass_and_sources(self):
+        self.add_load_diagnostics()
+        original = json.loads(json.dumps(self.manifest))
+        for change in ("origin", "mass", "source", "order"):
+            self.manifest = json.loads(json.dumps(original))
+            part = self.manifest["load_diagnostics"]["parts"][0]
+            if change == "origin": part["origin_body_m"] = [1, 0, 0]
+            elif change == "mass": part["subtree_mass_kg"] = -1
+            elif change == "source": part["source_body_per_frame"] = ["one"]
+            else: part["id"] = "wrong"
+            self.write_manifest(self.manifest)
+            with self.assertRaises(ValueError, msg=change):
+                StructuralSceneAssets(self.directory, FakePlayback())
+
+    def test_cut_action_and_varying_base_mass_cannot_be_mislabelled(self):
+        self.add_load_diagnostics()
+        original = json.loads(json.dumps(self.manifest))
+        for index in (0, 1):
+            self.manifest = json.loads(json.dumps(original))
+            part = self.manifest["load_diagnostics"]["parts"][index]
+            part["action"] = "parent_on_child" if index == 1 else "child_on_parent"
+            self.write_manifest(self.manifest)
+            with self.assertRaisesRegex(ValueError, "cut convention"):
+                StructuralSceneAssets(self.directory, FakePlayback())
+        self.manifest = json.loads(json.dumps(original))
+        self.manifest["parts"][0]["id"] = "base"
+        meta = self.manifest["load_diagnostics"]["parts"][0]
+        meta.update(id="base", action="child_on_parent", subtree_mass_kg=None,
+                    source_body_per_frame=["torso", "wheel"],
+                    subtree_mass_kg_by_source={"torso": 66.0, "wheel": 2.5},
+                    source_labels={"torso": "몸통", "wheel": "휠"})
+        self.write_manifest(self.manifest)
+        clean = StructuralSceneAssets(self.directory, FakePlayback()).info()["load_diagnostics"]["parts"][0]
+        self.assertEqual(clean["source_body_per_frame"], ["torso", "wheel"])
+        self.assertIsNone(clean["subtree_mass_kg"])
+        meta["subtree_mass_kg"] = 66.0
+        self.write_manifest(self.manifest)
+        with self.assertRaisesRegex(ValueError, "no scalar mass"):
+            StructuralSceneAssets(self.directory, FakePlayback())
+
     def test_playback_identity_and_shape_mismatches_are_rejected(self):
         for field, value, message in (
             ("frame_count", 3, "frame_count"),
@@ -190,7 +265,7 @@ class StructuralSceneAssetsTests(unittest.TestCase):
             StructuralSceneAssets(self.directory, FakePlayback())
         (self.directory/"geometry.bin").unlink();target.rename(self.directory/"geometry.bin")
         manifest={**self.manifest,"assets":{**self.manifest["assets"],"secret.bin":"c"*64}};self.write_manifest(manifest)
-        with self.assertRaisesRegex(ValueError, "exactly four"):
+        with self.assertRaisesRegex(ValueError, "supported binary assets"):
             StructuralSceneAssets(self.directory, FakePlayback())
 
 

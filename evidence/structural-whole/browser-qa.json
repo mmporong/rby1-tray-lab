@@ -127,5 +127,86 @@
     "No real robot or hardware safety validation.",
     "Screenshots were visually inspected in CUA output; no screenshot file is claimed."
   ],
-  "result": "PASS"
+  "result": "PASS",
+  "split_load_diagnostics": {
+    "default_mode": "original motion / whole robot stress, side-by-side; diagnostics below both views; RGB-D follows",
+    "default_selected_part": "whole",
+    "default_structural_pressed": true,
+    "desktop": {
+      "viewport_width": 1842,
+      "stage_px": [
+        813,
+        480
+      ],
+      "stress_canvas_px": [
+        811,
+        478
+      ],
+      "media_y_difference_px": 1,
+      "diagnostic_below_media": true,
+      "overflow": false
+    },
+    "medium": {
+      "viewport_width": 1024,
+      "stage_px": [
+        477.5,
+        360
+      ],
+      "stress_canvas_px": [
+        475.5,
+        358
+      ],
+      "overflow": false
+    },
+    "mobile_final": {
+      "viewport_width": 390,
+      "document_width": 375,
+      "diagnostic_width": 353,
+      "stress_canvas_width": 351,
+      "table_client_width": 321,
+      "table_scroll_width": 660,
+      "overflow": false,
+      "media_stacked": true
+    },
+    "viewport_override_reset": true,
+    "section_components_changed": [
+      "axial",
+      "bending",
+      "shear",
+      "torsion",
+      "total"
+    ],
+    "fem_components_changed": [
+      "normaldev",
+      "femshear",
+      "total"
+    ],
+    "fem_surface_and_cutaway": true,
+    "joint_mode_hides_diagnostics": true,
+    "gray_neck_uncomputed_and_component_selector_disabled": true,
+    "source_terms_table": "G/E/I and recorded total in same selected-part frame, 6 columns with force/moment units",
+    "path_example": "left arm 7 / left FT mount, child-on-parent, robot subtree mass 0.534 kg",
+    "wheel_16x_physics_playback": {
+      "terminal_frame": 1135,
+      "expected_frame": 1135,
+      "sync_video_time_s": 18.933333,
+      "last_render_call_ms": 3.8,
+      "maximum_render_call_ms": 11.3,
+      "scope": "CPU call instrumentation, not sustained display FPS"
+    },
+    "reset_settled": {
+      "video_time_s": 0,
+      "paused": true,
+      "frame": 0,
+      "expected": 0
+    },
+    "single_frame_settled": {
+      "frame": 1,
+      "sim_time_s": 0.134
+    },
+    "limits": [
+      "Finite UI samples, not continuous zero-drift or cross-browser performance certification.",
+      "Existing original four binary files unchanged; only auxiliary diagnostic data and presentation changed."
+    ]
+  }
 }

@@ -106,6 +106,64 @@ def _validate_basis(value: Any, name: str) -> list[float]:
     return basis
 
 
+def _load_metadata(value: Any, parts: list[dict], frame_count: int) -> dict:
+    if not isinstance(value, dict) or value.get("asset") != "diagnostics.bin":
+        raise ValueError("load_diagnostics must identify diagnostics.bin")
+    if value.get("part_stride_floats") != 18 or value.get("frame_stride_floats") != len(parts) * 18:
+        raise ValueError("load diagnostics strides do not match the scene")
+    raw_parts = value.get("parts")
+    if not isinstance(raw_parts, list) or len(raw_parts) != len(parts):
+        raise ValueError("load diagnostics part count does not match the scene")
+    clean = []
+    for raw, part in zip(raw_parts, parts):
+        if not isinstance(raw, dict) or raw.get("id") != part["id"]:
+            raise ValueError("load diagnostics part order does not match the scene")
+        item = {"id": part["id"]}
+        for field in ("parent_label", "source_body_label"):
+            text = raw.get(field)
+            if not isinstance(text, str) or not text.strip() or len(text) > 150:
+                raise ValueError(f"invalid load diagnostics {field}")
+            item[field] = text
+        action = raw.get("action")
+        varying_base = part["id"] == "base"
+        expected_action = "child_on_parent" if varying_base or part["kind"] == "fem" else "parent_on_child"
+        if action != expected_action:
+            raise ValueError("load diagnostics action disagrees with the recorded cut convention")
+        item["action"] = action
+        item["origin_body_m"] = _vector(raw.get("origin_body_m"), 3, "load origin")
+        item["basis_body"] = _validate_basis(raw.get("basis_body"), "load basis")
+        if part["kind"] == "section":
+            for field in ("origin_body_m", "basis_body"):
+                if any(not math.isclose(a, b, rel_tol=0.0, abs_tol=1e-10) for a, b in zip(item[field], part["section"][field])):
+                    raise ValueError("load diagnostics frame differs from the section frame")
+        mass = raw.get("subtree_mass_kg")
+        if mass is not None:
+            mass = _finite_number(mass, "subtree_mass_kg")
+            if mass < 0:
+                raise ValueError("subtree mass cannot be negative")
+        item["subtree_mass_kg"] = mass
+        sources = raw.get("source_body_per_frame")
+        if varying_base:
+            if sources is None or mass is not None:
+                raise ValueError("base load metadata requires varying sources and no scalar mass")
+        elif sources is not None or mass is None:
+            raise ValueError("fixed load cuts require scalar mass and cannot vary source bodies")
+        if sources is not None:
+            masses, labels = raw.get("subtree_mass_kg_by_source"), raw.get("source_labels")
+            if not isinstance(sources, list) or len(sources) != frame_count or not all(isinstance(x, str) and _ID.fullmatch(x) for x in sources):
+                raise ValueError("invalid load source_body_per_frame")
+            if not isinstance(masses, dict) or not isinstance(labels, dict) or set(masses) != set(sources) or set(labels) != set(sources):
+                raise ValueError("load source lookup maps must cover exactly the recorded sources")
+            clean_masses = {key: _finite_number(number, "source mass") for key, number in masses.items()}
+            if any(number < 0 for number in clean_masses.values()) or any(not isinstance(label, str) or not label.strip() or len(label) > 150 for label in labels.values()):
+                raise ValueError("invalid load source labels or mass")
+            item.update(source_body_per_frame=list(sources), subtree_mass_kg_by_source=clean_masses, source_labels=dict(labels))
+        elif mass is None:
+            raise ValueError("a varying load subtree mass requires per-frame sources")
+        clean.append(item)
+    return {"asset_url": "/structural-scene/diagnostics.bin", "part_stride_floats": 18, "frame_stride_floats": len(parts) * 18, "parts": clean}
+
+
 class StructuralSceneAssets:
     """Load one immutable whole-robot structural bundle after strict validation."""
 
@@ -246,19 +304,29 @@ class StructuralSceneAssets:
             raise ValueError("scope must be a non-empty string")
         assumptions = _text_list(manifest.get("assumptions"), "assumptions")
 
+        load_raw = manifest.get("load_diagnostics")
+        load_info = _load_metadata(load_raw, clean_parts, frame_count) if load_raw is not None else None
+        allowed_assets = (*ASSET_NAMES, "diagnostics.bin") if load_info else ASSET_NAMES
         hashes = manifest.get("assets")
-        if not isinstance(hashes, dict) or set(hashes) != set(ASSET_NAMES):
-            raise ValueError("structural scene must declare exactly four binary assets")
+        if not isinstance(hashes, dict) or set(hashes) != set(allowed_assets):
+            raise ValueError("structural scene must declare exactly the supported binary assets")
+        if load_info:
+            assert isinstance(load_raw, dict)
+            if load_raw.get("sha256") != hashes["diagnostics.bin"]:
+                raise ValueError("load diagnostics hash declarations do not match")
         expected_floats = {
             "geometry.bin": total_geometry_vertices * geometry_stride,
             "frames.bin": frame_count * frame_stride,
             "fem-surface.bin": fem_surface_count * fem_stride,
             "fem-cutaway.bin": fem_cutaway_count * fem_stride,
         }
+        if load_info:
+            expected_floats["diagnostics.bin"] = frame_count * len(clean_parts) * 18
         self._assets: dict[str, bytes] = {}
         frame_values: array | None = None
+        load_values: array | None = None
         total_bytes = 0
-        for name in ASSET_NAMES:
+        for name in allowed_assets:
             expected_hash = hashes.get(name)
             if not isinstance(expected_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
                 raise ValueError(f"invalid SHA-256 declaration for {name}")
@@ -281,6 +349,8 @@ class StructuralSceneAssets:
             values = _float_buffer(payload, expected_floats[name], name)
             if name == "frames.bin":
                 frame_values = values
+            elif name == "diagnostics.bin":
+                load_values = values
             self._assets[name] = payload
         assert frame_values is not None
         registered_maximum = 0.0
@@ -292,6 +362,14 @@ class StructuralSceneAssets:
                     f"frames.bin pose at frame {frame}, part {part}",
                 )
                 peak = float(frame_values[start + 15])
+                if load_values is not None:
+                    load_start = frame * len(clean_parts) * 18 + part * 18
+                    for axis in range(6):
+                        total = float(frame_values[start + 9 + axis])
+                        summed = sum(float(load_values[load_start + term * 6 + axis]) for term in range(3))
+                        tolerance = .01 if axis < 3 else .002
+                        if not math.isclose(total, summed, rel_tol=1e-5, abs_tol=tolerance):
+                            raise ValueError("load diagnostics do not reconstruct the recorded wrench")
                 if peak < 0:
                     raise ValueError(
                         f"frames.bin peak stress is negative at frame {frame}, part {part}"
@@ -321,14 +399,16 @@ class StructuralSceneAssets:
             "fem_cutaway_vertex_count": fem_cutaway_count,
             "scope": scope,
             "assumptions": assumptions,
-            "asset_urls": {name: f"/structural-scene/{name}" for name in ASSET_NAMES},
+            "asset_urls": {name: f"/structural-scene/{name}" for name in allowed_assets},
         }
+        if load_info:
+            self._info["load_diagnostics"] = load_info
 
     def info(self) -> dict[str, Any]:
         return self._info
 
     def asset(self, name: str) -> bytes | None:
-        return self._assets.get(name) if name in ASSET_NAMES else None
+        return self._assets.get(name)
 
 
 __all__ = ["ASSET_NAMES", "StructuralSceneAssets"]
