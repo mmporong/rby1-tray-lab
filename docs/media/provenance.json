@@ -12,11 +12,11 @@
       "sha256": "bea5afd3a92ad07dbbb927520bb550ca9afb509890434b7e75c88b5edd972417"
     },
     "viewer.jpg": {
-      "source": "local viewer `rby1_tray.cli view --config configs/mobile-native.json` at repository commit 5c3e00910c14c736ae3c0539aeb03e226760514a with the local structural bundle",
-      "capture": "headless Chrome 151, viewport 1600x1000, device scale 1.5; main video seeked to 11.6 s and saved only after the structural clock reported the matching record frame",
+      "source": "local viewer `rby1_tray.cli view --config configs/mobile-native.json` with the redesigned web UI committed alongside this image and the local structural bundle",
+      "capture": "headless Chrome 151, viewport 1600x1000, device scale 1.5; main video seeked to 11.6 s and saved only after the structural clock reported the matching record frame; element screenshot of the synchronized replay card (#replay)",
       "record_frame": "697 / 1136, 92.800 s physics time",
-      "presentation_change": "playback status badge hidden for the still image",
-      "sha256": "ead82b73d34c41feafadb5ac1b3372ac1d6b4592447b51118dade19751039cda"
+      "presentation_change": "none; stage and stress views use the viewer's 16:10 framing (main render object-fit cover, about 8% cropped from top and bottom)",
+      "sha256": "4216515f864ee88bfa75c2a6b377055a4e2ed0d3942dd816b9b1eff81656a102"
     },
     "flange-fem-stages.png": {
       "source": "local viewer `rby1_tray.cli view --config configs/mobile-native.json` with source files unchanged since 5c3e00910c14c736ae3c0539aeb03e226760514a and the local structural bundle artifacts/structural-whole",

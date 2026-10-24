@@ -265,12 +265,13 @@
     drawPeakPoint(projection,point) {
       const svg=this.el.overlay;if(!svg)return;svg.replaceChildren();if(!point)return;
       const w=projection[3]*point[0]+projection[7]*point[1]+projection[11]*point[2]+projection[15];if(w<=0)return;
-      const x=(projection[0]*point[0]+projection[4]*point[1]+projection[8]*point[2]+projection[12])/w*500+500,y=500-(projection[1]*point[0]+projection[5]*point[1]+projection[9]*point[2]+projection[13])/w*500;
-      svg.setAttribute('viewBox','0 0 1000 1000');
+      const width=svg.clientWidth||this.el.canvas.clientWidth||1000,height=svg.clientHeight||this.el.canvas.clientHeight||1000;
+      const x=((projection[0]*point[0]+projection[4]*point[1]+projection[8]*point[2]+projection[12])/w*.5+.5)*width,y=(.5-(projection[1]*point[0]+projection[5]*point[1]+projection[9]*point[2]+projection[13])/w*.5)*height;
+      svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
       const line=document.createElementNS('http://www.w3.org/2000/svg','line');
-      for(const [key,value]of Object.entries({x1:x,y1:y,x2:x+35,y2:y-35,stroke:'#4d2b7a','stroke-width':2}))line.setAttribute(key,String(value));
+      for(const [key,value]of Object.entries({x1:x,y1:y,x2:x+28,y2:y-28,stroke:'#4d2b7a','stroke-width':1.5}))line.setAttribute(key,String(value));
       const text=document.createElementNS('http://www.w3.org/2000/svg','text');
-      for(const [key,value]of Object.entries({x:x+39,y:y-35,fill:'#4d2b7a',stroke:'#ffffff','stroke-width':3,'stroke-linejoin':'round','paint-order':'stroke','font-size':21}))text.setAttribute(key,String(value));
+      for(const [key,value]of Object.entries({x:x+32,y:y-30,fill:'#4d2b7a',stroke:'#ffffff','stroke-width':3,'stroke-linejoin':'round','paint-order':'stroke','font-size':14,'font-weight':700}))text.setAttribute(key,String(value));
       text.textContent='최대점';svg.append(line,text);
     }
 

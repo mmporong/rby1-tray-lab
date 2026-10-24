@@ -3,448 +3,603 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RB-Y1 Tray Transfer Cell</title>
+  <meta name="color-scheme" content="light">
+  <title>RB-Y1 Tray Lab</title>
   <style>
     :root {
       color-scheme: light;
-      --void: #f4f7fa; --graphite: #f8fafc; --panel: #ffffff; --line: #d4dee8;
-      --text: #172b3e; --muted: #506478; --cyan: #006b7a; --amber: #9a5b00;
-      --red: #b42318; --green: #137547; --media-height: clamp(280px, 42vh, 460px);
-      font-family: Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, sans-serif;
+      --bg: #f4f6f8; --surface: #ffffff; --surface-2: #f7f9fb; --surface-3: #eef2f6;
+      --ink: #0f1c2a; --ink-2: #3d4e62; --ink-3: #5c6c7f;
+      --rule: #e1e7ed; --rule-strong: #c8d2dc;
+      --accent: #0b6b7b; --accent-ink: #075867; --accent-soft: #e4f1f3;
+      --target: #965600; --ok: #146c43; --ok-soft: #e7f3ec; --alert: #b42318; --alert-soft: #fdf0ef;
+      --stage-dark: #16212c; --radius: 10px; --radius-sm: 6px;
+      --shadow: 0 1px 2px rgba(15,28,42,.04), 0 14px 34px -22px rgba(15,28,42,.22);
+      --font: Pretendard, "Pretendard Variable", "Noto Sans KR", "Noto Sans CJK KR", system-ui, -apple-system, sans-serif;
+      --mono: "JetBrains Mono", "Ubuntu Sans Mono", "DejaVu Sans Mono", ui-monospace, monospace;
+      font-family: var(--font); font-size: 15px; line-height: 1.6;
     }
     * { box-sizing: border-box; }
     [hidden] { display: none !important; }
-    body { margin: 0; min-width: 300px; background: var(--void); color: var(--text); }
-    button, select { font: inherit; }
-    button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible, a:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
-    .shell { width: min(1680px, 100%); margin: 0 auto; padding: 18px; }
-    .shell > header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 5px 3px 17px; }
-    .eyebrow { margin: 0 0 6px; color: var(--cyan); font: 750 .69rem/1 ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; }
-    h1 { margin: 0; font-size: clamp(1.55rem, 2.5vw, 2.35rem); font-weight: 730; letter-spacing: -.045em; }
-    .subtitle { max-width: 690px; margin: 7px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.5; }
-    .study-jump { display: inline-flex; align-items: center; min-height: 44px; margin-top: 5px; color: var(--cyan); font-size: .8rem; font-weight: 700; text-underline-offset: 3px; }
-    .condition { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
-    .badge { border: 1px solid var(--line); background: var(--graphite); color: #465e73; padding: 7px 10px; font: 680 .7rem/1 ui-monospace, monospace; }
-    .layout, .content-column { display: grid; min-width: 0; width: 100%; grid-template-columns: minmax(0, 1fr); gap: 14px; }
-    .primary-grid { display: grid; min-width: 0; width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: stretch; }
-    .primary-grid > *, .panel, aside { min-width: 0; }
-    .panel { border: 1px solid var(--line); background: var(--panel); box-shadow: 0 3px 16px rgba(29,55,79,.05); }
-    .viewport-panel { overflow: hidden; }
-    .stage { position: relative; aspect-ratio: 4 / 3; min-height: 360px; background: #e9eff4; }
-    .primary-grid .stage, .primary-grid .load-media, .primary-grid .structural-media, .primary-grid .structural-canvas-wrap { height: var(--media-height); aspect-ratio: auto; }
-    .stage::after { position: absolute; inset: 0; pointer-events: none; content: ""; box-shadow: inset 0 0 0 1px rgba(23,43,62,.05); }
-    .stage img, .stage video { width: 100%; height: 100%; display: block; object-fit: contain; }
-    .stage-top { position: absolute; z-index: 2; inset: 14px 14px auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-    .run-status, .target-callout { border: 1px solid #c6d3de; background: rgba(255,255,255,.95); backdrop-filter: blur(9px); }
-    .run-status { display: flex; align-items: center; gap: 9px; padding: 9px 12px; color: #263e53; font-size: .77rem; font-weight: 720; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: #667d90; }
-    .dot.playing { background: var(--cyan); box-shadow: 0 0 0 5px rgba(0,107,122,.09); }
-    .dot.finished { background: var(--green); box-shadow: 0 0 0 5px rgba(19,117,71,.12); }
-    .dot.failed { background: var(--red); box-shadow: 0 0 0 5px rgba(180,35,24,.1); }
-    .target-callout { min-width: 154px; padding: 9px 11px; text-align: right; }
-    .target-callout span { display: block; color: var(--muted); font-size: .67rem; }
-    .target-callout strong { display: block; margin-top: 2px; color: var(--amber); font: 730 .95rem/1.3 ui-monospace, monospace; }
-    .error { position: absolute; z-index: 3; inset: auto 14px 14px; margin: 0; border: 1px solid #d5a09b; background: rgba(255,241,240,.97); color: #9f231b; padding: 11px 13px; font-size: .8rem; }
+    html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+    body { margin: 0; min-width: 300px; background: var(--bg); color: var(--ink); word-break: keep-all; overflow-wrap: break-word; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    button, select, input { font: inherit; color: inherit; }
+    a { color: var(--accent-ink); text-underline-offset: 3px; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     .hidden { display: none; }
-    .timeline { position: absolute; z-index: 2; inset: auto 14px 14px; display: grid; grid-template-columns: repeat(5, 1fr); width: calc(100% - 28px); gap: 6px; padding: 8px; border-radius: 3px; background: rgba(255,255,255,.95); }
-    .timeline-step { min-width: 0; border-top: 2px solid #b6c5d2; padding-top: 7px; color: #506478; font-size: .68rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .timeline-step.done { border-color: var(--green); color: #137547; }
-    .timeline-step.active { border-color: var(--cyan); color: var(--cyan); }
-    .toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; border-top: 1px solid var(--line); padding: 12px 14px; background: var(--graphite); }
-    .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-    button, select { min-height: 44px; border: 1px solid #8293a4; border-radius: 3px; background: #ffffff; color: #263e53; padding: 8px 13px; font-weight: 700; cursor: pointer; }
-    button:hover, select:hover { border-color: #526c81; background: #eef4f8; }
-    button.primary { min-width: 106px; border-color: var(--cyan); background: var(--cyan); color: #ffffff; }
-    button.primary:hover { background: #005767; }
-    button[aria-pressed="true"] { border-color: var(--cyan); color: var(--cyan); background: rgba(0,107,122,.09); }
-    button:disabled, select:disabled { cursor: wait; opacity: .5; }
-    label { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: .72rem; }
-    .view-tabs { display: flex; align-items: center; gap: 4px; }
-    .view-tabs button { min-width: 44px; min-height: 44px; padding: 7px 10px; font-size: .72rem; }
-    .camera-readout { text-align: right; color: #506478; font: .68rem/1.3 ui-monospace, monospace; }
-    .sensor-strip { padding: 14px; background: #ffffff; }
-    .sensor-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
-    .sensor-heading h2 { margin: 0; font-size: .82rem; }
-    .sensor-heading p { margin: 5px 0 0; color: var(--muted); font-size: .68rem; line-height: 1.45; }
-    .sensor-column { min-width: 0; }
-    .sensor-grid { position: relative; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
-    .sensor-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border: 1px solid #d4dee8; background: #ffffff; padding: 9px; transition: background .18s, border-color .18s; }
-    .sensor-row.expanded { grid-column: 1 / -1; border-color: var(--cyan); background: #eef8fa; }
-    .sensor-row-header { grid-column: 1 / -1; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-    .sensor-row-header h3 { margin: 0; color: #263e53; font-size: .76rem; }
-    .sensor-row-header p { margin: 3px 0 0; color: #506478; font: .62rem/1.45 ui-monospace, monospace; }
-    .sensor-row-header button { min-height: 44px; min-width: 44px; padding: 7px 9px; font-size: .62rem; }
-    .sensor-media { position: relative; min-width: 0; margin: 0; border: 1px solid #d4dee8; background: #e9eff4; cursor: zoom-in; }
-    .sensor-row.expanded .sensor-media { cursor: zoom-out; }
-    .sensor-media img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; background: #e9eff4; transition: height .18s; }
-    .sensor-row.expanded .sensor-media img { height: clamp(260px, 31vw, 480px); aspect-ratio: auto; }
-    .sensor-media figcaption { display: flex; justify-content: space-between; gap: 10px; padding: 8px 10px; color: #465e73; font-size: .67rem; }
-    .sensor-media figcaption span:last-child { color: #526c81; }
-    .sensor-empty { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); padding: 24px; text-align: center; font-size: .7rem; line-height: 1.5; background: #e9eff4; }
-    .depth-legend { position: absolute; inset: 8px 8px auto auto; display: flex; align-items: center; gap: 6px; border: 1px solid #b7c7d5; background: rgba(255,255,255,.96); padding: 4px 6px; color: #263e53; font: .58rem/1 ui-monospace, monospace; }
-    .depth-ramp { width: 72px; height: 8px; background: linear-gradient(90deg,#fff,#737373,#080808); }
-    .invalid-swatch { display: inline-block; width: 8px; height: 8px; background: rgb(230,55,135); }
-    .load-panel { min-width: 0; border-color: var(--line); background: #ffffff; padding: 0; }
-    .primary-diagnostic { overflow: hidden; }
-    .load-panel > header { display: block; padding: 12px 12px 0; }
-    .load-panel h3 { margin: 0; color: #263e53; font-size: .76rem; }
-    .load-panel p { margin: 4px 0 0; color: #506478; font-size: .65rem; line-height: 1.45; }
-    .diagnostic-tabs, .structural-view-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin: 9px 12px; }
-    .diagnostic-tabs button, .structural-view-tabs button { min-height: 44px; padding: 6px 8px; font-size: .68rem; }
-    .load-media { position: relative; aspect-ratio: 4 / 3; border: 1px solid #d4dee8; background: #e9eff4; overflow: hidden; }
+    .num { font-variant-numeric: tabular-nums; }
+
+    .shell { width: min(1600px, 100%); margin: 0 auto; padding: 28px 24px 56px; }
+    .layout { display: grid; gap: 40px; min-width: 0; }
+
+    /* Masthead */
+    .masthead { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 12px 32px; padding: 0 2px 24px; }
+    .eyebrow { margin: 0 0 8px; color: var(--accent-ink); font-size: .8rem; font-weight: 650; letter-spacing: .02em; }
+    h1 { margin: 0; font-size: clamp(1.75rem, 2.6vw, 2.35rem); line-height: 1.15; font-weight: 750; letter-spacing: -.03em; text-wrap: balance; }
+    .subtitle { max-width: 64ch; margin: 10px 0 0; color: var(--ink-2); font-size: 1rem; line-height: 1.6; text-wrap: pretty; }
+    .run-facts { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 14px 0 0; padding: 0; list-style: none; color: var(--ink-3); font-size: .8rem; }
+    .run-facts li { white-space: nowrap; }
+    .section-nav { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); box-shadow: 0 1px 2px rgba(15,28,42,.04); }
+    .section-nav a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 999px; color: var(--ink-2); font-size: .85rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
+    .section-nav a:hover { background: var(--surface-3); color: var(--ink); }
+
+    /* Shared controls */
+    button, select { min-height: 40px; border: 1px solid var(--rule-strong); border-radius: var(--radius-sm); background: var(--surface); color: var(--ink); padding: 0 14px; font-size: .875rem; font-weight: 600; cursor: pointer; transition: background-color .15s, border-color .15s, color .15s, box-shadow .15s; }
+    button:hover, select:hover { border-color: #9fb0c0; background: var(--surface-2); }
+    button:disabled, select:disabled { cursor: progress; opacity: .5; }
+    select { padding-right: 34px; appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%); background-position: calc(100% - 17px) 52%, calc(100% - 12px) 52%; background-size: 5px 5px; background-repeat: no-repeat; }
+    .segmented { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface-3); }
+    .segmented button { min-height: 34px; border: 0; border-radius: 6px; background: transparent; color: var(--ink-2); padding: 0 12px; font-size: .82rem; }
+    .segmented button:hover { background: rgba(255,255,255,.6); color: var(--ink); }
+    .segmented button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(15,28,42,.1), 0 0 0 1px rgba(15,28,42,.04); }
+
+    .panel { min-width: 0; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 24px; margin: 0 2px 16px; }
+    .section-head h2 { margin: 0; font-size: 1.25rem; line-height: 1.3; font-weight: 720; letter-spacing: -.015em; }
+    .section-head p { max-width: 72ch; margin: 6px 0 0; color: var(--ink-2); font-size: .9rem; line-height: 1.6; text-wrap: pretty; }
+
+    /* Replay stage */
+    .replay { overflow: hidden; }
+    .primary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); min-width: 0; }
+    .primary-grid > * { min-width: 0; }
+    .primary-grid > * + * { border-left: 1px solid var(--rule); }
+    .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 8px 10px 8px 18px; border-bottom: 1px solid var(--rule); }
+    .panel-heading h3 { margin: 0; font-size: .95rem; font-weight: 680; white-space: nowrap; }
+    .stage, .load-media, .structural-canvas-wrap, .structural-media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+    .stage { background: var(--stage-dark); }
+    .stage img, .stage video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+    .stage[data-view="pickup"] img, .stage[data-view="pickup"] video { object-position: 50% 12%; }
+    .stage[data-view="placement"] img, .stage[data-view="placement"] video { object-position: 50% 30%; }
+    .stage-chip { position: absolute; z-index: 2; display: grid; gap: 1px; padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,.94); box-shadow: 0 1px 2px rgba(0,0,0,.12), 0 6px 18px -8px rgba(0,0,0,.35); color: var(--ink); line-height: 1.3; backdrop-filter: blur(8px); }
+    .phase-chip { top: 14px; left: 14px; max-width: calc(100% - 200px); }
+    .phase-chip .chip-kicker { color: var(--accent-ink); font-size: .75rem; font-weight: 700; }
+    .phase-chip strong { overflow: hidden; font-size: .95rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+    .target-callout { top: 14px; right: 14px; text-align: right; }
+    .target-callout span { color: var(--ink-3); font-size: .75rem; font-weight: 600; }
+    .target-callout strong { color: var(--target); font-size: 1.05rem; font-weight: 750; font-variant-numeric: tabular-nums; }
+    .error { position: absolute; z-index: 3; inset: auto 14px 14px; margin: 0; border: 1px solid #e6b4ae; border-radius: 8px; background: rgba(253,240,239,.97); color: #8f1f16; padding: 10px 13px; font-size: .85rem; }
+
+    .load-media { background: #e8eef3; }
     .load-media video { display: block; width: 100%; height: 100%; object-fit: contain; }
-    .load-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 18px; background: #e9eff4; color: var(--muted); text-align: center; font-size: .7rem; line-height: 1.5; }
-    .load-clock { display: block; padding: 8px 12px 0; color: #506478; font: .62rem/1.4 ui-monospace, monospace; }
+    .load-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 18px; background: var(--surface-3); color: var(--ink-3); text-align: center; font-size: .85rem; line-height: 1.5; }
     #jointPane { position: relative; }
-    .load-caption { position: absolute; inset: auto 0 0; padding: 8px 12px; background: rgba(255,255,255,.96); }
-    .load-caption .load-clock { padding: 0; }
-    .load-caption p { margin: 4px 0 0; color: #506478; font-size: .65rem; line-height: 1.45; }
-    .structural-media { position: relative; aspect-ratio: 4 / 3; margin: 0; border: 1px solid #d4dee8; background: #e9eff4; overflow: hidden; }
-    .structural-media img { display: block; width: 100%; height: 100%; object-fit: contain; }
-    .structural-media figcaption { position: absolute; inset: auto 0 0; padding: 7px 9px; background: rgba(255,255,255,.96); color: #263e53; font-size: .62rem; }
-    .structural-summary { display: grid; grid-template-columns: 1fr 1fr; margin-top: 8px; border-top: 1px solid #d4dee8; border-left: 1px solid #d4dee8; }
-    .structural-summary div { min-width: 0; padding: 7px; border-right: 1px solid #d4dee8; border-bottom: 1px solid #d4dee8; }
-    .structural-summary dt { margin: 0 0 4px; color: #506478; font-size: .58rem; }
-    .structural-summary dd { margin: 0; overflow-wrap: anywhere; color: #263e53; font: 700 .68rem/1.35 ui-monospace, monospace; }
-    .structural-context { margin: 8px 12px 0 !important; color: #465e73 !important; }
-    .structural-assumptions { margin: 7px 0 0; padding-left: 17px; color: #506478; font-size: .62rem; line-height: 1.5; }
-    .structural-assumptions li + li { margin-top: 3px; }
-    #structuralSceneTitle { margin: 0 0 12px; font-size: .78rem; color: #263e53; }
-    .structural-scene-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 12px; }
-    .structural-scene-controls label { display: grid; gap: 6px; color: #506478; font-size: .72rem; }
-    .structural-scene-controls select { min-width: 0; min-height: 44px; border: 1px solid #d4dee8; border-radius: 6px; background: #f4f7fa; color: #263e53; padding: 6px 8px; }
-    .structural-canvas-wrap { position: relative; aspect-ratio: 4 / 3; border: 1px solid #a2b3c1; background: linear-gradient(180deg,#a8bbc7 0%,#8fa6b5 47%,#738c9e 100%); overflow: hidden; }
+    .load-caption { position: absolute; inset: auto 0 0; padding: 8px 14px; background: rgba(255,255,255,.94); border-top: 1px solid var(--rule); }
+    .load-clock { display: block; color: var(--ink-2); font-size: .78rem; font-variant-numeric: tabular-nums; }
+    .load-caption p { margin: 2px 0 0; color: var(--ink-3); font-size: .78rem; line-height: 1.45; }
+    .structural-canvas-wrap { background: linear-gradient(180deg,#a8bbc7 0%,#8fa6b5 47%,#738c9e 100%); }
     .structural-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
-    .structural-wrench-overlay, .joint-load-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
-    .structural-overlay { position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; gap: 8px; padding: 7px 9px; background: rgba(255,255,255,.96); color: #263e53; font: .58rem/1.35 ui-monospace, monospace; }
-    .stress-ramp { height: 8px; margin: 10px 0 0; border-radius: 3px; background: linear-gradient(90deg,#143f94,#0dc7e0,#4cdb61,#ffc41f,#ed1f1f); }
-    .structural-scene-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 8px; margin: 8px 0 0; color: #506478; font: .68rem/1.5 ui-monospace, monospace; }
-    .joint-load-card { min-width: 0; margin: 0; border: 0; border-left: 1px solid var(--line); background: #f8fafc; padding: 16px; }
-    .joint-load-card-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; border-bottom: 1px solid #d4dee8; padding-bottom: 7px; }
-    #jointLoadLegend { color: #263e53; font: 700 .72rem/1.5 ui-monospace, monospace; }
-    .joint-load-toggle { display: inline-flex; min-height: 44px; align-items: center; color: #263e53; font-size: .72rem; }
-    .joint-load-toggle input { width: 18px; height: 18px; margin: 0; accent-color: var(--cyan); }
-    .joint-load-note { margin: 7px 0 0 !important; color: #506478 !important; font-size: .7rem !important; line-height: 1.45 !important; }
-    .joint-load-summary { min-width: 0; margin-top: 8px; }
-    .joint-load-status { margin: 0 0 6px; color: #506478; font-size: .72rem; line-height: 1.5; }
-    .joint-load-top { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
-    .joint-load-top > * { min-width: 0; min-height: 44px; border: 1px solid #b7c7d5; border-left: 2px solid var(--amber); background: #f4f7fa; padding: 7px 8px; overflow-wrap: anywhere; color: #263e53; font: 650 .7rem/1.45 ui-monospace, monospace; text-align: left; }
-    .joint-load-summary details { margin-top: 8px; border: 1px solid #d4dee8; }
-    .joint-load-summary summary { padding: 9px; font-size: .72rem; }
+    .structural-wrench-overlay, .joint-load-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; font-family: var(--font); font-variant-numeric: tabular-nums; }
+    .structural-overlay { position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; gap: 12px; padding: 7px 14px; background: rgba(255,255,255,.92); border-top: 1px solid rgba(15,28,42,.08); color: var(--ink-2); font-size: .78rem; font-variant-numeric: tabular-nums; }
+    .structural-overlay output { white-space: nowrap; }
+    .structural-overlay output:last-child { color: var(--ink); font-weight: 650; text-align: right; }
+    .structural-scene-error { margin: 14px; border: 1px solid #e6b4ae; border-radius: 8px; background: var(--alert-soft); color: #8f1f16; padding: 11px 13px; font-size: .85rem; line-height: 1.5; }
+    .structural-media { margin: 0; background: #e8eef3; }
+    .structural-media img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .structural-media figcaption { position: absolute; inset: auto 0 0; padding: 7px 12px; background: rgba(255,255,255,.94); color: var(--ink-2); font-size: .78rem; }
+    #structuralLegacy { padding: 0 0 14px; }
+    #structuralLegacy > p, .structural-context { margin: 10px 16px 0; color: var(--ink-2); font-size: .82rem; line-height: 1.55; }
+    #structuralLegacy .structural-view-tabs { margin: 10px 16px 0; }
+    #structuralLegacy .structural-summary, #structuralLegacy .structural-assumptions { margin-right: 16px; margin-left: 16px; }
+
+    /* Transport */
+    .transport { display: grid; gap: 14px; padding: 16px 18px 18px; border-top: 1px solid var(--rule); background: var(--surface-2); }
+    .transport-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+    .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    button.primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 112px; border-color: var(--accent); background: var(--accent); color: #ffffff; }
+    button.primary:hover { border-color: var(--accent-ink); background: var(--accent-ink); }
+    button.primary svg { width: 14px; height: 14px; fill: currentColor; }
+    button.primary .icon-pause, button.primary.is-playing .icon-play { display: none; }
+    button.primary.is-playing .icon-pause { display: block; }
+    .clock { display: flex; align-items: baseline; gap: 6px; margin-left: 6px; font-variant-numeric: tabular-nums; }
+    .clock strong { font-size: 1.15rem; font-weight: 720; letter-spacing: -.01em; }
+    .clock span { color: var(--ink-3); font-size: .85rem; }
+    .run-status { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); font-size: .85rem; font-weight: 600; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #8696a7; }
+    .dot.playing { background: var(--accent); box-shadow: 0 0 0 4px rgba(11,107,123,.14); }
+    .dot.finished { background: var(--ok); box-shadow: 0 0 0 4px rgba(20,108,67,.14); }
+    .dot.failed { background: var(--alert); box-shadow: 0 0 0 4px rgba(180,35,24,.12); }
+    .transport-end { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-left: auto; }
+    .speed-field { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-3); font-size: .82rem; font-weight: 600; }
+    .camera-readout { color: var(--ink-3); font-size: .78rem; font-variant-numeric: tabular-nums; }
+    .scrub { position: relative; height: 24px; }
+    .scrub-ticks { position: absolute; z-index: 1; top: 50%; right: 9px; left: 9px; height: 6px; margin-top: -3px; pointer-events: none; }
+    .scrub-ticks i { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--surface-2); }
+    #scrubber { --progress: 0%; position: absolute; inset: 0; width: 100%; height: 24px; margin: 0; background: transparent; cursor: pointer; -webkit-appearance: none; appearance: none; }
+    #scrubber:disabled { cursor: default; opacity: .55; }
+    #scrubber::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: linear-gradient(90deg, var(--accent) var(--progress), var(--rule-strong) var(--progress)); }
+    #scrubber::-moz-range-track { height: 6px; border-radius: 999px; background: var(--rule-strong); }
+    #scrubber::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--accent); }
+    #scrubber::-webkit-slider-thumb { width: 18px; height: 18px; margin-top: -6px; border: 2px solid var(--accent); border-radius: 50%; background: #ffffff; box-shadow: 0 1px 3px rgba(15,28,42,.25); -webkit-appearance: none; appearance: none; }
+    #scrubber::-moz-range-thumb { width: 14px; height: 14px; border: 2px solid var(--accent); border-radius: 50%; background: #ffffff; box-shadow: 0 1px 3px rgba(15,28,42,.25); }
+    #scrubber:focus-visible { outline: none; }
+    #scrubber:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px rgba(11,107,123,.25); }
+    #scrubber:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px rgba(11,107,123,.25); }
+    .phase-track { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+    .timeline-step { display: grid; justify-items: start; gap: 2px; width: 100%; min-height: 50px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); padding: 6px 10px; color: var(--ink-3); text-align: left; font-size: .82rem; font-weight: 600; line-height: 1.3; }
+    .timeline-step:hover:not(:disabled) { border-color: #9fb0c0; color: var(--ink); }
+    .timeline-step:disabled { cursor: not-allowed; opacity: .45; }
+    .step-index { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-3); font-size: .72rem; font-weight: 700; letter-spacing: .04em; }
+    .step-index::before { content: ""; width: 8px; height: 8px; border: 1.5px solid var(--rule-strong); border-radius: 50%; background: var(--surface); }
+    .timeline-step.done { color: var(--ink-2); }
+    .timeline-step.done .step-index::before { border-color: var(--ok); background: var(--ok); }
+    .timeline-step.active { border-color: rgba(11,107,123,.28); background: var(--accent-soft); color: var(--accent-ink); }
+    .timeline-step.active .step-index { color: var(--accent-ink); }
+    .timeline-step.active .step-index::before { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 3px rgba(11,107,123,.18); }
+    .step-label { overflow: hidden; max-width: 100%; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* Telemetry */
+    .telemetry { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--rule); }
+    .telemetry > * { min-width: 0; padding: 16px 18px 18px; }
+    .telemetry > * + * { border-left: 1px solid var(--rule); }
+    .cell-title { margin: 0 0 10px; font-size: .9rem; font-weight: 700; }
+    .metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 16px; margin: 0; }
+    .metric { min-width: 0; }
+    .metric dt { margin: 0 0 2px; color: var(--ink-3); font-size: .78rem; font-weight: 600; }
+    .metric dd { margin: 0; overflow-wrap: anywhere; font-size: 1.05rem; font-weight: 700; line-height: 1.35; font-variant-numeric: tabular-nums; }
+    .metric dd.good { color: var(--ok); }
+    .metric dd.warn { color: var(--target); }
+    .checks-panel { min-width: 0; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--rule); }
+    .checks-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .checks-head h3 { margin: 0; font-size: .9rem; font-weight: 700; }
+    .stress-settings-head { display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 10px; }
+    .stress-settings-head .cell-title { margin: 0; }
+    .cell-note { margin: 0; color: var(--ink-2); font-size: .875rem; line-height: 1.6; }
+    .checks-head span { color: var(--ink-3); font-size: .78rem; }
+    .checklist { display: grid; margin: 0; padding: 0; list-style: none; }
+    .check { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 32px; font-size: .875rem; }
+    .check > span:first-child { display: inline-flex; align-items: center; gap: 9px; color: var(--ink-2); }
+    .check > span:first-child::before { content: ""; display: inline-grid; flex: none; place-items: center; width: 16px; height: 16px; border: 1.5px solid var(--rule-strong); border-radius: 50%; color: #ffffff; font-size: 10px; font-weight: 800; line-height: 1; }
+    .check.is-pass > span:first-child { color: var(--ink); }
+    .check.is-pass > span:first-child::before { content: "✓"; border-color: var(--ok); background: var(--ok); }
+    .check-state { color: var(--ink-3); font-size: .78rem; font-weight: 650; }
+    .check-state.pass { color: var(--ok); }
+    .help { margin: 0; padding: 12px 18px; border-top: 1px solid var(--rule); background: var(--surface-2); color: var(--ink-3); font-size: .8rem; line-height: 1.55; }
+    .help kbd { display: inline-block; min-width: 20px; margin: 0 1px; padding: 0 5px; border: 1px solid var(--rule-strong); border-bottom-width: 2px; border-radius: 4px; background: var(--surface); color: var(--ink-2); font: 600 .72rem/1.5 var(--font); text-align: center; }
+
+    /* Sensors */
+    .sensor-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .sensor-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; min-width: 0; padding: 14px; transition: border-color .18s, box-shadow .18s; }
+    .sensor-row.expanded { grid-column: 1 / -1; border-color: rgba(11,107,123,.4); }
+    .sensor-row-header { grid-column: 1 / -1; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+    .sensor-row-header h3 { margin: 0; font-size: .95rem; font-weight: 700; }
+    .sensor-row-header p { margin: 3px 0 0; color: var(--ink-3); font-size: .75rem; line-height: 1.45; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    .sensor-row-header button { flex: none; min-height: 34px; padding: 0 10px; font-size: .78rem; }
+    .sensor-media { position: relative; min-width: 0; margin: 0; overflow: hidden; border-radius: 6px; background: var(--surface-3); cursor: zoom-in; }
+    .sensor-row.expanded .sensor-media { cursor: zoom-out; }
+    .sensor-media img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; background: var(--surface-3); }
+    .sensor-row.expanded .sensor-media img { height: clamp(260px, 31vw, 520px); aspect-ratio: auto; }
+    .sensor-media figcaption { position: absolute; inset: auto auto 8px 8px; display: flex; gap: 6px; }
+    .sensor-media figcaption span { padding: 2px 7px; border-radius: 999px; background: rgba(15,28,42,.72); color: #ffffff; font-size: .72rem; font-weight: 600; }
+    .sensor-media figcaption span:last-child { background: rgba(255,255,255,.88); color: var(--ink-2); }
+    .sensor-empty { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; background: var(--surface-3); color: var(--ink-3); text-align: center; font-size: .8rem; line-height: 1.5; }
+    .depth-legend { position: absolute; inset: 8px 8px auto auto; display: flex; align-items: center; gap: 6px; border-radius: 999px; background: rgba(255,255,255,.92); padding: 3px 8px; color: var(--ink-2); font-size: .68rem; font-variant-numeric: tabular-nums; }
+    .depth-ramp { width: 56px; height: 6px; border-radius: 3px; background: linear-gradient(90deg,#fff,#737373,#080808); box-shadow: inset 0 0 0 1px rgba(15,28,42,.15); }
+    .invalid-swatch { display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: rgb(230,55,135); }
+
+    /* Stress analysis */
+    .stress-note { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 16px 18px; color: var(--ink-2); font-size: .9rem; }
+    .stress-note p { margin: 0; }
+    .stress-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+    .stress-grid > [hidden] + *, .stress-grid > :only-child { grid-column: 1 / -1; }
+    .stress-settings { min-width: 0; }
+    .structural-scene-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 14px; }
+    .structural-scene-controls label { display: grid; gap: 6px; color: var(--ink-3); font-size: .78rem; font-weight: 600; }
+    .structural-scene-controls select { width: 100%; min-width: 0; }
+    .structural-view-tabs { margin: 0 0 14px; }
+    .stress-ramp { height: 8px; margin: 4px 0 0; border-radius: 4px; background: linear-gradient(90deg,#143f94,#0dc7e0,#4cdb61,#ffc41f,#ed1f1f); }
+    .structural-scene-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 8px; margin: 8px 0 0; color: var(--ink-3); font-size: .78rem; font-variant-numeric: tabular-nums; }
+    .structural-support, .structural-explain { margin-top: 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface-2); }
+    details > summary { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; color: var(--ink); cursor: pointer; font-size: .875rem; font-weight: 650; list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    details > summary::before { content: ""; width: 7px; height: 7px; border-right: 1.5px solid var(--ink-3); border-bottom: 1.5px solid var(--ink-3); transform: rotate(-45deg); transition: transform .15s; }
+    details[open] > summary::before { transform: rotate(45deg); }
+    .structural-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin: 0 14px 12px; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--rule); }
+    .structural-summary div { min-width: 0; padding: 8px 10px; background: var(--surface); }
+    .structural-summary dt { margin: 0 0 3px; color: var(--ink-3); font-size: .75rem; }
+    .structural-summary dd { margin: 0; overflow-wrap: anywhere; color: var(--ink); font-size: .85rem; font-weight: 650; font-variant-numeric: tabular-nums; }
+    .structural-summary dd.good { color: var(--ok); } .structural-summary dd.warn { color: var(--target); }
+    .structural-support .structural-context { margin: 0 14px 10px; }
+    .structural-assumptions { margin: 0; padding: 0 14px 14px 32px; color: var(--ink-2); font-size: .82rem; line-height: 1.55; }
+    .structural-assumptions li + li { margin-top: 4px; }
+    .joint-load-card { min-width: 0; margin: 0; padding: 18px; border-left: 1px solid var(--rule); background: var(--surface-2); }
+    .structural-diagnostics[hidden] + .joint-load-card { border-left: 0; }
+    .joint-load-card-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+    #jointLoadLegend { color: var(--ink); font-size: .9rem; font-weight: 700; }
+    .joint-load-toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; color: var(--ink-2); font-size: .85rem; cursor: pointer; }
+    .joint-load-toggle input { width: 18px; height: 18px; margin: 0; accent-color: var(--accent); }
+    .joint-load-note { margin: 10px 0 0; color: var(--ink-3); font-size: .82rem; line-height: 1.55; }
+    .joint-load-summary { min-width: 0; margin-top: 12px; }
+    .joint-load-status { margin: 0 0 8px; color: var(--ink-2); font-size: .85rem; line-height: 1.5; font-variant-numeric: tabular-nums; }
+    .joint-load-top { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .joint-load-top > * { min-width: 0; min-height: 48px; border: 1px solid var(--rule); border-left: 3px solid var(--target); border-radius: 6px; background: var(--surface); padding: 6px 10px; overflow-wrap: anywhere; color: var(--ink); font-size: .82rem; font-weight: 650; line-height: 1.4; font-variant-numeric: tabular-nums; text-align: left; }
+    .joint-load-summary details { margin-top: 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); }
     .joint-load-table { width: 100%; min-width: 0; overflow-x: auto; }
-    .joint-load-table table { width: 100%; min-width: 540px; border-collapse: collapse; color: #354f65; font: .59rem/1.4 ui-monospace, monospace; }
-    .joint-load-table th, .joint-load-table td { padding: 7px 8px; border-top: 1px solid #d4dee8; text-align: right; white-space: nowrap; }
-    .joint-load-table th:first-child, .joint-load-table td:first-child { position: sticky; left: 0; min-width: 150px; background: #f8fafc; text-align: left; }
-    .structural-diagnostics { width: 100%; min-width: 0; padding: 14px; }
-    .structural-support { margin: 8px 0 0; border: 1px solid #d4dee8; background: #f8fafc; }
-    .structural-support .structural-summary { margin: 0 12px 10px; }
-    .structural-support .structural-assumptions { margin: 7px 12px 12px; }
-    .structural-diagnostics .structural-diagnostic-summary { margin: 8px 0; border: 1px solid #d4dee8; background: #f3f7fb; color: #354f65; padding: 9px; font-size: .66rem; line-height: 1.5; }
-    .structural-load-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 8px 0; }
-    .structural-load-metric { min-width: 0; border-left: 2px solid var(--cyan); background: #f4f7fa; padding: 8px; }
-    .structural-load-metric dt, .structural-load-metric small { display: block; color: #506478; font-size: .58rem; line-height: 1.35; }
-    .structural-load-metric dd { margin: 4px 0; overflow-wrap: anywhere; color: #172b3e; font: 720 .76rem/1.3 ui-monospace, monospace; }
-    .structural-load-metric strong { display: block; margin-top: 4px; overflow-wrap: anywhere; color: #172b3e; font: 720 .76rem/1.3 ui-monospace, monospace; }
-    .structural-load-metric .description { margin: 5px 0 0; color: #506478; font-size: .58rem; line-height: 1.45; }
-    .structural-wrench-table { width: 100%; min-width: 0; max-width: 100%; overflow-x: auto; border: 1px solid #d4dee8; background: #ffffff; }
-    .structural-wrench-table table { width: 100%; min-width: 660px; border-collapse: collapse; color: #354f65; font: .6rem/1.4 ui-monospace, monospace; }
-    .structural-wrench-table caption { padding: 8px; color: #506478; text-align: left; }
-    .structural-wrench-table th, .structural-wrench-table td { padding: 7px 8px; border-top: 1px solid #d4dee8; border-right: 1px solid #d4dee8; text-align: right; white-space: nowrap; }
-    .structural-wrench-table th:first-child, .structural-wrench-table td:first-child { position: sticky; left: 0; min-width: 132px; background: #f8fafc; text-align: left; }
-    .structural-hot-parts { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
-    .structural-hot-parts button { min-height: 44px; padding: 7px 9px; font-size: .62rem; }
-    .structural-mechanism-controls { display: grid; grid-template-columns: minmax(180px, 360px); gap: 7px; margin-bottom: 8px; }
-    .structural-mechanism-controls label { display: grid; align-content: start; gap: 4px; min-width: 0; }
+    .joint-load-table table, .structural-wrench-table table { width: 100%; border-collapse: collapse; color: var(--ink-2); font-size: .8rem; line-height: 1.4; font-variant-numeric: tabular-nums; }
+    .joint-load-table table { min-width: 460px; }
+    .joint-load-table th, .joint-load-table td, .structural-wrench-table th, .structural-wrench-table td { padding: 7px 10px; border-top: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+    .joint-load-table thead th, .structural-wrench-table thead th { color: var(--ink-3); font-weight: 600; }
+    .joint-load-table th:first-child, .joint-load-table td:first-child, .structural-wrench-table th:first-child, .structural-wrench-table td:first-child { position: sticky; left: 0; min-width: 140px; background: var(--surface); color: var(--ink); text-align: left; }
+    .structural-diagnostics { width: 100%; min-width: 0; padding: 18px; }
+    .structural-mechanism-controls { display: grid; grid-template-columns: minmax(180px, 360px); gap: 7px; margin-bottom: 10px; }
+    .structural-mechanism-controls label { display: grid; gap: 6px; min-width: 0; color: var(--ink-3); font-size: .78rem; font-weight: 600; }
     .structural-mechanism-controls select { width: 100%; min-width: 0; }
-    .structural-explain { margin-top: 8px; border: 1px solid #d4dee8; background: #f8fafc; }
-    .structural-explain summary { padding: 10px; font-size: .66rem; }
-    .structural-explain p { margin: 0; padding: 0 10px 9px; color: #506478; font-size: .62rem; line-height: 1.55; }
-    .structural-diagnostics .structural-axis-readout { margin: 8px 0; overflow-wrap: anywhere; color: #506478; font: .6rem/1.5 ui-monospace, monospace; }
-    .structural-scene-error { margin: 9px 0; border: 1px solid #d5a09b; background: #fff1f0; color: #9f231b; padding: 11px; font-size: .7rem; line-height: 1.5; }
-    aside { display: grid; grid-template-columns: .9fr 1.25fr 1.15fr; gap: 14px; align-items: start; }
-    aside > .panel:last-child { grid-column: 1 / -1; }
-    .section { padding: 15px; }
-    .section-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
-    .section h2 { margin: 0; font-size: .82rem; letter-spacing: .02em; }
-    .section-kicker { color: var(--muted); font: .65rem/1 ui-monospace, monospace; }
-    .mission { border-left: 3px solid var(--amber); background: #fff8e8; padding: 12px; }
-    .mission strong { display: block; color: var(--amber); font-size: .78rem; }
-    .mission p { margin: 6px 0 0; color: #354f65; font-size: .78rem; line-height: 1.55; }
-    .metrics { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-    .metric { min-width: 0; padding: 11px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .metric dt { margin: 0 0 6px; color: var(--muted); font-size: .66rem; font-weight: 650; }
-    .metric dd { margin: 0; overflow-wrap: anywhere; font: 720 .87rem/1.35 ui-monospace, monospace; }
-    .metric dd.good { color: var(--green); }
-    .metric dd.warn { color: var(--amber); }
-    .checklist { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
-    .check { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--panel); padding: 10px 11px; font-size: .74rem; }
-    .check-state { color: #506478; font: 700 .68rem/1 ui-monospace, monospace; }
-    .check-state.pass { color: var(--green); }
-    details { border-top: 1px solid var(--line); }
-    summary { padding: 13px 15px; color: #354f65; cursor: pointer; font-size: .76rem; font-weight: 700; }
-    pre { max-height: 320px; margin: 0 14px 14px; overflow: auto; border: 1px solid #d4dee8; background: #f5f7fa; color: #354f65; padding: 12px; font: 11px/1.55 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
-    .help { margin: 10px 0 0; color: var(--muted); font-size: .7rem; line-height: 1.5; }
-    .panel-heading { min-height: 66px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; background: var(--graphite); border-bottom: 1px solid var(--line); }
-    .panel-heading h2 { margin: 0; font-size: .85rem; white-space: nowrap; }
-    .panel-heading .diagnostic-tabs { display: flex; margin: 0; gap: 4px; }
-    .panel-heading .diagnostic-tabs button { min-height: 44px; font-size: .7rem; }
-    .analysis-controls { display: grid; grid-template-columns: 1fr 1fr; }
-    .stress-settings { min-width: 0; padding: 16px; }
-    .analysis-controls .structural-view-tabs { margin: 8px 0; }
-    .analysis-controls summary { min-height: 44px; display: list-item; font-size: .72rem; }
+    .structural-diagnostics .structural-diagnostic-summary { margin: 10px 0; border-radius: 8px; background: var(--surface-3); color: var(--ink-2); padding: 10px 12px; font-size: .85rem; line-height: 1.55; }
+    .structural-hot-parts { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+    .structural-hot-parts button { min-height: 34px; padding: 0 12px; border-radius: 999px; font-size: .8rem; }
+    .structural-load-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 10px 0; }
+    .structural-load-metric { min-width: 0; border: 1px solid var(--rule); border-top: 3px solid var(--accent); border-radius: 6px; background: var(--surface); padding: 10px 12px; }
+    .structural-load-metric dt, .structural-load-metric small { display: block; color: var(--ink-3); font-size: .75rem; line-height: 1.4; }
+    .structural-load-metric dd { margin: 4px 0; overflow-wrap: anywhere; color: var(--ink); font-size: 1rem; font-weight: 720; line-height: 1.3; font-variant-numeric: tabular-nums; }
+    .structural-explain p { margin: 0; padding: 0 14px 10px; color: var(--ink-2); font-size: .82rem; line-height: 1.6; }
+    .structural-diagnostics .structural-axis-readout { margin: 10px 0; overflow-wrap: anywhere; color: var(--ink-3); font-size: .78rem; line-height: 1.5; font-variant-numeric: tabular-nums; }
+    .structural-wrench-table { width: 100%; min-width: 0; max-width: 100%; margin: 0 0 12px; overflow-x: auto; }
+    .structural-wrench-table table { min-width: 640px; }
+    .structural-wrench-table caption { padding: 0 14px 8px; color: var(--ink-3); text-align: left; }
+
+    /* Improvement study */
     .improvement-study { overflow: hidden; }
-    .improvement-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 20px; border-bottom: 1px solid var(--line); background: linear-gradient(135deg,#ffffff 0%,#f2f8fa 100%); }
-    .improvement-header h2 { margin: 0; font-size: clamp(1.15rem,2vw,1.55rem); letter-spacing: -.025em; }
-    .improvement-header p { max-width: 780px; margin: 7px 0 0; color: var(--muted); font-size: .78rem; line-height: 1.55; }
-    .assessment-badge { flex: none; border: 1px solid #aebdca; background: #ffffff; color: #465e73; padding: 9px 12px; font-size: .72rem; font-weight: 750; }
-    .assessment-badge.passed { border-color: #8fc4aa; background: #edf8f2; color: var(--green); }
-    .assessment-badge.partial { border-color: #d6ba86; background: #fff8e8; color: var(--amber); }
-    .assessment-badge.incomplete, .assessment-badge.is-error { border-color: #d7aaa5; background: #fff3f2; color: var(--red); }
-    .improvement-state { margin: 16px 20px; border-left: 3px solid var(--cyan); background: #f2f8fa; color: #354f65; padding: 11px 13px; font-size: .76rem; line-height: 1.55; }
-    .improvement-state.is-error { border-left-color: var(--red); background: #fff3f2; color: #8f2b23; }
-    .study-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; padding: 0 20px 20px; }
-    .study-card { min-width: 0; border: 1px solid var(--line); background: #ffffff; padding: 15px; }
-    .study-card h3 { margin: 0; color: #263e53; font-size: .85rem; }
-    .study-card > p { margin: 6px 0 12px; color: var(--muted); font-size: .68rem; line-height: 1.5; }
-    .study-metrics { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; margin: 0 0 12px; }
-    .study-metric { min-width: 0; background: #f4f7fa; padding: 9px; }
-    .study-metric dt { color: var(--muted); font-size: .6rem; line-height: 1.35; }
-    .study-metric dd { margin: 5px 0 0; overflow-wrap: anywhere; color: #263e53; font: 720 .76rem/1.4 ui-monospace,monospace; }
-    .study-table-wrap { max-width: 100%; overflow-x: auto; border: 1px solid var(--line); }
-    .study-table { width: 100%; min-width: 410px; border-collapse: collapse; color: #354f65; font-size: .65rem; line-height: 1.45; }
-    .study-table caption { padding: 8px; color: var(--muted); text-align: left; }
-    .study-table th, .study-table td { padding: 8px; border-top: 1px solid var(--line); text-align: right; white-space: nowrap; }
-    .study-table th:first-child, .study-table td:first-child { text-align: left; white-space: normal; }
-    .study-note { margin: 10px 0 0 !important; border-left: 2px solid #9fb2c1; padding-left: 9px; color: #465e73 !important; }
-    .evidence-videos { padding: 0 20px 20px; }
-    .evidence-videos h3 { margin: 0 0 5px; font-size: .88rem; }
-    .evidence-videos > p { margin: 0 0 11px; color: var(--muted); font-size: .68rem; line-height: 1.5; }
-    .evidence-video-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
-    .evidence-video { min-width: 0; margin: 0; border: 1px solid var(--line); background: #f4f7fa; }
-    .evidence-video video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #e9eff4; object-fit: contain; }
-    .evidence-video figcaption { padding: 10px 12px; color: #354f65; font-size: .68rem; line-height: 1.5; }
+    .improvement-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px 28px; padding: 24px 24px 20px; border-bottom: 1px solid var(--rule); }
+    .improvement-header h2 { margin: 0; font-size: 1.25rem; line-height: 1.3; font-weight: 720; letter-spacing: -.015em; }
+    .improvement-header p { max-width: 72ch; margin: 6px 0 0; color: var(--ink-2); font-size: .9rem; line-height: 1.6; }
+    .assessment { display: grid; justify-items: end; gap: 10px; flex: none; }
+    .assessment-badge { display: inline-flex; align-items: center; min-height: 32px; border: 1px solid var(--rule-strong); border-radius: 999px; background: var(--surface); color: var(--ink-2); padding: 0 14px; font-size: .85rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .assessment-badge.passed { border-color: #9dcbb3; background: var(--ok-soft); color: var(--ok); }
+    .assessment-badge.partial { border-color: #e2c48f; background: #fdf6e8; color: var(--target); }
+    .assessment-badge.incomplete, .assessment-badge.is-error { border-color: #e6b4ae; background: var(--alert-soft); color: var(--alert); }
+    .gate-list { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+    .gate-list li { display: flex; align-items: center; justify-content: flex-end; gap: 8px; color: var(--ink-2); font-size: .8rem; }
+    .gate-list li::after { content: ""; display: inline-grid; flex: none; place-items: center; width: 15px; height: 15px; border: 1.5px solid var(--rule-strong); border-radius: 50%; color: #ffffff; font-size: 9px; font-weight: 800; line-height: 1; }
+    .gate-list li.is-met::after { content: "✓"; border-color: var(--ok); background: var(--ok); }
+    .gate-list li:not(.is-met) { color: var(--ink); font-weight: 600; }
+    .gate-list li:not(.is-met)::after { content: "✕"; border-color: var(--target); background: var(--target); }
+    .improvement-state { margin: 18px 24px 0; border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; background: var(--surface-2); color: var(--ink-2); padding: 10px 14px; font-size: .875rem; line-height: 1.55; }
+    .improvement-state.is-error { border-left-color: var(--alert); background: var(--alert-soft); color: #8f1f16; }
+    .study-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding: 18px 24px 24px; }
+    .study-card { min-width: 0; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); padding: 18px; }
+    .study-card h3 { margin: 0; font-size: 1rem; font-weight: 700; }
+    .study-card > p { margin: 4px 0 14px; color: var(--ink-3); font-size: .82rem; line-height: 1.55; }
+    .study-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 0 12px; }
+    .study-metric { min-width: 0; border-radius: 6px; background: var(--surface-2); padding: 10px 12px; }
+    .study-metric dt { color: var(--ink-3); font-size: .75rem; line-height: 1.4; }
+    .study-metric dd { margin: 3px 0 0; overflow-wrap: anywhere; color: var(--ink); font-size: .95rem; font-weight: 700; line-height: 1.35; font-variant-numeric: tabular-nums; }
+    .study-table-wrap { max-width: 100%; margin: 0 0 12px; overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; }
+    .study-table { width: 100%; min-width: 300px; border-collapse: collapse; color: var(--ink-2); font-size: .8rem; line-height: 1.45; font-variant-numeric: tabular-nums; }
+    .study-table caption { padding: 8px 12px; color: var(--ink-3); text-align: left; }
+    .study-table th, .study-table td { padding: 7px 12px; border-top: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+    .study-table thead th { color: var(--ink-3); font-weight: 600; }
+    .study-table th:first-child, .study-table td:first-child { color: var(--ink); text-align: left; white-space: normal; }
+    .study-note { margin: 4px 0 0; border-left: 2px solid var(--rule-strong); padding-left: 10px; color: var(--ink-3); font-size: .8rem; line-height: 1.6; }
+    .evidence-videos { padding: 0 24px 24px; }
+    .evidence-videos h3 { margin: 0; font-size: 1rem; font-weight: 700; }
+    .evidence-videos > p { margin: 4px 0 14px; color: var(--ink-3); font-size: .82rem; line-height: 1.55; }
+    .evidence-video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 16px; max-width: 1180px; }
+    .evidence-video { min-width: 0; margin: 0; overflow: hidden; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); }
+    .evidence-video video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; background: var(--stage-dark); object-fit: contain; }
+    .evidence-video figcaption { padding: 12px 14px; color: var(--ink); font-size: .875rem; line-height: 1.5; }
     .evidence-video figcaption strong, .evidence-video figcaption span { display: block; }
-    .evidence-video figcaption span { margin-top: 3px; color: var(--muted); }
-    .improvement-provenance { margin: 0 20px 20px; border: 1px solid var(--line); }
-    .improvement-provenance summary { border: 0; }
-    .provenance-list { display: grid; gap: 7px; margin: 0; padding: 0 14px 14px; list-style: none; color: #506478; font: .64rem/1.5 ui-monospace,monospace; }
+    .evidence-video figcaption span { margin-top: 2px; color: var(--ink-3); font-size: .8rem; }
+    .improvement-provenance { margin: 0 24px 24px; border: 1px solid var(--rule); border-radius: 8px; }
+    .provenance-list { display: grid; gap: 6px; margin: 0; padding: 0 14px 14px; list-style: none; color: var(--ink-3); font: .75rem/1.55 var(--mono); }
     .provenance-list li { overflow-wrap: anywhere; }
-    @media (max-width: 1100px) { .sensor-grid { grid-template-columns: 1fr; } }
-    @media (max-width: 880px) { .analysis-controls { grid-template-columns: 1fr; } .joint-load-card { border-left: 0; border-top: 1px solid var(--line); } }
-    @media (max-width: 680px) { .panel-heading { align-items: flex-start; flex-direction: column; } .toolbar .camera-readout { text-align: left; } .controls select { flex: 1; } }
-    @media (max-width: 1200px) { .structural-load-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 1050px) { .shell > header { align-items: flex-start; flex-direction: column; } .condition { justify-content: flex-start; } aside { grid-template-columns: 1fr 1fr; } aside .result-panel { grid-column: 1 / -1; } .study-grid { grid-template-columns: 1fr; } }
-    @media (max-width: 880px) { .primary-grid { grid-template-columns: 1fr; } .primary-grid .stage, .primary-grid .load-media, .primary-grid .structural-media, .primary-grid .structural-canvas-wrap { height: auto; aspect-ratio: 4 / 3; min-height: 0; } }
-    @media (max-width: 680px) { .shell { padding: 10px; } .stage { min-height: 0; } .target-callout { min-width: 128px; } .timeline-step { font-size: .6rem; } .toolbar { grid-template-columns: 1fr; } .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls label { justify-content: space-between; } .view-tabs { display: grid; grid-template-columns: repeat(3, 1fr); } .sensor-header { align-items: stretch; flex-direction: column; } .sensor-row { grid-template-columns: 1fr; } .sensor-row-header { grid-column: auto; } .sensor-media img, .sensor-row.expanded .sensor-media img { height: auto; aspect-ratio: 16 / 9; } aside { grid-template-columns: 1fr; } aside .result-panel, aside > .panel:last-child { grid-column: auto; } .improvement-header { flex-direction: column; padding: 16px; } .study-grid, .evidence-videos { padding-right: 16px; padding-left: 16px; } .evidence-video-grid { grid-template-columns: 1fr; } .improvement-state, .improvement-provenance { margin-right: 16px; margin-left: 16px; } }
-    @media (max-width: 680px) { .joint-load-top { grid-template-columns: 1fr; } }
-    @media (max-width: 680px) { .sensor-row.expanded .sensor-media { overflow-x: auto; } .sensor-row.expanded .sensor-media img { width: 640px; height: auto; max-width: none; aspect-ratio: auto; } }
-    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+
+    /* Raw state */
+    .raw-state summary { min-height: 52px; }
+    pre { max-height: 360px; margin: 0 14px 14px; overflow: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface-2); color: var(--ink-2); padding: 12px; font: 12px/1.55 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+
+    @media (max-width: 1240px) {
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .structural-load-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stress-grid { grid-template-columns: 1fr; }
+      .joint-load-card { border-top: 1px solid var(--rule); border-left: 0; }
+    }
+    @media (max-width: 1100px) {
+      .sensor-grid { grid-template-columns: 1fr; }
+      .study-grid { grid-template-columns: 1fr; }
+      .masthead { grid-template-columns: 1fr; align-items: start; }
+      .section-nav { justify-self: start; }
+    }
+    @media (max-width: 880px) {
+      .replay { display: flex; flex-direction: column; }
+      .primary-grid { display: contents; }
+      .viewport-panel { order: 1; }
+      .transport { order: 2; border-bottom: 1px solid var(--rule); }
+      #loadPanel { order: 3; border-left: 0; }
+      .telemetry { order: 4; grid-template-columns: 1fr; }
+      .telemetry > * + * { border-top: 1px solid var(--rule); border-left: 0; }
+      .help { order: 5; }
+      .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 680px) {
+      :root { font-size: 15px; }
+      .shell { padding: 18px 16px 40px; }
+      .layout { gap: 32px; }
+      .masthead { padding-bottom: 18px; }
+      .section-nav { width: 100%; overflow-x: auto; }
+      .section-nav a { flex: 1 0 auto; justify-content: center; padding: 0 12px; }
+      .panel-heading { flex-wrap: wrap; padding: 10px 12px 10px 14px; }
+      .phase-chip { top: 10px; left: 10px; max-width: calc(100% - 130px); padding: 6px 10px; }
+      .phase-chip strong { font-size: .85rem; }
+      .structural-overlay { flex-wrap: wrap; gap: 0 10px; padding: 6px 10px; font-size: .72rem; }
+      .load-caption p { display: none; }
+      .target-callout { top: 10px; right: 10px; padding: 6px 10px; }
+      .transport { padding: 14px; }
+      .transport-row { gap: 10px; }
+      .controls { width: 100%; display: grid; grid-template-columns: 1.4fr 1fr 1fr; }
+      .clock { margin-left: 0; }
+      .transport-end { width: 100%; justify-content: space-between; margin-left: 0; }
+      .phase-track { gap: 4px; }
+      .timeline-step { min-height: 46px; padding: 6px; font-size: .75rem; }
+      .step-label { white-space: normal; }
+      .telemetry > * { padding: 14px; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .help { padding: 12px 14px; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+      .sensor-row { grid-template-columns: 1fr; padding: 12px; }
+      .sensor-media img, .sensor-row.expanded .sensor-media img { height: auto; aspect-ratio: 16 / 9; }
+      .sensor-row.expanded .sensor-media { overflow-x: auto; }
+      .sensor-row.expanded .sensor-media img { width: 640px; max-width: none; }
+      .structural-scene-controls { grid-template-columns: 1fr; }
+      .joint-load-card, .structural-diagnostics { padding: 14px; }
+      .stress-note { padding: 14px; }
+      .joint-load-top { grid-template-columns: 1fr; }
+      .structural-load-grid { grid-template-columns: 1fr 1fr; }
+      .improvement-header { flex-direction: column; padding: 18px 16px 16px; }
+      .assessment { justify-items: start; }
+      .gate-list li { flex-direction: row-reverse; justify-content: flex-end; }
+      .improvement-state { margin: 16px 16px 0; }
+      .study-grid { padding: 16px; }
+      .study-card { padding: 14px; }
+      .study-table { min-width: 0; }
+      .study-table th, .study-table td { padding: 7px 8px; white-space: normal; }
+      .evidence-videos { padding: 0 16px 16px; }
+      .improvement-provenance { margin: 0 16px 16px; }
+    }
+    @media (hover: none) { .key-hint { display: none; } }
+    @media (pointer: coarse) {
+      button, select, .sensor-row-header button, .structural-hot-parts button, .section-nav a { min-height: 44px; }
+      .segmented button { min-height: 40px; }
+      .scrub, #scrubber { height: 44px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
   </style>
 </head>
 <body>
   <main class="shell">
-    <header>
+    <header class="masthead">
       <div>
-        <p class="eyebrow">MuJoCo · Bimanual manipulation cell</p>
+        <p class="eyebrow">MuJoCo 물리 기록 · 양팔 모바일 매니퓰레이터</p>
         <h1>RB-Y1 적재 트레이 이송</h1>
-        <p class="subtitle">바닥의 자유 강체 트레이를 양손으로 파지해 적재물을 유지하고, 높은 컨테이너에 안착한 뒤 후진해 출발 위치와 모델 기본 자세로 복귀합니다.</p>
-        <a class="study-jump" href="#improvementStudy">개선 전후 검증 보기 ↓</a>
+        <p class="subtitle">바닥의 트레이를 양손으로 잡아 적재물 3개와 함께 높은 컨테이너에 올리고, 손을 회수한 뒤 출발 위치와 기본 자세로 돌아오는 과정을 같은 기록 시각으로 맞춰 봅니다.</p>
+        <ul class="run-facts" aria-label="실험 조건">
+          <li id="backendBadge">MuJoCo</li><li id="baseBadge">베이스 조건 확인 중</li><li>자유 강체 4개</li><li id="modelBadge">모델 로드 중</li>
+        </ul>
       </div>
-      <div class="condition" aria-label="실험 조건">
-        <span id="backendBadge" class="badge">CPU MuJoCo</span><span id="baseBadge" class="badge">베이스 지그 고정</span>
-        <span class="badge">자유 강체 4개</span><span id="modelBadge" class="badge">모델 로드 중</span>
-      </div>
+      <nav class="section-nav" aria-label="페이지 구역">
+        <a href="#replay">재생</a><a id="stressNavLink" href="#stress" hidden>부품 하중</a><a href="#sensors">센서</a><a href="#improvementStudy">개선 검증</a>
+      </nav>
     </header>
 
     <div class="layout">
-      <div class="content-column">
-      <div class="primary-grid">
-      <section class="panel viewport-panel" aria-labelledby="originalViewTitle">
-        <div class="panel-heading"><h2 id="originalViewTitle">원본 동작</h2><div class="view-tabs" aria-label="표시 모드">
-            <button type="button" data-view="overview" aria-pressed="true">전체</button><button type="button" data-view="pickup" aria-pressed="false">파지</button><button type="button" data-view="placement" aria-pressed="false">안착</button>
-          </div></div>
-        <div class="stage">
-          <img id="frame" alt="RB-Y1이 적재 트레이를 높은 컨테이너로 옮기는 MuJoCo 시뮬레이션" width="960" height="720">
-          <video id="playbackVideo" aria-label="검증된 MuJoCo 물리 실행 영상" width="960" height="720" muted playsinline preload="auto" hidden></video>
-          <div class="stage-top">
-            <div class="run-status" aria-live="polite"><span id="statusDot" class="dot"></span><span id="runStatus">준비 중</span></div>
-            <div class="target-callout"><span>목표 안착면</span><strong id="targetHeight">— m</strong></div>
-          </div>
-          <div class="timeline" aria-label="작업 진행 단계">
-            <div class="timeline-step" data-stage="pickup">1 바닥 접근</div><div class="timeline-step" data-stage="grasp">2 양손 파지</div>
-            <div class="timeline-step" data-stage="transfer">3 상승·이송</div><div class="timeline-step" data-stage="placement">4 컨테이너 안착</div>
-            <div class="timeline-step" data-stage="release">5 분리·복귀</div>
-          </div>
-          <p id="error" class="error hidden" role="alert"></p>
-        </div>
-
-      </section>
-
-      <section id="loadPanel" class="panel load-panel primary-diagnostic" aria-labelledby="loadTitle" hidden>
-        <div class="panel-heading"><h2 id="loadTitle">응력·관절 부하</h2><div class="diagnostic-tabs" role="group" aria-label="진단 결과 선택">
-          <button id="jointModeButton" type="button" aria-pressed="true">관절 부하 영상</button>
-          <button id="structuralModeButton" type="button" aria-pressed="false" hidden>응력 + 관절 부하</button>
-        </div></div>
-        <div id="jointPane">
-          <div class="load-media">
-            <video id="loadVideo" aria-label="RB-Y1 관절 부하 기록" width="960" height="720" muted playsinline preload="auto"></video>
-            <p id="loadStatus" class="load-status" role="status">부하 기록을 불러오는 중입니다.</p>
-          </div>
-          <div class="load-caption"><output id="loadClock" class="load-clock">주 영상과 같은 기록 시각 · —</output>
-          <p>관절 토크를 모델 힘 제한과 비교한 색상입니다. 구조 응력·파손 해석이 아닙니다.</p></div>
-        </div>
-        <div id="structuralPane" hidden>
-          <div id="structuralSceneRoot" hidden>
-            <p id="structuralSceneError" class="structural-scene-error" role="alert" hidden></p>
-            <div id="structuralSceneContent">
-            <div class="structural-canvas-wrap">
-              <canvas id="structuralCanvas" width="480" height="360" aria-label="기록 시각과 동기화된 로봇 응력 분포"></canvas>
-              <svg id="jointLoadOverlay" class="joint-load-overlay" viewBox="0 0 480 360" preserveAspectRatio="none" aria-hidden="true"></svg>
-              <svg id="structuralWrenchOverlay" class="structural-wrench-overlay" viewBox="0 0 480 360" preserveAspectRatio="none" aria-hidden="true"></svg>
-              <div class="structural-overlay"><output id="structuralSceneClock">기록 프레임 —</output><output id="structuralSceneMaximum">현재 최대 —</output></div>
-            </div>
-
-            </div>
-          </div>
-          <div id="structuralLegacy">
-          <figure class="structural-media">
-            <img id="structuralImage" alt="부품 표면의 von Mises 응력 분포" width="960" height="720">
-            <figcaption id="structuralCaption">표면 응력 분포</figcaption>
-            <p id="structuralStatus" class="load-status" role="status" hidden></p>
-          </figure>
-          <p id="structuralTitle">부품 응력 결과를 불러오는 중입니다.</p>
-          <div class="structural-view-tabs" role="group" aria-label="응력 결과 단면 선택">
-            <button type="button" data-structural-view="surface" aria-pressed="true">표면</button>
-            <button type="button" data-structural-view="cutaway" aria-pressed="false">단면</button>
-          </div>
-          <dl class="structural-summary">
-            <div><dt>고정 시점</dt><dd id="structuralSnapshot">—</dd></div>
-            <div><dt>재료 가정</dt><dd id="structuralMaterial">—</dd></div>
-            <div><dt>최대 변위</dt><dd id="structuralDisplacement">—</dd></div>
-            <div><dt>체적 95% 응력</dt><dd id="structuralP95">—</dd></div>
-            <div><dt>최대 응력</dt><dd id="structuralPeak">—</dd></div>
-            <div><dt>메시 수렴</dt><dd id="structuralConvergence">—</dd></div>
-            <div><dt>힘 평형 오차</dt><dd id="structuralForceBalance">—</dd></div>
-            <div><dt>모멘트 평형 오차</dt><dd id="structuralMomentBalance">—</dd></div>
-          </dl>
-          <p class="structural-context">고정된 한 시점의 단방향 선형 정적 해석입니다. 재생 영상과 시간 동기화되지 않으며 로봇 움직임에 변형을 되돌려 적용하지 않습니다.</p>
-          <ul id="structuralAssumptions" class="structural-assumptions" aria-label="구조 해석 가정"></ul>
-          </div>
-        </div>
-
-      </section>
-      </div>
-
-        <div class="panel toolbar" aria-label="공통 재생 제어">
-          <div class="controls" aria-label="시뮬레이션 제어">
-            <button id="play" class="primary" type="button" aria-pressed="false">재생</button><button id="single" type="button">50 스텝</button>
-            <button id="reset" type="button">처음으로</button>
-            <label for="speed">재생 배율<select id="speed"><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
-          </div>
-
-          <output id="cameraReadout" class="camera-readout">전체 시점 · 방위 105° · 고도 −20°</output>
-        </div>
-      <section id="structuralControls" class="panel analysis-controls" aria-label="진단 표시 설정과 관절 부하" hidden>
-        <div class="stress-settings">
-            <h3 id="structuralSceneTitle">전체 로봇 · 등가 단면 응력 추정</h3>
-            <div class="structural-scene-controls">
-              <label>표시 범위<select id="structuralPart" aria-label="응력 표시 범위"></select></label>
-              <label>색상 척도<select id="structuralScale" aria-label="응력 색상 척도"><option value="log">로그</option><option value="linear">선형</option></select></label>
-            </div>
-            <div id="structuralSceneViews" class="structural-view-tabs" role="group" aria-label="CAD FEM 표시 방식" hidden>
-              <button type="button" data-scene-view="surface" aria-pressed="true">표면</button>
-              <button type="button" data-scene-view="cutaway" aria-pressed="false">단면</button>
-            </div>
-            <div class="stress-ramp" aria-hidden="true"></div>
-            <div class="structural-scene-meta"><span id="structuralLegend">응력 범례 · MPa</span></div>
-
-            <details class="structural-support"><summary>선택 부품 하중·해석 기준</summary>
-              <dl class="structural-summary">
-                <div><dt>현재 힘 · 선택 좌표계</dt><dd id="structuralForce">부품 선택 시 표시</dd></div>
-                <div><dt>현재 모멘트 · 선택 좌표계</dt><dd id="structuralMoment">부품 선택 시 표시</dd></div>
-              </dl>
-              <p id="structuralScope" class="structural-context"></p>
-              <ul id="structuralPartAssumptions" class="structural-assumptions" aria-label="선택 부품 해석 가정"></ul>
-            </details>
-            <details class="structural-support"><summary>전체 해석 가정</summary><ul id="structuralSceneAssumptions" class="structural-assumptions"></ul></details>
-        </div>
-            <section class="joint-load-card" aria-label="관절 부하 요약과 표시 설정">
-              <div class="joint-load-card-header">
-                <span id="jointLoadLegend">관절 부하 · 몸통·양팔 20관절</span>
-                <label class="joint-load-toggle"><input id="showJointLoad" type="checkbox" checked aria-label="관절 지시선 표시">관절 지시선 표시</label>
+      <section id="replay" class="panel replay" aria-labelledby="replayTitle">
+        <h2 id="replayTitle" class="visually-hidden">동기 재생</h2>
+        <div class="primary-grid">
+          <section class="viewport-panel" aria-labelledby="originalViewTitle">
+            <div class="panel-heading"><h3 id="originalViewTitle">원본 동작</h3>
+              <div class="segmented view-tabs" role="group" aria-label="카메라 시점">
+                <button type="button" data-view="overview" aria-pressed="true">전체</button><button type="button" data-view="pickup" aria-pressed="false">파지</button><button type="button" data-view="placement" aria-pressed="false">안착</button>
               </div>
-              <p class="joint-load-note">지시선은 부하가 큰 관절을 가리킵니다. 수치는 |토크| / 모델 제한이며, 실물 정격이 아닙니다.</p>
+            </div>
+            <div class="stage" data-view="overview">
+              <img id="frame" alt="RB-Y1이 적재 트레이를 높은 컨테이너로 옮기는 MuJoCo 시뮬레이션" width="960" height="720">
+              <video id="playbackVideo" aria-label="검증된 MuJoCo 물리 실행 영상" width="960" height="720" muted playsinline preload="auto" hidden></video>
+              <div class="stage-chip phase-chip" aria-hidden="true"><span id="phaseChipStage" class="chip-kicker">단계 —</span><strong id="phaseChipLabel">준비 중</strong></div>
+              <div class="stage-chip target-callout"><span>목표 안착면</span><strong id="targetHeight">— m</strong></div>
+              <p id="error" class="error hidden" role="alert"></p>
+            </div>
+          </section>
+
+          <section id="loadPanel" class="load-panel" aria-labelledby="loadTitle" hidden>
+            <div class="panel-heading"><h3 id="loadTitle">응력·관절 부하</h3>
+              <div class="segmented diagnostic-tabs" role="group" aria-label="진단 화면 선택">
+                <button id="jointModeButton" type="button" aria-pressed="true">관절 부하 영상</button>
+                <button id="structuralModeButton" type="button" aria-pressed="false" hidden>응력 + 관절 부하</button>
+              </div>
+            </div>
+            <div id="jointPane">
+              <div class="load-media">
+                <video id="loadVideo" aria-label="RB-Y1 관절 부하 기록" width="960" height="720" muted playsinline preload="auto"></video>
+                <p id="loadStatus" class="load-status" role="status">부하 기록을 불러오는 중입니다.</p>
+              </div>
+              <div class="load-caption"><output id="loadClock" class="load-clock">주 영상과 같은 기록 시각 · —</output>
+                <p>관절 토크를 모델 힘 제한과 비교한 색상입니다. 구조 응력은 응력 화면에서 봅니다.</p></div>
+            </div>
+            <div id="structuralPane" hidden>
+              <div id="structuralSceneRoot" hidden>
+                <p id="structuralSceneError" class="structural-scene-error" role="alert" hidden></p>
+                <div id="structuralSceneContent">
+                  <div class="structural-canvas-wrap">
+                    <canvas id="structuralCanvas" width="480" height="300" aria-label="기록 시각과 동기화된 로봇 응력 분포"></canvas>
+                    <svg id="jointLoadOverlay" class="joint-load-overlay" viewBox="0 0 480 300" preserveAspectRatio="none" aria-hidden="true"></svg>
+                    <svg id="structuralWrenchOverlay" class="structural-wrench-overlay" viewBox="0 0 480 300" preserveAspectRatio="none" aria-hidden="true"></svg>
+                    <div class="structural-overlay"><output id="structuralSceneClock">기록 프레임 —</output><output id="structuralSceneMaximum">현재 최대 —</output></div>
+                  </div>
+                </div>
+              </div>
+              <div id="structuralLegacy">
+                <figure class="structural-media">
+                  <img id="structuralImage" alt="부품 표면의 von Mises 응력 분포" width="960" height="720">
+                  <figcaption id="structuralCaption">표면 응력 분포</figcaption>
+                  <p id="structuralStatus" class="load-status" role="status" hidden></p>
+                </figure>
+                <p id="structuralTitle">부품 응력 결과를 불러오는 중입니다.</p>
+                <div class="segmented structural-view-tabs" role="group" aria-label="응력 결과 단면 선택">
+                  <button type="button" data-structural-view="surface" aria-pressed="true">표면</button>
+                  <button type="button" data-structural-view="cutaway" aria-pressed="false">단면</button>
+                </div>
+                <dl class="structural-summary">
+                  <div><dt>고정 시점</dt><dd id="structuralSnapshot">—</dd></div>
+                  <div><dt>재료 가정</dt><dd id="structuralMaterial">—</dd></div>
+                  <div><dt>최대 변위</dt><dd id="structuralDisplacement">—</dd></div>
+                  <div><dt>체적 95% 응력</dt><dd id="structuralP95">—</dd></div>
+                  <div><dt>최대 응력</dt><dd id="structuralPeak">—</dd></div>
+                  <div><dt>메시 수렴</dt><dd id="structuralConvergence">—</dd></div>
+                  <div><dt>힘 평형 오차</dt><dd id="structuralForceBalance">—</dd></div>
+                  <div><dt>모멘트 평형 오차</dt><dd id="structuralMomentBalance">—</dd></div>
+                </dl>
+                <p class="structural-context">고정된 한 시점의 단방향 선형 정적 해석입니다. 재생 영상과 시간 동기화되지 않으며 로봇 움직임에 변형을 되돌려 적용하지 않습니다.</p>
+                <ul id="structuralAssumptions" class="structural-assumptions" aria-label="구조 해석 가정"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="transport toolbar" aria-label="공통 재생 제어">
+          <div class="transport-row">
+            <div class="controls" role="group" aria-label="재생 제어">
+              <button id="play" class="primary" type="button" aria-pressed="false" aria-keyshortcuts="Space"><svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9.5-5.5z"/></svg><svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z"/></svg><span id="playLabel">재생</span></button>
+              <button id="reset" type="button">처음으로</button>
+              <button id="single" type="button">50 스텝</button>
+            </div>
+            <div class="clock" role="group" aria-label="시뮬레이션 시각"><strong id="timeNow">—</strong><span><span class="clock-total">/ <span id="timeTotal">—</span></span> s</span></div>
+            <div class="run-status" aria-live="polite"><span id="statusDot" class="dot"></span><span id="runStatus">준비 중</span></div>
+            <div class="transport-end">
+              <label class="speed-field" for="speed">재생 배율<select id="speed"><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
+              <output id="cameraReadout" class="camera-readout">전체 시점</output>
+            </div>
+          </div>
+          <div id="scrubRow" class="scrub">
+            <div id="scrubTicks" class="scrub-ticks" aria-hidden="true"></div>
+            <input id="scrubber" type="range" min="0" max="0" step="1" value="0" aria-label="재생 위치" disabled>
+          </div>
+          <ol id="phaseTrack" class="phase-track" aria-label="작업 단계로 이동">
+            <li><button class="timeline-step" type="button" data-stage="pickup" data-stage-index="0" disabled><span class="step-index">1단계</span><span class="step-label">바닥 접근</span></button></li>
+            <li><button class="timeline-step" type="button" data-stage="grasp" data-stage-index="1" disabled><span class="step-index">2단계</span><span class="step-label">양손 파지</span></button></li>
+            <li><button class="timeline-step" type="button" data-stage="transfer" data-stage-index="2" disabled><span class="step-index">3단계</span><span class="step-label">상승·이송</span></button></li>
+            <li><button class="timeline-step" type="button" data-stage="placement" data-stage-index="3" disabled><span class="step-index">4단계</span><span class="step-label">컨테이너 안착</span></button></li>
+            <li><button class="timeline-step" type="button" data-stage="release" data-stage-index="4" disabled><span class="step-index">5단계</span><span class="step-label">분리·복귀</span></button></li>
+          </ol>
+        </div>
+
+        <div class="telemetry">
+          <section class="state-cell" aria-labelledby="metricsTitle">
+            <h3 id="metricsTitle" class="cell-title">현재 물리 상태</h3>
+            <dl class="metrics">
+              <div class="metric"><dt>제어 단계</dt><dd id="phase">—</dd></div><div class="metric"><dt>트레이 중심 높이</dt><dd id="trayHeight">—</dd></div><div class="metric"><dt>파지력 왼손 · 오른손</dt><dd id="graspForce">—</dd></div>
+              <div class="metric"><dt>손가락 접촉</dt><dd id="contact">—</dd></div><div class="metric"><dt>트레이 위 적재물</dt><dd id="payload">—</dd></div><div class="metric"><dt>독립 평가</dt><dd id="result">진행 전</dd></div>
+            </dl>
+            <div class="checks-panel result-panel">
+              <div class="checks-head"><h3 id="checksTitle">성공 조건</h3><span>다섯 항목을 모두 충족해야 성공</span></div>
+              <ul class="checklist" aria-labelledby="checksTitle">
+                <li class="check"><span>목표 영역 안</span><span id="checkTarget" class="check-state">대기</span></li>
+                <li class="check"><span>컨테이너 바닥 접촉</span><span id="checkSupport" class="check-state">대기</span></li>
+                <li class="check"><span>적재물 3개 지지</span><span id="checkPayload" class="check-state">대기</span></li>
+                <li class="check"><span>손 분리·회수</span><span id="checkWithdraw" class="check-state">대기</span></li>
+                <li class="check"><span>출발 위치·기본 자세 복귀</span><span id="checkHome" class="check-state">대기</span></li>
+              </ul>
+            </div>
+          </section>
+          <section class="stress-cell" aria-labelledby="structuralSceneTitle">
+            <div id="stressSettings" class="stress-settings" hidden>
+              <div class="stress-settings-head"><h3 id="structuralSceneTitle" class="cell-title">전체 로봇 · 등가 단면 응력 추정</h3><label class="joint-load-toggle"><input id="showJointLoad" type="checkbox" checked>관절 지시선</label></div>
+              <div class="structural-scene-controls">
+                <label>표시 범위<select id="structuralPart" aria-label="응력 표시 범위"></select></label>
+                <label>색상 척도<select id="structuralScale" aria-label="응력 색상 척도"><option value="log">로그</option><option value="linear">선형</option></select></label>
+              </div>
+              <div id="structuralSceneViews" class="segmented structural-view-tabs" role="group" aria-label="CAD FEM 표시 방식" hidden>
+                <button type="button" data-scene-view="surface" aria-pressed="true">표면</button>
+                <button type="button" data-scene-view="cutaway" aria-pressed="false">단면</button>
+              </div>
+              <div class="stress-ramp" aria-hidden="true"></div>
+              <div class="structural-scene-meta"><span id="structuralLegend">응력 범례 · MPa</span></div>
+              <details class="structural-support"><summary>선택 부품 하중·해석 기준</summary>
+                <dl class="structural-summary">
+                  <div><dt>현재 힘 · 선택 좌표계</dt><dd id="structuralForce">부품 선택 시 표시</dd></div>
+                  <div><dt>현재 모멘트 · 선택 좌표계</dt><dd id="structuralMoment">부품 선택 시 표시</dd></div>
+                </dl>
+                <p id="structuralScope" class="structural-context"></p>
+                <ul id="structuralPartAssumptions" class="structural-assumptions" aria-label="선택 부품 해석 가정"></ul>
+              </details>
+              <details class="structural-support"><summary>전체 해석 가정</summary><ul id="structuralSceneAssumptions" class="structural-assumptions"></ul></details>
+            </div>
+            <p id="stressCellNote" class="cell-note">응력·관절 부하 기록을 확인하고 있습니다.</p>
+          </section>
+        </div>
+        <p class="help"><span id="playbackHelp">재생 데이터를 불러오는 중입니다.</span> <span id="keyHint" class="key-hint" hidden><kbd>Space</kbd> 재생·일시정지 · <kbd>←</kbd><kbd>→</kbd> 한 프레임 · <kbd>Shift</kbd>와 함께 1초</span></p>
+      </section>
+
+      <section id="stress" aria-labelledby="stressTitle" hidden>
+        <div class="section-head"><div><h2 id="stressTitle">부품 하중과 관절 부하</h2><p>전신 36개 부품은 속이 빈 원통 단면을 가정해 응력을 추정하고, 왼쪽 손목 플랜지는 공식 CAD 형상으로 FEM을 풉니다. 부품이나 관절을 고르면 위의 응력 화면이 그 부품으로 바뀝니다.</p></div></div>
+        <div class="panel stress-panel">
+          <div id="stressHint" class="stress-note"><p>응력 + 관절 부하 화면에서 부품별 하중과 관절 부하 수치를 함께 봅니다.</p><button id="stressHintButton" type="button">응력 + 관절 부하로 보기</button></div>
+          <div class="stress-grid">
+            <section id="structuralDiagnostics" class="structural-diagnostics" aria-label="선택 부품 하중과 응력 성분" hidden></section>
+            <section id="structuralControls" class="joint-load-card" aria-label="관절 부하 요약" hidden>
+              <div class="joint-load-card-header"><span id="jointLoadLegend">관절 부하 · 몸통·양팔 20관절</span></div>
+              <p class="joint-load-note">지시선은 부하가 큰 관절을 가리킵니다. 수치는 |토크| / 모델 구동기 제한이며, 실물 정격과는 다릅니다.</p>
               <div id="jointLoadSummary" class="joint-load-summary"><span>기록 관절 상태를 불러오는 중입니다.</span></div>
             </section>
+          </div>
+        </div>
       </section>
 
-      <section id="structuralDiagnostics" class="panel structural-diagnostics" aria-label="선택 부품 하중과 응력 성분" hidden></section>
-
-      <section class="panel sensor-strip" aria-labelledby="sensorTitle">
-          <div class="sensor-column">
-          <div class="sensor-header">
-            <div class="sensor-heading"><h2 id="sensorTitle">RGB·깊이 모니터</h2><p id="sensorBatchMeta">재생 시각 이전의 카메라별 최신 관측을 불러옵니다. 패널을 누르면 해당 카메라가 확대됩니다.</p></div>
-          </div>
-          <div id="sensorGrid" class="sensor-grid">
-            <section class="sensor-row" data-sensor-camera="head_rgbd">
-              <header class="sensor-row-header"><div><h3>헤드 · ZED X Mini 대응</h3><p data-sensor-meta>관측 대기 · depth —</p></div><button type="button" data-sensor-expand aria-pressed="false">확대</button></header>
-              <figure class="sensor-media" data-sensor-kind="rgb"><img alt="헤드 카메라 RGB 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
-              <figure class="sensor-media" data-sensor-kind="depth"><img alt="헤드 카메라 metric depth 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><div class="depth-legend"><span data-depth-near>—</span><i class="depth-ramp"></i><span data-depth-far>—</span><i class="invalid-swatch"></i><span>invalid</span></div><figcaption><span>깊이</span><span>고정 범위 · m</span></figcaption></figure>
-            </section>
-            <section class="sensor-row" data-sensor-camera="left_wrist_rgbd">
-              <header class="sensor-row-header"><div><h3>왼쪽 손목 · RealSense D405 대응</h3><p data-sensor-meta>관측 대기 · depth —</p></div><button type="button" data-sensor-expand aria-pressed="false">확대</button></header>
-              <figure class="sensor-media" data-sensor-kind="rgb"><img alt="왼쪽 손목 카메라 RGB 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
-              <figure class="sensor-media" data-sensor-kind="depth"><img alt="왼쪽 손목 카메라 metric depth 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><div class="depth-legend"><span data-depth-near>—</span><i class="depth-ramp"></i><span data-depth-far>—</span><i class="invalid-swatch"></i><span>invalid</span></div><figcaption><span>깊이</span><span>고정 범위 · m</span></figcaption></figure>
-            </section>
-            <section class="sensor-row" data-sensor-camera="right_wrist_rgbd">
-              <header class="sensor-row-header"><div><h3>오른쪽 손목 · RealSense D405 대응</h3><p data-sensor-meta>관측 대기 · depth —</p></div><button type="button" data-sensor-expand aria-pressed="false">확대</button></header>
-              <figure class="sensor-media" data-sensor-kind="rgb"><img alt="오른쪽 손목 카메라 RGB 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
-              <figure class="sensor-media" data-sensor-kind="depth"><img alt="오른쪽 손목 카메라 metric depth 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><div class="depth-legend"><span data-depth-near>—</span><i class="depth-ramp"></i><span data-depth-far>—</span><i class="invalid-swatch"></i><span>invalid</span></div><figcaption><span>깊이</span><span>고정 범위 · m</span></figcaption></figure>
-            </section>
-          </div>
-          </div>
+      <section id="sensors" aria-labelledby="sensorTitle">
+        <div class="section-head"><div><h2 id="sensorTitle">센서 관측</h2><p id="sensorBatchMeta">재생 시각 이전의 카메라별 최신 관측을 불러옵니다. 화면을 누르면 해당 카메라가 크게 보입니다.</p></div></div>
+        <div id="sensorGrid" class="sensor-grid">
+          <section class="panel sensor-row" data-sensor-camera="head_rgbd">
+            <header class="sensor-row-header"><div><h3>머리 카메라 · ZED X Mini 대응</h3><p data-sensor-meta>관측 대기 · depth —</p></div><button type="button" data-sensor-expand aria-pressed="false">크게 보기</button></header>
+            <figure class="sensor-media" data-sensor-kind="rgb"><img alt="머리 카메라 RGB 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
+            <figure class="sensor-media" data-sensor-kind="depth"><img alt="머리 카메라 metric depth 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><div class="depth-legend"><span data-depth-near>—</span><i class="depth-ramp"></i><span data-depth-far>—</span><i class="invalid-swatch"></i><span>무효</span></div><figcaption><span>깊이</span><span>고정 범위 · m</span></figcaption></figure>
+          </section>
+          <section class="panel sensor-row" data-sensor-camera="left_wrist_rgbd">
+            <header class="sensor-row-header"><div><h3>왼쪽 손목 · RealSense D405 대응</h3><p data-sensor-meta>관측 대기 · depth —</p></div><button type="button" data-sensor-expand aria-pressed="false">크게 보기</button></header>
+            <figure class="sensor-media" data-sensor-kind="rgb"><img alt="왼쪽 손목 카메라 RGB 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
+            <figure class="sensor-media" data-sensor-kind="depth"><img alt="왼쪽 손목 카메라 metric depth 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><div class="depth-legend"><span data-depth-near>—</span><i class="depth-ramp"></i><span data-depth-far>—</span><i class="invalid-swatch"></i><span>무효</span></div><figcaption><span>깊이</span><span>고정 범위 · m</span></figcaption></figure>
+          </section>
+          <section class="panel sensor-row" data-sensor-camera="right_wrist_rgbd">
+            <header class="sensor-row-header"><div><h3>오른쪽 손목 · RealSense D405 대응</h3><p data-sensor-meta>관측 대기 · depth —</p></div><button type="button" data-sensor-expand aria-pressed="false">크게 보기</button></header>
+            <figure class="sensor-media" data-sensor-kind="rgb"><img alt="오른쪽 손목 카메라 RGB 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><figcaption><span>RGB</span><span>합성 렌더</span></figcaption></figure>
+            <figure class="sensor-media" data-sensor-kind="depth"><img alt="오른쪽 손목 카메라 metric depth 관측" width="320" height="180"><div class="sensor-empty" role="status">관측 대기</div><div class="depth-legend"><span data-depth-near>—</span><i class="depth-ramp"></i><span data-depth-far>—</span><i class="invalid-swatch"></i><span>무효</span></div><figcaption><span>깊이</span><span>고정 범위 · m</span></figcaption></figure>
+          </section>
+        </div>
       </section>
-      </div>
-
-      <aside aria-label="실험 상태">
-        <section class="panel section">
-          <div class="section-title"><h2>작업 목표</h2><span class="section-kicker">TASK CONTRACT</span></div>
-          <div class="mission"><strong>적재물 안착과 로봇 원위치 복귀</strong><p>트레이와 적재물 3개를 안착하고 손을 해제·회수합니다. 후진해 출발 위치로 돌아온 뒤 모델의 기본 자세로 정지해야 성공입니다.</p></div>
-        </section>
-        <section class="panel section">
-          <div class="section-title"><h2>현재 물리 상태</h2><span class="section-kicker">SI UNITS</span></div>
-          <dl class="metrics">
-            <div class="metric"><dt>제어 단계</dt><dd id="phase">—</dd></div><div class="metric"><dt>시뮬레이션 시간</dt><dd id="simTime">—</dd></div>
-            <div class="metric"><dt>트레이 중심 높이</dt><dd id="trayHeight">—</dd></div><div class="metric"><dt>손가락 접촉</dt><dd id="contact">—</dd></div>
-            <div class="metric"><dt>트레이 위 적재물</dt><dd id="payload">—</dd></div><div class="metric"><dt>독립 평가</dt><dd id="result">진행 전</dd></div>
-          </dl>
-          <p id="playbackHelp" class="help">재생 데이터를 불러오는 중입니다.</p>
-        </section>
-        <section class="panel section result-panel">
-          <div class="section-title"><h2>안착 판정</h2><span class="section-kicker">GEOMETRY + CONTACT</span></div>
-          <div class="checklist">
-            <div class="check"><span>목표 영역 안</span><span id="checkTarget" class="check-state">대기</span></div><div class="check"><span>컨테이너 바닥 접촉</span><span id="checkSupport" class="check-state">대기</span></div>
-            <div class="check"><span>적재물 3개 지지</span><span id="checkPayload" class="check-state">대기</span></div><div class="check"><span>손 분리·회수</span><span id="checkWithdraw" class="check-state">대기</span></div>
-            <div class="check"><span>출발 위치·기본 자세 복귀</span><span id="checkHome" class="check-state">대기</span></div>
-          </div>
-        </section>
-        <section class="panel"><details><summary>원본 상태 JSON 보기</summary><pre id="rawState" aria-live="polite">상태를 불러오는 중…</pre></details></section>
-      </aside>
 
       <section id="improvementStudy" class="panel improvement-study" aria-labelledby="improvementTitle">
         <header class="improvement-header">
-          <div><p class="eyebrow">PREREGISTERED COMPARISON</p><h2 id="improvementTitle">개선 전후 검증</h2><p>같은 과제·시드에서 기존 경로와 회전 형상 여유를 반영한 경로를 비교합니다. 이 표본은 구현 결함의 재현과 수정 검증을 위한 것이며, 일반 성공률을 추정하지 않습니다.</p></div>
-          <span id="improvementAssessment" class="assessment-badge">근거 불러오는 중</span>
+          <div><h2 id="improvementTitle">개선 전후 검증</h2><p>같은 과제·시드에서 기존 경로와 회전한 트레이 외곽을 반영한 경로를 짝지어 비교합니다. 구현 결함을 재현하고 수정을 확인하기 위한 표본이며, 일반 환경의 성공률이나 실물 성능을 뜻하지 않습니다.</p></div>
+          <div class="assessment"><span id="improvementAssessment" class="assessment-badge">근거 불러오는 중</span><ul id="improvementGates" class="gate-list" aria-label="사전 지정 판정" hidden></ul></div>
         </header>
         <p id="improvementState" class="improvement-state" role="status" aria-live="polite">개선 실험 기록을 확인하고 있습니다.</p>
         <div id="studyGrid" class="study-grid" hidden>
           <section class="study-card" aria-labelledby="controllerStudyTitle"><h3 id="controllerStudyTitle">경로 개선 비교</h3><p>동일 조건에서 기존 경로와 형상 여유 경로의 작업 결과를 짝지어 비교합니다.</p><div id="controllerStudy"></div></section>
-          <section class="study-card" aria-labelledby="safetyStudyTitle"><h3 id="safetyStudyTitle">안전 거부 검증</h3><p>센서 안전 거부가 관측됐는지와 작업 성공 여부를 서로 다른 판정으로 표시합니다.</p><div id="safetyStudy"></div></section>
-          <section class="study-card" aria-labelledby="cooperationStudyTitle"><h3 id="cooperationStudyTitle">양팔 협조 비교</h3><p>협조 제어 유무의 짝비교입니다. 결과가 갈린 경우에만 차이가 관측됐다고 표시합니다.</p><div id="cooperationStudy"></div></section>
+          <section class="study-card" aria-labelledby="safetyStudyTitle"><h3 id="safetyStudyTitle">안전 거부 검증</h3><p>센서 이상을 감지해 멈춘 결과와 작업 성공 여부를 따로 판정합니다.</p><div id="safetyStudy"></div></section>
+          <section class="study-card" aria-labelledby="cooperationStudyTitle"><h3 id="cooperationStudyTitle">양팔 협조 비교</h3><p>협조 감속을 켠 실행과 끈 실행을 같은 조건끼리 짝지어 비교합니다.</p><div id="cooperationStudy"></div></section>
         </div>
-        <section id="evidenceVideos" class="evidence-videos" aria-labelledby="evidenceVideoTitle" hidden><h3 id="evidenceVideoTitle">실패·개선 실행 영상</h3><p>각 영상은 독립 재생됩니다. 위의 원본 동작·RGB·깊이·응력 타임라인과 연결되지 않습니다.</p><div id="evidenceVideoGrid" class="evidence-video-grid"></div></section>
+        <section id="evidenceVideos" class="evidence-videos" aria-labelledby="evidenceVideoTitle" hidden><h3 id="evidenceVideoTitle">개선 실험 실행 영상</h3><p>각 영상은 독립 재생됩니다. 위의 동기 재생 타임라인과는 연결되지 않습니다.</p><div id="evidenceVideoGrid" class="evidence-video-grid"></div></section>
         <details id="improvementProvenance" class="improvement-provenance" hidden><summary>소스·설정 근거 보기</summary><ul id="provenanceList" class="provenance-list"></ul></details>
       </section>
+
+      <section class="panel raw-state"><details><summary>원본 상태 JSON 보기</summary><pre id="rawState" aria-live="polite">상태를 불러오는 중…</pre></details></section>
     </div>
   </main>
 
@@ -455,7 +610,7 @@
     const ui = {
       frame: $('frame'), video: $('playbackVideo'), playbackHelp: $('playbackHelp'), play: $('play'), single: $('single'), reset: $('reset'), speed: $('speed'), error: $('error'),
       statusDot: $('statusDot'), runStatus: $('runStatus'), camera: $('cameraReadout'), raw: $('rawState'), phase: $('phase'),
-      simTime: $('simTime'), trayHeight: $('trayHeight'), contact: $('contact'), payload: $('payload'), result: $('result'),
+      graspForce: $('graspForce'), trayHeight: $('trayHeight'), contact: $('contact'), payload: $('payload'), result: $('result'),
       targetHeight: $('targetHeight'), checkTarget: $('checkTarget'), checkSupport: $('checkSupport'), checkPayload: $('checkPayload'),
       checkWithdraw: $('checkWithdraw'), backendBadge: $('backendBadge'), baseBadge: $('baseBadge'), modelBadge: $('modelBadge'),
       sensorGrid: $('sensorGrid'), sensorBatchMeta: $('sensorBatchMeta'), sensorRows: [...document.querySelectorAll('[data-sensor-camera]')],
@@ -466,8 +621,14 @@
       structuralForceBalance: $('structuralForceBalance'), structuralMomentBalance: $('structuralMomentBalance'), structuralAssumptions: $('structuralAssumptions'),
       structuralViewButtons: [...document.querySelectorAll('[data-structural-view]')],
       structuralSceneRoot: $('structuralSceneRoot'), structuralSceneContent: $('structuralSceneContent'), structuralLegacy: $('structuralLegacy'), structuralSceneTitle: $('structuralSceneTitle'), structuralSceneError: $('structuralSceneError'), structuralPart: $('structuralPart'), structuralScale: $('structuralScale'), structuralSceneViews: $('structuralSceneViews'), structuralSceneViewButtons: [...document.querySelectorAll('[data-scene-view]')], structuralCanvas: $('structuralCanvas'), structuralWrenchOverlay: $('structuralWrenchOverlay'), jointLoadOverlay: $('jointLoadOverlay'), structuralSceneClock: $('structuralSceneClock'), structuralSceneMaximum: $('structuralSceneMaximum'), structuralLegend: $('structuralLegend'), jointLoadLegend: $('jointLoadLegend'), jointLoadSummary: $('jointLoadSummary'), showJointLoad: $('showJointLoad'), structuralDiagnostics: $('structuralDiagnostics'), structuralControls: $('structuralControls'), structuralForce: $('structuralForce'), structuralMoment: $('structuralMoment'), structuralScope: $('structuralScope'), structuralPartAssumptions: $('structuralPartAssumptions'), structuralSceneAssumptions: $('structuralSceneAssumptions'),
-      viewButtons: [...document.querySelectorAll('[data-view]')], timeline: [...document.querySelectorAll('.timeline-step')]
+      viewButtons: [...document.querySelectorAll('[data-view]')], timeline: [...document.querySelectorAll('.timeline-step')],
+      scrubber: $('scrubber'), scrubTicks: $('scrubTicks'), timeNow: $('timeNow'), timeTotal: $('timeTotal'), playLabel: $('playLabel'),
+      phaseChipStage: $('phaseChipStage'), phaseChipLabel: $('phaseChipLabel'), stressHint: $('stressHint'), stressHintButton: $('stressHintButton'),
+      stressSettings: $('stressSettings'), stressCellNote: $('stressCellNote'), stressSection: $('stress'), stressNavLink: $('stressNavLink'),
+      scrubRow: $('scrubRow'), keyHint: $('keyHint'), stage: document.querySelector('.stage'), replay: $('replay')
     };
+    const stageLabels = ['바닥 접근', '양손 파지', '상승·이송', '컨테이너 안착', '분리·복귀'];
+    let stageStartFrames = [], scrubbing = false, announcedSecond = null;
     let playing = false, actionPromise = null, playGeneration = 0, framePromise = null, frameDirty = false;
     let azimuth = 105, selectedView = 'overview', currentState = null, frameObjectUrl = null;
     let sensorGeneration = 0, sensorEventKey = '', sensorObjectUrls = [];
@@ -489,7 +650,7 @@
 
     const formatNumber = (value, digits=3) => new Intl.NumberFormat('ko-KR', { maximumFractionDigits: digits }).format(value);
     const isTerminal = (state) => Boolean(state?.finished || state?.result?.terminal);
-    function setCheck(element, value) { element.textContent = value ? 'PASS' : '대기'; element.className = `check-state${value ? ' pass' : ''}`; }
+    function setCheck(element, value) { element.textContent = value ? '충족' : '대기'; element.className = `check-state${value ? ' pass' : ''}`; element.closest('.check')?.classList.toggle('is-pass', Boolean(value)); }
     function formatResult(state) {
       if (state.result?.success) return '성공';
       if (state.result?.failure_reason) return `실패 · ${state.result.failure_reason}`;
@@ -497,11 +658,39 @@
     }
     function updateTimeline(state) {
       const active = phaseStage[state.phase] ?? 0, success = Boolean(state.result?.success);
-      ui.timeline.forEach((step, index) => { step.classList.toggle('done', success || index < active); step.classList.toggle('active', !success && index === active); });
+      ui.timeline.forEach((step, index) => {
+        const current = !success && index === active;
+        step.classList.toggle('done', success || index < active); step.classList.toggle('active', current);
+        if (current) step.setAttribute('aria-current', 'step'); else step.removeAttribute('aria-current');
+      });
+      ui.phaseChipStage.textContent = `${active + 1} / 5 · ${stageLabels[active]}`;
+      ui.phaseChipLabel.textContent = phaseLabels[state.phase] || state.phase || '—';
     }
     function updatePlayLabel() {
-      ui.play.textContent = playing ? '일시정지' : isTerminal(currentState) ? '다시 재생' : '재생';
+      ui.playLabel.textContent = playing ? '일시정지' : isTerminal(currentState) ? '다시 재생' : '재생';
+      ui.play.classList.toggle('is-playing', playing);
       ui.play.setAttribute('aria-pressed', String(playing)); ui.statusDot.classList.toggle('playing', playing);
+    }
+    function setScrubber(index) {
+      if (!playbackInfo) return;
+      const last = Math.max(1, playbackStates.length - 1), bounded = Math.min(last, Math.max(0, index));
+      const state = playbackStates[bounded]?.state, time = Number(state?.time_s);
+      ui.scrubber.value = String(bounded); ui.scrubber.style.setProperty('--progress', `${(bounded / last * 100).toFixed(3)}%`);
+      const second = Math.floor(time);
+      if (!playing || second !== announcedSecond) { announcedSecond = second; ui.scrubber.setAttribute('aria-valuetext', `${Number.isFinite(time) ? time.toFixed(2) : '—'} s · ${phaseLabels[state?.phase] || state?.phase || '—'}`); }
+    }
+    function buildPhaseTrack() {
+      const last = Math.max(1, playbackStates.length - 1);
+      stageStartFrames = stageLabels.map((_, stage) => playbackStates.findIndex((item) => (phaseStage[item.state.phase] ?? 0) >= stage));
+      ui.scrubTicks.replaceChildren(...stageStartFrames.slice(1).filter((frame) => frame > 0).map((frame) => { const tick = document.createElement('i'); tick.style.left = `${(frame / last * 100).toFixed(3)}%`; return tick; }));
+      ui.timeline.forEach((step, stage) => {
+        const frame = stageStartFrames[stage], time = Number(playbackStates[frame]?.state?.time_s);
+        step.disabled = frame < 0;
+        step.setAttribute('aria-label', `${stage + 1}단계 ${stageLabels[stage]}${Number.isFinite(time) ? ` · ${time.toFixed(1)} s부터` : ''}`);
+        step.title = Number.isFinite(time) ? `${time.toFixed(1)} s로 이동` : '';
+      });
+      ui.scrubber.max = String(last);
+      ui.timeTotal.textContent = Number.isFinite(Number(playbackInfo.duration_sim_s)) ? Number(playbackInfo.duration_sim_s).toFixed(2) : '—';
     }
     function updateState(state) {
       currentState = state;
@@ -511,16 +700,18 @@
       const checks = state.result?.checks || {}, milestones = state.result?.milestones || {};
       const targetHeight = Number(state.target?.support_z_m);
       ui.phase.textContent = phaseLabels[state.phase] || state.phase || '—';
-      ui.simTime.textContent = Number.isFinite(state.time_s) ? `${formatNumber(state.time_s, 2)} s` : '—';
+      const grip = state.grasp_force_n || {}, gripLeft = Number(grip.left), gripRight = Number(grip.right);
+      ui.graspForce.textContent = Number.isFinite(gripLeft) && Number.isFinite(gripRight) ? `${formatNumber(gripLeft, 1)} · ${formatNumber(gripRight, 1)} N` : '—';
+      ui.timeNow.textContent = Number.isFinite(state.time_s) ? Number(state.time_s).toFixed(2) : '—';
       ui.trayHeight.textContent = Number.isFinite(trayHeight) ? `${formatNumber(trayHeight)} m` : '—';
       ui.contact.textContent = pads.length ? `${pads.filter(Boolean).length} / 4` : '—';
       ui.payload.textContent = state.payloads ? `${supported} / ${state.payloads.length}` : '—';
       ui.result.textContent = formatResult(state); ui.result.className = state.result?.success ? 'good' : state.result?.failure_reason ? 'warn' : '';
-      ui.targetHeight.textContent = Number.isFinite(targetHeight) ? `${formatNumber(targetHeight, 2)} m` : '— m';
+      ui.targetHeight.textContent = Number.isFinite(targetHeight) ? `${targetHeight.toFixed(2)} m` : '— m';
       ui.backendBadge.textContent = state.backend || 'CPU MuJoCo';
       ui.baseBadge.textContent = state.base_mode === 'fixture' ? '베이스 지그 고정 · 안정성 미평가' : state.base_mode === 'mobile' ? '4휠 직진 · 엔코더 오도메트리' : (state.base_mode || '베이스 조건 미제공');
       const audit = state.audit || {};
-      ui.modelBadge.textContent = [audit.nq,audit.nv,audit.nu].every(Number.isInteger) ? `nq ${audit.nq} · nv ${audit.nv} · nu ${audit.nu}` : '모델 차원 미제공';
+      ui.modelBadge.textContent = [audit.nq,audit.nv,audit.nu].every(Number.isInteger) ? `모델 nq ${audit.nq} · nv ${audit.nv} · nu ${audit.nu}` : '모델 차원 확인 중';
       if (ui.raw.closest('details').open) ui.raw.textContent = JSON.stringify(state, null, 2);
       setCheck(ui.checkTarget, Boolean(checks.tray_in_target_xy)); setCheck(ui.checkSupport, Boolean(checks.tray_on_support));
       setCheck(ui.checkPayload, Boolean(checks.payloads_supported && checks.payloads_settled)); setCheck(ui.checkWithdraw, Boolean(milestones.withdrawn)); setCheck($('checkHome'), Boolean(milestones.returned_home)); updateTimeline(state);
@@ -531,7 +722,7 @@
       const perceptionTime = state.mission?.perception?.timestamp_sim_s ?? 'none';
       const sensorTick = Number.isFinite(state.time_s) ? Math.ceil(state.time_s * 2) : 0;
       const nextSensorEventKey = `${state.phase || ''}|${perceptionTime}|${sensorTick}`;
-      if (nextSensorEventKey !== sensorEventKey) { sensorEventKey=nextSensorEventKey; refreshSensor(); }
+      if (nextSensorEventKey !== sensorEventKey && !scrubbing) { sensorEventKey=nextSensorEventKey; refreshSensor(); }
       if (isTerminal(state) && playing && !playbackInfo) stopPlayback(true); updatePlayLabel();
     }
     function showError(message='') { ui.error.textContent = message; ui.error.classList.toggle('hidden', !message); }
@@ -556,6 +747,7 @@
         ui.camera.value = `${labels[selectedView]} 시점 · 방위 ${azimuth}° · 고도 −20°`; ui.camera.textContent = ui.camera.value;
       })().finally(() => { framePromise = null; }); return framePromise;
     }
+    const roleLabels = { controller:'제어 입력', controller_observation:'제어 입력', monitor_only:'모니터 전용' };
     async function fetchSensorImage(camera, kind) {
       const params = new URLSearchParams({camera,kind,v:String(Date.now())});
       if (playbackInfo) params.set('time_s', String(currentState?.time_s || 0));
@@ -588,16 +780,16 @@
         }
         batch.images.forEach((item,index)=>{figures[index].querySelector('img').src=item.url; figures[index].querySelector('.sensor-empty').hidden=true; nextUrls.push(item.url);});
         const item=batch.images[0], timestamp=Number(item.timestamp), now=Number(currentState?.time_s), latency=Number.isFinite(now)&&Number.isFinite(timestamp)?Math.max(0,now-timestamp):NaN;
-        meta.textContent=`${item.profile||batch.camera} · 관측 ${formatNumber(timestamp,3)} s · 지연 ${Number.isFinite(latency)?formatNumber(latency,3)+' s':'—'} · ${item.role||'controller'}`;
+        meta.textContent=`${item.profile||batch.camera} · 관측 ${formatNumber(timestamp,3)} s · 지연 ${Number.isFinite(latency)?formatNumber(latency,3)+' s':'—'} · ${roleLabels[item.role||'controller']||item.role}`;
         const depthFigure=figures[1]; depthFigure.querySelector('[data-depth-near]').textContent=item.depthMin?`${item.depthMin} m`:'—'; depthFigure.querySelector('[data-depth-far]').textContent=item.depthMax?`${item.depthMax} m`:'—';
       }
       const displayed=batches.filter((batch)=>batch.images?.[0]&&batch.images?.[1]&&!batch.error&&!batch.preloadError).map((batch)=>batch.images[0]);
       const batchIds=new Set(displayed.map((item)=>item.batchId).filter(Boolean)), times=new Set(displayed.map((item)=>item.timestamp));
       if (displayed.length===3&&batchIds.size===1&&times.size===1) {
         const item=displayed[0], timestamp=Number(item.timestamp), now=Number(currentState?.time_s), latency=Number.isFinite(now)&&Number.isFinite(timestamp)?Math.max(0,now-timestamp):NaN;
-        ui.sensorBatchMeta.textContent=`공통 모니터 배치 ${item.batchId} · 관측 ${formatNumber(timestamp,3)} s · 전체 지연 ${Number.isFinite(latency)?formatNumber(latency,3)+' s':'—'} · 패널을 누르면 확대됩니다.`;
+        ui.sensorBatchMeta.textContent=`세 카메라를 같은 시각에 관측했습니다 · 관측 ${formatNumber(timestamp,3)} s · 재생 시각과의 차이 ${Number.isFinite(latency)?formatNumber(latency,3)+' s':'—'} · 화면을 누르면 크게 보입니다.`;
       } else {
-        ui.sensorBatchMeta.textContent='재생 시각 이전의 카메라별 최신 관측입니다. 관측 시각이 서로 다를 수 있습니다. 패널을 누르면 확대됩니다.';
+        ui.sensorBatchMeta.textContent='재생 시각 이전의 카메라별 최신 관측입니다. 관측 시각이 서로 다를 수 있습니다. 화면을 누르면 크게 보입니다.';
       }
       sensorObjectUrls.forEach((url)=>URL.revokeObjectURL(url)); sensorObjectUrls=nextUrls;
     }
@@ -624,6 +816,7 @@
       if (force || index!==lastStateFrame) {
         lastStateFrame=index; updateState(playbackStates[index].state);
         ui.backendBadge.textContent='MuJoCo · 기록 재생';
+        if(!scrubbing)setScrubber(index);
       }
       structuralScene?.setJointState(playbackStates[index].state.joint_state,index);
       structuralScene?.seekFrame(index,selectedTime);
@@ -635,6 +828,9 @@
       ui.jointPane.hidden=mode!=='joint';ui.structuralPane.hidden=mode!=='structural';
       ui.structuralDiagnostics.hidden=mode!=='structural'||!structuralScene;
       ui.structuralControls.hidden=mode!=='structural'||!structuralScene;
+      const sceneShown=mode==='structural'&&Boolean(structuralScene);
+      ui.stressSettings.hidden=!sceneShown;ui.stressCellNote.hidden=sceneShown;ui.stressHint.hidden=sceneShown;
+      ui.stressCellNote.textContent=mode==='joint'?`관절 토크를 모델 힘 제한과 비교한 색상 영상입니다.${structuralScene?' 응력 + 관절 부하를 고르면 이 자리에서 표시 범위와 색상 척도를 바꿀 수 있습니다.':''}`:structuralInfo?.error?'동기 구조 응력을 불러오지 못했습니다. 원본 동작과 상태 표시는 계속 사용할 수 있습니다.':'고정 응력 스냅샷의 결과와 해석 기준은 위 응력 화면 아래에 정리되어 있습니다.';
       ui.jointModeButton.setAttribute('aria-pressed',String(mode==='joint'));
       ui.structuralModeButton.setAttribute('aria-pressed',String(mode==='structural'));
       if(mode==='structural'){ui.loadVideo.pause();structuralScene?.render();}
@@ -659,7 +855,7 @@
           await structuralScene.load(sceneInfo);
           if(lastStateFrame>=0&&playbackStates[lastStateFrame]){structuralScene.setJointState(playbackStates[lastStateFrame].state.joint_state,lastStateFrame);structuralScene.seekFrame(lastStateFrame,lastStateFrame/playbackInfo.fps);}
           structuralInfo={synchronized:true};ui.structuralSceneError.hidden=true;ui.structuralSceneContent.hidden=false;ui.structuralLegacy.hidden=true;ui.loadPanel.hidden=false;ui.structuralModeButton.hidden=false;ui.structuralModeButton.textContent='응력 + 관절 부하';ui.jointModeButton.hidden=!jointAvailable;
-          ui.structuralPart.value='whole';setDiagnosticMode('structural');
+          ui.structuralPart.value='whole';ui.stressSection.hidden=false;ui.stressNavLink.hidden=false;setDiagnosticMode('structural');
           return;
         }
       } catch(error) {
@@ -733,7 +929,7 @@
     }
     function recordedCameraLabel() {
       const labels={overview:'전체',pickup:'파지',placement:'안착'};
-      ui.camera.value=`${labels[selectedView]} 시점 · 검증 실행 ${playbackInfo.fps} FPS · ${ui.speed.value}×`;
+      ui.camera.value=`${labels[selectedView]} 시점 · 검증 실행 ${playbackInfo.fps} FPS`;
       ui.camera.textContent=ui.camera.value;
     }
     async function loadRecordedView(view, resume=false) {
@@ -774,6 +970,7 @@
       finally { if (generation===videoGeneration) {videoLoading=false;ui.play.disabled=false;setControlsBusy(false);} }
     }
     function seekRecorded(seconds) {
+      if(videoLoading||!Number.isFinite(ui.video.duration))return;
       cancelDecodedFrameSync();
       ui.video.currentTime=Math.min(ui.video.duration,Math.max(0,seconds));
       lastStateFrame=-1;syncLoadVideo(true);
@@ -783,6 +980,8 @@
       const busy=value||videoLoading;
       ui.single.disabled=busy||playing;ui.reset.disabled=busy;ui.speed.disabled=busy;
       ui.viewButtons.forEach((button)=>{button.disabled=busy;});
+      ui.scrubber.disabled=busy||!playbackInfo;
+      ui.timeline.forEach((step,stage)=>{step.disabled=busy||!playbackInfo||!(stageStartFrames[stage]>=0);});
     }
     async function runAction(action) {
       if (actionPromise) return actionPromise; setControlsBusy(true);
@@ -838,26 +1037,48 @@
     });
     ui.speed.addEventListener('change',()=>{if(playbackInfo){ui.video.playbackRate=Number(ui.speed.value);syncLoadVideo(true);recordedCameraLabel();}});
     ui.viewButtons.forEach((button) => button.addEventListener('click', () => {
-      selectedView=button.dataset.view;
-      if(playbackInfo)ui.playbackHelp.textContent='검증된 물리 실행을 60 FPS로 재생합니다. 표시 1배속은 시뮬레이션 8배속이며 상태·센서는 같은 기록 시각을 따릅니다.';
+      selectedView=button.dataset.view;ui.stage.dataset.view=selectedView;
+      if(playbackInfo)ui.playbackHelp.textContent='검증된 물리 실행을 60 FPS로 재생합니다. 화면 1배속은 물리 8배속이며, 두 화면과 상태·센서가 같은 기록 시각을 따릅니다.';
       ui.viewButtons.forEach((item)=>item.setAttribute('aria-pressed',String(item===button)));
       if(playbackInfo)loadRecordedView(selectedView,playing);else refreshFrame().catch((error)=>showError(error.message));
     }));
     ui.jointModeButton.addEventListener('click',()=>setDiagnosticMode('joint'));
     ui.structuralModeButton.addEventListener('click',()=>setDiagnosticMode('structural'));
     ui.structuralViewButtons.forEach((button)=>button.addEventListener('click',()=>setStructuralView(button.dataset.structuralView)));
-    ui.sensorRows.forEach((row)=>{ const toggle=()=>{ const expand=!row.classList.contains('expanded'); ui.sensorRows.forEach((other)=>{other.classList.toggle('expanded',expand&&other===row); const button=other.querySelector('[data-sensor-expand]'); button.setAttribute('aria-pressed',String(expand&&other===row)); button.textContent=expand&&other===row?'축소':'확대';}); }; row.querySelector('[data-sensor-expand]').addEventListener('click',toggle); row.querySelectorAll('.sensor-media').forEach((figure)=>figure.addEventListener('click',toggle)); });
+    ui.sensorRows.forEach((row)=>{ const toggle=()=>{ const expand=!row.classList.contains('expanded'); ui.sensorRows.forEach((other)=>{other.classList.toggle('expanded',expand&&other===row); const button=other.querySelector('[data-sensor-expand]'); button.setAttribute('aria-pressed',String(expand&&other===row)); button.textContent=expand&&other===row?'원래 크기':'크게 보기';}); }; row.querySelector('[data-sensor-expand]').addEventListener('click',toggle); row.querySelectorAll('.sensor-media').forEach((figure)=>figure.addEventListener('click',toggle)); });
     ui.raw.closest('details').addEventListener('toggle',()=>{if(currentState&&ui.raw.closest('details').open)ui.raw.textContent=JSON.stringify(currentState,null,2);});
+    const endScrub=()=>{if(!scrubbing)return;scrubbing=false;if(lastStateFrame>=0)setScrubber(lastStateFrame);sensorEventKey='';if(currentState)updateState(currentState);};
+    ui.scrubber.addEventListener('pointerdown',(event)=>{if(event.button===0)scrubbing=true;});
+    ui.scrubber.addEventListener('pointerup',endScrub);ui.scrubber.addEventListener('pointercancel',endScrub);ui.scrubber.addEventListener('lostpointercapture',endScrub);ui.scrubber.addEventListener('change',endScrub);
+    ui.scrubber.addEventListener('input',()=>{if(!playbackInfo)return;const index=Number(ui.scrubber.value);setScrubber(index);seekRecorded(index/playbackInfo.fps);});
+    ui.timeline.forEach((step,stage)=>step.addEventListener('click',()=>{const frame=stageStartFrames[stage];if(!playbackInfo||!(frame>=0))return;setScrubber(frame);seekRecorded(frame/playbackInfo.fps);}));
+    ui.stressHintButton.addEventListener('click',()=>{setDiagnosticMode('structural');ui.replay.scrollIntoView({block:'start'});});
+    let replayVisible=true;
+    if('IntersectionObserver' in window)new IntersectionObserver((entries)=>{replayVisible=entries[0].isIntersecting;},{threshold:.15}).observe(ui.replay);
+    document.addEventListener('keydown',(event)=>{
+      if(event.defaultPrevented||event.altKey||event.ctrlKey||event.metaKey)return;
+      const target=event.target,onPage=target===document.body||target===document.documentElement,inReplay=(onPage&&replayVisible)||ui.replay.contains(target);
+      if(!inReplay||target.closest?.('video[controls],audio[controls]'))return;
+      const tag=target.tagName||'',onScrubber=target===ui.scrubber,typing=!onScrubber&&(['INPUT','SELECT','TEXTAREA'].includes(tag)||target.isContentEditable);
+      if(event.key===' '&&!typing&&(onScrubber||!['BUTTON','A','SUMMARY'].includes(tag))){event.preventDefault();if(!event.repeat&&!ui.play.disabled)ui.play.click();return;}
+      if((event.key==='ArrowLeft'||event.key==='ArrowRight')&&!typing&&(!onScrubber||event.shiftKey)&&playbackInfo&&!videoLoading){
+        event.preventDefault();if(playing)stopPlayback();
+        const frames=(event.key==='ArrowRight'?1:-1)*(event.shiftKey?playbackInfo.fps:1);
+        seekRecorded(ui.video.currentTime+frames/playbackInfo.fps);
+      }
+    });
 
     const improvementUi={
       assessment:$('improvementAssessment'),state:$('improvementState'),grid:$('studyGrid'),controller:$('controllerStudy'),safety:$('safetyStudy'),cooperation:$('cooperationStudy'),
-      videos:$('evidenceVideos'),videoGrid:$('evidenceVideoGrid'),provenance:$('improvementProvenance'),provenanceList:$('provenanceList')
+      videos:$('evidenceVideos'),videoGrid:$('evidenceVideoGrid'),provenance:$('improvementProvenance'),provenanceList:$('provenanceList'),gates:$('improvementGates')
     };
+    const gateLabels={core_task_success:'필수 조건 전부 작업 성공',no_paired_regression:'기존 경로 대비 퇴행 없음',sampled_transport_clearance:'상승 구간 접촉 없음 · 여유 30 mm',safety_rejections:'센서 이상 조건 모두 거부'};
     const caseLabels={
       nominal:'기준 조건','depth-noise-0.003-dropout-0.03':'깊이 잡음·누락','payload-mass-scale-1.2':'적재 질량 1.2배',
       'tray-yaw-0.035':'트레이 회전 +2.0°','tray-yaw-minus-0.035':'트레이 회전 −2.0°','tray-yaw-0.025-heldout':'미사용 검증 +1.4°',
       'rgbd-stale-0.15':'오래된 RGB-D','calibration-bias-0.005':'카메라 외부 보정 편향 +5 mm'
     };
+    const failureLabels={wrist_verification_failed:'손목 관측 검증',perception_failed:'인식 검증',payload_lost:'적재물 손실',phase_timeout:'단계 시간 초과'};
     function makeElement(tag,className,text){const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;}
     function finiteValue(value){if(value===null||value===undefined||value==='')return null;const number=Number(value);return Number.isFinite(number)?number:null;}
     function formatOptional(value,digits=3,suffix=''){const number=finiteValue(value);return number===null?'—':`${formatNumber(number,digits)}${suffix}`;}
@@ -898,7 +1119,7 @@
       addMetric(metrics,'작업 성공',completed.length?`${completed.filter((run)=>run.success===true).length} / ${completed.length}`:'—');
       const rows=allRuns.map((run)=>{
         const expectedCase=run.expected_rejection_observed!==null&&run.expected_rejection_observed!==undefined||String(run.expected_outcome||'').includes('rejection'),rejection=expectedCase?(run.expected_rejection_observed===true?'보호 거부 확인':run.expected_rejection_observed===false?'보호 거부 미확인':'판정 없음'):'기대 거부 아님';
-        const task=run.execution_status!=='completed'?`실행 오류 · ${run.execution_status||'상태 없음'}`:run.success===true?'작업 성공':`작업 실패 · ${run.failure_reason||run.mission_failure?.reason||'조건 미충족'}`;
+        const reason=run.failure_reason||run.mission_failure?.reason,task=run.execution_status!=='completed'?`실행 오류 · ${run.execution_status||'상태 없음'}`:run.success===true?'작업 성공':`${run.expected_rejection_observed===true?'작업 중단':'작업 실패'} · ${failureLabels[reason]||reason||'조건 미충족'}`;
         return [caseLabels[String(run.case)]||String(run.case),rejection,task];
       });
       const note=makeElement('p','study-note','센서 이상을 감지해 작업을 멈춘 결과는 안전 거부 판정으로 따로 집계합니다. 작업 성공으로 바꾸어 세지 않습니다.');
@@ -920,11 +1141,12 @@
       const scope=makeElement('p','study-note','차이 = 협조 감속 사용 − 해제. 둘 다 성공한 동일 조건·seed 쌍의 평균입니다. 양수는 증가, 음수는 감소를 뜻하며 완료시간과 안정성의 비용을 함께 봅니다.');
       improvementUi.cooperation.replaceChildren(metrics,note,costs,scope);
     }
+    const evidenceObserver='IntersectionObserver' in window?new IntersectionObserver((entries)=>entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.preload='auto';evidenceObserver.unobserve(entry.target);}}),{rootMargin:'400px 0px'}):null;
     function renderEvidenceVideos(videos){
       improvementUi.videoGrid.replaceChildren();
       videos.forEach((item)=>{
         const figure=makeElement('figure','evidence-video'),video=document.createElement('video'),caption=document.createElement('figcaption'),title=makeElement('strong','',item.label||`${caseLabels[String(item.case)]||item.case||'실행'} · ${item.profile||'프로필 없음'}`);
-        video.controls=true;video.preload='metadata';video.playsInline=true;video.src=String(item.url||'');video.setAttribute('aria-label',`${title.textContent} 실행 영상`);
+        video.controls=true;video.muted=true;video.preload='metadata';video.playsInline=true;video.width=960;video.height=720;video.src=`${String(item.url||'')}#t=0.5`;evidenceObserver?.observe(video);video.setAttribute('aria-label',`${title.textContent} 실행 영상`);
         const outcome=item.success===true?'성공':item.success===false?'실패':'결과 미기재';
         const meta=makeElement('span','',`${caseLabels[String(item.case)]||item.case||'조건 없음'} · 시드 ${item.seed??'—'} · ${outcome} · 표시 1× = 물리 ${formatOptional(item.playback_speed,0,'×')}`);
         video.addEventListener('error',()=>{meta.textContent=`${meta.textContent} · 영상을 불러오지 못했습니다.`;});caption.append(title,meta);figure.append(video,caption);improvementUi.videoGrid.append(figure);
@@ -942,10 +1164,12 @@
         if(info?.enabled!==true){improvementUi.assessment.textContent='검증 근거 없음';improvementUi.assessment.className='assessment-badge incomplete';improvementUi.state.textContent=info?.error||'개선 실험 근거가 아직 준비되지 않았습니다.';return;}
         if(info.schema_version!==1||!info.assessment||!info.studies?.improvement||!info.studies?.safety||!info.studies?.cooperation)throw new Error('개선 실험 응답 형식이 맞지 않습니다.');
         const status=['passed','partial','incomplete'].includes(info.assessment.status)?info.assessment.status:'incomplete';
-        improvementUi.assessment.textContent=info.assessment.label||({passed:'검증 통과',partial:'일부 검증',incomplete:'검증 미완료'}[status]);improvementUi.assessment.className=`assessment-badge ${status}`;
-        improvementUi.state.textContent=info.assessment.summary||'평가 설명이 제공되지 않았습니다.';improvementUi.grid.hidden=false;
+        const gates=Object.entries(info.assessment.gates||{}).filter(([,value])=>typeof value==='boolean'),met=gates.filter(([,value])=>value).length;
+        improvementUi.assessment.textContent=gates.length?`사전 판정 ${gates.length}개 중 ${met}개 충족`:(info.assessment.label||({passed:'검증 통과',partial:'일부 검증',incomplete:'검증 미완료'}[status]));improvementUi.assessment.className=`assessment-badge ${status}`;
+        improvementUi.gates.replaceChildren(...gates.map(([key,value])=>{const item=makeElement('li',value?'is-met':'',gateLabels[key]||key);item.setAttribute('aria-label',`${gateLabels[key]||key} · ${value?'충족':'미충족'}`);return item;}));improvementUi.gates.hidden=gates.length===0;
+        improvementUi.state.textContent=info.assessment.summary||'평가 설명이 제공되지 않았습니다.';improvementUi.state.hidden=status!=='incomplete';improvementUi.grid.hidden=false;
         renderControllerStudy(info.studies.improvement);renderSafetyStudy(info.studies.safety);renderCooperationStudy(info.studies.cooperation,info.cooperation_effect);renderEvidenceVideos(Array.isArray(info.videos)?info.videos:[]);renderProvenance(info);
-      }catch(error){improvementUi.assessment.textContent='검증 근거 오류';improvementUi.assessment.className='assessment-badge is-error';improvementUi.state.textContent=`개선 실험 기록을 표시하지 못했습니다. ${error.message}`;improvementUi.state.classList.add('is-error');improvementUi.grid.hidden=true;improvementUi.videos.hidden=true;improvementUi.provenance.hidden=true;}
+      }catch(error){improvementUi.state.hidden=false;improvementUi.gates.hidden=true;improvementUi.assessment.textContent='검증 근거 오류';improvementUi.assessment.className='assessment-badge is-error';improvementUi.state.textContent=`개선 실험 기록을 표시하지 못했습니다. ${error.message}`;improvementUi.state.classList.add('is-error');improvementUi.grid.hidden=true;improvementUi.videos.hidden=true;improvementUi.provenance.hidden=true;}
     }
     document.addEventListener('visibilitychange', () => { if (document.hidden) stopPlayback(); });
     async function initialize() {
@@ -955,19 +1179,20 @@
         if(info.enabled){
           const states=await request(info.states_url);
           if(!Array.isArray(states)||states.length!==info.frame_count||!states.length)throw new Error('재생 상태와 영상 프레임 수가 맞지 않습니다.');
-          playbackInfo=info;playbackStates=states;ui.single.textContent='한 프레임';
+          playbackInfo=info;playbackStates=states;ui.single.textContent='한 프레임';ui.single.setAttribute('aria-keyshortcuts','ArrowRight');ui.keyHint.hidden=false;buildPhaseTrack();
           ui.viewButtons.forEach(button=>{button.hidden=!info.videos[button.dataset.view];});
           initializeLoadVideo(info.videos.load);
           await initializeStructural(Boolean(info.videos.load));
-          ui.playbackHelp.textContent='검증된 물리 실행을 60 FPS 영상으로 재생합니다. 기본 1배속은 시뮬레이션 8배속에 해당하며, 상태·센서도 같은 기록 시각을 따릅니다.';
+          ui.playbackHelp.textContent='검증된 물리 실행을 60 FPS로 재생합니다. 화면 1배속은 물리 8배속이며, 두 화면과 상태·센서가 같은 기록 시각을 따릅니다.';
           await loadRecordedView(selectedView);
         } else {
           ui.playbackHelp.textContent='실시간 물리 계산 모드입니다. 배율은 목표값이며 실제 진행 속도는 CPU 계산과 렌더 속도에 따라 달라집니다.';
+          ui.scrubRow.hidden=true;$('phaseTrack').hidden=true;document.querySelector('.clock-total').hidden=true;
           await initializeStructural(false);
           await Promise.all([request('/api/state').then(updateState),refreshFrame()]);
         }
       } catch(error){showError(`${error.message} 서버 연결을 확인해 주세요.`);}
-      finally{ui.play.disabled=false;setControlsBusy(false);}
+      finally{ui.play.disabled=false;setControlsBusy(false);if(ui.loadPanel.hidden)ui.stressCellNote.textContent='이 실행에는 응력·관절 부하 기록이 연결되어 있지 않습니다.';}
     }
     initialize();
     initializeImprovement();
