@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "scope": "README presentation media derived from committed playback evidence; physics state is unchanged",
+  "created": "2026-10-24",
+  "files": {
+    "hero-cycle.gif": {
+      "source": "evidence/playback-native/overview.mp4",
+      "source_sha256": "2943177363c859769b833eab6d5bfad558a75df209db066afb1b5c9cca93433b",
+      "command": "ffmpeg -i evidence/playback-native/overview.mp4 -vf \"fps=15,scale=720:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle\" docs/media/hero-cycle.gif",
+      "display_rate": "1 s of display = 8 s of physics (source playback contract)",
+      "duration_s": 18.94,
+      "sha256": "bea5afd3a92ad07dbbb927520bb550ca9afb509890434b7e75c88b5edd972417"
+    },
+    "viewer.jpg": {
+      "source": "local viewer `rby1_tray.cli view --config configs/mobile-native.json` at repository commit 5c3e00910c14c736ae3c0539aeb03e226760514a with the local structural bundle",
+      "capture": "headless Chrome 151, viewport 1600x1000, device scale 1.5; main video seeked to 11.6 s and saved only after the structural clock reported the matching record frame",
+      "record_frame": "697 / 1136, 92.800 s physics time",
+      "presentation_change": "playback status badge hidden for the still image",
+      "sha256": "ead82b73d34c41feafadb5ac1b3372ac1d6b4592447b51118dade19751039cda"
+    }
+  }
+}
