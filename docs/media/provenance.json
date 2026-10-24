@@ -17,6 +17,25 @@
       "record_frame": "697 / 1136, 92.800 s physics time",
       "presentation_change": "playback status badge hidden for the still image",
       "sha256": "ead82b73d34c41feafadb5ac1b3372ac1d6b4592447b51118dade19751039cda"
+    },
+    "flange-fem-stages.png": {
+      "source": "local viewer `rby1_tray.cli view --config configs/mobile-native.json` with source files unchanged since 5c3e00910c14c736ae3c0539aeb03e226760514a and the local structural bundle artifacts/structural-whole",
+      "bundle_sha256": {
+        "manifest.json": "06f2c4093a2a3095ec0773550f6b140b880f191a2b9c5dadd7ac5ceec63318b7",
+        "frames.bin": "f498f7b28eb03110980ce12336d4c435624a4c4203f78d8e2253b3c5b74d2bc5"
+      },
+      "capture": "headless Chrome 151, viewport 1600x1000, device scale 3; structural part `left_flange_fem`, surface view, log color scale; main video seeked to (record_frame-1)/60 s and saved only after the structural clock reported the matching record frame",
+      "record_frames": [
+        "538 / 1136, 71.600 s, viewer maximum 0.026 MPa",
+        "863 / 1136, 114.934 s, viewer maximum 0.114 MPa",
+        "921 / 1136, 122.666 s, viewer maximum 5.10 kPa"
+      ],
+      "frame_selection": "863 has the largest per-frame flange FEM maximum among all 1,136 record frames in frames.bin (0.1142 MPa); 538 shows raising the torso while holding the tray and 921 shows the scene after release",
+      "color_scale": "viewer shader scale shared by all panels: t = ln(1 + s / 1 kPa) / ln(1 + 848.567 kPa / 1 kPa), 0 to 0.85 MPa",
+      "presentation_change": "robot panel and flange canvas cropped; titles, values, color bar and notes drawn with Pillow using NanumBarunGothic; first scene is labeled as lifting the torso while holding the tray (raise_high phase)",
+      "cad_scope": "rendered image only; STEP, BREP, mesh and structural bundle files are not included",
+      "sha256": "4fdcb9dffd5a40f67f3ef882633bea2ef3a13aaa7183ff934ab55bf491e741fd",
+      "value_note": "the per-scene maximum is the largest single-element von Mises value, which depends on mesh size and support condition; it is used for comparing scenes"
     }
   }
 }

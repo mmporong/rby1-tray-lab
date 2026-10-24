@@ -18,7 +18,7 @@
 
 다운로드 게이트는 개인이면 이름·이메일·휴대전화, 사업자이면 회사명·담당자 이름·이메일·휴대전화와 개인정보 수집·이용 동의를 요구한다. 최초 익명 요청은 HTTP 403이었다. 이후 사용자가 브라우저에서 동의 양식을 완료했지만, 제품·동의 페이지는 `www.rainbow-robotics.com`, 파일 링크는 `rainbow-robotics.com`으로 달라 기본 링크는 계속 권한 없음 화면을 표시했다. 같은 경로·파일 식별자를 동의한 `www` 호스트로 요청하자 다운로드됐다. 쿠키를 복제하거나 권한을 바꾸지 않았고 개인정보도 재제출하지 않았다.
 
-공식 원본 경로와 성공한 주소, 파일 해시는 [조사 JSON](../evidence/cad-availability.json)에 보존했다. 원본 ZIP·STEP·PNG는 로컬에만 보관한다. CAD 재배포 라이선스는 여전히 미확인이며 SDK의 Apache-2.0을 적용하지 않는다.
+공식 원본 경로와 성공한 주소, 파일 해시는 [조사 JSON](../evidence/cad-availability.json)에 보존했다. 원본 ZIP·STEP·동봉 PNG는 로컬에만 보관한다. 공개 저장소에는 뷰어에서 플랜지 응력 결과를 캡처한 그림 한 장(`docs/media/flange-fem-stages.png`)만 싣고, 제작 기록은 [미디어 출처](media/provenance.json)에 둔다. CAD 재배포 라이선스는 여전히 미확인이며 SDK의 Apache-2.0을 적용하지 않는다.
 
 ## 확보한 STEP의 초기 검사
 
