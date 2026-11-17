@@ -25,6 +25,7 @@ from .cooperation import CooperationConfig, CooperationSupervisor
 from .mobility import DriveConfig, DriveController, WHEEL_JOINT_NAMES
 from .perception import PerceptionError, TrayCAD, TrayEstimate, estimate_tray_pose
 from .planning import Robot, smoothstep
+from .pickup_timing import blend_seed, make_schedule, segmented_progress
 from .scene import audit_model, build_scene, load_config
 from .session import Session
 from .transport_clearance import (
@@ -371,6 +372,8 @@ class MobileSession(Session):
         self.phase = "home_start"
         self.phase_started_s = 0.0
         self._active_motion: ArmMotion | None = None
+        # ! Optional pickup timing state; baseline remains unchanged when disabled.
+        self._pickup_schedule = None
         self._detected_tray: TrayEstimate | None = None
         self._planned_tray_center: np.ndarray | None = None
         self._drive_start_pose: np.ndarray | None = None
@@ -939,6 +942,14 @@ class MobileSession(Session):
                 if phase == "pickup_approach" and index == segment_count
                 else seed
             )
+            # ! Opt-in only: blend the prior solved waypoint with the known
+            # ! high-branch seed. This is an IK initial guess, not a waypoint.
+            pickup_opt = self.config.get("pickup_optimization", {})
+            if (phase == "pickup_approach" and index == segment_count
+                    and pickup_opt.get("enabled", False)):
+                solve_seed = blend_seed(
+                    seed, HIGH_CARRY_WARM_START_RAD,
+                    float(pickup_opt.get("seed_blend_alpha", 1.0)))
             solved, result = self.robot.solve(
                 point_positions,
                 seed=solve_seed,
@@ -1106,6 +1117,33 @@ class MobileSession(Session):
                 "transport_clearance": transport_metrics,
             }
         )
+        # ! Opt-in retiming: segment 1 keeps its original 5 s profile;
+        # ! only segment 2 is compressed using the measured baseline jump.
+        pickup_opt = self.config.get("pickup_optimization", {})
+        if phase == "pickup_approach" and pickup_opt.get("enabled", False):
+            reference_jump = pickup_opt.get("baseline_second_jump_rad")
+            if reference_jump is None:
+                raise ValueError("pickup_optimization.baseline_second_jump_rad is required")
+            schedule = make_schedule(
+                path,
+                original_total_s=float(duration_s),
+                baseline_second_jump_rad=float(reference_jump),
+                second_factor=float(pickup_opt.get("second_segment_factor", 1.0)),
+                minimum_second_s=float(pickup_opt.get("minimum_second_s", 1.5)),
+            )
+            duration_s = schedule.duration_s
+            self._pickup_schedule = schedule
+            metrics["seed_policy"] = (
+                "previous_to_high_seed_blend_alpha_"
+                f"{float(pickup_opt.get('seed_blend_alpha', 1.0)):.3f}")
+            metrics["pickup_time_schedule"] = {
+                "first_s": schedule.first_s,
+                "second_s": schedule.second_s,
+                "original_total_s": schedule.original_total_s,
+                "baseline_second_jump_rad": schedule.baseline_second_jump_rad,
+                "second_jump_rad": schedule.second_jump_rad,
+                "second_factor": schedule.second_factor,
+            }
         self.ik_errors.append(metrics)
         motion = ArmMotion(
             phase=phase,
@@ -1289,6 +1327,8 @@ class MobileSession(Session):
         self._drive_stopped_since_s = None
         self._motion_settled_since_s = None
         self._active_motion = None
+        # ! Clear any phase-specific time warp before planning the next motion.
+        self._pickup_schedule = None
         self._drive_start_pose = None
         self._drive_start_tray_center = None
         self._motion_clock_s = 0.0
@@ -1608,8 +1648,13 @@ class MobileSession(Session):
         # segment would repeatedly stop and restart the carried tray.
         progress = smoothstep(raw)
         scaled = min(progress * segment_count, float(segment_count))
+        gripper_fraction = progress
+        # ! Use the measured C1 two-segment time warp only when explicitly enabled.
+        if self.phase == "pickup_approach" and self._pickup_schedule is not None:
+            scaled = segmented_progress(elapsed, self._pickup_schedule)
+            gripper_fraction = scaled / 2.0
         joints = interpolate_joint_path(motion.joint_path_rad, scaled)
-        gripper = motion.start_gripper_m + smoothstep(raw) * (
+        gripper = motion.start_gripper_m + gripper_fraction * (
             motion.target_gripper_m - motion.start_gripper_m
         )
         velocity = (joints - self.command_rad) / float(self.config["control_dt_s"])
