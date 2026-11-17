@@ -160,6 +160,30 @@ FEM은 프레임마다 새로 풀지 않는다. 세 방향으로 미는 힘과 �
 - 관절 부하는 MuJoCo 구동기 토크를 모델 토크 제한으로 나눈 값이다. 응력 계산 방법은 [구조 해석](#구조-해석-cae) 절에 정리했다.
 - 전신 응력 화면은 CAD 파생 구조 번들을 준비한 환경에서 열린다. 새 clone에서는 원본 동작·관절 부하 영상·RGB-D·개선 비교 화면을 볼 수 있다. 화면 구성과 해석 규약은 [기술 상세](docs/technical-details.md#관절-부하와-접촉력-시각화)에 정리했다.
 
+## 파지 접근 IK 회전 감소·시간 최적화 실험 (선택형)
+
+동일한 RBY1-M 모델과 seed 0의 로컬 MuJoCo A/B에서 양팔 관절 이동량을 14.7%,
+접근 구간의 양의 기계적 일을 6.5% 줄이면서 전체 작업 시간을 150.840초에서
+146.902초로 단축한 후보를 확인했다. 접근 최대 구동기 토크는 8.6% 증가했다.
+이 수치는 단일 로컬 실행 조건의 결과이며, 전체 안전성 개선이나 전기 소비량 감소를 의미하지 않는다.
+
+실험 후보는 `configs/mobile-native-pickup-optimized.json`에서만 활성화된다.
+**기존 `configs/mobile-native.json`과 `run`의 기본 동작은 변경하지 않았다.**
+변경한 동작은 최종 pickup IK 초기값 혼합(`alpha=0.75`)과 두 번째 접근 구간의
+C1 시간 배분(`factor=0.70`)이다. TCP·토크·충돌·작업 성공 판정 기준은 그대로다.
+
+재현하려면 프로젝트 루트에서 (출력 폴더는 새 경로 사용):
+
+```bash
+MUJOCO_GL=egl PYOPENGL_PLATFORM=egl EGL_PLATFORM=surfaceless \
+  .venv/bin/python -m rby1_tray.cli run \
+  --config configs/mobile-native-pickup-optimized.json \
+  --output artifacts/pickup-optimized-new
+```
+
+실험 설계, 원본 대비 시간·기계적 일·최대 토크·저속 구간의 비교,
+재현 조건 및 해석 제한은 [파지 접근 IK/시간 개선 검증](docs/pickup-ik-retiming-study.md)에 정리했다.
+
 ## 실행
 
 Linux, Python 3.12, CPU/EGL 환경에서 검증했다. Ubuntu·Windows WSL2 설치, 구조 번들 준비, SSH 접속은 [다른 PC 실행 가이드](docs/run-on-another-pc.md)에 정리했다. 명령은 저장소 루트에서 실행한다.
